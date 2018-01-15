@@ -1,4 +1,5 @@
 ﻿using PlurCrawler.Tokens;
+using PlurCrawler.Tokens.Tokenizer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,9 @@ namespace PlurCrawler
     {
         public void test()
         {
-            var facebookTokenizer = new FacebookTokenizer();
-
+            var tokenizer = new NaverToken("asdf","asdf");
+            
+            
         }
         
 

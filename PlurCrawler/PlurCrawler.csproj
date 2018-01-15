@@ -110,12 +110,17 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tokens\BaseTokenizer.cs" />
+    <Compile Include="Tokens\Credentials\CredentialsType.cs" />
+    <Compile Include="Tokens\Tokenizer\IToken.cs" />
+    <Compile Include="Tokens\Tokenizer\NaverToken.cs" />
+    <Compile Include="Tokens\Tokenizer\BaseTokenizer.cs" />
     <Compile Include="Tokens\Credentials\CredentialsTypeException.cs" />
     <Compile Include="Tokens\Credentials\ICredentials.cs" />
-    <Compile Include="Tokens\Credentials\InstagramCredentials.cs" />
+    <Compile Include="Tokens\Credentials\NaverCredentials.cs" />
     <Compile Include="Tokens\Credentials\TwitterCredentials.cs" />
-    <Compile Include="Tokens\TwitterTokenizer.cs" />
+    <Compile Include="Tokens\Tokenizer\NaverTokenizer.cs" />
+    <Compile Include="Tokens\Tokenizer\TwitterTokenizer.cs" />
+    <Compile Include="Tokens\Tokenizer\TwitterToken.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
