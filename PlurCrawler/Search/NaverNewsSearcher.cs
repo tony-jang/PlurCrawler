@@ -11,22 +11,22 @@ using PlurCrawler.Tokens.Tokenizer;
 
 namespace PlurCrawler.Search
 {
-    public class NaverCafeSearcher : ISearcher
+    public class NaverNewsSearcher : ISearcher
     {
         public IToken Token { get; private set; }
 
         public NaverToken NaverToken => (NaverToken)Token;
 
-        public NaverCafeSearcher(NaverToken token)
+        public NaverNewsSearcher(NaverToken token)
         {
             this.Token = token;
         }
 
-        public ISearchResult Search(ISearchOption searchOption)
+        public List<ISearchResult> Search(ISearchOption searchOption)
         {
             if (searchOption is NaverSearchOption naverSearchOption)
             {
-                string url = $"https://openapi.naver.com/v1/search/blog?query={naverSearchOption.Query}";
+                string url = $"https://openapi.naver.com/v1/search/news.json?query={naverSearchOption.Query}";
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.Headers.Add("X-Naver-Client-Id", NaverToken.ClientId);

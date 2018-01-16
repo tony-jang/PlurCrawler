@@ -14,6 +14,6 @@ namespace PlurCrawler.Search
     {
         IToken Token { get; }
 
-        ISearchResult Search(ISearchOption searchOption);
+        List<ISearchResult> Search(ISearchOption searchOption);
     }
 }
