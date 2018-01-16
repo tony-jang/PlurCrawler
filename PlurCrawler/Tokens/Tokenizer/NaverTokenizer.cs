@@ -7,6 +7,9 @@ using PlurCrawler.Tokens.Credentials;
 
 namespace PlurCrawler.Tokens.Tokenizer
 {
+    /// <summary>
+    /// 네이버의 토큰을 생성하는 클래스입니다.
+    /// </summary>
     public class NaverTokenizer : BaseTokenizer
     {
         /// <summary>

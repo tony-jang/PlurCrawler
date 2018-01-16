@@ -3,7 +3,7 @@
 namespace PlurCrawler.Tokens.Credentials
 {
     /// <summary>
-    /// 인증 정보의 타입이 올바르게 연결되지 않았을때 발생하는 예외입니다.
+    /// 자격 정보의 타입이 올바르게 연결되지 않았을때 발생하는 예외입니다.
     /// </summary>
     public class CredentialsTypeException : Exception
     {

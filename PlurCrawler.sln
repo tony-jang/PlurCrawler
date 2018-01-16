@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlurCrawler", "PlurCrawler\PlurCrawler.csproj", "{08E1C4B4-D0A2-4FEC-95D6-8D3AD39A41EA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlurCrawler_Sample", "PlurCrawler_Sample\PlurCrawler_Sample.csproj", "{92C6573E-C840-4F6A-9BA8-59B5A73AAD82}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{08E1C4B4-D0A2-4FEC-95D6-8D3AD39A41EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08E1C4B4-D0A2-4FEC-95D6-8D3AD39A41EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08E1C4B4-D0A2-4FEC-95D6-8D3AD39A41EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92C6573E-C840-4F6A-9BA8-59B5A73AAD82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92C6573E-C840-4F6A-9BA8-59B5A73AAD82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92C6573E-C840-4F6A-9BA8-59B5A73AAD82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92C6573E-C840-4F6A-9BA8-59B5A73AAD82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

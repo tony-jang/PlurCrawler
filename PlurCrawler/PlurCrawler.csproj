@@ -110,7 +110,14 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tokens\Credentials\CredentialsType.cs" />
+    <Compile Include="Search\ISearcher.cs" />
+    <Compile Include="Search\NaverCafeSearcher.cs" />
+    <Compile Include="Search\Options\DateRange.cs" />
+    <Compile Include="Search\Options\ISearchOption.cs" />
+    <Compile Include="Search\Options\NaverSearchOption.cs" />
+    <Compile Include="Search\Options\SearchOptionTypeException.cs" />
+    <Compile Include="Search\SearchResults\ISearchResult.cs" />
+    <Compile Include="Search\SearchResults\NaverSearchResult.cs" />
     <Compile Include="Tokens\Tokenizer\IToken.cs" />
     <Compile Include="Tokens\Tokenizer\NaverToken.cs" />
     <Compile Include="Tokens\Tokenizer\BaseTokenizer.cs" />
@@ -120,11 +127,13 @@
     <Compile Include="Tokens\Credentials\TwitterCredentials.cs" />
     <Compile Include="Tokens\Tokenizer\NaverTokenizer.cs" />
     <Compile Include="Tokens\Tokenizer\TwitterTokenizer.cs" />
-    <Compile Include="Tokens\Tokenizer\TwitterToken.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Database\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
