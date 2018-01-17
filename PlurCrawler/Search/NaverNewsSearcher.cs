@@ -26,7 +26,10 @@ namespace PlurCrawler.Search
         {
             if (searchOption is NaverSearchOption naverSearchOption)
             {
-                string url = $"https://openapi.naver.com/v1/search/news.json?query={naverSearchOption.Query}";
+                string query = naverSearchOption.Query;
+                ulong count = naverSearchOption.SearchCount;
+                var sort = naverSearchOption.NaverSortOptions;
+                string url = $"https://openapi.naver.com/v1/search/news.json?query={query}&display={count}&sort={sort}";
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.Headers.Add("X-Naver-Client-Id", NaverToken.ClientId);
@@ -40,6 +43,8 @@ namespace PlurCrawler.Search
                     StreamReader reader = new StreamReader(stream, Encoding.UTF8);
 
                     string text = reader.ReadToEnd();
+
+                    return null;
                 }
                 else
                 {
@@ -47,9 +52,6 @@ namespace PlurCrawler.Search
                     throw new Exception($"오류 발생 코드 : {status.ToString()}");
 #endif
                 }
-
-
-                return null;
             }
             else
             {

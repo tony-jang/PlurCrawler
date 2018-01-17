@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Newtonsoft.Json;
 using PlurCrawler;
+using PlurCrawler.Search;
+using PlurCrawler.Search.Options;
 using PlurCrawler.Search.SearchResults;
 using PlurCrawler.Tokens.Credentials;
 using PlurCrawler.Tokens.Tokenizer;
@@ -38,26 +40,48 @@ namespace PlurCrawler_Sample
 
         public void Test()
         {
-            NaverSearchResult naverSearchResult = new NaverSearchResult()
+            var naverCredentials = new NaverCredentials()
             {
-                Date = DateTime.Now,
-                OriginalURL = "asdf",
-                Title = "asdf"
+                ClientId = "dd4WOSPzTtUF_uKyc9iI",
+                ClientSecret = "vURlgeXkH6"
             };
 
-            NaverSearchResult naverSearchResult2 = new NaverSearchResult()
+            var naverTokenizer = new NaverTokenizer();
+            NaverToken naverToken = (NaverToken)naverTokenizer.CredentialsCertification(naverCredentials);
+
+            var searcher = new NaverNewsSearcher(naverToken);
+
+            searcher.Search(new NaverSearchOption()
             {
-                Date = DateTime.Now,
-                OriginalURL = "asdf2",
-                Title = "asdf2"
-            };
+                Query = "Google",
+                SearchCount = 10,
+                SearchRange = new DateRange()
+                {
+                    StartTime = DateTime.Now,
+                    EndTime = DateTime.Now.AddHours(100)
+                }
+            });
+            
+            //NaverSearchResult naverSearchResult = new NaverSearchResult()
+            //{
+            //    Date = DateTime.Now,
+            //    OriginalURL = "asdf",
+            //    Title = "asdf"
+            //};
 
-            List<NaverSearchResult> results = new List<NaverSearchResult>(){ naverSearchResult, naverSearchResult2 };
+            //NaverSearchResult naverSearchResult2 = new NaverSearchResult()
+            //{
+            //    Date = DateTime.Now,
+            //    OriginalURL = "asdf2",
+            //    Title = "asdf2"
+            //};
 
-            var str = JsonConvert.SerializeObject(results);
+            //List<NaverSearchResult> results = new List<NaverSearchResult>(){ naverSearchResult, naverSearchResult2 };
 
-            Clipboard.Clear();
-            Clipboard.SetText(str);
+            //var str = JsonConvert.SerializeObject(results);
+
+            //Clipboard.Clear();
+            //Clipboard.SetText(str);
 
             return;
             TwitterCredentials credentials = new TwitterCredentials("hKomvFO7HT0ZNZM9Kc2lnKhsY", "mk2AoM6iHKuSPmnvsqyHJuKXqIsDVHD37hoB3KA6Y6oksNDhyD");

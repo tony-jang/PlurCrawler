@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 
 namespace PlurCrawler.Search.Options
 {
+    /// <summary>
+    /// 날짜의 시작지점과 끝 지점을 지정합니다.
+    /// </summary>
     public struct DateRange
     {
+        /// <summary>
+        /// 날짜 범위 클래스를 초기화합니다.
+        /// </summary>
+        /// <param name="startTime">시작 지점의 날짜입니다.</param>
+        /// <param name="endTime">종료 지점의 날짜입니다.</param>
         public DateRange(DateTime startTime, DateTime endTime)
         {
             Initalized = true;
@@ -19,6 +27,9 @@ namespace PlurCrawler.Search.Options
         private bool Initalized;
 
         private DateTime _startTime;
+        /// <summary>
+        /// 시작 지점의 날짜입니다.
+        /// </summary>
         public DateTime StartTime
         {
             get => _startTime;
@@ -28,8 +39,11 @@ namespace PlurCrawler.Search.Options
                 Initalized = true;
             }
         }
-
+        
         private DateTime _endTime;
+        /// <summary>
+        /// 종료 지점의 날짜입니다.
+        /// </summary>
         public DateTime EndTime
         {
             get => _endTime;
