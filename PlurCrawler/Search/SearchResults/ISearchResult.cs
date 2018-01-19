@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace PlurCrawler.Search.SearchResults
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface ISearchResult
     {
         DateTime Date { get; set; }

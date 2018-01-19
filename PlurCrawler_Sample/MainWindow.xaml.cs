@@ -54,12 +54,7 @@ namespace PlurCrawler_Sample
             searcher.Search(new NaverSearchOption()
             {
                 Query = "Google",
-                SearchCount = 10,
-                SearchRange = new DateRange()
-                {
-                    StartTime = DateTime.Now,
-                    EndTime = DateTime.Now.AddHours(100)
-                }
+                SearchCount = 10
             });
             
             //NaverSearchResult naverSearchResult = new NaverSearchResult()

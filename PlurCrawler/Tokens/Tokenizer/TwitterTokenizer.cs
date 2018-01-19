@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using PlurCrawler.Tokens.Credentials;
+using PlurCrawler.Tokens.Tokenizer.Base;
+
 using Tweetinvi;
 
 namespace PlurCrawler.Tokens.Tokenizer

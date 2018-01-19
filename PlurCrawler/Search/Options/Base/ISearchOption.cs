@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlurCrawler.Search.Options
+namespace PlurCrawler.Search.Options.Base
 {
     public interface ISearchOption
     {
         string Query { get; set; }
-
-        DateRange SearchRange { get; set; }
 
         ulong SearchCount { get; set; }
     }

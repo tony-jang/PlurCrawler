@@ -1,4 +1,4 @@
-﻿namespace PlurCrawler.Tokens.Tokenizer
+﻿namespace PlurCrawler.Tokens.Tokenizer.Base
 {
     /// <summary>
     /// 토큰을 저장하는 클래스의 기본 인터페이스입니다.

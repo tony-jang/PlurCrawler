@@ -1,6 +1,6 @@
 ﻿using PlurCrawler.Tokens.Credentials;
 
-namespace PlurCrawler.Tokens.Tokenizer
+namespace PlurCrawler.Tokens.Tokenizer.Base
 {
     /// <summary>
     /// 토큰을 생성하는 기본 클래스입니다.
@@ -13,6 +13,5 @@ namespace PlurCrawler.Tokens.Tokenizer
         /// <param name="credentials"></param>
         /// <returns></returns>
         public abstract IToken CredentialsCertification(ICredentials credentials);
-
     }
 }

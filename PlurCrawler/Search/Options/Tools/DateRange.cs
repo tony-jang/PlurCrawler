@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlurCrawler.Search.Options
+namespace PlurCrawler.Search.Options.Tools
 {
     /// <summary>
     /// 날짜의 시작지점과 끝 지점을 지정합니다.
@@ -27,6 +27,7 @@ namespace PlurCrawler.Search.Options
         private bool Initalized;
 
         private DateTime _startTime;
+
         /// <summary>
         /// 시작 지점의 날짜입니다.
         /// </summary>

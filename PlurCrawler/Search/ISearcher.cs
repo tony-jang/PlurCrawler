@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using PlurCrawler.Tokens.Tokenizer;
-using PlurCrawler.Search.Options;
+using PlurCrawler.Tokens.Tokenizer.Base;
+using PlurCrawler.Search.Options.Base;
 
 namespace PlurCrawler.Search
 {

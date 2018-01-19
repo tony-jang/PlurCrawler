@@ -5,9 +5,14 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+
+
 using PlurCrawler.Search.Options;
+using PlurCrawler.Search.Options.Base;
+using PlurCrawler.Search.Options.Tools;
 using PlurCrawler.Search.SearchResults;
 using PlurCrawler.Tokens.Tokenizer;
+using PlurCrawler.Tokens.Tokenizer.Base;
 
 namespace PlurCrawler.Search
 {
@@ -29,7 +34,7 @@ namespace PlurCrawler.Search
                 string query = naverSearchOption.Query;
                 ulong count = naverSearchOption.SearchCount;
                 var sort = naverSearchOption.NaverSortOptions;
-                string url = $"https://openapi.naver.com/v1/search/news.json?query={query}&display={count}&sort={sort}";
+                string url = $"https://openapi.naver.com/v1/search/news?query={query}&display={count}&sort={sort}";
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.Headers.Add("X-Naver-Client-Id", NaverToken.ClientId);
