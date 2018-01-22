@@ -1,12 +1,4 @@
-﻿using System;
-
-using PlurCrawler.Tokens.Tokenizer;
-
-using InviModel = Tweetinvi.Models;
-using Invi = Tweetinvi;
-using Tweetinvi.Models;
-
-namespace PlurCrawler.Tokens.Credentials
+﻿namespace PlurCrawler.Tokens.Credentials
 {
     /// <summary>
     /// Twitter API의 자격 정보를 저장하고 있는 클래스입니다.
@@ -38,31 +30,6 @@ namespace PlurCrawler.Tokens.Credentials
         /// 인증용 핀 번호를 나타냅니다.
         /// </summary>
         public string PINNumber { get; private set; }
-
-        private IAuthenticationContext _context;
-
-        public IAuthenticationContext Context => _context;
-
-        /// <summary>
-        /// PIN 입력용 URL을 제공합니다.
-        /// </summary>
-        /// <returns></returns>
-        public string GetURL()
-        {
-            if (string.IsNullOrEmpty(ConsumerKey) || string.IsNullOrEmpty(ConsumerSecret))
-                return null;
-            try
-            {
-                var appCredentials = new InviModel.TwitterCredentials(this.ConsumerKey, this.ConsumerSecret);
-                _context = Invi.AuthFlow.InitAuthentication(appCredentials);
-
-                return _context.AuthorizationURL;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
 
         /// <summary>
         /// PIN 번호를 입력합니다.
