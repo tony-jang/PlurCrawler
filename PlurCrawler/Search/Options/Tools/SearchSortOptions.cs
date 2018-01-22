@@ -14,11 +14,13 @@ namespace PlurCrawler.Search.Options.Tools
         /// <summary>
         /// 유사성 우선적으로 정렬합니다.
         /// </summary>
-        []
+        [Note("sim")]
         Similarity,
+
         /// <summary>
         /// 날짜의 최신 우선순으로 정렬합니다.
         /// </summary>
+        [Note("date")]
         Date
     }
 }
