@@ -40,6 +40,9 @@ namespace PlurCrawler_Sample
 
         public void Test()
         {
+
+            return;
+
             var naverCredentials = new NaverCredentials()
             {
                 ClientId = "dd4WOSPzTtUF_uKyc9iI",
@@ -81,7 +84,7 @@ namespace PlurCrawler_Sample
             return;
             TwitterCredentials credentials = new TwitterCredentials("hKomvFO7HT0ZNZM9Kc2lnKhsY", "mk2AoM6iHKuSPmnvsqyHJuKXqIsDVHD37hoB3KA6Y6oksNDhyD");
 
-            string url = credentials.GetURL();
+            //string url = credentials.GetURL();
             string pin = "";
 
             credentials.InputPIN(pin);
