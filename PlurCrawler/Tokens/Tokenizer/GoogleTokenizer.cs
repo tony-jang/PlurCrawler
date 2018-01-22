@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PlurCrawler.Tokens.Credentials;
 using PlurCrawler.Tokens.Tokenizer.Base;
+using PlurCrawler.Tokens.OAuth;
 
 namespace PlurCrawler.Tokens.Tokenizer
 {
@@ -14,7 +15,7 @@ namespace PlurCrawler.Tokens.Tokenizer
     public class GoogleTokenizer : BaseTokenizer
     {
         /// <summary>
-        /// 구글의 토큰 정보을 반환합니다. 구글은 인증과정을 거치지 않습니다.
+        /// 구글의 토큰 정보을 반환합니다. OAuth 2.0 인증 과정을 거칩니다.
         /// </summary>
         /// <param name="credentials">자격 정보를 저장하고 있는 <see cref="GoogleCredentials"/>가 필요합니다.</param>
         /// <returns></returns>
@@ -22,7 +23,8 @@ namespace PlurCrawler.Tokens.Tokenizer
         {
             if (credentials is GoogleCredentials googleCredentials)
             {
-                return new GoogleToken(googleCredentials.Key, googleCredentials.EngineID);
+                GoogleOAuth oauth = new GoogleOAuth(googleCredentials);
+
             }
             else
             {

@@ -9,13 +9,13 @@ namespace PlurCrawler.Tokens.Credentials
     public class GoogleCredentials : ICredentials
     {
         /// <summary>
-        /// 구글 인증 정보의 키 값입니다.
+        /// 구글 인증 정보의 클라이언트 ID입니다.
         /// </summary>
-        public string Key { get; set; }
+        public string ClientID { get; set; }
 
         /// <summary>
-        /// 구글 인증 정보의 엔진 ID 정보입니다.
+        /// 구글 인증 정보의 클라이언트 보안 비밀입니다.
         /// </summary>
-        public string EngineID { get; set; }
+        public string ClientSecret { get; set; }
     }
 }

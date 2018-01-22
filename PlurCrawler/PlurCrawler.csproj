@@ -121,6 +121,8 @@
     <Compile Include="Search\SearchResults\ISearchResult.cs" />
     <Compile Include="Search\SearchResults\NaverSearchResult.cs" />
     <Compile Include="Tokens\Credentials\GoogleCredentials.cs" />
+    <Compile Include="Tokens\OAuth\BaseOAuth.cs" />
+    <Compile Include="Tokens\OAuth\GoogleOAuth.cs" />
     <Compile Include="Tokens\Tokenizer\GoogleToken.cs" />
     <Compile Include="Tokens\Tokenizer\GoogleTokenizer.cs" />
     <Compile Include="Tokens\Tokenizer\Base\IToken.cs" />
