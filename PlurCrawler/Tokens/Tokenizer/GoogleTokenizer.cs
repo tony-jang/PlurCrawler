@@ -24,7 +24,7 @@ namespace PlurCrawler.Tokens.Tokenizer
             if (credentials is GoogleCredentials googleCredentials)
             {
                 GoogleOAuth oauth = new GoogleOAuth(googleCredentials);
-
+                return null;
             }
             else
             {
