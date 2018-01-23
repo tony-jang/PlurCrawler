@@ -4,21 +4,35 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlurCrawler_Sample"
+        xmlns:control="clr-namespace:PlurCrawler_Sample.Controls"
         mc:Ignorable="d"
         Title="MainWindow" Height="550" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid>
+            <Grid.Resources>
+                <Style TargetType="{x:Type control:ImageTextBlock}" BasedOn="{StaticResource {x:Type control:ImageTextBlock}}">
+                    <Setter Property="Margin" Value="5"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="Background" Value="Transparent"/>
+                </Style>
+            </Grid.Resources>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            
+            <control:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_google.png"/>
+            <control:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_twitter.png" Grid.Column="1"/>
+            <control:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_youtube.png" Grid.Column="2"/>
+            <control:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_facebook.png" Grid.Column="3"/>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>

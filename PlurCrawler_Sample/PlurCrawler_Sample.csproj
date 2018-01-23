@@ -126,5 +126,17 @@
   <ItemGroup>
     <Folder Include="DetailsOptions\" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icon_google.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icon_twitter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icon_youtube.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icon_facebook.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

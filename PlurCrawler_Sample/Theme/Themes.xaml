@@ -5,13 +5,13 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:ImageTextBlock}">
-                    <Grid>
+                    <Grid Background="{TemplateBinding Background}">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="{TemplateBinding Height}"/>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Image Source="{TemplateBinding Source}"/>
-                        <TextBlock Grid.Column="1" Text="{TemplateBinding Text}"/>
+                        <TextBlock Margin="5,0,0,0" Grid.Column="1" Text="{TemplateBinding Text}" VerticalAlignment="Center"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
