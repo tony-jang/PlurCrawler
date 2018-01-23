@@ -12,12 +12,7 @@ namespace PlurCrawler
     {
         public void test()
         {
-            var tokenizer = new NaverToken("asdf","asdf");
-            
             
         }
-        
-
-        
     }
 }

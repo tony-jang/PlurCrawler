@@ -10,6 +10,7 @@ namespace PlurCrawler.Tokens.OAuth
     public class GoogleOAuth : BaseOAuth
     {
         private GoogleCredentials _credentials;
+
         public GoogleOAuth(GoogleCredentials credentials)
         {
             this._credentials = credentials;

@@ -35,63 +35,7 @@ namespace PlurCrawler_Sample
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            Test();
-        }
-
-        public void Test()
-        {
-
-            return;
-
-            var naverCredentials = new NaverCredentials()
-            {
-                ClientId = "dd4WOSPzTtUF_uKyc9iI",
-                ClientSecret = "vURlgeXkH6"
-            };
-
-            var naverTokenizer = new NaverTokenizer();
-            NaverToken naverToken = (NaverToken)naverTokenizer.CredentialsCertification(naverCredentials);
-
-            var searcher = new NaverNewsSearcher(naverToken);
-
-            searcher.Search(new NaverSearchOption()
-            {
-                Query = "Google",
-                SearchCount = 10
-            });
             
-            //NaverSearchResult naverSearchResult = new NaverSearchResult()
-            //{
-            //    Date = DateTime.Now,
-            //    OriginalURL = "asdf",
-            //    Title = "asdf"
-            //};
-
-            //NaverSearchResult naverSearchResult2 = new NaverSearchResult()
-            //{
-            //    Date = DateTime.Now,
-            //    OriginalURL = "asdf2",
-            //    Title = "asdf2"
-            //};
-
-            //List<NaverSearchResult> results = new List<NaverSearchResult>(){ naverSearchResult, naverSearchResult2 };
-
-            //var str = JsonConvert.SerializeObject(results);
-
-            //Clipboard.Clear();
-            //Clipboard.SetText(str);
-
-            return;
-            TwitterCredentials credentials = new TwitterCredentials("hKomvFO7HT0ZNZM9Kc2lnKhsY", "mk2AoM6iHKuSPmnvsqyHJuKXqIsDVHD37hoB3KA6Y6oksNDhyD");
-
-            //string url = credentials.GetURL();
-            string pin = "";
-
-            credentials.InputPIN(pin);
-
-            TwitterTokenizer twitterTokenizer = new TwitterTokenizer();
-
-            twitterTokenizer.CredentialsCertification(credentials);
         }
     }
 }
