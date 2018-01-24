@@ -1,6 +1,8 @@
-﻿using PlurCrawler.Tokens.Credentials;
+﻿using PlurCrawler.Resources;
+using PlurCrawler.Tokens.Credentials;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -12,7 +14,24 @@ namespace PlurCrawler.Tokens.OAuth
 {
     public class GoogleOAuth : BaseOAuth
     {
-        public event EventHandler<AuthRequestEventArgs> OnAuthRequest;
+        public event EventHandler<AuthRequestEventArgs> AuthRequest;
+        public event EventHandler HttpServerStarted;
+        public event EventHandler HttpServerStopped;
+
+        private void OnAuthRequest(object sender, AuthRequestEventArgs e)
+        {
+            AuthRequest?.Invoke(sender, e);
+        }
+
+        private void OnHttpServerStarted(object sender, EventArgs e)
+        {
+            HttpServerStarted?.Invoke(sender, e);
+        }
+
+        private void OnHttpServerStopped(object sender, EventArgs e)
+        {
+            HttpServerStopped?.Invoke(sender, e);
+        }
 
         private GoogleCredentials _credentials;
 
@@ -29,7 +48,7 @@ namespace PlurCrawler.Tokens.OAuth
             this._credentials = credentials;
         }
 
-        public void Authorize()
+        public async void Authorize()
         {
             string state = RandomDataBase64url(32);
             string codeVertifier = RandomDataBase64url(32);
@@ -40,13 +59,36 @@ namespace PlurCrawler.Tokens.OAuth
             var http = new HttpListener();
             http.Prefixes.Add(redirectURI);
             http.Start();
+            OnHttpServerStarted(this, new EventArgs());
 
             string authoriztionRequest = 
                 $@"{authEndpoint}?response_type=code&scope=openid%20profile&redirect_uri={Uri.EscapeDataString(redirectURI)
                 }&client_id={clientID}&state={state}&code_challenge={codeChallenge}&code_challenge_method={codeChallengeMethod}";
 
-            // TODO : Authorize Function 완성
-            
+            OnAuthRequest(this, new AuthRequestEventArgs(authoriztionRequest));
+
+            HttpListenerContext context = await http.GetContextAsync();
+            HttpListenerResponse response = context.Response;
+
+            string responseString = ResourceManager.GetTextResource("Responses/GoogleResponseText.txt");
+
+            byte[] buffer = Encoding.UTF8.GetBytes(responseString);
+            response.ContentLength64 = buffer.Length;
+
+            Stream responseOutput = response.OutputStream;
+
+            Task responseTask = responseOutput.WriteAsync(buffer, 0, buffer.Length).ContinueWith((task) =>
+            {
+                responseOutput.Close();
+                http.Stop();
+                OnHttpServerStopped(this, new EventArgs());
+            });
+
+            if (context.Request.QueryString.Get("error") != null)
+            {
+                
+            }
+
         }
     }
 }

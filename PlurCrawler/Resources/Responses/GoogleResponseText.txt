@@ -1,0 +1,8 @@
+﻿<html>
+	<head>
+		<meta http-equiv='refresh' content='10;url=https://google.com'>
+	</head>
+	<body>
+		Please return to the app.
+	</body>
+</html>
