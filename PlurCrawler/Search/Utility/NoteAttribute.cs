@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlurCrawler.Search.Options.Tools
+namespace PlurCrawler.Search.Utility
 {
     /// <summary>
     /// 지정된 노트를 저장하는 특성입니다. 이 클래스는 상속될 수 없습니다.

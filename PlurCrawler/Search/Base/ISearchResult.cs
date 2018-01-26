@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlurCrawler.Search.SearchResults
+namespace PlurCrawler.Search.Base
 {
     /// <summary>
     /// 
     /// </summary>
     public interface ISearchResult
     {
-        DateTime Date { get; set; }
+        DateTime? PublishedDate { get; set; }
         
         string OriginalURL { get; set; }
 

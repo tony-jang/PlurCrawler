@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlurCrawler.Search.Options.Tools
+namespace PlurCrawler.Search.Utility
 {
     /// <summary>
     /// 검색 옵션 타입이 잘못되었을때 발생하는 예외입니다.
