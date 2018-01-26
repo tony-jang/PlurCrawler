@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PlurCrawler.Search.Utility
+﻿namespace PlurCrawler.Search.Utility
 {
     /// <summary>
     /// 검색 결과의 정렬 결과를 결정합니다.

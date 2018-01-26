@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using PlurCrawler.Search.Base;
+using PlurCrawler.Search.Utility;
+
 using Google.Apis.Customsearch.v1;
 using Google.Apis.Customsearch.v1.Data;
 using Google.Apis.Services;
-using PlurCrawler.Search.Base;
-using PlurCrawler.Search.Utility;
-using PlurCrawler.Tokens.Tokenizer;
 
 namespace PlurCrawler.Search.Services.GoogleCSE
 {
