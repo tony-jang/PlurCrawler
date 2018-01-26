@@ -28,11 +28,15 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            
-            <control:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_google.png"/>
-            <control:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_twitter.png" Grid.Column="1"/>
-            <control:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_youtube.png" Grid.Column="2"/>
-            <control:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_facebook.png" Grid.Column="3"/>
+
+            <control:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_google.png" Foreground="Red">
+                <control:ImageTextBlock.ToolTip>
+                    <control:AuthStateToolTip Title="Google" Description="asdfasdf"/>
+                </control:ImageTextBlock.ToolTip>
+            </control:ImageTextBlock>
+            <control:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_twitter.png" Grid.Column="1" Foreground="Red"/>
+            <control:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_youtube.png" Grid.Column="2" Foreground="Red"/>
+            <control:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_facebook.png" Grid.Column="3" Foreground="Red"/>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -55,7 +59,9 @@
         <Grid Grid.Row="2">
             <TabControl>
                 <TabItem Header="로그">
-                    <TextBox Grid.Row="1" Margin="10"/>
+                    <ListBox Margin="10">
+
+                    </ListBox>
                 </TabItem>
             </TabControl>
         </Grid>

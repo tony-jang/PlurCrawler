@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="PlurCrawler_Sample.Controls.AuthStateToolTipDesign"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PlurCrawler_Sample.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Width="250" Height="100" Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Source="/PlurCrawler_Sample;component/Resources/icon_google_tooltip.png" Margin="10"/>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Google" Grid.Row="0" FontSize="20"/>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="인증되지 않았습니다!" Grid.Row="1"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

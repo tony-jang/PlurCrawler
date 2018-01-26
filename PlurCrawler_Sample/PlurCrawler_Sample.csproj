@@ -72,6 +72,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Verification\VerificationManager.xaml.cs">
+      <DependentUpon>VerificationManager.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Controls\AuthStateToolTipDesign.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -80,12 +87,20 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controls\AuthStateToolTip.cs" />
+    <Compile Include="Controls\AuthStateToolTipDesign.xaml.cs">
+      <DependentUpon>AuthStateToolTipDesign.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ImageTextBlock.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Theme\Themes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Verification\VerificationManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -137,6 +152,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\icon_facebook.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icon_google_tooltip.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
