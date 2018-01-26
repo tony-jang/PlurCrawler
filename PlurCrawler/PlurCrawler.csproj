@@ -150,6 +150,9 @@
     <Compile Include="Search\Utility\SearchSortOptions.cs" />
     <Compile Include="Search\Utility\SearchOptionTypeException.cs" />
     <Compile Include="Search\Base\ISearchResult.cs" />
+    <Compile Include="Search\Services\GoogleCSE\GoogleCSESearcher.cs" />
+    <Compile Include="Search\Services\GoogleCSE\GoogleCSESearchOption.cs" />
+    <Compile Include="Search\Services\GoogleCSE\GoogleCSESearchResult.cs" />
     <Compile Include="Tokens\Credentials\GoogleCredentials.cs" />
     <Compile Include="Tokens\OAuth\EventArg\AuthFailedEventArgs.cs" />
     <Compile Include="Tokens\OAuth\EventArg\AuthRequestEventArgs.cs" />
