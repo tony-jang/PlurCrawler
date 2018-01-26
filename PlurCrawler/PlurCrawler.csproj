@@ -112,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Output\OutputManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ResourceManager.cs" />
     <Compile Include="Search\ISearcher.cs" />
@@ -129,6 +130,9 @@
     <Compile Include="Tokens\OAuth\EventArg\AuthRequestEventArgs.cs" />
     <Compile Include="Tokens\OAuth\BaseOAuth.cs" />
     <Compile Include="Tokens\OAuth\GoogleOAuth.cs" />
+    <Compile Include="Tokens\Tokenizer\Base\BasePINTokenizer.cs" />
+    <Compile Include="Tokens\Tokenizer\Base\BaseWebTokenizer.cs" />
+    <Compile Include="Tokens\Tokenizer\Base\BaseWrapTokenizer.cs" />
     <Compile Include="Tokens\Tokenizer\GoogleToken.cs" />
     <Compile Include="Tokens\Tokenizer\GoogleTokenizer.cs" />
     <Compile Include="Tokens\Tokenizer\Base\IToken.cs" />

@@ -11,23 +11,16 @@ namespace PlurCrawler.Tokens.Tokenizer
     /// <summary>
     /// 네이버의 토큰을 생성하는 클래스입니다.
     /// </summary>
-    public class NaverTokenizer : BaseTokenizer
+    public class NaverTokenizer : ITokenizer
     {
         /// <summary>
-        /// 네이버의 토큰 정보을 반환합니다. 네이버는 인증과정을 거치지 않습니다.
+        /// 네이버의 토큰 정보를 기존 정보와 래핑합니다.
         /// </summary>
         /// <param name="credentials">네이버의 인증 정보를 저장하는 <see cref="NaverCredentials"/>가 필요합니다.</param>
         /// <returns></returns>
-        public override IToken CredentialsCertification(ICredentials credentials)
+        public NaverToken WrapCredentials(NaverCredentials credentials)
         {
-            if (credentials is NaverCredentials naverCredentials)
-            {
-                return new NaverToken(naverCredentials.ClientId, naverCredentials.ClientSecret);
-            }
-            else
-            {
-                throw new CredentialsTypeException($"{credentials.GetType().ToString()} 타입이 아닌 'NaverCredentials' 타입만 넣을 수 있습니다.");
-            }
+            return new NaverToken(credentials.ClientId, credentials.ClientSecret);
         }
     }
 }
