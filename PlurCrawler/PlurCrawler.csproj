@@ -144,9 +144,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ResourceManager.cs" />
     <Compile Include="Search\ISearcher.cs" />
-    <Compile Include="Search\Services\GoogleCSESearcher.cs" />
-    <Compile Include="Search\Services\GoogleCSESearchOption.cs" />
-    <Compile Include="Search\Services\GoogleCSESearchResult.cs" />
+    <Compile Include="Search\Services\GoogleCSE\GoogleCSESearcher.cs" />
+    <Compile Include="Search\Services\GoogleCSE\GoogleCSESearchOption.cs" />
+    <Compile Include="Search\Services\GoogleCSE\GoogleCSESearchResult.cs" />
     <Compile Include="Search\Utility\DateRange.cs" />
     <Compile Include="Search\Base\ISearchOption.cs" />
     <Compile Include="Search\Utility\NoteAttribute.cs" />
