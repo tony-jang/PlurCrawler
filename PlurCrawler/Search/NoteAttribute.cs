@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PlurCrawler.Search.Utility
+namespace PlurCrawler.Search
 {
     /// <summary>
     /// 지정된 노트를 저장하는 특성입니다. 이 클래스는 상속될 수 없습니다.

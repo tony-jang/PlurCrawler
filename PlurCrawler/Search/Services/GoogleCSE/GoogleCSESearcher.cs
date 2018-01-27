@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using PlurCrawler.Search.Base;
-using PlurCrawler.Search.Utility;
+using PlurCrawler.Search;
 
 using Google.Apis.Customsearch.v1;
 using Google.Apis.Customsearch.v1.Data;
@@ -11,7 +11,7 @@ using Google.Apis.Services;
 
 namespace PlurCrawler.Search.Services.GoogleCSE
 {
-    public class GoogleCSESearcher : ISearcher
+    public class GoogleCSESearcher : BaseSearcher
     {
         /// <summary>
         /// <see cref="GoogleCSESearcher"/> 클래스를 초기화합니다.
@@ -29,12 +29,7 @@ namespace PlurCrawler.Search.Services.GoogleCSE
         {
             Vertification(apiKey, searchEngineId);
         }
-
-        /// <summary>
-        /// Google CSE가 ApiKey와 SearchEngineId가 할당되었는지에 대한 여부를 가져옵니다.
-        /// </summary>
-        public bool IsVerification { get; private set; }
-
+        
         /// <summary>
         /// Api Key 입니다.
         /// </summary>
@@ -54,16 +49,16 @@ namespace PlurCrawler.Search.Services.GoogleCSE
         {
             this.ApiKey = apiKey;
             this.SearchEngineId = searchEngineId;
-
+                
             IsVerification = true;
         }
 
         /// <summary>
-        /// Google Custom Search를 이용해 검색을 실시합니다. <see cref="ISearcher"/>에서 상속 받은 함수 입니다.
+        /// Google Custom Search를 이용해 검색을 실시합니다. <see cref="BaseSearcher"/>에서 상속 받은 함수 입니다.
         /// </summary>
         /// <param name="searchOption">구글 검색의 검색 옵션입니다. <see cref="GoogleCSESearchOption"/>이 필요합니다.</param>
         /// <returns></returns>
-        public List<ISearchResult> Search(ISearchOption searchOption)
+        public override List<ISearchResult> Search(IDateSearchOption searchOption)
         {
             if (searchOption is GoogleCSESearchOption googleSearchOption)
             {
@@ -93,6 +88,7 @@ namespace PlurCrawler.Search.Services.GoogleCSE
             CseResource.ListRequest request = customSearchService.Cse.List(searchOption.Query);
 
             request.Cx = SearchEngineId;
+
             var results = new List<Result>();
             IList<Result> paging = new List<Result>();
             int count = 0;

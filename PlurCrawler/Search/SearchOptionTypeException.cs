@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PlurCrawler.Search.Utility
+namespace PlurCrawler.Search
 {
     /// <summary>
     /// 검색 옵션 타입이 잘못되었을때 발생하는 예외입니다.

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PlurCrawler.Search.Utility
+namespace PlurCrawler.Search
 {
     /// <summary>
     /// 날짜의 시작지점과 끝 지점을 지정합니다.

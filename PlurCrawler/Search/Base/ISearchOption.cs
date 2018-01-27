@@ -7,5 +7,12 @@
         ulong SearchCount { get; set; }
 
         ulong Offset { get; set; }
+
+        LanguageCode Language { get; set; }
     }
 }
+
+/*
+
+ 
+*/
