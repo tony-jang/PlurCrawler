@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace PlurCrawler.Output
 {
-    public class OutputManager
+    public abstract class BaseOutput
     {
-
     }
 }

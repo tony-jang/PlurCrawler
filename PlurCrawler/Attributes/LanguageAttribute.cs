@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlurCrawler.Search
+using PlurCrawler.Search;
+
+namespace PlurCrawler.Attributes
 {
     public class LanguageNoteAttribute : Attribute
     {

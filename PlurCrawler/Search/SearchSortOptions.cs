@@ -1,4 +1,6 @@
-﻿namespace PlurCrawler.Search
+﻿using PlurCrawler.Attributes;
+
+namespace PlurCrawler.Search
 {
     /// <summary>
     /// 검색 결과의 정렬 결과를 결정합니다.
