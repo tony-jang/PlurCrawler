@@ -31,7 +31,7 @@
 
             <control:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_google.png" Foreground="Red">
                 <control:ImageTextBlock.ToolTip>
-                    <control:AuthStateToolTip Title="Google" Description="asdfasdf"/>
+                    <control:AuthStateToolTip Title="Google" Description="인증 확인"/>
                 </control:ImageTextBlock.ToolTip>
             </control:ImageTextBlock>
             <control:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_twitter.png" Grid.Column="1" Foreground="Red"/>
@@ -65,10 +65,10 @@
 
                     </ListBox>
                 </TabItem>
-                <TabItem Header="Tab No. 1" IsSelected="True">
+                <TabItem Header="인증 관리" IsSelected="True">
                     <Frame Source="/PlurCrawler_Sample;component/Verification/VertificationManager.xaml" NavigationUIVisibility="Hidden"/>
                 </TabItem>
-                <TabItem Header="Tab No. 2">
+                <TabItem Header="ㅁㄴㅇㄹ">
                     <TextBlock>We Have Tearable Tabs!</TextBlock>
                 </TabItem>
             </dragablz:TabablzControl>

@@ -1,0 +1,36 @@
+﻿<Page x:Class="PlurCrawler_Sample.Verification.VertificationManager"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PlurCrawler_Sample.Verification"
+      mc:Ignorable="d" 
+      d:DesignHeight="400" d:DesignWidth="500"
+      Title="VertificationManager">
+
+    <Grid>
+        <TabControl>
+            <TabItem Header="Google">
+                <StackPanel Margin="10">
+                    <StackPanel>
+                        <TextBlock Text="구글 인증을 위한 API Key를 입력해주세요."/>
+                        <TextBox Margin="0,10,0,0"/>
+                    </StackPanel>
+                    <TextBlock Margin="0,10,0,0" TextTrimming="CharacterEllipsis">
+                        API Key : <Run x:Name="runAPIKey" Text="AIzaSyDuJa0F9nJzUwTOJyPZeBqkbEPwHoxwTG4" Foreground="Green"/>
+                    </TextBlock>
+
+                    <TextBlock Margin="0,10,0,0">
+                        유효성 : <Run x:Name="runAvailable" Text="인증됨" Foreground="Green"/>
+                    </TextBlock>
+
+                    <Button x:Name="btnAccept" Content="적용" HorizontalAlignment="Right" Padding="20,5"/>
+                </StackPanel>
+                
+            </TabItem>
+            <TabItem Header="Twitter"/>
+            <TabItem Header="Youtube"/>
+            
+        </TabControl>
+    </Grid>
+</Page>
