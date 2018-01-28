@@ -72,7 +72,7 @@ namespace PlurCrawler.Search.Services.Youtube
         /// </summary>
         /// <param name="searchOption">Youtube의 검색 옵션입니다. <see cref="YoutubeSearchOption"/>이 필요합니다.</param>
         /// <returns></returns>
-        public override List<ISearchResult> Search(IDateSearchOption searchOption)
+        public override List<ISearchResult> Search(ISearchOption searchOption)
         {
             if (searchOption is YoutubeSearchOption searcher)
             {
@@ -80,7 +80,7 @@ namespace PlurCrawler.Search.Services.Youtube
             }
             else
             {
-                throw new SearchOptionTypeException("GoogleCSESearchOption만 넣을 수 있습니다.");
+                throw new SearchOptionTypeException("YoutubeSearchOption만 넣을 수 있습니다.");
             }
         }
 

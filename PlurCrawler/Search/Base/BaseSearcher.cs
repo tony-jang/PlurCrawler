@@ -22,7 +22,7 @@ namespace PlurCrawler.Search
         /// </summary>
         /// <param name="searchOption">검색 옵션입니다.</param>
         /// <returns></returns>
-        public abstract List<ISearchResult> Search(IDateSearchOption searchOption);
+        public abstract List<ISearchResult> Search(ISearchOption searchOption);
 
         /// <summary>
         /// 각 서비스에서 사용하는 언어 코드를 가져옵니다. 없을 경우 빈 문자열을 반환합니다.

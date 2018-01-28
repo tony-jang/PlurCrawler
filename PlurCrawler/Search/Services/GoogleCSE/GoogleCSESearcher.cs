@@ -58,7 +58,7 @@ namespace PlurCrawler.Search.Services.GoogleCSE
         /// </summary>
         /// <param name="searchOption">구글 검색의 검색 옵션입니다. <see cref="GoogleCSESearchOption"/>이 필요합니다.</param>
         /// <returns></returns>
-        public override List<ISearchResult> Search(IDateSearchOption searchOption)
+        public override List<ISearchResult> Search(ISearchOption searchOption)
         {
             if (searchOption is GoogleCSESearchOption googleSearchOption)
             {
