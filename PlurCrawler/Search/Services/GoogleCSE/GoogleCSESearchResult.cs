@@ -32,6 +32,5 @@ namespace PlurCrawler.Search.Services.GoogleCSE
         /// 해당 검색 결과를 미리보기 합니다.
         /// </summary>
         public string Snippet { get; set; }
-
     }
 }

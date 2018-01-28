@@ -7,15 +7,29 @@ using PlurCrawler.Attributes;
 
 namespace PlurCrawler.Search
 {
+    /// <summary>
+    /// 기본 서쳐입니다.
+    /// </summary>
     public abstract class BaseSearcher
     {
         /// <summary>
         /// 검색하려는 엔진이 인증되었는지에 대한 여부를 가져옵니다.
         /// </summary>
         public bool IsVerification { get; internal set; }
-
+        
+        /// <summary>
+        /// 검색을 실시합니다.
+        /// </summary>
+        /// <param name="searchOption">검색 옵션입니다.</param>
+        /// <returns></returns>
         public abstract List<ISearchResult> Search(IDateSearchOption searchOption);
 
+        /// <summary>
+        /// 각 서비스에서 사용하는 언어 코드를 가져옵니다. 없을 경우 빈 문자열을 반환합니다.
+        /// </summary>
+        /// <param name="serviceKind">언어 코드를 가져올 서비스 종류입니다.</param>
+        /// <param name="languageCode">언어 코드입니다.</param>
+        /// <returns></returns>
         public string GetLanguageCode(ServiceKind serviceKind, LanguageCode languageCode)
         {
             LanguageNoteAttribute[] attr = languageCode.GetAttributesFromEnum<LanguageNoteAttribute>();

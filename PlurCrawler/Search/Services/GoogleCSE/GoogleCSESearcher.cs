@@ -89,13 +89,15 @@ namespace PlurCrawler.Search.Services.GoogleCSE
 
             request.Cx = SearchEngineId;
 
+            request.Start = (long)searchOption.Offset;
+
             var results = new List<Result>();
             IList<Result> paging = new List<Result>();
             int count = 0;
 
             while ((paging != null) && targetCount > 0)
             {
-                request.Start = count * 10 + 1;
+                request.Start = count * 10 + 1 + (long)searchOption.Offset;
                 if ((targetCount % 10) == 0)
                     request.Num = 10;
                 else

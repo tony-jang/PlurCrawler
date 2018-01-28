@@ -15,19 +15,6 @@ namespace PlurCrawler.Search.Services.Youtube
 {
     public class YoutubeSearcher : BaseSearcher
     {
-
-        public override List<ISearchResult> Search(IDateSearchOption searchOption)
-        {
-            if (searchOption is YoutubeSearchOption searcher)
-            {
-                return null;
-            }
-            else
-            {
-                throw new SearchOptionTypeException("GoogleCSESearchOption만 넣을 수 있습니다.");
-            }
-        }
-
         private byte[] ToByteArray(String HexString)
         {
             int NumberChars = HexString.Length;
@@ -80,7 +67,28 @@ namespace PlurCrawler.Search.Services.Youtube
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Youtube를 이용해 검색을 실시합니다. <see cref="BaseSearcher"/>에서 상속 받은 함수 입니다.
+        /// </summary>
+        /// <param name="searchOption">Youtube의 검색 옵션입니다. <see cref="YoutubeSearchOption"/>이 필요합니다.</param>
+        /// <returns></returns>
+        public override List<ISearchResult> Search(IDateSearchOption searchOption)
+        {
+            if (searchOption is YoutubeSearchOption searcher)
+            {
+                return Search((YoutubeSearchOption)searchOption).Select(i => (ISearchResult)i).ToList();
+            }
+            else
+            {
+                throw new SearchOptionTypeException("GoogleCSESearchOption만 넣을 수 있습니다.");
+            }
+        }
 
+        /// <summary>
+        /// Youtube를 이용해 검색을 실시합니다.
+        /// </summary>
+        /// <param name="searchOption">Youtube의 검색 옵션입니다.</param>
+        /// <returns></returns>
         public List<YoutubeSearchResult> Search(YoutubeSearchOption searchOption)
         {
             YouTubeService youtube = new YouTubeService(new BaseClientService.Initializer()
@@ -117,7 +125,7 @@ namespace PlurCrawler.Search.Services.Youtube
 
                 if (description.EndsWith("..."))
                 {
-                    description = GetFullDescription(s.Id.VideoId) + "\n[Test :: FullDescription Called]";
+                    description = GetFullDescription(s.Id.VideoId);
                 }
 
                 list.Add(new YoutubeSearchResult()
