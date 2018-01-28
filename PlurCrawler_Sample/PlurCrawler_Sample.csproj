@@ -69,12 +69,18 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WPFExtension, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPFExtension.1.1.0\lib\net45\WPFExtension.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\TabItemCommand.cs" />
+    <Compile Include="Controls\CloseableTabItem.cs" />
+    <Compile Include="Controls\PathButton.cs" />
     <Compile Include="MainInterTabClient.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="TabHostWindow.xaml.cs">

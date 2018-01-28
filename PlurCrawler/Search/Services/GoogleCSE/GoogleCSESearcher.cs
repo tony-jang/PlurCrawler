@@ -62,6 +62,7 @@ namespace PlurCrawler.Search.Services.GoogleCSE
         {
             if (searchOption is GoogleCSESearchOption googleSearchOption)
             {
+                IEnumerable<object> a = new List<object>();
                 return Search(googleSearchOption).Select(i => (ISearchResult)i).ToList();
             }
             else

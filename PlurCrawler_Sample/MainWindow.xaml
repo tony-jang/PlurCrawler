@@ -56,6 +56,17 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="2">
+            <Grid.Resources>
+                <Style TargetType="{x:Type TabItem}">
+                    <!--<Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>-->
+                </Style>
+            </Grid.Resources>
             <dragablz:TabablzControl FixedHeaderCount="1">
                 <dragablz:TabablzControl.InterTabController>
                     <dragablz:InterTabController InterTabClient="{Binding InterTabClient}"/>
@@ -65,6 +76,9 @@
 
                     </ListBox>
                 </TabItem>
+                <control:CloseableTabItem Header="하하핫?">
+                    
+                </control:CloseableTabItem>
                 <TabItem Header="인증 관리" IsSelected="True">
                     <Frame Source="/PlurCrawler_Sample;component/Verification/VertificationManager.xaml" NavigationUIVisibility="Hidden"/>
                 </TabItem>
