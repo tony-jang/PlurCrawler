@@ -90,8 +90,8 @@ namespace PlurCrawler.Search.Services.Youtube
 
             SearchResource.ListRequest listRequest = youtube.Search.List("snippet");
             listRequest.Q = searchOption.Query;
-            listRequest.PublishedAfter = searchOption.PublishedAfter;
-            listRequest.PublishedBefore = searchOption.PublishedBefore;
+            listRequest.PublishedAfter = searchOption.PublishedDateRange.StartTime;
+            listRequest.PublishedBefore = searchOption.PublishedDateRange.EndTime;
 
             listRequest.Order = SearchResource.ListRequest.OrderEnum.Relevance;
             listRequest.MaxResults = 25;

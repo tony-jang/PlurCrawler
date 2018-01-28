@@ -1,4 +1,5 @@
 ﻿using PlurCrawler.Search.Base;
+using PlurCrawler.Structure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,9 @@ namespace PlurCrawler.Search.Services.Youtube
         public ulong SearchCount { get; set; }
 
         public ulong Offset { get; set; }
-
-        public DateTime? PublishedAfter { get; set; }
-
-        public DateTime? PublishedBefore { get; set; }
+        
         public LanguageCode Language { get; set; }
+
+        public DateRange PublishedDateRange { get; set; }
     }
 }

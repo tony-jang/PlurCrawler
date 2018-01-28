@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlurCrawler.Structure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,6 @@ namespace PlurCrawler.Search.Base
 {
     public interface IDateSearchOption : ISearchOption
     {
-        DateTime? PublishedAfter { get; set; }
-        DateTime? PublishedBefore { get; set; }
+        DateRange PublishedDateRange { get; set; }
     }
 }

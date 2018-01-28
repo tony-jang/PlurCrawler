@@ -12,7 +12,7 @@ namespace PlurCrawler.Structure
         /// </summary>
         /// <param name="startTime">시작 지점의 날짜입니다.</param>
         /// <param name="endTime">종료 지점의 날짜입니다.</param>
-        public DateRange(DateTime startTime, DateTime endTime)
+        public DateRange(DateTime? startTime, DateTime? endTime)
         {
             Initalized = true;
 
@@ -22,12 +22,12 @@ namespace PlurCrawler.Structure
 
         private bool Initalized;
 
-        private DateTime _startTime;
+        private DateTime? _startTime;
 
         /// <summary>
         /// 시작 지점의 날짜입니다.
         /// </summary>
-        public DateTime StartTime
+        public DateTime? StartTime
         {
             get => _startTime;
             set
@@ -37,11 +37,11 @@ namespace PlurCrawler.Structure
             }
         }
         
-        private DateTime _endTime;
+        private DateTime? _endTime;
         /// <summary>
         /// 종료 지점의 날짜입니다.
         /// </summary>
-        public DateTime EndTime
+        public DateTime? EndTime
         {
             get => _endTime;
             set

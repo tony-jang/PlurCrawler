@@ -1,4 +1,5 @@
 ﻿using PlurCrawler.Search.Base;
+using PlurCrawler.Structure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,6 @@ namespace PlurCrawler.Search.Services.Twitter
 {
     public class TwitterSearchOption : IDateSearchOption
     {
-        public DateTime? PublishedAfter { get; set; }
-
-        public DateTime? PublishedBefore { get; set; }
 
         public string Query { get; set; }
 
@@ -19,5 +17,6 @@ namespace PlurCrawler.Search.Services.Twitter
 
         public ulong Offset { get; set; }
         public LanguageCode Language { get; set; }
+        public DateRange PublishedDateRange { get; set; }
     }
 }

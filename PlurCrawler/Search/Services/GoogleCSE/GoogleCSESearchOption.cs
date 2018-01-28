@@ -1,5 +1,6 @@
 ﻿using System;
 using PlurCrawler.Search.Base;
+using PlurCrawler.Structure;
 
 namespace PlurCrawler.Search.Services.GoogleCSE
 {
@@ -10,8 +11,9 @@ namespace PlurCrawler.Search.Services.GoogleCSE
         public ulong SearchCount { get; set; }
 
         public ulong Offset { get; set; }
-        public DateTime? PublishedAfter { get; set; }
-        public DateTime? PublishedBefore { get; set; }
+
         public LanguageCode Language { get; set; }
+
+        public DateRange PublishedDateRange { get; set; }
     }
 }

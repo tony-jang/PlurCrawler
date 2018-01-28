@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using PlurCrawler.Extension;
 using PlurCrawler.Search.Base;
+using PlurCrawler.Attributes;
 
 namespace PlurCrawler.Search
 {
