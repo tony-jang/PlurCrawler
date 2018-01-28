@@ -123,5 +123,16 @@ namespace PlurCrawler.Search.Services.GoogleCSE
                 Snippet = i.Snippet.Replace("\\n", Environment.NewLine)
             }).ToList();
         }
+        
+        /// <summary>
+        /// 검색 옵션을 무시한 채로 지정된 하루만 검색합니다.
+        /// </summary>
+        /// <param name="time">검색할 날짜입니다.</param>
+        /// <param name="searchOption">검색 옵션입니다.</param>
+        /// <returns></returns>
+        public List<GoogleCSESearchResult> SearchOneDay(DateTime time, GoogleCSESearchOption searchOption)
+        {
+            return null;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 using PlurCrawler.Extension;
@@ -41,5 +42,6 @@ namespace PlurCrawler.Search
             else
                 return itm.LanguageString;
         }
+        
     }
 }

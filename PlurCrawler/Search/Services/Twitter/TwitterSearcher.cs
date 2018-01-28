@@ -27,5 +27,16 @@ namespace PlurCrawler.Search.Services.Twitter
         {
             return null;
         }
+
+        /// <summary>
+        /// 검색 옵션을 무시한 채로 지정된 하루만 검색합니다.
+        /// </summary>
+        /// <param name="time">검색할 날짜입니다.</param>
+        /// <param name="searchOption">검색 옵션입니다.</param>
+        /// <returns></returns>
+        public List<TwitterSearchResult> SearchOneDay(DateTime time, TwitterSearchOption searchOption)
+        {
+            return null;
+        }
     }
 }

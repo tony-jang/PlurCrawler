@@ -15,53 +15,19 @@ namespace PlurCrawler.Search.Services.Youtube
 {
     public class YoutubeSearcher : BaseSearcher
     {
-        private byte[] ToByteArray(String HexString)
+        /// <summary>
+        /// Api Key 입니다.
+        /// </summary>
+        public string ApiKey { get; private set; }
+        
+        /// <summary>
+        /// ApiKey와 SearchEngineId를 새로 고칩니다. 유효성 검사는 하지 않습니다.
+        /// </summary>
+        /// <param name="apiKey">Api Key 입니다.</param>
+        public void Vertification(string apiKey)
         {
-            int NumberChars = HexString.Length;
-            byte[] bytes = new byte[NumberChars / 2];
-            for (int i = 0; i < NumberChars; i += 2)
-            {
-                bytes[i / 2] = Convert.ToByte(HexString.Substring(i, 2), 16);
-            }
-            return bytes;
-        }
-
-        private string GetFullDescription(string videoId)
-        {
-            string url = $"https://m.youtube.com/watch?v={videoId}";
-
-            WebClient client = new WebClient();
-
-            // Mobile로 인식하기 위한 헤더
-            client.Headers.Add("user-agent", "Opera/12.02 (Android 4.1; Linux; Opera Mobi/ADR-1111101157; U; en-US) Presto/2.9.201 Version/12.02");
-
-            string code = client.DownloadString(url);
-            
-            string mainPattern = @"(?<=\\""text\\"": \\"").+?(?=\\"")";
-            string subPattern = @"\\\\u([\da-f]{2})([\da-f]{2})";
-
-            code = code.Split(new string[] { "\\\"description" }, StringSplitOptions.None)[1];
-            code = code.Split(new string[] { "\\\"runs\\\"" }, StringSplitOptions.None)[1];
-
-            StringBuilder sb = new StringBuilder();
-
-            foreach (Match m in Regex.Matches(code, mainPattern))
-            {
-                string temp = m.Value;
-
-                foreach (Match m2 in Regex.Matches(m.Value, subPattern))
-                {
-                    byte[] bytes = ToByteArray(m2.Groups[2].Value + m2.Groups[1].Value);
-
-                    temp = temp.Replace(m2.Value, new string(Encoding.Unicode.GetChars(bytes)));
-                }
-
-                temp = temp.Replace(@"\\n", Environment.NewLine);
-                temp = temp.Replace(@"\\\/", "/");
-                sb.Append(temp);
-            }
-
-            return sb.ToString();
+            this.ApiKey = apiKey;
+            IsVerification = true;
         }
 
         /// <summary>
@@ -138,5 +104,69 @@ namespace PlurCrawler.Search.Services.Youtube
 
             return list;
         }
+
+        /// <summary>
+        /// 검색 옵션을 무시한 채로 지정된 하루만 검색합니다.
+        /// </summary>
+        /// <param name="time">검색할 날짜입니다.</param>
+        /// <param name="searchOption">검색 옵션입니다.</param>
+        /// <returns></returns>
+        public List<YoutubeSearchOption> SearchOneDay(DateTime time, YoutubeSearchOption searchOption)
+        {
+            return null;
+        }
+
+
+        #region [  Utility  ]
+        private byte[] ToByteArray(String HexString)
+        {
+            int NumberChars = HexString.Length;
+            byte[] bytes = new byte[NumberChars / 2];
+            for (int i = 0; i < NumberChars; i += 2)
+            {
+                bytes[i / 2] = Convert.ToByte(HexString.Substring(i, 2), 16);
+            }
+            return bytes;
+        }
+
+        private string GetFullDescription(string videoId)
+        {
+            string url = $"https://m.youtube.com/watch?v={videoId}";
+
+            WebClient client = new WebClient();
+
+            // Mobile로 인식하기 위한 헤더
+            client.Headers.Add("user-agent", "Opera/12.02 (Android 4.1; Linux; Opera Mobi/ADR-1111101157; U; en-US) Presto/2.9.201 Version/12.02");
+
+            string code = client.DownloadString(url);
+
+            string mainPattern = @"(?<=\\""text\\"": \\"").+?(?=\\"")";
+            string subPattern = @"\\\\u([\da-f]{2})([\da-f]{2})";
+
+            code = code.Split(new string[] { "\\\"description" }, StringSplitOptions.None)[1];
+            code = code.Split(new string[] { "\\\"runs\\\"" }, StringSplitOptions.None)[1];
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (Match m in Regex.Matches(code, mainPattern))
+            {
+                string temp = m.Value;
+
+                foreach (Match m2 in Regex.Matches(m.Value, subPattern))
+                {
+                    byte[] bytes = ToByteArray(m2.Groups[2].Value + m2.Groups[1].Value);
+
+                    temp = temp.Replace(m2.Value, new string(Encoding.Unicode.GetChars(bytes)));
+                }
+
+                temp = temp.Replace(@"\\n", Environment.NewLine);
+                temp = temp.Replace(@"\\\/", "/");
+                sb.Append(temp);
+            }
+
+            return sb.ToString();
+        }
+
+        #endregion
     }
 }
