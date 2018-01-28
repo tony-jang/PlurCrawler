@@ -36,8 +36,7 @@ namespace PlurCrawler.Search.Services.Youtube
             client.Headers.Add("user-agent", "Opera/12.02 (Android 4.1; Linux; Opera Mobi/ADR-1111101157; U; en-US) Presto/2.9.201 Version/12.02");
 
             string code = client.DownloadString(url);
-
-
+            
             string mainPattern = @"(?<=\\""text\\"": \\"").+?(?=\\"")";
             string subPattern = @"\\\\u([\da-f]{2})([\da-f]{2})";
 
@@ -52,8 +51,6 @@ namespace PlurCrawler.Search.Services.Youtube
 
                 foreach (Match m2 in Regex.Matches(m.Value, subPattern))
                 {
-                    StringBuilder sb2 = new StringBuilder();
-                    
                     byte[] bytes = ToByteArray(m2.Groups[2].Value + m2.Groups[1].Value);
 
                     temp = temp.Replace(m2.Value, new string(Encoding.Unicode.GetChars(bytes)));
