@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PlurCrawler_Sample.Verification
+namespace PlurCrawler_Sample.Windows
 {
     /// <summary>
-    /// VertificationManager.xaml에 대한 상호 작용 논리
+    /// DetailsOption.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class VertificationManager : Page
+    public partial class DetailsOption : Page
     {
-        public VertificationManager()
+        public DetailsOption()
         {
             InitializeComponent();
         }

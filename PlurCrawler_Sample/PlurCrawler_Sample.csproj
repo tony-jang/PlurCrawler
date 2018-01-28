@@ -78,7 +78,11 @@
     <Compile Include="Commands\TabItemCommand.cs" />
     <Compile Include="Controls\CloseableTabItem.cs" />
     <Compile Include="Controls\PathButton.cs" />
-    <Compile Include="Verification\VertificationManager.xaml.cs">
+    <Compile Include="Controls\PropertyTextBox.cs" />
+    <Compile Include="Windows\DetailsOption.xaml.cs">
+      <DependentUpon>DetailsOption.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\VertificationManager.xaml.cs">
       <DependentUpon>VertificationManager.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\AuthStateToolTipDesign.xaml">
@@ -106,7 +110,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Verification\VertificationManager.xaml">
+    <Page Include="Windows\DetailsOption.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\VertificationManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -144,9 +152,7 @@
       <Name>PlurCrawler</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DetailsOptions\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\icon_google.png" />
   </ItemGroup>

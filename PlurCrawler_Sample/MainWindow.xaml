@@ -12,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
+            <RowDefinition Height="200"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid>
@@ -56,6 +57,9 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="2">
+            <Frame Source="/PlurCrawler_Sample;component/Windows/DetailsOption.xaml" NavigationUIVisibility="Hidden" />
+        </Grid>
+        <Grid Grid.Row="3">
             <ListView>
                 <ListViewItem Content="[System] 검색 시스템을 초기화중입니다."/>
                 <ListViewItem Content="[System] ....."/>

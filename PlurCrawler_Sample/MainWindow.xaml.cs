@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Dragablz;
+
 using Newtonsoft.Json;
 using PlurCrawler;
 using PlurCrawler.Search;
@@ -32,7 +32,6 @@ namespace PlurCrawler_Sample
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainWindowViewModel();
             this.Loaded += MainWindow_Loaded;
         }
 
@@ -55,7 +54,7 @@ namespace PlurCrawler_Sample
 
             foreach (var itm in items2)
             {
-                crawlLB.Items.Add(itm.Title + "||" + itm.Description);
+                //crawlLB.Items.Add(itm.Title + "||" + itm.Description);
             }
 
             return;
@@ -70,7 +69,7 @@ namespace PlurCrawler_Sample
 
             foreach(var itm in items)
             {
-                crawlLB.Items.Add(itm.Title + "||" + itm.Snippet);
+                //crawlLB.Items.Add(itm.Title + "||" + itm.Snippet);
             }
 
         }
