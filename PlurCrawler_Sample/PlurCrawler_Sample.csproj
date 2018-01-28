@@ -34,9 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dragablz, Version=0.0.3.197, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dragablz.0.0.3.197\lib\net45\Dragablz.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -81,11 +78,6 @@
     <Compile Include="Commands\TabItemCommand.cs" />
     <Compile Include="Controls\CloseableTabItem.cs" />
     <Compile Include="Controls\PathButton.cs" />
-    <Compile Include="MainInterTabClient.cs" />
-    <Compile Include="MainWindowViewModel.cs" />
-    <Compile Include="TabHostWindow.xaml.cs">
-      <DependentUpon>TabHostWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Verification\VertificationManager.xaml.cs">
       <DependentUpon>VertificationManager.xaml</DependentUpon>
     </Compile>
@@ -110,10 +102,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="TabHostWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Theme\Themes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -19,16 +19,29 @@
                     <TextBlock Margin="0,10,0,0" TextTrimming="CharacterEllipsis">
                         API Key : <Run x:Name="runAPIKey" Text="AIzaSyDuJa0F9nJzUwTOJyPZeBqkbEPwHoxwTG4" Foreground="Green"/>
                     </TextBlock>
-
                     <TextBlock Margin="0,10,0,0">
                         유효성 : <Run x:Name="runAvailable" Text="인증됨" Foreground="Green"/>
                     </TextBlock>
-
                     <Button x:Name="btnAccept" Content="적용" HorizontalAlignment="Right" Padding="20,5"/>
                 </StackPanel>
                 
             </TabItem>
-            <TabItem Header="Twitter"/>
+            <TabItem Header="Twitter">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Margin="0,10">
+                        <TextBlock Text="트위터 인증을 위한 PIN 번호를 입력해주세요."/>
+                        <TextBox Margin="0,10,0,0"/>
+                    </StackPanel>
+
+                    <WebBrowser Grid.Row="1" Source="http://naver.com">
+                        
+                    </WebBrowser>
+                </Grid>
+            </TabItem>
             <TabItem Header="Youtube"/>
             
         </TabControl>
