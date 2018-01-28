@@ -21,7 +21,7 @@
                         <TextBox Grid.Column="1"/>
                     </Grid>
                     <controls:PropertyTextBox Margin="10" PropertyName="검색 갯수" Style="{StaticResource PropertyTextBoxStyle}"/>
-                    <DatePicker/>
+                    <controls:DatePickerRange Style="{StaticResource DatePickerRangeStyle}"/>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Youtube"/>

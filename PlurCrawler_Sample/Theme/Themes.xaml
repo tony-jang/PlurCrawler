@@ -72,6 +72,26 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="DatePickerRangeStyle" TargetType="{x:Type local:DatePickerRange}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <DatePicker Grid.Column="0"/>
+                        <TextBlock Grid.Column="1" Text="~" TextAlignment="Center"/>
+                        <DatePicker Grid.Column="2"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     
     <Style x:Key="CloseableTabItemStyle" TargetType="{x:Type local:CloseableTabItem}">
 
