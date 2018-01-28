@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlurCrawler_Sample"
         xmlns:control="clr-namespace:PlurCrawler_Sample.Controls"
+        xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
         mc:Ignorable="d"
         Title="MainWindow" Height="550" Width="800">
     <Grid>
@@ -55,13 +56,23 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="2">
-            <TabControl>
-                <TabItem Header="로그">
+            <dragablz:TabablzControl FixedHeaderCount="1">
+                <dragablz:TabablzControl.InterTabController>
+                    <dragablz:InterTabController InterTabClient="{Binding InterTabClient}"/>
+                </dragablz:TabablzControl.InterTabController>
+                <TabItem Header="로그" IsSelected="True">
                     <ListBox x:Name="crawlLB" Margin="10">
-                        
+
                     </ListBox>
                 </TabItem>
-            </TabControl>
+                <TabItem Header="Tab No. 1" IsSelected="True">
+                    <Frame Source="/PlurCrawler_Sample;component/Verification/VertificationManager.xaml" NavigationUIVisibility="Hidden"/>
+                </TabItem>
+                <TabItem Header="Tab No. 2">
+                    <TextBlock>We Have Tearable Tabs!</TextBlock>
+                </TabItem>
+            </dragablz:TabablzControl>
+
         </Grid>
     </Grid>
 </Window>

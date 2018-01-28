@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using Dragablz;
 using Newtonsoft.Json;
 using PlurCrawler;
 using PlurCrawler.Search;
@@ -32,8 +32,11 @@ namespace PlurCrawler_Sample
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = new MainWindowViewModel();
             this.Loaded += MainWindow_Loaded;
         }
+
+
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
