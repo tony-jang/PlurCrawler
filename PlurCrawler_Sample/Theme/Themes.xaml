@@ -54,6 +54,8 @@
     </Style>
 
     <Style x:Key="PropertyTextBoxStyle" TargetType="{x:Type local:PropertyTextBox}">
+        <Setter Property="Margin" Value="10,0,10,10"/>
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:PropertyTextBox}">
@@ -62,10 +64,16 @@
                             <ColumnDefinition/>
                             <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
                         <TextBlock Text="{TemplateBinding PropertyName}" FontWeight="Bold"/>
                         <Border Grid.Column="1" x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
                             <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                         </Border>
+                        
+                        <TextBlock Text="{TemplateBinding Description}" TextAlignment="Right" Grid.Row="1" Grid.ColumnSpan="2" Foreground="Gray"/>
                     </Grid>
                     
                 </ControlTemplate>
@@ -74,19 +82,40 @@
     </Style>
 
     <Style x:Key="DatePickerRangeStyle" TargetType="{x:Type local:DatePickerRange}">
+        <Setter Property="Margin" Value="10,0,10,10"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate>
+                <ControlTemplate TargetType="{x:Type local:DatePickerRange}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
-                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="20"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <DatePicker Grid.Column="0"/>
-                        <TextBlock Grid.Column="1" Text="~" TextAlignment="Center"/>
-                        <DatePicker Grid.Column="2"/>
+                        <TextBlock Margin="0,0,10,0" Text="{TemplateBinding PropertyName}" FontWeight="Bold" VerticalAlignment="Center"/>
+                        <DatePicker Grid.Column="1"/>
+                        <TextBlock Grid.Column="2" Text="~" TextAlignment="Center" VerticalAlignment="Center"/>
+                        <DatePicker Grid.Column="3"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="PropertyGroupBoxStyle" TargetType="{x:Type local:PropertyGroupBox}">
+        <Setter Property="Margin" Value="10,0,10,10"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:PropertyGroupBox}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <ContentPresenter Grid.Column="0" Content="{TemplateBinding Header}" TextBlock.FontWeight="Bold" VerticalAlignment="Center"/>
+                        <ContentPresenter Grid.Column="1" Content="{TemplateBinding Content}"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

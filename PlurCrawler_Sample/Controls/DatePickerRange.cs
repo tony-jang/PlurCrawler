@@ -12,8 +12,15 @@ namespace PlurCrawler_Sample.Controls
 {
     class DatePickerRange : Control
     {
+        public static DependencyProperty PropertyNameProperty = DependencyHelper.Register();
         public static DependencyProperty StartDateTimeProperty = DependencyHelper.Register();
         public static DependencyProperty EndDateTimeProperty = DependencyHelper.Register();
+
+        public string PropertyName
+        {
+            get => (string)GetValue(PropertyNameProperty);
+            set => SetValue(PropertyNameProperty, value);
+        }
 
         public DateTime StartDateTime
         {

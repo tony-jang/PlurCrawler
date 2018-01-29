@@ -25,7 +25,7 @@ namespace PlurCrawler.Search.Services.Twitter
 
         public List<TwitterSearchResult> Search(TwitterSearchOption searchOption)
         {
-            return null;
+            
         }
 
         /// <summary>

@@ -12,16 +12,15 @@
         <TabControl TabStripPlacement="Left">
             <TabItem Header="Google CSE">
                 <StackPanel Margin="10">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="검색 갯수"/>
-                        <TextBox Grid.Column="1"/>
-                    </Grid>
-                    <controls:PropertyTextBox Margin="10" PropertyName="검색 갯수" Style="{StaticResource PropertyTextBoxStyle}"/>
-                    <controls:DatePickerRange Style="{StaticResource DatePickerRangeStyle}"/>
+                    <controls:PropertyTextBox PropertyName="검색 갯수" Description="* 검색 갯수의 기본값은 10개 입니다.&#x0a;* 해당 검색 갯수는 검색 타입에 따라서 의미가 달라집니다." Style="{StaticResource PropertyTextBoxStyle}"/>
+                    <controls:DatePickerRange PropertyName="검색 범위 : " Style="{StaticResource DatePickerRangeStyle}"/>
+
+                    <controls:PropertyGroupBox Header="검색 방식 : ">
+                        <WrapPanel>
+                            <RadioButton Margin="5" Content="날짜 전체를 기준으로 검색"/>
+                            <RadioButton Margin="5" Content="하루를 기준으로 검색"/>
+                        </WrapPanel>
+                    </controls:PropertyGroupBox>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Youtube"/>
