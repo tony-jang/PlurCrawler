@@ -18,7 +18,7 @@ namespace PlurCrawler.Search.Base
         string OriginalURL { get; }
 
         /// <summary>
-        /// 제목을 설정합니다.
+        /// 제목을 나타냅니다.
         /// </summary>
         string Title { get; }
     }

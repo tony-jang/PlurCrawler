@@ -36,6 +36,11 @@ namespace PlurCrawler.Structure
                 Initalized = true;
             }
         }
+
+        /// <summary>
+        /// 시작 지점의 날짜의 값이 null인지 여부를 가져옵니다.
+        /// </summary>
+        public bool IsStartTimeNull => StartTime == null;
         
         private DateTime? _endTime;
         /// <summary>
@@ -50,5 +55,10 @@ namespace PlurCrawler.Structure
                 Initalized = true;
             }
         }
+
+        /// <summary>
+        /// 종료 지점의 날짜의 값이 null인지 여부를 가져옵니다.
+        /// </summary>
+        public bool IsEndTimeNull => EndTime == null;
     }
 }

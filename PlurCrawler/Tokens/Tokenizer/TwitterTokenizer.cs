@@ -20,15 +20,14 @@ namespace PlurCrawler.Tokens.Tokenizer
         /// <returns></returns>
         public void CredentialsCertification(TwitterCredentials credentials)
         {
-            try
+            var userCredentials = AuthFlow.CreateCredentialsFromVerifierCode(credentials.PINNumber, _context);
+
+            if (userCredentials == null)
             {
-                var userCredentials = AuthFlow.CreateCredentialsFromVerifierCode(credentials.PINNumber, _context);
-                Auth.SetCredentials(userCredentials);
+                throw new CredentialsTypeException("PINNumber가 잘못 입력되었습니다.");
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+
+            Auth.SetCredentials(userCredentials);
         }
 
         private tiModels.IAuthenticationContext _context;
