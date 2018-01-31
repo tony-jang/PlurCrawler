@@ -80,6 +80,7 @@
     <Compile Include="Controls\DatePickerRange.cs" />
     <Compile Include="Controls\PathButton.cs" />
     <Compile Include="Controls\PropertyGroupBox.cs" />
+    <Compile Include="Controls\PropertyPasswordBox.cs" />
     <Compile Include="Controls\PropertyTextBox.cs" />
     <Compile Include="Windows\DetailsOption.xaml.cs">
       <DependentUpon>DetailsOption.xaml</DependentUpon>

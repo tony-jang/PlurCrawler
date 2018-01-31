@@ -68,14 +68,51 @@
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <TextBlock Text="{TemplateBinding PropertyName}" FontWeight="Bold"/>
+                        
+                        <TextBlock x:Name="tbPropName" Text="{TemplateBinding PropertyName}"/>
                         <Border Grid.Column="1" x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
                             <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                         </Border>
+                        <TextBlock Text="{TemplateBinding Description}" TextAlignment="Right" Grid.Row="1" Grid.ColumnSpan="2" Foreground="Gray"/>
+                        
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="AccentName" Value="True">
+                            <Setter Property="FontWeight" TargetName="tbPropName" Value="Bold"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="PropertyPasswordBoxStyle" TargetType="{x:Type local:PropertyPasswordBox}">
+        <Setter Property="Margin" Value="10,0,10,10"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:PropertyPasswordBox}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock x:Name="tbPropName" Text="{TemplateBinding PropertyName}"/>
+                        
+                        <PasswordBox x:Name="pwBox" Grid.Column="1"
+                                     SnapsToDevicePixels="True"/>
                         
                         <TextBlock Text="{TemplateBinding Description}" TextAlignment="Right" Grid.Row="1" Grid.ColumnSpan="2" Foreground="Gray"/>
                     </Grid>
-                    
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="AccentName" Value="True">
+                            <Setter Property="FontWeight" TargetName="tbPropName" Value="Bold"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
