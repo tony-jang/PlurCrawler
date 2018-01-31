@@ -4,27 +4,54 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PlurCrawler_Sample.Windows"
+      xmlns:controls="clr-namespace:PlurCrawler_Sample.Controls"
       mc:Ignorable="d" 
       d:DesignHeight="400" d:DesignWidth="500"
       Title="VertificationManager">
 
     <Grid>
         <TabControl>
-            <TabItem Header="Google">
-                <StackPanel Margin="10">
-                    <StackPanel>
-                        <TextBlock Text="구글 인증을 위한 API Key를 입력해주세요."/>
-                        <TextBox Margin="0,10,0,0"/>
-                    </StackPanel>
-                    <TextBlock Margin="0,10,0,0" TextTrimming="CharacterEllipsis">
-                        API Key : <Run x:Name="runAPIKey" Text="AIzaSyDuJa0F9nJzUwTOJyPZeBqkbEPwHoxwTG4" Foreground="Green"/>
-                    </TextBlock>
-                    <TextBlock Margin="0,10,0,0">
-                        유효성 : <Run x:Name="runAvailable" Text="인증됨" Foreground="Green"/>
-                    </TextBlock>
-                    <Button x:Name="btnAccept" Content="적용" HorizontalAlignment="Right" Padding="20,5"/>
-                </StackPanel>
-                
+            <TabItem Header="Google CSE">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Margin="10">
+                            <StackPanel>
+                                <TextBlock x:Name="tbGoogleInfo"  Text="구글 인증을 위한 API Key를 입력해주세요."/>
+                                <TextBox x:Name="tbGoogleKey" Margin="0,10,0,0"/>
+                                <Button x:Name="btnGoogleOK" Content="확인" Margin="0,5" Padding="20,5" HorizontalAlignment="Right"/>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                        <Grid Grid.Row="1" Margin="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="인증 정보 관리" FontSize="20"/>
+                            <StackPanel Grid.Row="1">
+                                <Grid Margin="0,10,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock TextTrimming="CharacterEllipsis" VerticalAlignment="Center">
+                                    API Key : <Run x:Name="runGoogleAPIKey" Text="AIzaSyDuJa0F9nJzUwTOJyPZeBqkbEPwHoxwTG4" Foreground="Green"/>
+                                    </TextBlock>
+                                    <Button x:Name="btnGoogleViewHidden" Grid.Column="1" Content="숨겨진 키 보기/감추기" Padding="10,5"/>
+                                </Grid>
+
+                                <TextBlock Margin="0,10,0,0">
+                                유효성 : <Run x:Name="runGoogleAvailable" Text="인증됨" Foreground="Green"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="Twitter">
                 <Grid Margin="10">
@@ -33,13 +60,16 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <StackPanel Margin="0,10">
-                        <TextBlock Text="트위터 인증을 위한 PIN 번호를 입력해주세요."/>
-                        <TextBox Margin="0,10,0,0"/>
+                        <TextBlock Text="트위터 웹 인증을 위해서 Consumer Key와 Consumer Secret을 입력해주세요."/>
+                        <controls:PropertyTextBox x:Name="tbtwitterID" PropertyName="Consumer Key" Margin="5"/>
+                        <controls:PropertyPasswordBox x:Name="tbtwitterPassword" PropertyName="Consumer Secret" Margin="5"/>
                     </StackPanel>
 
-                    <WebBrowser Grid.Row="1" Source="http://naver.com">
-                        
-                    </WebBrowser>
+                    <Grid Grid.Row="1">
+                        <WebBrowser>
+                            
+                        </WebBrowser>
+                    </Grid>
                 </Grid>
             </TabItem>
             <TabItem Header="Youtube"/>

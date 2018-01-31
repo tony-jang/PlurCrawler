@@ -60,10 +60,29 @@
             <Frame Source="/PlurCrawler_Sample;component/Windows/DetailsOption.xaml" NavigationUIVisibility="Hidden" />
         </Grid>
         <Grid Grid.Row="3">
-            <ListView x:Name="lvLog">
-                <ListViewItem Content="[System] 검색 시스템을 초기화중입니다."/>
-                <ListViewItem Content="[System] ....."/>
-            </ListView>
+            <TabControl SelectedIndex="1">
+                <TabControl.Resources>
+                    <Style TargetType="{x:Type TabItem}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type TabItem}">
+                                    <ContentPresenter Content="{TemplateBinding ContentTemplate}"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style> 
+                </TabControl.Resources>
+                <TabItem>
+                    <ListView x:Name="lvLog">
+                        <ListViewItem Content="[System] 검색 시스템을 초기화중입니다."/>
+                        <ListViewItem Content="[System] ....."/>
+                    </ListView>
+                </TabItem>
+
+                <TabItem>
+                    <Frame Source="/PlurCrawler_Sample;component/Windows/VertificationManager.xaml" NavigationUIVisibility="Hidden"/>
+                </TabItem>
+            </TabControl>
         </Grid>
     </Grid>
 </Window>

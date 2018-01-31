@@ -39,7 +39,24 @@ namespace PlurCrawler_Sample
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            //var cred = new TwitterCredentials("hKomvFO7HT0ZNZM9Kc2lnKhsY", "mk2AoM6iHKuSPmnvsqyHJuKXqIsDVHD37hoB3KA6Y6oksNDhyD");
+
+            //TwitterTokenizer tokenizer = new TwitterTokenizer();
+
+            //string url = tokenizer.GetURL(cred);
+
+            //string pin = "";
+
+            //cred.InputPIN(pin);
+
+            //tokenizer.CredentialsCertification(cred);
+
+            //TwitterSearcher searcher = new TwitterSearcher();
+
+            //searcher.Search(new TwitterSearchOption()
+            //{
+            //    Query = "대도서관"
+            //});
         }
     }
 }
