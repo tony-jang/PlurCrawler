@@ -1,6 +1,6 @@
 ﻿using System;
 using PlurCrawler.Search.Base;
-using PlurCrawler.Structure;
+using PlurCrawler.Common;
 
 namespace PlurCrawler.Search.Services.GoogleCSE
 {

@@ -1,5 +1,5 @@
 ﻿using PlurCrawler.Search.Base;
-using PlurCrawler.Structure;
+using PlurCrawler.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
