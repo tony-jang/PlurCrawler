@@ -13,7 +13,7 @@ using PlurCrawler.Search;
 
 namespace PlurCrawler.Search.Services.Youtube
 {
-    public class YoutubeSearcher : BaseSearcher
+    public class YoutubeSearcher : BaseSearcher<YoutubeSearchOption, YoutubeSearchResult>
     {
         /// <summary>
         /// Api Key 입니다.
@@ -31,28 +31,11 @@ namespace PlurCrawler.Search.Services.Youtube
         }
 
         /// <summary>
-        /// Youtube를 이용해 검색을 실시합니다. <see cref="BaseSearcher"/>에서 상속 받은 함수 입니다.
-        /// </summary>
-        /// <param name="searchOption">Youtube의 검색 옵션입니다. <see cref="YoutubeSearchOption"/>이 필요합니다.</param>
-        /// <returns></returns>
-        public override List<ISearchResult> Search(ISearchOption searchOption)
-        {
-            if (searchOption is YoutubeSearchOption searcher)
-            {
-                return Search((YoutubeSearchOption)searchOption).Select(i => (ISearchResult)i).ToList();
-            }
-            else
-            {
-                throw new SearchOptionTypeException("YoutubeSearchOption만 넣을 수 있습니다.");
-            }
-        }
-
-        /// <summary>
         /// Youtube를 이용해 검색을 실시합니다.
         /// </summary>
         /// <param name="searchOption">Youtube의 검색 옵션입니다.</param>
         /// <returns></returns>
-        public List<YoutubeSearchResult> Search(YoutubeSearchOption searchOption)
+        public override IEnumerable<YoutubeSearchResult> Search(YoutubeSearchOption searchOption)
         {
             YouTubeService youtube = new YouTubeService(new BaseClientService.Initializer()
             {
@@ -61,8 +44,8 @@ namespace PlurCrawler.Search.Services.Youtube
 
             SearchResource.ListRequest listRequest = youtube.Search.List("snippet");
             listRequest.Q = searchOption.Query;
-            listRequest.PublishedAfter = searchOption.PublishedDateRange.StartTime;
-            listRequest.PublishedBefore = searchOption.PublishedDateRange.EndTime;
+            listRequest.PublishedAfter = searchOption.DateRange.Since;
+            listRequest.PublishedBefore = searchOption.DateRange.Until;
 
             listRequest.Order = SearchResource.ListRequest.OrderEnum.Relevance;
             listRequest.MaxResults = 25;
@@ -80,6 +63,7 @@ namespace PlurCrawler.Search.Services.Youtube
                 if (searchResult.Id.Kind == "youtube#video")
                     videos.Add(searchResult);
             }
+
             List<YoutubeSearchResult> list = new List<YoutubeSearchResult>();
             foreach (SearchResult s in videos)
             {
@@ -94,7 +78,7 @@ namespace PlurCrawler.Search.Services.Youtube
                 list.Add(new YoutubeSearchResult()
                 {
                     Title = title,
-                    OriginalURL = "http://youtube.com/watch?v=" + s.Id.VideoId,
+                    OriginalURL = $"{"http:"}//youtube.com/watch?v={s.Id.VideoId}",
                     PublishedDate = s.Snippet.PublishedAt,
                     ChannelTitle = s.Snippet.ChannelTitle,
                     Description = description,

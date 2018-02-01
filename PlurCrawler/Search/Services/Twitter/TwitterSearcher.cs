@@ -8,11 +8,10 @@ using Tweetinvi.Models;
 using Tweetinvi.Parameters;
 
 using ITweetSearchResult = Tweetinvi.Models.ISearchResult;
-using IPlurSearchResult = PlurCrawler.Search.Base.ISearchResult;
 
 namespace PlurCrawler.Search.Services.Twitter
 {
-    public class TwitterSearcher : BaseSearcher
+    public class TwitterSearcher : BaseSearcher<TwitterSearchOption, TwitterSearchResult>
     {
         /// <summary>
         /// 인증 상태를 확인합니다.
@@ -20,38 +19,11 @@ namespace PlurCrawler.Search.Services.Twitter
         public new bool IsVerification => Tweetinvi.Auth.Credentials != null;
 
         /// <summary>
-        /// Twitter를 이용해 검색을 실시합니다. <see cref="BaseSearcher"/>에서 상속 받은 함수 입니다.
-        /// </summary>
-        /// <param name="searchOption">트위터의 검색 옵션입니다. <see cref="TwitterSearchOption"/>이 필요합니다.</param>
-        /// <returns></returns>
-        public override List<IPlurSearchResult> Search(ISearchOption searchOption)
-        {
-            if (searchOption is TwitterSearchOption twitterSearchOption)
-            {
-                return Search(twitterSearchOption).Select(i => (IPlurSearchResult)i).ToList();
-            }
-            else
-            {
-                throw new SearchOptionTypeException("TwitterSearchOption만 넣을 수 있습니다.");
-            }
-        }
-
-        public int GetSearchCount(int searchCount)
-        {
-            if (searchCount > 100)
-            {
-                return 100;
-            }
-
-            return searchCount;
-        }
-
-        /// <summary>
         /// Twitter를 이용해 검색을 실시합니다.
         /// </summary>
         /// <param name="searchOption">트위터의 검색 옵션입니다.</param>
         /// <returns></returns>
-        public List<TwitterSearchResult> Search(TwitterSearchOption searchOption)
+        public override IEnumerable<TwitterSearchResult> Search(TwitterSearchOption searchOption)
         {
             int maxid = 0;
 
@@ -59,21 +31,21 @@ namespace PlurCrawler.Search.Services.Twitter
 
             if (searchOption.SplitWithDate)
             {
-                if (searchOption.PublishedDateRange.StartTime != null)
+                if (searchOption.DateRange.Since != null)
                 {
-                    DateTime time = searchOption.PublishedDateRange.StartTime.Value.Date;
+                    DateTime time = searchOption.DateRange.Since.Value.Date;
                     do
                     {
                         result = result.Union(SearchOneDay(time));
                         
-                        if (time.Date == searchOption.PublishedDateRange.EndTime.Value.Date)
+                        if (time.Date == searchOption.DateRange.Until.Value.Date)
                             break;
 
                         time = time.AddDays(1);
 
                     } while (true);
 
-                    return result.ToList();
+                    return result;
                 }
 
                 return null;
@@ -98,7 +70,7 @@ namespace PlurCrawler.Search.Services.Twitter
             }
 
             // 내부 함수 - 날짜에 다른 검색 [offset은 본 함수에서 호출]
-            List<TwitterSearchResult> SearchOneDay(DateTime time)
+            IEnumerable<TwitterSearchResult> SearchOneDay(DateTime time)
             {
                 int searchCount = (int)searchOption.SearchCount;
 
@@ -109,7 +81,7 @@ namespace PlurCrawler.Search.Services.Twitter
                     int count = GetSearchCount(searchCount);
                     var list = Search(count, maxid, time);
 
-                    if (list.Count == 0)
+                    if (list.Count() == 0)
                         break;
 
                     tweetList = tweetList.Union(list);
@@ -119,13 +91,13 @@ namespace PlurCrawler.Search.Services.Twitter
             }
 
             // 내부 함수 - 갯수에 따른 검색 [최대 100개까지 호출 가능 // MaxId로 구분]
-            List<TwitterSearchResult> Search(int searchCount, int maxId, DateTime time = default(DateTime))
+            IEnumerable<TwitterSearchResult> Search(int searchCount, int maxId, DateTime time = default(DateTime))
             {
                 var searchParam = new SearchTweetsParameters(searchOption.Query)
                 {
                     MaximumNumberOfResults = searchCount,
-                    Since = searchOption.PublishedDateRange.IsStartTimeNull ? default(DateTime) : searchOption.PublishedDateRange.StartTime.Value,
-                    Until = searchOption.PublishedDateRange.IsEndTimeNull ? default(DateTime) : searchOption.PublishedDateRange.EndTime.Value,
+                    Since = searchOption.DateRange.Since.GetValueOrDefault(),
+                    Until = searchOption.DateRange.Until.GetValueOrDefault(),
                     MaxId = maxid
                 };
 
@@ -139,9 +111,8 @@ namespace PlurCrawler.Search.Services.Twitter
 
                 if (results.Tweets != null)
                 {
-                    List<TwitterSearchResult> tweets = results.Tweets
-                        .Select(i => ConvertResult(i))
-                        .ToList();
+                    IEnumerable<TwitterSearchResult> tweets = results.Tweets
+                        .Select(i => ConvertResult(i));
 
                     return tweets;
                 }
@@ -149,6 +120,15 @@ namespace PlurCrawler.Search.Services.Twitter
                 return new List<TwitterSearchResult>();
             }
         }
+
+        private int GetSearchCount(int searchCount)
+        {
+            if (searchCount > 100)
+                return 100;
+
+            return searchCount;
+        }
+
         private TwitterSearchResult ConvertResult(ITweetWithSearchMetadata tweet)
         {
             return new TwitterSearchResult()

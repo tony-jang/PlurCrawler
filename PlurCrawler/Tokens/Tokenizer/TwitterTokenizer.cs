@@ -33,7 +33,7 @@ namespace PlurCrawler.Tokens.Tokenizer
         private tiModels.IAuthenticationContext _context;
 
         /// <summary>
-        /// PIN 입력용 URL을 제공합니다.
+        /// PIN 입력용 URL을 제공합니다. 만약 잘못 입력된 경우 Null을 반환합니다.
         /// </summary>
         /// <returns></returns>
         public string GetURL(TwitterCredentials credentials)
@@ -46,6 +46,10 @@ namespace PlurCrawler.Tokens.Tokenizer
                 _context = AuthFlow.InitAuthentication(appCredentials);
 
                 return _context.AuthorizationURL;
+            }
+            catch (NullReferenceException)
+            {
+                return string.Empty;
             }
             catch (Exception ex)
             {

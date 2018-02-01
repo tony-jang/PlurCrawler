@@ -33,7 +33,7 @@ namespace PlurCrawler.Search.Services.Youtube
         /// <summary>
         /// 검색 결과가 나온 결과의 범위를 지정합니다.
         /// </summary>
-        public DateRange PublishedDateRange { get; set; }
+        public DateRange DateRange { get; set; }
 
         /// <summary>
         /// 날짜 별로 구분해서 검색합니다, 이 때 검색 갯수는 날짜 별로 변경됩니다. (기존: 10일 전체 30개) (이후: 1일 마다 30개)

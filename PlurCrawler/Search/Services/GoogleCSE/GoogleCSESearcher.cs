@@ -11,7 +11,7 @@ using Google.Apis.Services;
 
 namespace PlurCrawler.Search.Services.GoogleCSE
 {
-    public class GoogleCSESearcher : BaseSearcher
+    public class GoogleCSESearcher : BaseSearcher<GoogleCSESearchOption, GoogleCSESearchResult>
     {
         /// <summary>
         /// <see cref="GoogleCSESearcher"/> 클래스를 초기화합니다.
@@ -54,29 +54,11 @@ namespace PlurCrawler.Search.Services.GoogleCSE
         }
 
         /// <summary>
-        /// Google Custom Search를 이용해 검색을 실시합니다. <see cref="BaseSearcher"/>에서 상속 받은 함수 입니다.
-        /// </summary>
-        /// <param name="searchOption">구글 검색의 검색 옵션입니다. <see cref="GoogleCSESearchOption"/>이 필요합니다.</param>
-        /// <returns></returns>
-        public override List<ISearchResult> Search(ISearchOption searchOption)
-        {
-            if (searchOption is GoogleCSESearchOption googleSearchOption)
-            {
-                IEnumerable<object> a = new List<object>();
-                return Search(googleSearchOption).Select(i => (ISearchResult)i).ToList();
-            }
-            else
-            {
-                throw new SearchOptionTypeException("GoogleCSESearchOption만 넣을 수 있습니다.");
-            }
-        }
-
-        /// <summary>
         /// Google Custom Search를 이용해 검색을 실시합니다.
         /// </summary>
         /// <param name="searchOption">Google Custom Search의 검색 옵션입니다.</param>
         /// <returns></returns>
-        public List<GoogleCSESearchResult> Search(GoogleCSESearchOption searchOption)
+        public override IEnumerable<GoogleCSESearchResult> Search(GoogleCSESearchOption searchOption)
         {
             var list = new List<GoogleCSESearchResult>();
             var customSearchService = new CustomsearchService(new BaseClientService.Initializer
@@ -122,7 +104,7 @@ namespace PlurCrawler.Search.Services.GoogleCSE
                 PublishedDate = null,
                 Title = i.Title,
                 Snippet = i.Snippet.Replace("\\n", Environment.NewLine)
-            }).ToList();
+            });
         }
         
         /// <summary>
@@ -131,7 +113,7 @@ namespace PlurCrawler.Search.Services.GoogleCSE
         /// <param name="time">검색할 날짜입니다.</param>
         /// <param name="searchOption">검색 옵션입니다.</param>
         /// <returns></returns>
-        public List<GoogleCSESearchResult> SearchOneDay(DateTime time, GoogleCSESearchOption searchOption)
+        public IEnumerable<GoogleCSESearchResult> SearchOneDay(DateTime time, GoogleCSESearchOption searchOption)
         {
             return null;
         }
