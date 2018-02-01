@@ -26,11 +26,7 @@ namespace PlurCrawler.Structure
         public DateTime? Since
         {
             get => _since;
-            set
-            {
-                // 
-                _since = (value < Until) ? value : _since;
-            }
+            set => _since = (value < Until) ? value : _since;
         }
         
         private DateTime? _until;
@@ -40,10 +36,7 @@ namespace PlurCrawler.Structure
         public DateTime? Until
         {
             get => _until;
-            set
-            {
-                _until = (value > Since) ? value : _until;
-            }
+            set => _until = (value > Since) ? value : _until;
         }
     }
 }
