@@ -82,7 +82,7 @@
     <Compile Include="Controls\PropertyGroupBox.cs" />
     <Compile Include="Controls\PropertyPasswordBox.cs" />
     <Compile Include="Controls\PropertyTextBox.cs" />
-    <Compile Include="Enums\VerifyType.cs" />
+    <Compile Include="Common\VerifyType.cs" />
     <Compile Include="Windows\DetailsOption.xaml.cs">
       <DependentUpon>DetailsOption.xaml</DependentUpon>
     </Compile>

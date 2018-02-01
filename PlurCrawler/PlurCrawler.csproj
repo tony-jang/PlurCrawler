@@ -141,15 +141,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extension\EnumEx.cs" />
-    <Compile Include="Output\BaseOutput.cs" />
+    <Compile Include="Format\BaseOutput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ResourceManager.cs" />
     <Compile Include="Search\Base\IDateSearchOption.cs" />
     <Compile Include="Search\Base\BaseSearcher.cs" />
     <Compile Include="Attributes\LanguageAttribute.cs" />
-    <Compile Include="Search\LanguageCode.cs" />
-    <Compile Include="Search\RegionCode.cs" />
-    <Compile Include="Search\ServiceKind.cs" />
+    <Compile Include="Search\Common\LanguageCode.cs" />
+    <Compile Include="Search\Common\RegionCode.cs" />
+    <Compile Include="Search\Common\ServiceKind.cs" />
     <Compile Include="Search\Services\GoogleCSE\GoogleCSESearcher.cs" />
     <Compile Include="Search\Services\GoogleCSE\GoogleCSESearchOption.cs" />
     <Compile Include="Search\Services\GoogleCSE\GoogleCSESearchResult.cs" />
@@ -159,11 +159,11 @@
     <Compile Include="Search\Services\Youtube\YoutubeSearcher.cs" />
     <Compile Include="Search\Services\Youtube\YoutubeSearchOption.cs" />
     <Compile Include="Search\Services\Youtube\YoutubeSearchResult.cs" />
-    <Compile Include="Structure\DateRange.cs" />
+    <Compile Include="Common\DateRange.cs" />
     <Compile Include="Search\Base\ISearchOption.cs" />
     <Compile Include="Attributes\NoteAttribute.cs" />
-    <Compile Include="Search\SearchSortOptions.cs" />
-    <Compile Include="Search\SearchOptionTypeException.cs" />
+    <Compile Include="Search\Common\SearchSortOptions.cs" />
+    <Compile Include="Search\Common\SearchOptionTypeException.cs" />
     <Compile Include="Search\Base\ISearchResult.cs" />
     <Compile Include="Tokens\Credentials\GoogleCredentials.cs" />
     <Compile Include="Tokens\OAuth\EventArg\AuthFailedEventArgs.cs" />
