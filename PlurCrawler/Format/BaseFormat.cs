@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PlurCrawler.Format
 {
-    public abstract class BaseOutput
+    public abstract class BaseFormat
     {
     }
 }

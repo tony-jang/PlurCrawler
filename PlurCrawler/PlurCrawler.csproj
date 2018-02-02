@@ -141,7 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extension\EnumEx.cs" />
-    <Compile Include="Format\BaseOutput.cs" />
+    <Compile Include="Format\BaseFormat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ResourceManager.cs" />
     <Compile Include="Search\Base\IDateSearchOption.cs" />
