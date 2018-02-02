@@ -4,28 +4,62 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PlurCrawler_Sample.Windows"
-      xmlns:controls="clr-namespace:PlurCrawler_Sample.Controls"
+      xmlns:ctrl="clr-namespace:PlurCrawler_Sample.Controls"
       mc:Ignorable="d" 
-      d:DesignHeight="400" d:DesignWidth="600"
+      d:DesignHeight="400" d:DesignWidth="300" MinWidth="300"
       Title="DetailsOption">
     <Grid>
-        <TabControl TabStripPlacement="Left">
+        <TabControl TabStripPlacement="Top">
             <TabItem Header="Google CSE">
-                <StackPanel Margin="10">
-                    <controls:PropertyTextBox PropertyName="검색 갯수" Description="* 검색 갯수의 기본값은 10개 입니다.&#x0a;* 해당 검색 갯수는 검색 타입에 따라서 의미가 달라집니다." Style="{StaticResource PropertyTextBoxStyle}"/>
-                    <controls:DatePickerRange PropertyName="검색 범위 : " Style="{StaticResource DatePickerRangeStyle}"/>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="0,10">
+                        <ctrl:PropertyTextBox PropertyName="검색 갯수" 
+                            Description="* 기본은 10개입니다.&#x0a;* 검색 타입에 따라서 의미가 달라집니다."/>
 
-                    <controls:PropertyGroupBox Header="검색 방식 : ">
-                        <WrapPanel>
-                            <RadioButton Margin="5" Content="날짜 전체를 기준으로 검색"/>
-                            <RadioButton Margin="5" Content="하루를 기준으로 검색"/>
-                        </WrapPanel>
-                    </controls:PropertyGroupBox>
-                </StackPanel>
+                        <ctrl:PropertyGroupBox Header="갯수 기준">
+                            <WrapPanel>
+                                <RadioButton Margin="5" Content="전체 기준" GroupName="googleFindType"/>
+                                <RadioButton Margin="5" Content="하루 기준" GroupName="googleFindType"/>
+                            </WrapPanel>
+                        </ctrl:PropertyGroupBox>
+                        
+                        <ctrl:PropertyTextBox PropertyName="페이지 오프셋" 
+                            Description="* 검색을 표시할 오프셋을 나타냅니다.&#x0a;(예를 들어 5라면 6번째 부터 출력합니다)"/>
+
+                        <ctrl:PropertyGroupBox x:Name="gbOutputData" Header="출력할 데이터">
+                            <StackPanel>
+                                <StackPanel.Resources>
+                                    <Style TargetType="{x:Type CheckBox}">
+                                        <Setter Property="Margin" Value="0,0,0,5"/>
+                                    </Style>
+                                </StackPanel.Resources>
+                                <CheckBox Content="원본 URL"/>
+                                <CheckBox Content="제목"/>
+                                <CheckBox Content="미리보기"/>
+                                <CheckBox Content="올라온 날짜"/>
+                            </StackPanel>
+                        </ctrl:PropertyGroupBox>
+
+                        <ctrl:PropertyGroupBox x:Name="gbOutputLoc" Header="출력할 위치">
+                            <StackPanel>
+                                <StackPanel.Resources>
+                                    <Style TargetType="{x:Type CheckBox}">
+                                        <Setter Property="Margin" Value="0,0,0,5"/>
+                                    </Style>
+                                </StackPanel.Resources>
+                                <CheckBox Content="MySQL"/>
+                                <CheckBox Content="MS-SQL"/>
+                                <CheckBox Content="Json File"/>
+                                <CheckBox Content="CSV File"/>
+                            </StackPanel>
+                        </ctrl:PropertyGroupBox>
+
+                        <ctrl:DateRangePicker PropertyName="검색 범위"/>
+                    </StackPanel>
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="Youtube"/>
             <TabItem Header="Twitter"/>
-            
         </TabControl>
     </Grid>
 </Page>
