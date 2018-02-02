@@ -118,23 +118,36 @@
         </Setter>
     </Style>
 
-    <Style x:Key="DatePickerRangeStyle" TargetType="{x:Type local:DatePickerRange}">
+    <Style x:Key="DateRangePickerStyle" TargetType="{x:Type local:DateRangePicker}">
         <Setter Property="Margin" Value="10,0,10,10"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:DatePickerRange}">
+                <ControlTemplate TargetType="{x:Type local:DateRangePicker}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="20"/>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Margin="0,0,10,0" Text="{TemplateBinding PropertyName}" FontWeight="Bold" VerticalAlignment="Center"/>
-                        <DatePicker Grid.Column="1"/>
-                        <TextBlock Grid.Column="2" Text="~" TextAlignment="Center" VerticalAlignment="Center"/>
-                        <DatePicker Grid.Column="3"/>
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <DatePicker x:Name="dpSince" Grid.Row="0"/>
+                            <TextBlock Grid.Row="1" Text="~" 
+                                       VerticalAlignment="Center" 
+                                       HorizontalAlignment="Center"
+                                       Margin="3"
+                                       FontSize="18">
+                                 <TextBlock.LayoutTransform>
+                                    <RotateTransform CenterX="0.5" CenterY="0.5" Angle="90"/>
+                                 </TextBlock.LayoutTransform>
+                            </TextBlock>
+                            <DatePicker x:Name="dpUntil" Grid.Row="2"/>
+                        </Grid>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
