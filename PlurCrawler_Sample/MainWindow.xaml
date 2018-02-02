@@ -7,12 +7,11 @@
         xmlns:control="clr-namespace:PlurCrawler_Sample.Controls"
         xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="800">
+        Title="MainWindow" Height="700" Width="1000">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="200"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid>
@@ -30,11 +29,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <control:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_google.png" Foreground="Red">
-                <control:ImageTextBlock.ToolTip>
-                    <control:AuthStateToolTip Title="Google" Description="인증 확인"/>
-                </control:ImageTextBlock.ToolTip>
-            </control:ImageTextBlock>
+            <control:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_google.png" Foreground="Red"/>
             <control:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_twitter.png" Grid.Column="1" Foreground="Red"/>
             <control:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_youtube.png" Grid.Column="2" Foreground="Red"/>
         </Grid>
@@ -42,25 +37,18 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock Margin="10,0" Text="검색어" Grid.Column="0" VerticalAlignment="Center"/>
             <TextBox Margin="10,0" Text="" Grid.Column="1" VerticalAlignment="Center"/>
-
-            <Grid Grid.Column="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Margin="5,0" Content="세부 옵션" VerticalAlignment="Center" Padding="5"/>
-                <Button Grid.Column="1" Margin="5,0" Content="검색" VerticalAlignment="Center" Padding="5"/>
-            </Grid>
+            <Button x:Name="btnSearch" Grid.Column="2" Margin="5,0" Content="검색 시작" VerticalAlignment="Center" Padding="30,5"/>
         </Grid>
         <Grid Grid.Row="2">
-            <Frame Source="/PlurCrawler_Sample;component/Windows/DetailsOption.xaml" NavigationUIVisibility="Hidden" />
-        </Grid>
-        <Grid Grid.Row="3">
-            <TabControl SelectedIndex="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+            <TabControl x:Name="mainTabControl" SelectedIndex="1" BorderBrush="{x:Null}">
                 <TabControl.Resources>
                     <Style TargetType="{x:Type TabItem}">
                         <Setter Property="Template">
@@ -72,17 +60,39 @@
                         </Setter>
                     </Style> 
                 </TabControl.Resources>
-                <TabItem>
+                <TabItem x:Name="tiLog">
                     <ListView x:Name="lvLog">
                         <ListViewItem Content="[System] 검색 시스템을 초기화중입니다."/>
                         <ListViewItem Content="[System] ....."/>
                     </ListView>
                 </TabItem>
 
-                <TabItem>
-                    <Frame Source="/PlurCrawler_Sample;component/Windows/VertificationManager.xaml" NavigationUIVisibility="Hidden"/>
+                <TabItem x:Name="tiVertification">
+                    <Frame x:Name="frVertManager"
+                        Source="/PlurCrawler_Sample;component/Windows/VertificationManager.xaml" NavigationUIVisibility="Hidden"/>
                 </TabItem>
             </TabControl>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid>
+                    <TreeView>
+                        <TreeViewItem Header="인증 관리자">
+                            <TreeViewItem Header="구글 커스텀 서치 엔진"/>
+                            <TreeViewItem Header="트위터"/>
+                            <TreeViewItem Header="유튜브"/>
+                        </TreeViewItem>
+                        <TreeViewItem Header="분석 결과">
+                            <TreeViewItem Header="분석 보고서 (2018-02-02 14:22)"/>
+                        </TreeViewItem>
+                        <TreeViewItem Header="분석 결과"/>
+                    </TreeView>
+                </Grid>
+                <Frame x:Name="frOption" Grid.Row="1" Source="/PlurCrawler_Sample;component/Windows/DetailsOption.xaml" NavigationUIVisibility="Hidden" />
+            </Grid>
+            
         </Grid>
     </Grid>
 </Window>
