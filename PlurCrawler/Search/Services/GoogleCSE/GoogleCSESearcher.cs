@@ -60,27 +60,44 @@ namespace PlurCrawler.Search.Services.GoogleCSE
         /// <returns></returns>
         public override IEnumerable<GoogleCSESearchResult> Search(GoogleCSESearchOption searchOption)
         {
-            var list = new List<GoogleCSESearchResult>();
+            CseResource.ListRequest request = BuildRequest(searchOption);
+
+            IEnumerable<Result> results = Search(request, (long)searchOption.Offset, (long)searchOption.SearchCount);
+
+            if (results.Count() == 0)
+                return Enumerable.Empty<GoogleCSESearchResult>();
+
+            return ConvertType(results);
+        }
+
+        #region [  Private Method  ]
+
+        private CseResource.ListRequest BuildRequest(GoogleCSESearchOption option)
+        {
             var customSearchService = new CustomsearchService(new BaseClientService.Initializer
             {
                 ApiKey = this.ApiKey
             });
 
-            long targetCount = (long)searchOption.SearchCount;
-
-            CseResource.ListRequest request = customSearchService.Cse.List(searchOption.Query);
+            CseResource.ListRequest request = customSearchService.Cse.List(option.Query);
 
             request.Cx = SearchEngineId;
+            request.Start = (long)option.Offset;
 
-            request.Start = (long)searchOption.Offset;
+            // TODO : 날짜 설정 추가
 
+            return request;
+        }
+
+        private IEnumerable<Result> Search(CseResource.ListRequest request, long offset, long targetCount)
+        {
             var results = new List<Result>();
             IList<Result> paging = new List<Result>();
             int count = 0;
 
             while ((paging != null) && targetCount > 0)
             {
-                request.Start = count * 10 + 1 + (long)searchOption.Offset;
+                request.Start = count * 10 + 1 + offset;
                 if ((targetCount % 10) == 0)
                     request.Num = 10;
                 else
@@ -95,10 +112,12 @@ namespace PlurCrawler.Search.Services.GoogleCSE
                 targetCount -= request.Num.Value;
             }
 
-            if (results.Count == 0)
-                return null;
+            return results;
+        }
 
-            return results.Select(i => new GoogleCSESearchResult()
+        private IEnumerable<GoogleCSESearchResult> ConvertType(IEnumerable<Result> resultList)
+        {
+            return resultList.Select(i => new GoogleCSESearchResult()
             {
                 OriginalURL = i.Link,
                 PublishedDate = null,
@@ -106,7 +125,9 @@ namespace PlurCrawler.Search.Services.GoogleCSE
                 Snippet = i.Snippet.Replace("\\n", Environment.NewLine)
             });
         }
-        
+
+        #endregion
+
         /// <summary>
         /// 검색 옵션을 무시한 채로 지정된 하루만 검색합니다.
         /// </summary>
