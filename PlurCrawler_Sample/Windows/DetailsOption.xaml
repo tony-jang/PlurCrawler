@@ -11,52 +11,61 @@
     <Grid>
         <TabControl TabStripPlacement="Top">
             <TabItem Header="Google CSE">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel Margin="0,10">
-                        <ctrl:PropertyTextBox PropertyName="검색 갯수" 
+                <Grid>
+                    <ScrollViewer x:Name="svGoogle" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="0,10">
+                            <ctrl:PropertyTextBox PropertyName="검색 갯수" 
                             Description="* 기본은 10개입니다.&#x0a;* 검색 타입에 따라서 의미가 달라집니다."/>
 
-                        <ctrl:PropertyGroupBox Header="갯수 기준">
-                            <WrapPanel>
-                                <RadioButton Margin="5" Content="전체 기준" GroupName="googleFindType"/>
-                                <RadioButton Margin="5" Content="하루 기준" GroupName="googleFindType"/>
-                            </WrapPanel>
-                        </ctrl:PropertyGroupBox>
-                        
-                        <ctrl:PropertyTextBox PropertyName="페이지 오프셋" 
+                            <ctrl:PropertyGroupBox Header="갯수 기준">
+                                <WrapPanel>
+                                    <RadioButton Margin="5" Content="전체 기준" GroupName="googleFindType"/>
+                                    <RadioButton Margin="5" Content="하루 기준" GroupName="googleFindType"/>
+                                </WrapPanel>
+                            </ctrl:PropertyGroupBox>
+
+                            <ctrl:PropertyTextBox PropertyName="페이지 오프셋" 
                             Description="* 검색을 표시할 오프셋을 나타냅니다.&#x0a;(예를 들어 5라면 6번째 부터 출력합니다)"/>
 
-                        <ctrl:PropertyGroupBox x:Name="gbOutputData" Header="출력할 데이터">
-                            <StackPanel>
-                                <StackPanel.Resources>
-                                    <Style TargetType="{x:Type CheckBox}">
-                                        <Setter Property="Margin" Value="0,0,0,5"/>
-                                    </Style>
-                                </StackPanel.Resources>
-                                <CheckBox Content="원본 URL"/>
-                                <CheckBox Content="제목"/>
-                                <CheckBox Content="미리보기"/>
-                                <CheckBox Content="올라온 날짜"/>
-                            </StackPanel>
-                        </ctrl:PropertyGroupBox>
+                            <ctrl:PropertyGroupBox x:Name="gbOutputData" Header="출력할 데이터">
+                                <StackPanel>
+                                    <StackPanel.Resources>
+                                        <Style TargetType="{x:Type CheckBox}">
+                                            <Setter Property="Margin" Value="0,0,0,5"/>
+                                        </Style>
+                                    </StackPanel.Resources>
+                                    <CheckBox Content="원본 URL"/>
+                                    <CheckBox Content="제목"/>
+                                    <CheckBox Content="미리보기"/>
+                                    <CheckBox Content="올라온 날짜"/>
+                                </StackPanel>
+                            </ctrl:PropertyGroupBox>
 
-                        <ctrl:PropertyGroupBox x:Name="gbOutputLoc" Header="출력할 위치">
-                            <StackPanel>
-                                <StackPanel.Resources>
-                                    <Style TargetType="{x:Type CheckBox}">
-                                        <Setter Property="Margin" Value="0,0,0,5"/>
-                                    </Style>
-                                </StackPanel.Resources>
-                                <CheckBox Content="MySQL"/>
-                                <CheckBox Content="MS-SQL"/>
-                                <CheckBox Content="Json File"/>
-                                <CheckBox Content="CSV File"/>
-                            </StackPanel>
-                        </ctrl:PropertyGroupBox>
+                            <ctrl:PropertyGroupBox x:Name="gbOutputLoc" Header="출력할 위치">
+                                <StackPanel>
+                                    <StackPanel.Resources>
+                                        <Style TargetType="{x:Type CheckBox}">
+                                            <Setter Property="Margin" Value="0,0,0,5"/>
+                                        </Style>
+                                    </StackPanel.Resources>
+                                    <CheckBox Content="MySQL"/>
+                                    <CheckBox Content="MS-SQL"/>
+                                    <CheckBox Content="Json File"/>
+                                    <CheckBox Content="CSV File"/>
+                                </StackPanel>
+                            </ctrl:PropertyGroupBox>
 
-                        <ctrl:DateRangePicker PropertyName="검색 범위"/>
-                    </StackPanel>
-                </ScrollViewer>
+                            <ctrl:DateRangePicker PropertyName="검색 범위"/>
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <Grid x:Name="signGoogle" Background="#CCFFFFFF">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                   TextWrapping="Wrap" TextAlignment="Center">
+                            해당 서비스에서 검색을 수행중 일때에는<LineBreak/>설정 변경이 불가합니다.
+                        </TextBlock>
+                    </Grid>
+                </Grid>
             </TabItem>
             <TabItem Header="Youtube"/>
             <TabItem Header="Twitter"/>

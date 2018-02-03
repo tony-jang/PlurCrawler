@@ -35,6 +35,8 @@ namespace PlurCrawler_Sample.Windows
             btnTwitterPINAuth.Click += BtnTwitterPINAuth_Click;
 
             btnTwitterReqURL.Click += BtnTwitterReqURL_Click;
+
+            signGoogle.Visibility = Visibility.Hidden;
         }
 
         #region [  Twitter  ]

@@ -18,15 +18,22 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <StackPanel Margin="10">
-                            <StackPanel>
-                                <TextBlock x:Name="tbGoogleInfo"  Text="구글 인증을 위한 API Key를 입력해주세요."/>
-                                <controls:PropertyTextBox PropertyName="API Key" x:Name="tbGoogleKey" Margin="0,10,0,0"/>
-                                <controls:PropertyTextBox PropertyName="Engine ID" x:Name="tbEngineID" Margin="0,10,0,0"/>
-                                <Button x:Name="btnGoogleOK" Content="확인" Margin="0,5" Padding="20,5" HorizontalAlignment="Right"/>
+                        <Grid>
+                            <StackPanel Margin="10">
+                                <StackPanel>
+                                    <TextBlock x:Name="tbGoogleInfo"  Text="구글 인증을 위한 API Key를 입력해주세요."/>
+                                    <controls:PropertyTextBox PropertyName="API Key" x:Name="tbGoogleKey" Margin="0,10,0,0"/>
+                                    <controls:PropertyTextBox PropertyName="Engine ID" x:Name="tbEngineID" Margin="0,10,0,0"/>
+                                    <Button x:Name="btnGoogleOK" Content="확인" Margin="0,5" Padding="20,5" HorizontalAlignment="Right"/>
+                                </StackPanel>
                             </StackPanel>
+                            <Grid x:Name="signGoogle" Background="#CCFFFFFF">
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center">
+                                    해당 서비스에서 검색을 수행중 일때에는<LineBreak/>검색 API 토큰 변경이 불가합니다.
+                                </TextBlock>
+                            </Grid>
+                        </Grid>
 
-                        </StackPanel>
 
                         <Grid Grid.Row="1" Margin="10">
                             <Grid.RowDefinitions>
