@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlurCrawler_Sample"
-        xmlns:control="clr-namespace:PlurCrawler_Sample.Controls"
+        xmlns:ctrl="clr-namespace:PlurCrawler_Sample.Controls"
         xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1000">
@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
         <Grid>
             <Grid.Resources>
-                <Style TargetType="{x:Type control:ImageTextBlock}" BasedOn="{StaticResource {x:Type control:ImageTextBlock}}">
+                <Style TargetType="{x:Type ctrl:ImageTextBlock}" BasedOn="{StaticResource {x:Type ctrl:ImageTextBlock}}">
                     <Setter Property="Margin" Value="5"/>
                     <Setter Property="VerticalAlignment" Value="Center"/>
                     <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -29,9 +29,9 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <control:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_google.png" Foreground="Red"/>
-            <control:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_twitter.png" Grid.Column="1" Foreground="Red"/>
-            <control:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_youtube.png" Grid.Column="2" Foreground="Red"/>
+            <ctrl:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_google.png" Foreground="Red"/>
+            <ctrl:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_twitter.png" Grid.Column="1" Foreground="Red"/>
+            <ctrl:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_youtube.png" Grid.Column="2" Foreground="Red"/>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -78,17 +78,19 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid>
-                    <TreeView>
-                        <TreeViewItem Header="인증 관리자">
-                            <TreeViewItem Header="구글 커스텀 서치 엔진"/>
-                            <TreeViewItem Header="트위터"/>
-                            <TreeViewItem Header="유튜브"/>
-                        </TreeViewItem>
-                        <TreeViewItem Header="분석 결과">
-                            <TreeViewItem Header="분석 보고서 (2018-02-02 14:22)"/>
-                        </TreeViewItem>
-                        <TreeViewItem Header="분석 결과"/>
-                    </TreeView>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="작업 목록" Margin="5"/>
+                    <ListView Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ctrl:TaskProgressBar x:Name="itm" Title="Google CSE Search 작업"/>
+                    </ListView>
                 </Grid>
                 <Frame x:Name="frOption" Grid.Row="1" Source="/PlurCrawler_Sample;component/Windows/DetailsOption.xaml" NavigationUIVisibility="Hidden" />
             </Grid>
