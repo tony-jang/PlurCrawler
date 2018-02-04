@@ -98,7 +98,7 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="작업 목록" Margin="5"/>
-                    <ListView Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListView x:Name="lvTask" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>

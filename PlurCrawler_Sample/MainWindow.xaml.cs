@@ -20,11 +20,14 @@ using PlurCrawler.Search;
 using PlurCrawler.Search.Services.GoogleCSE;
 using PlurCrawler.Search.Services.Twitter;
 using PlurCrawler.Search.Services.Youtube;
+using PlurCrawler.Search.Common;
 using PlurCrawler.Tokens.Credentials;
 using PlurCrawler.Tokens.Tokenizer;
 using PlurCrawler_Sample.Windows;
 
 using Newtonsoft.Json;
+using PlurCrawler.Search.Base;
+using PlurCrawler_Sample.Controls;
 
 namespace PlurCrawler_Sample
 {
@@ -43,8 +46,9 @@ namespace PlurCrawler_Sample
 
             btnSearch.Click += BtnSearch_Click;
 
-            itm.Maximum = 100;
+            dict = new Dictionary<ISearcher, TaskProgressBar>();
 
+            itm.Maximum = 100;
             Thread thr = new Thread(() =>
             {
                 int i = 0;
@@ -63,33 +67,93 @@ namespace PlurCrawler_Sample
             thr.Start();
         }
 
-        bool en = false;
+        bool googleSearching = false,
+            youtubeSearching = false,
+            twitterSearching = false;
+
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
-            var googleCSESearcher = new GoogleCSESearcher();
+            if (cbGoogleService.IsChecked.GetValueOrDefault())
+                SearchGoogle();
 
-            googleCSESearcher.Vertification(_vertificationManager.GoogleAPIKey, _vertificationManager.GoogleEngineID);
-
-            mainTabControl.SelectedIndex = 0;
-
-            lvLog.Items.Add("[System] 검색을 시작합니다.");
-
-            var list = googleCSESearcher.Search(new GoogleCSESearchOption()
+            if (cbTwitterService.IsChecked.GetValueOrDefault())
             {
-                SearchCount = 10,
-                Query = "네이버"
+                // Twitter Service In Here.
+            }
+
+            if (cbYoutubeService.IsChecked.GetValueOrDefault())
+            {
+                // Youtube Service In Here.
+            }
+
+        }
+
+        Dictionary<ISearcher, TaskProgressBar> dict;
+
+        public void SearchGoogle()
+        {
+            // 동일한 서비스는 끝나기 전까지 실행이 불가능함.
+            if (googleSearching)
+                return;
+
+            googleSearching = true;
+            _detailsOption.GoogleEnableChange(false);
+
+            Thread thr = new Thread(() =>
+            {
+                var googleCSESearcher = new GoogleCSESearcher();
+
+                string googleKey = string.Empty,
+                       googleID = string.Empty;
+
+                Dispatcher.Invoke(() =>
+                {
+                    googleKey = _vertificationManager.GoogleAPIKey;
+                    googleID = _vertificationManager.GoogleEngineID;
+
+                    var tb = new TaskProgressBar();
+
+                    tb.Title = "Google CSE 검색";
+                    tb.Message = "검색이 진행중입니다.";
+
+                    dict[googleCSESearcher] = tb;
+
+                    lvTask.Items.Add(tb);
+                });
+
+                googleCSESearcher.Vertification(googleKey, googleID);
+
+                GoogleCSESearchOption option = null;
+                Dispatcher.Invoke(() =>
+                {
+                    // 옵션 초기화
+                    option = _detailsOption.GetGoogleCSESearchOption();
+                    option.Query = tbQuery.Text;
+                });
+
+                googleCSESearcher.SearchProgressChanged += GoogleCSESearcher_SearchProgressChanged;
+
+                IEnumerable<GoogleCSESearchResult> googleResult = googleCSESearcher.Search(option);
+
+                Dispatcher.Invoke(() => {
+                    googleSearching = false;
+                    _detailsOption.GoogleEnableChange(true);
+                });
             });
 
-            lvLog.Items.Add("[System] 검색이 완료되었습니다.");
+            thr.Start();
+        }
 
-            foreach (var itm in list)
+        private void GoogleCSESearcher_SearchProgressChanged(object sender, ProgressEventArgs args)
+        {
+            Dispatcher.Invoke(() =>
             {
-                lvLog.Items.Add(new ListViewItem()
-                {
-                    Content = itm.Title
-                });
-            }
+                var itm = dict[sender as ISearcher];
+                itm.Maximum = args.Maximum;
+                itm.Value = args.Value;
+            });
+            
         }
 
         public static object GetPropValue(object src, string propName)
