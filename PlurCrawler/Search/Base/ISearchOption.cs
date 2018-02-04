@@ -1,4 +1,6 @@
-﻿namespace PlurCrawler.Search.Base
+﻿using PlurCrawler.Format.Common;
+
+namespace PlurCrawler.Search.Base
 {
     /// <summary>
     /// 검색 옵션입니다.
@@ -24,5 +26,10 @@
         /// 검색할 언어 코드를 입력합니다.
         /// </summary>
         LanguageCode Language { get; set; }
+
+        /// <summary>
+        /// 출력할 서비스들을 선택합니다.
+        /// </summary>
+        OutputFormat OutputServices { get; set; }
     }
 }

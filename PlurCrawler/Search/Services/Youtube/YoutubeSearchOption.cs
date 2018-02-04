@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PlurCrawler.Format.Common;
 
 namespace PlurCrawler.Search.Services.Youtube
 {
@@ -39,5 +40,10 @@ namespace PlurCrawler.Search.Services.Youtube
         /// 날짜 별로 구분해서 검색합니다, 이 때 검색 갯수는 날짜 별로 변경됩니다. (기존: 10일 전체 30개) (이후: 1일 마다 30개)
         /// </summary>
         public bool SplitWithDate { get; set; }
+
+        /// <summary>
+        /// 출력할 서비스들을 선택합니다.
+        /// </summary>
+        public OutputFormat OutputServices { get; set; }
     }
 }
