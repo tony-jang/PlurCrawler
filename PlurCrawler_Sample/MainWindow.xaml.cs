@@ -133,6 +133,7 @@ namespace PlurCrawler_Sample
                 });
 
                 googleCSESearcher.SearchProgressChanged += GoogleCSESearcher_SearchProgressChanged;
+                googleCSESearcher.SearchFinished += GoogleCSESearcher_SearchFinished;
 
                 IEnumerable<GoogleCSESearchResult> googleResult = googleCSESearcher.Search(option);
 
@@ -143,6 +144,15 @@ namespace PlurCrawler_Sample
             });
 
             thr.Start();
+        }
+
+        private void GoogleCSESearcher_SearchFinished(object sender)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                var itm = dict[sender as ISearcher];
+                itm.Value = itm.Maximum;
+            });
         }
 
         private void GoogleCSESearcher_SearchProgressChanged(object sender, ProgressEventArgs args)
