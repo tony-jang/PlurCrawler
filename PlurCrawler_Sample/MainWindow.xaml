@@ -89,7 +89,7 @@
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
                             </Style>
                         </ListBox.ItemContainerStyle>
-                        <ctrl:TaskProgressBar x:Name="itm" Title="Google CSE Search 작업"/>
+                        <ctrl:TaskProgressBar x:Name="itm" Title="Google CSE Search 작업" Message="검색을 대기 중입니다."/>
                     </ListView>
                 </Grid>
                 <Frame x:Name="frOption" Grid.Row="1" Source="/PlurCrawler_Sample;component/Windows/DetailsOption.xaml" NavigationUIVisibility="Hidden" />
