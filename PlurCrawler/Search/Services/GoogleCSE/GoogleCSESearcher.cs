@@ -113,7 +113,9 @@ namespace PlurCrawler.Search.Services.GoogleCSE
 
                 count++;
                 tempCount -= request.Num.Value;
-                OnSearchProgressChanged(new ProgressEventArgs((int)targetCount, (int)(targetCount - tempCount)));
+
+                int currCount = (int)(targetCount - (targetCount - tempCount));
+                OnSearchProgressChanged(new ProgressEventArgs((int)targetCount, currCount));
             }
 
             return results;
