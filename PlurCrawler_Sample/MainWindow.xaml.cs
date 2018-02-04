@@ -42,11 +42,36 @@ namespace PlurCrawler_Sample
         public MainWindow()
         {
             InitializeComponent();
+
             this.Loaded += MainWindow_Loaded;
 
             btnSearch.Click += BtnSearch_Click;
 
+            cbGoogleService.Checked += CheckChanged;
+            cbGoogleService.Unchecked += CheckChanged;
+
+            cbTwitterService.Checked += CheckChanged;
+            cbTwitterService.Unchecked += CheckChanged;
+
+            cbYoutubeService.Checked += CheckChanged;
+            cbYoutubeService.Unchecked += CheckChanged;
+
+
             dict = new Dictionary<ISearcher, TaskProgressBar>();
+        }
+
+        private void CheckChanged(object sender, RoutedEventArgs e)
+        {
+            if (cbGoogleService.IsChecked.GetValueOrDefault() ||
+                cbTwitterService.IsChecked.GetValueOrDefault() ||
+                cbYoutubeService.IsChecked.GetValueOrDefault())
+            {
+                btnSearch.IsEnabled = true;
+            }
+            else
+            {
+                btnSearch.IsEnabled = false;
+            }
         }
 
         bool googleSearching = false,

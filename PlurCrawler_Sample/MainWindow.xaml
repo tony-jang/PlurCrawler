@@ -47,7 +47,7 @@
                     </Grid.RowDefinitions>
                     <TextBlock Margin="5,0" Text="검색어" Grid.Column="0" VerticalAlignment="Center"/>
                     <TextBox x:Name="tbQuery" Margin="10,0" Text="" Grid.Column="1" VerticalAlignment="Center"/>
-                    <Button x:Name="btnSearch" Grid.Column="2" Margin="5,0" Content="작업 시작" VerticalAlignment="Center" Padding="30,5"/>
+                    <Button x:Name="btnSearch" Grid.Column="2" Margin="5,0" Content="작업 시작" VerticalAlignment="Center" Padding="30,5" IsEnabled="False"/>
                     <Grid Grid.Row="1" Grid.ColumnSpan="2">
                         <WrapPanel HorizontalAlignment="Center">
                             <CheckBox x:Name="cbGoogleService" Margin="5" Content="구글 CSE"/>
