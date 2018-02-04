@@ -145,6 +145,7 @@
     <Compile Include="Format\Base\BaseFormatReturn.cs" />
     <Compile Include="Format\Base\IFormat.cs" />
     <Compile Include="Format\Common\OutputFormat.cs" />
+    <Compile Include="Format\JsonFormat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ResourceManager.cs" />
     <Compile Include="Search\Base\IDateSearchOption.cs" />
