@@ -3,11 +3,10 @@ using System.Linq;
 using System.Collections.Generic;
 
 using PlurCrawler.Extension;
-using PlurCrawler.Search.Base;
 using PlurCrawler.Attributes;
 using PlurCrawler.Search.Common;
 
-namespace PlurCrawler.Search
+namespace PlurCrawler.Search.Base
 {
     /// <summary>
     /// 기본 서쳐입니다.
