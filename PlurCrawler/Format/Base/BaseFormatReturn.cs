@@ -11,6 +11,6 @@ namespace PlurCrawler.Format.Base
     public abstract class BaseFormat<TResult, TReturn> : IFormat<TResult>
                                                          where TResult : ISearchResult
     {
-        public abstract TReturn Fomatting(TResult resultData);
+        public abstract TReturn Formatting(TResult resultData);
     }
 }
