@@ -61,7 +61,8 @@
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="300" MinWidth="300"/>
             </Grid.ColumnDefinitions>
             <TabControl x:Name="mainTabControl" SelectedIndex="1" BorderBrush="{x:Null}">
                 <TabControl.Resources>
@@ -87,9 +88,13 @@
                         Source="/PlurCrawler_Sample;component/Windows/VertificationManager.xaml" NavigationUIVisibility="Hidden"/>
                 </TabItem>
             </TabControl>
-            <Grid Grid.Column="1">
+
+            <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+            <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
+                    <RowDefinition Height="5"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid>
@@ -107,7 +112,10 @@
                         <ctrl:TaskProgressBar x:Name="itm" Title="Google CSE Search 작업" Message="검색을 대기 중입니다."/>
                     </ListView>
                 </Grid>
-                <Frame x:Name="frOption" Grid.Row="1" Source="/PlurCrawler_Sample;component/Windows/DetailsOption.xaml" NavigationUIVisibility="Hidden" />
+
+                <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch"/>
+
+                <Frame x:Name="frOption" Grid.Row="2" Source="/PlurCrawler_Sample;component/Windows/DetailsOption.xaml" NavigationUIVisibility="Hidden" />
             </Grid>
             
         </Grid>
