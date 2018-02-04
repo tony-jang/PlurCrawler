@@ -44,13 +44,20 @@ namespace PlurCrawler.Search.Base
                 return itm.LanguageString;
         }
 
-        public delegate void SearchProgressChangedDelegate(object sender, ProgressEventArgs args);
+        public delegate void SearchProgressDelegate(object sender, ProgressEventArgs args);
+        public delegate void SearchResultDelegate(object sender);
 
-        public event SearchProgressChangedDelegate SearchProgressChanged;
+        public event SearchProgressDelegate SearchProgressChanged;
+        public event SearchResultDelegate SearchFinished;
 
         internal void OnSearchProgressChanged(object sender, ProgressEventArgs args)
         {
             SearchProgressChanged?.Invoke(sender, args);
+        }
+
+        internal void OnSearchFinished(object sender)
+        {
+            SearchFinished?.Invoke(sender);
         }
     }
 }
