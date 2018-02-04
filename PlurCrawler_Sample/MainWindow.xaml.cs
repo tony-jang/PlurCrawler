@@ -107,6 +107,14 @@ namespace PlurCrawler_Sample
                 string googleKey = string.Empty,
                        googleID = string.Empty;
 
+                GoogleCSESearchOption option = null;
+                Dispatcher.Invoke(() =>
+                {
+                    // 옵션 초기화
+                    option = _detailsOption.GetGoogleCSESearchOption();
+                    option.Query = tbQuery.Text;
+                });
+
                 Dispatcher.Invoke(() =>
                 {
                     googleKey = _vertificationManager.GoogleAPIKey;
@@ -114,6 +122,7 @@ namespace PlurCrawler_Sample
 
                     var tb = new TaskProgressBar();
 
+                    tb.Maximum = option.SearchCount;
                     tb.Title = "Google CSE 검색";
                     tb.Message = "검색이 진행중입니다.";
 
@@ -124,13 +133,7 @@ namespace PlurCrawler_Sample
 
                 googleCSESearcher.Vertification(googleKey, googleID);
 
-                GoogleCSESearchOption option = null;
-                Dispatcher.Invoke(() =>
-                {
-                    // 옵션 초기화
-                    option = _detailsOption.GetGoogleCSESearchOption();
-                    option.Query = tbQuery.Text;
-                });
+
 
                 googleCSESearcher.SearchProgressChanged += GoogleCSESearcher_SearchProgressChanged;
                 googleCSESearcher.SearchFinished += GoogleCSESearcher_SearchFinished;
@@ -152,6 +155,7 @@ namespace PlurCrawler_Sample
             {
                 var itm = dict[sender as ISearcher];
                 itm.Value = itm.Maximum;
+                itm.Message = "검색이 완료되었습니다.";
             });
         }
 
