@@ -138,6 +138,7 @@ namespace PlurCrawler_Sample
                 var itm = dict[sender as ISearcher];
                 itm.Value = itm.Maximum;
                 itm.Message = "검색이 완료되었습니다.";
+                _vertificationManager.ChangeGoogleState(Common.VerifyType.Verified);
             });
         }
 

@@ -116,7 +116,7 @@ namespace PlurCrawler_Sample.Windows
             IsGoogleHidden = true;
 
             runGoogleAPIKey.Text = HiddenText;
-            ChangeGoogleState(VerifyType.Invalid);
+            ChangeGoogleState(VerifyType.NotChecked);
         }
 
         public void ChangeGoogleState(VerifyType verifyType)

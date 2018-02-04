@@ -29,9 +29,9 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <ctrl:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_google.png" Foreground="Red"/>
-            <ctrl:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_twitter.png" Grid.Column="1" Foreground="Red"/>
-            <ctrl:ImageTextBlock Text="인증되지 않음" Source="Resources/icon_youtube.png" Grid.Column="2" Foreground="Red"/>
+            <ctrl:ImageTextBlock x:Name="authGoogleCheck" Text="인증되지 않음" Source="Resources/icon_google.png" Foreground="Red"/>
+            <ctrl:ImageTextBlock x:Name="authTwitterCheck" Text="인증되지 않음" Source="Resources/icon_twitter.png" Grid.Column="1" Foreground="Red"/>
+            <ctrl:ImageTextBlock x:Name="authYoutubeCheck" Text="인증되지 않음" Source="Resources/icon_youtube.png" Grid.Column="2" Foreground="Red"/>
         </Grid>
         <Grid Grid.Row="1">
             <GroupBox Header="검색어 방식" Margin="5">
