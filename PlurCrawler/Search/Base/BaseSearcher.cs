@@ -5,20 +5,21 @@ using System.Collections.Generic;
 using PlurCrawler.Extension;
 using PlurCrawler.Search.Base;
 using PlurCrawler.Attributes;
+using PlurCrawler.Search.Common;
 
 namespace PlurCrawler.Search
 {
     /// <summary>
     /// 기본 서쳐입니다.
     /// </summary>
-    public abstract class BaseSearcher<TOption, TResult> where TOption : ISearchOption 
+    public abstract class BaseSearcher<TOption, TResult> where TOption : ISearchOption
                                                          where TResult : ISearchResult
     {
         /// <summary>
         /// 검색하려는 엔진이 인증되었는지에 대한 여부를 가져옵니다.
         /// </summary>
         public bool IsVerification { get; internal set; }
-        
+
         /// <summary>
         /// 검색을 실시합니다.
         /// </summary>
@@ -43,6 +44,15 @@ namespace PlurCrawler.Search
             else
                 return itm.LanguageString;
         }
-        
+
+        public delegate void SearchProgressChangedDelegate(ProgressEventArgs args);
+
+        public event SearchProgressChangedDelegate SearchProgressChanged;
+
+        internal void OnSearchProgressChanged(ProgressEventArgs args)
+        {
+            SearchProgressChanged?.Invoke(args);
+        }
+
     }
 }
