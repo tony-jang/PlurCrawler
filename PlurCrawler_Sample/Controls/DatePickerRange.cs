@@ -30,16 +30,16 @@ namespace PlurCrawler_Sample.Controls
             dpUntil = base.GetTemplateChild("dpUntil") as DatePicker;
 
 
-            dpSince.DisplayDateStart = new DateTime(2005, 1, 1);
-            dpUntil.DisplayDateStart = new DateTime(2005, 1, 1);
+            //dpSince.DisplayDateStart = new DateTime(2005, 1, 1);
+            //dpUntil.DisplayDateStart = new DateTime(2005, 1, 1);
 
-            dpSince.DisplayDateEnd = DateTime.Today;
-            dpUntil.DisplayDateEnd = DateTime.Today;
+            //dpSince.DisplayDateEnd = DateTime.Today;
+            //dpUntil.DisplayDateEnd = DateTime.Today;
         }
 
         public static DependencyProperty PropertyNameProperty = DependencyHelper.Register();
-        public static DependencyProperty StartDateTimeProperty = DependencyHelper.Register();
-        public static DependencyProperty EndDateTimeProperty = DependencyHelper.Register();
+        public static DependencyProperty SinceProperty = DependencyHelper.Register();
+        public static DependencyProperty UntilProperty = DependencyHelper.Register();
 
         public string PropertyName
         {
@@ -47,16 +47,16 @@ namespace PlurCrawler_Sample.Controls
             set => SetValue(PropertyNameProperty, value);
         }
 
-        public DateTime StartDateTime
+        public DateTime Since
         {
-            get => (DateTime)GetValue(StartDateTimeProperty);
-            set => SetValue(StartDateTimeProperty, value);
+            get => (DateTime)GetValue(SinceProperty);
+            set => SetValue(SinceProperty, value);
         }
 
-        public DateTime EndDateTime
+        public DateTime Until
         {
-            get => (DateTime)GetValue(EndDateTimeProperty);
-            set => SetValue(EndDateTimeProperty, value);
+            get => (DateTime)GetValue(UntilProperty);
+            set => SetValue(UntilProperty, value);
         }
     }
 }
