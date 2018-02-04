@@ -146,6 +146,25 @@ namespace PlurCrawler_Sample.Windows
             runGoogleAvailable.Text = text;
         }
 
+        public void ChangeGoogleState(bool enabled)
+        {
+            bool flag;
+            if (enabled)
+            {
+                signGoogle.Visibility = Visibility.Hidden;
+                flag = true;
+            }
+            else
+            {
+                signGoogle.Visibility = Visibility.Visible;
+                flag = false;
+            }
+
+            tbGoogleInfo.IsEnabled = flag;
+            tbEngineID.IsEnabled = flag;
+            btnGoogleOK.IsEnabled = flag;
+        }
+
         private void BtnGoogleOK_Click(object sender, RoutedEventArgs e)
         {
             SetGoogleKey(tbGoogleKey.Text, tbEngineID.Text);
