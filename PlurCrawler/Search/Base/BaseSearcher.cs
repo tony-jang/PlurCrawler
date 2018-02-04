@@ -12,8 +12,8 @@ namespace PlurCrawler.Search
     /// <summary>
     /// 기본 서쳐입니다.
     /// </summary>
-    public abstract class BaseSearcher<TOption, TResult> where TOption : ISearchOption
-                                                         where TResult : ISearchResult
+    public abstract class BaseSearcher<TOption, TResult> : ISearcher where TOption : ISearchOption
+                                                                     where TResult : ISearchResult
     {
         /// <summary>
         /// 검색하려는 엔진이 인증되었는지에 대한 여부를 가져옵니다.
@@ -53,6 +53,5 @@ namespace PlurCrawler.Search
         {
             SearchProgressChanged?.Invoke(sender, args);
         }
-
     }
 }
