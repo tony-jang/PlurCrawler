@@ -100,7 +100,6 @@ namespace PlurCrawler.Search.Services.GoogleCSE
 
             while ((paging != null) && tempCount > 0)
             {
-                OnSearchProgressChanged(new ProgressEventArgs((int)targetCount, (int)(targetCount - tempCount)));
                 request.Start = count * 10 + 1 + offset;
                 if ((tempCount % 10) == 0)
                     request.Num = 10;
@@ -114,6 +113,7 @@ namespace PlurCrawler.Search.Services.GoogleCSE
 
                 count++;
                 tempCount -= request.Num.Value;
+                OnSearchProgressChanged(new ProgressEventArgs((int)targetCount, (int)(targetCount - tempCount)));
             }
 
             return results;
