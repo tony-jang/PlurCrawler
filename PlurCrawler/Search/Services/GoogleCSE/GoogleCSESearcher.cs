@@ -4,6 +4,7 @@ using System.Linq;
 
 using PlurCrawler.Search.Base;
 using PlurCrawler.Search;
+using PlurCrawler.Search.Common;
 
 using Google.Apis.Customsearch.v1;
 using Google.Apis.Customsearch.v1.Data;
@@ -95,13 +96,16 @@ namespace PlurCrawler.Search.Services.GoogleCSE
             IList<Result> paging = new List<Result>();
             int count = 0;
 
-            while ((paging != null) && targetCount > 0)
+            long tempCount = targetCount;
+
+            while ((paging != null) && tempCount > 0)
             {
+                OnSearchProgressChanged(new ProgressEventArgs((int)targetCount, (int)(targetCount - tempCount)));
                 request.Start = count * 10 + 1 + offset;
-                if ((targetCount % 10) == 0)
+                if ((tempCount % 10) == 0)
                     request.Num = 10;
                 else
-                    request.Num = (targetCount % 10);
+                    request.Num = (tempCount % 10);
 
                 paging = request.Execute().Items;
 
@@ -109,7 +113,7 @@ namespace PlurCrawler.Search.Services.GoogleCSE
                     results.AddRange(paging);
 
                 count++;
-                targetCount -= request.Num.Value;
+                tempCount -= request.Num.Value;
             }
 
             return results;
