@@ -109,7 +109,6 @@
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
                             </Style>
                         </ListBox.ItemContainerStyle>
-                        <ctrl:TaskProgressBar x:Name="itm" Title="Google CSE Search 작업" Message="검색을 대기 중입니다."/>
                     </ListView>
                 </Grid>
 

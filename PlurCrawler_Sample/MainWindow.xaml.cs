@@ -47,24 +47,6 @@ namespace PlurCrawler_Sample
             btnSearch.Click += BtnSearch_Click;
 
             dict = new Dictionary<ISearcher, TaskProgressBar>();
-
-            itm.Maximum = 100;
-            Thread thr = new Thread(() =>
-            {
-                int i = 0;
-                while (i <= 100)
-                {
-                    Dispatcher.Invoke(() => itm.Value = i++);
-                    Thread.Sleep(20);
-                }
-
-                Dispatcher.Invoke(() =>
-                {
-                    _detailsOption.signGoogle.Visibility = Visibility.Hidden;
-                });
-            });
-
-            thr.Start();
         }
 
         bool googleSearching = false,
