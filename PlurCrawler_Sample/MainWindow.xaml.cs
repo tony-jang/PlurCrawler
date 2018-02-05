@@ -63,8 +63,7 @@ namespace PlurCrawler_Sample
             GoogleCSESearchOption opt = serializer.Deserialize(AppSetting.Default.GoogleOption);
 
             _detailsOption.LoadGoogle(opt);
-
-
+            
             // 인증 정보 불러오기
 
             if (!string.IsNullOrEmpty(AppSetting.Default.GoogleCredentials))
@@ -76,14 +75,11 @@ namespace PlurCrawler_Sample
 
                 _vertManager.ChangeGoogleState(AppSetting.Default.GoogleVertified);
             }
-
-
+            
             #endregion
 
 #if DEBUG
-
-
-
+            
             //foreach (PropertyInfo mi in typeof(GoogleCSESearchResult).GetProperties())
             //{
             //Console.Write("test");
@@ -169,6 +165,8 @@ namespace PlurCrawler_Sample
             {
                 var googleCSESearcher = new GoogleCSESearcher();
 
+                bool isCanceled = false;
+
                 string googleKey = string.Empty,
                        googleID = string.Empty;
 
@@ -178,7 +176,6 @@ namespace PlurCrawler_Sample
                     // 옵션 초기화
                     option = _detailsOption.GetGoogleCSESearchOption();
                     option.Query = tbQuery.Text;
-
                 });
 
                 Dispatcher.Invoke(() =>
@@ -198,20 +195,27 @@ namespace PlurCrawler_Sample
 
                     if (option.OutputServices == PlurCrawler.Format.Common.OutputFormat.None)
                     {
-                        tb.Maximum = 0;
+                        tb.Maximum = 1;
                         tb.Message = "결과를 내보낼 위치가 없습니다.";
-                        return;
+                        isCanceled = true;
                     }
                 });
 
-                googleCSESearcher.Vertification(googleKey, googleID);
-                
-                googleCSESearcher.SearchProgressChanged += GoogleCSESearcher_SearchProgressChanged;
-                googleCSESearcher.SearchFinished += GoogleCSESearcher_SearchFinished;
+                if (isCanceled)
+                {
+                    return;
+                }
+                else
+                {
+                    googleCSESearcher.Vertification(googleKey, googleID);
 
-                IEnumerable<GoogleCSESearchResult> googleResult = googleCSESearcher.Search(option);
+                    googleCSESearcher.SearchProgressChanged += GoogleCSESearcher_SearchProgressChanged;
+                    googleCSESearcher.SearchFinished += GoogleCSESearcher_SearchFinished;
 
-                ExportManager.JsonExport(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "TestFile.json"), googleResult);
+                    IEnumerable<GoogleCSESearchResult> googleResult = googleCSESearcher.Search(option);
+
+                    ExportManager.JsonExport(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "TestFile.json"), googleResult);
+                }
 
                 Dispatcher.Invoke(() => {
                     googleSearching = false;
