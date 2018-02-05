@@ -2,6 +2,8 @@
 using PlurCrawler.Search.Base;
 using PlurCrawler.Common;
 using PlurCrawler.Format.Common;
+using System.Xml.Serialization;
+using System.ComponentModel;
 
 namespace PlurCrawler.Search.Services.GoogleCSE
 {
@@ -40,6 +42,16 @@ namespace PlurCrawler.Search.Services.GoogleCSE
         /// <summary>
         /// 출력할 서비스들을 선택합니다.
         /// </summary>
+        [XmlIgnore]
         public OutputFormat OutputServices { get; set; }
+
+        [XmlElement("OutputServices")]
+        [EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
+        public int OutputServicesInt
+        {
+            get => (int)OutputServices;
+            set => OutputServices = (OutputFormat)value;
+        }
+        
     }
 }

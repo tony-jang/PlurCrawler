@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyTitle("PlurCrawler_Sample")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Plurdis Comp")]
 [assembly: AssemblyProduct("PlurCrawler_Sample")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
