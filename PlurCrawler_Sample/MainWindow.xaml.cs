@@ -24,10 +24,13 @@ using PlurCrawler.Search.Common;
 using PlurCrawler.Tokens.Credentials;
 using PlurCrawler.Tokens.Tokenizer;
 using PlurCrawler_Sample.Windows;
-
-using Newtonsoft.Json;
 using PlurCrawler.Search.Base;
 using PlurCrawler_Sample.Controls;
+using PlurCrawler_Sample.Common;
+
+using Newtonsoft.Json;
+
+using AppSetting = PlurCrawler_Sample.Properties.Settings;
 
 namespace PlurCrawler_Sample
 {
@@ -44,6 +47,7 @@ namespace PlurCrawler_Sample
             InitializeComponent();
 
             this.Loaded += MainWindow_Loaded;
+            this.Closing += MainWindow_Closing;
 
             btnSearch.Click += BtnSearch_Click;
 
@@ -55,9 +59,16 @@ namespace PlurCrawler_Sample
 
             cbYoutubeService.Checked += CheckChanged;
             cbYoutubeService.Unchecked += CheckChanged;
-
-
+            
             dict = new Dictionary<ISearcher, TaskProgressBar>();
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var serializer = new ObjectSerializer<GoogleCSESearchOption>();
+
+            AppSetting.Default.GoogleOption = serializer.Serialize(_detailsOption.GetGoogleCSESearchOption());
+            AppSetting.Default.Save();
         }
 
         private void CheckChanged(object sender, RoutedEventArgs e)
@@ -193,19 +204,15 @@ namespace PlurCrawler_Sample
             _vertificationManager = (VertificationManager)frVertManager.Content;
 
             #endregion
-            
-#if DEBUG
-            _detailsOption.LoadGoogle(new GoogleCSESearchOption()
-            {
-                DateRange = new PlurCrawler.Common.DateRange(DateTime.Today, DateTime.Today),
-                Offset = 3,
-                SearchCount = 15,
-                SplitWithDate = false
-            });
-            
-            var setting = _detailsOption.GetGoogleCSESearchOption();
 
-            Console.WriteLine("test");
+#if DEBUG
+
+
+            var serializer = new ObjectSerializer<GoogleCSESearchOption>();
+
+            GoogleCSESearchOption opt = serializer.Deserialize(AppSetting.Default.GoogleOption);
+
+            _detailsOption.LoadGoogle(opt);
 
             //foreach (PropertyInfo mi in typeof(GoogleCSESearchResult).GetProperties())
             //{
