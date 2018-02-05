@@ -132,6 +132,7 @@ namespace PlurCrawler_Sample
                     // 옵션 초기화
                     option = _detailsOption.GetGoogleCSESearchOption();
                     option.Query = tbQuery.Text;
+
                 });
 
                 Dispatcher.Invoke(() =>
@@ -139,14 +140,22 @@ namespace PlurCrawler_Sample
                     googleKey = _vertificationManager.GoogleAPIKey;
                     googleID = _vertificationManager.GoogleEngineID;
 
-                    var tb = new TaskProgressBar();
+                    var tb = new TaskProgressBar()
+                    {
+                        Title = "Google CSE 검색",
+                        Maximum = option.SearchCount,
+                        Message = "검색이 진행중입니다."
+                    };
 
-                    tb.Maximum = option.SearchCount;
-                    tb.Title = "Google CSE 검색";
-                    tb.Message = "검색이 진행중입니다.";
 
+                    if (option.OutputServices == PlurCrawler.Format.Common.OutputFormat.None)
+                    {
+                        tb.Maximum = 0;
+                        tb.Message = "검색을 내보낼 위치가 없으므로 검색을 진행하지 않습니다.";
+                        return;
+                    }
+                    
                     dict[googleCSESearcher] = tb;
-
                     lvTask.Items.Add(tb);
                 });
 
@@ -176,7 +185,7 @@ namespace PlurCrawler_Sample
                 var itm = dict[sender as ISearcher];
                 itm.Value = itm.Maximum;
                 itm.Message = "검색이 완료되었습니다.";
-                _vertificationManager.ChangeGoogleState(Common.VerifyType.Verified);
+                _vertificationManager.ChangeGoogleState(VerifyType.Verified);
             });
         }
 
