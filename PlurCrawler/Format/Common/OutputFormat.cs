@@ -8,6 +8,7 @@ namespace PlurCrawler.Format.Common
 {
     public enum OutputFormat
     {
+        None = 0,
         CSV = 1,
         Json = 2,
         MySQL = 4,
