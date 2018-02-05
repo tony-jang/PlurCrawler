@@ -36,7 +36,7 @@ namespace PlurCrawler_Sample.Windows
         public void LoadGoogle(GoogleCSESearchOption option)
         {
             if (option == null)
-                return;
+                option = GoogleCSESearchOption.GetDefault();
             drpGoogle.Since = option.DateRange.Since.GetValueOrDefault();
             drpGoogle.Until = option.DateRange.Until.GetValueOrDefault();
             tbGooglePageOffset.Text = option.Offset.ToString();

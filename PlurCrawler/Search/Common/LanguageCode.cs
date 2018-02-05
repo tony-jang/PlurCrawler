@@ -422,7 +422,6 @@ namespace PlurCrawler.Search
         /// </summary>
         [LanguageNote(ServiceKind.GoogleCSE, "zu")]
         Zulu,
-
-
+        All,
     }
 }

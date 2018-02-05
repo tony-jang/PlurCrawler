@@ -9,7 +9,11 @@ namespace PlurCrawler.Search.Services.GoogleCSE
 {
     public class GoogleCSESearchOption : IDateSearchOption
     {
-        public GoogleCSESearchOption GetDefault()
+        /// <summary>
+        /// <see cref="GoogleCSESearchOption"/>의 기본 설정 값을 가져옵니다.
+        /// </summary>
+        /// <returns></returns>
+        public static GoogleCSESearchOption GetDefault()
         {
             return new GoogleCSESearchOption()
             {
@@ -19,7 +23,7 @@ namespace PlurCrawler.Search.Services.GoogleCSE
                 UseDateSearch = false,
                 OutputServices = OutputFormat.Json,
                 Offset = 0,
-                Language = LanguageCode.Korean
+                Language = LanguageCode.All
             };
         }
 
