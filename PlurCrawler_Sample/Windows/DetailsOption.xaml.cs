@@ -66,7 +66,9 @@ namespace PlurCrawler_Sample.Windows
         {
             CheckBox[] cbs = { cbOutput1, cbOutput2, cbOutput3, cbOutput4 };
 
-            return (OutputFormat)cbs.Select(i => int.Parse(i.Tag.ToString())).Sum();
+            return (OutputFormat)cbs.Where(i => i.IsChecked.GetValueOrDefault())
+                .Select(i => int.Parse(i.Tag.ToString()))
+                .Sum();
         }
 
         public void GoogleEnableChange(bool enable)

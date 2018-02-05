@@ -124,8 +124,8 @@ namespace PlurCrawler_Sample
 
             // 인증 정보 저장
 
-            if (string.IsNullOrEmpty(_vertManager.GoogleAPIKey) ||
-                string.IsNullOrEmpty(_vertManager.GoogleEngineID))
+            if (!(string.IsNullOrEmpty(_vertManager.GoogleAPIKey) ||
+                string.IsNullOrEmpty(_vertManager.GoogleEngineID)))
             {
                 AppSetting.Default.GoogleCredentials = $"{_vertManager.GoogleAPIKey}//{_vertManager.GoogleEngineID}";
                 AppSetting.Default.GoogleVertified = _vertManager.GoogleVerifyType;
@@ -208,27 +208,24 @@ namespace PlurCrawler_Sample
                         Message = "검색이 진행중입니다."
                     };
 
+                    lvTask.Items.Add(tb);
+                    dict[googleCSESearcher] = tb;
 
                     if (option.OutputServices == PlurCrawler.Format.Common.OutputFormat.None)
                     {
                         tb.Maximum = 0;
-                        tb.Message = "검색을 내보낼 위치가 없으므로 검색을 진행하지 않습니다.";
+                        tb.Message = "결과를 내보낼 위치가 없습니다.";
                         return;
                     }
-                    
-                    dict[googleCSESearcher] = tb;
-                    lvTask.Items.Add(tb);
                 });
 
                 googleCSESearcher.Vertification(googleKey, googleID);
-
-
-
+                
                 googleCSESearcher.SearchProgressChanged += GoogleCSESearcher_SearchProgressChanged;
                 googleCSESearcher.SearchFinished += GoogleCSESearcher_SearchFinished;
 
                 IEnumerable<GoogleCSESearchResult> googleResult = googleCSESearcher.Search(option);
-
+                
                 Dispatcher.Invoke(() => {
                     googleSearching = false;
                     _detailsOption.GoogleEnableChange(true);
