@@ -25,6 +25,6 @@ namespace PlurCrawler.Search.Base
         /// <summary>
         /// 날짜형 검색을 사용할지에 대한 여부를 결정합니다.
         /// </summary>
-        bool UseDate { get; set; }
+        bool UseDateSearch { get; set; }
     }
 }
