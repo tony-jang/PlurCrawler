@@ -37,10 +37,13 @@ namespace PlurCrawler_Sample.Windows
         {
             if (option == null)
                 option = GoogleCSESearchOption.GetDefault();
+
             drpGoogle.Since = option.DateRange.Since.GetValueOrDefault();
             drpGoogle.Until = option.DateRange.Until.GetValueOrDefault();
+
             tbGooglePageOffset.Text = option.Offset.ToString();
             tbGoogleSearchCount.Text = option.SearchCount.ToString();
+
             if (option.SplitWithDate)
                 rbGoogleSplitWithDate.IsChecked = true;
             else
