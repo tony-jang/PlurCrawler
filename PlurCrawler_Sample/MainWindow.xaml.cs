@@ -40,7 +40,7 @@ namespace PlurCrawler_Sample
     public partial class MainWindow : Window
     {
         DetailsOption _detailsOption;
-        VertificationManager _vertificationManager;
+        VertificationManager _vertManager;
 
         public MainWindow()
         {
@@ -68,17 +68,36 @@ namespace PlurCrawler_Sample
             #region [  Initalization  ]
 
             _detailsOption = (DetailsOption)frOption.Content;
-            _vertificationManager = (VertificationManager)frVertManager.Content;
+            _vertManager = (VertificationManager)frVertManager.Content;
+
+            #endregion
+
+            #region [  Load Setting  ]
+
+            var serializer = new ObjectSerializer<GoogleCSESearchOption>();
+            GoogleCSESearchOption opt = serializer.Deserialize(AppSetting.Default.GoogleOption);
+
+            _detailsOption.LoadGoogle(opt);
+
+
+            // 인증 정보 불러오기
+
+            if (!string.IsNullOrEmpty(AppSetting.Default.GoogleCredentials))
+            {
+                string[] credentials =
+                    AppSetting.Default.GoogleCredentials.Split(new string[] { "//" }, StringSplitOptions.None);
+
+                _vertManager.SetGoogleKey(credentials[0], credentials[1]);
+
+                _vertManager.ChangeGoogleState(AppSetting.Default.GoogleVertified);
+            }
+
 
             #endregion
 
 #if DEBUG
 
-            var serializer = new ObjectSerializer<GoogleCSESearchOption>();
 
-            GoogleCSESearchOption opt = serializer.Deserialize(AppSetting.Default.GoogleOption);
-
-            _detailsOption.LoadGoogle(opt);
 
             //foreach (PropertyInfo mi in typeof(GoogleCSESearchResult).GetProperties())
             //{
@@ -95,10 +114,23 @@ namespace PlurCrawler_Sample
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            #region [  세팅 저장  ]
+            #region [  Save Setting  ]
+
+            // 옵션 저장
 
             var serializer = new ObjectSerializer<GoogleCSESearchOption>();
             AppSetting.Default.GoogleOption = serializer.Serialize(_detailsOption.GetGoogleCSESearchOption());
+
+
+            // 인증 정보 저장
+
+            if (string.IsNullOrEmpty(_vertManager.GoogleAPIKey) ||
+                string.IsNullOrEmpty(_vertManager.GoogleEngineID))
+            {
+                AppSetting.Default.GoogleCredentials = $"{_vertManager.GoogleAPIKey}//{_vertManager.GoogleEngineID}";
+                AppSetting.Default.GoogleVertified = _vertManager.GoogleVerifyType;
+            }
+
             AppSetting.Default.Save();
 
             #endregion
@@ -146,7 +178,7 @@ namespace PlurCrawler_Sample
 
             googleSearching = true;
             _detailsOption.GoogleEnableChange(false);
-            _vertificationManager.ChangeEditable(false);
+            _vertManager.ChangeEditable(false);
 
             Thread thr = new Thread(() =>
             {
@@ -166,8 +198,8 @@ namespace PlurCrawler_Sample
 
                 Dispatcher.Invoke(() =>
                 {
-                    googleKey = _vertificationManager.GoogleAPIKey;
-                    googleID = _vertificationManager.GoogleEngineID;
+                    googleKey = _vertManager.GoogleAPIKey;
+                    googleID = _vertManager.GoogleEngineID;
 
                     var tb = new TaskProgressBar()
                     {
@@ -200,7 +232,7 @@ namespace PlurCrawler_Sample
                 Dispatcher.Invoke(() => {
                     googleSearching = false;
                     _detailsOption.GoogleEnableChange(true);
-                    _vertificationManager.ChangeEditable(true);
+                    _vertManager.ChangeEditable(true);
                 });
             });
 
@@ -214,7 +246,7 @@ namespace PlurCrawler_Sample
                 var itm = dict[sender as ISearcher];
                 itm.Value = itm.Maximum;
                 itm.Message = "검색이 완료되었습니다.";
-                _vertificationManager.ChangeGoogleState(VerifyType.Verified);
+                _vertManager.ChangeGoogleState(VerifyType.Verified);
             });
         }
 

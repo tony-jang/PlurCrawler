@@ -8,8 +8,8 @@ namespace PlurCrawler_Sample.Common
 {
     public enum VerifyType
     {
-        Verified,
         NotChecked,
-        Invalid
+        Invalid,
+        Verified,
     }
 }

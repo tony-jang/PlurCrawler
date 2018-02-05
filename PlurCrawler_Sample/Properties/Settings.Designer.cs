@@ -58,5 +58,29 @@ namespace PlurCrawler_Sample.Properties {
                 this["GoogleOption"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string GoogleCredentials {
+            get {
+                return ((string)(this["GoogleCredentials"]));
+            }
+            set {
+                this["GoogleCredentials"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NotChecked")]
+        public global::PlurCrawler_Sample.Common.VerifyType GoogleVertified {
+            get {
+                return ((global::PlurCrawler_Sample.Common.VerifyType)(this["GoogleVertified"]));
+            }
+            set {
+                this["GoogleVertified"] = value;
+            }
+        }
     }
 }

@@ -139,6 +139,8 @@ namespace PlurCrawler_Sample.Windows
             ChangeGoogleState(VerifyType.NotChecked);
         }
 
+        public VerifyType GoogleVerifyType { get; internal set; }
+
         public void ChangeGoogleState(VerifyType verifyType)
         {
             Brush brush;
@@ -159,6 +161,8 @@ namespace PlurCrawler_Sample.Windows
                     text = "유효하지 않음";
                     break;
             }
+
+            GoogleVerifyType = verifyType;
 
             runGoogleAPIKey.Foreground = brush;
             runGoogleAvailable.Foreground = brush;

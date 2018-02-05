@@ -11,5 +11,11 @@
     <Setting Name="GoogleOption" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="GoogleCredentials" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="GoogleVertified" Type="PlurCrawler_Sample.Common.VerifyType" Scope="User">
+      <Value Profile="(Default)">NotChecked</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
