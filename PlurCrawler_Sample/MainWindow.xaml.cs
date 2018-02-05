@@ -76,13 +76,9 @@ namespace PlurCrawler_Sample
             if (cbGoogleService.IsChecked.GetValueOrDefault() ||
                 cbTwitterService.IsChecked.GetValueOrDefault() ||
                 cbYoutubeService.IsChecked.GetValueOrDefault())
-            {
                 btnSearch.IsEnabled = true;
-            }
             else
-            {
                 btnSearch.IsEnabled = false;
-            }
         }
 
         bool googleSearching = false,
