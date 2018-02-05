@@ -146,7 +146,7 @@ namespace PlurCrawler_Sample
 
             googleSearching = true;
             _detailsOption.GoogleEnableChange(false);
-            _vertificationManager.ChangeGoogleState(false);
+            _vertificationManager.ChangeEditable(false);
 
             Thread thr = new Thread(() =>
             {
@@ -200,7 +200,7 @@ namespace PlurCrawler_Sample
                 Dispatcher.Invoke(() => {
                     googleSearching = false;
                     _detailsOption.GoogleEnableChange(true);
-                    _vertificationManager.ChangeGoogleState(true);
+                    _vertificationManager.ChangeEditable(true);
                 });
             });
 

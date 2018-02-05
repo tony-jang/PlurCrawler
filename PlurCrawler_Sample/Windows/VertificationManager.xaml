@@ -21,13 +21,16 @@
                         <Grid>
                             <StackPanel Margin="10">
                                 <StackPanel>
-                                    <TextBlock x:Name="tbGoogleInfo"  Text="구글 인증을 위한 API Key를 입력해주세요."/>
+                                    <TextBlock x:Name="tbGoogleInfo"  Text="구글 인증을 위한 API Key와 Engine ID를 입력해주세요."/>
                                     <controls:PropertyTextBox PropertyName="API Key" x:Name="tbGoogleKey" Margin="0,10,0,0"/>
                                     <controls:PropertyTextBox PropertyName="Engine ID" x:Name="tbEngineID" Margin="0,10,0,0"/>
-                                    <Button x:Name="btnGoogleOK" Content="확인" Margin="0,5" Padding="20,5" HorizontalAlignment="Right"/>
+                                    <Grid>
+                                        <TextBlock x:Name="tbGoogleMsg" Text="API Key 또는 Engine ID는 빈칸일 수 없습니다." Foreground="Red" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Hidden"/>
+                                        <Button x:Name="btnGoogleOK" Content="확인" Margin="0,5" Padding="20,5" HorizontalAlignment="Right"/>
+                                    </Grid>
                                 </StackPanel>
                             </StackPanel>
-                            <Grid x:Name="signGoogle" Background="#CCFFFFFF">
+                            <Grid x:Name="signGoogle" Background="#CCFFFFFF" Visibility="Hidden">
                                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center">
                                     해당 서비스에서 검색을 수행중 일때에는<LineBreak/>검색 API 토큰 변경이 불가합니다.
                                 </TextBlock>
@@ -48,17 +51,17 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock TextTrimming="CharacterEllipsis" VerticalAlignment="Center">
-                                        API Key : <Run x:Name="runGoogleAPIKey" Text="AIzaSyDuJa0F9nJzUwTOJyPZeBqkbEPwHoxwTG4" Foreground="Green"/>
+                                        API Key : <Run x:Name="runGoogleAPIKey" Text="API Key가 입력되지 않음" Foreground="Red"/>
                                     </TextBlock>    
                                     <Button x:Name="btnGoogleViewHidden" Grid.Column="1" Content="숨겨진 키 보기/감추기" Padding="10,5"/>
                                 </Grid>
 
                                 <TextBlock Margin="0,10,0,0" TextTrimming="CharacterEllipsis" Grid.Column="1" VerticalAlignment="Center">
-                                    Engine ID : <Run x:Name="runEngineID" Text="010840099607507232751:bvvrumuuuqw" Foreground="Green"/>
+                                    Engine ID : <Run x:Name="runEngineID" Text="Engine ID가 입력되지 않음" Foreground="Red"/>
                                 </TextBlock>
                                 
                                 <TextBlock Margin="0,10,0,0">
-                                    유효성 : <Run x:Name="runGoogleAvailable" Text="인증됨" Foreground="Green"/>
+                                    유효성 : <Run x:Name="runGoogleAvailable" Text="인증되지 않음" Foreground="Red"/>
                                 </TextBlock>
 
                                 <TextBlock Margin="0,10,0,0" TextWrapping="Wrap">

@@ -106,9 +106,27 @@ namespace PlurCrawler_Sample.Windows
         /// </summary>
         public string GoogleEngineID { get; private set; }
 
+        /// <summary>
+        /// 구글 키를 세팅합니다.
+        /// </summary>
+        /// <param name="key">Google API Key입니다.</param>
+        /// <param name="googleEngineId">Google Engine Id입니다.</param>
         public void SetGoogleKey(string key, string googleEngineId)
         {
             tbGoogleKey.Clear();
+            tbEngineID.Clear();
+            
+            if (string.IsNullOrEmpty(key) ||
+                string.IsNullOrEmpty(googleEngineId))
+            {
+                tbGoogleMsg.Visibility = Visibility.Visible;
+                tbGoogleMsg.Text = "API Key 또는 Engine ID는 빈칸일 수 없습니다.";
+                return;
+            }
+            else
+            {
+                tbGoogleMsg.Visibility = Visibility.Hidden;
+            }
 
             GoogleAPIKey = key;
             GoogleEngineID = googleEngineId;
@@ -116,6 +134,8 @@ namespace PlurCrawler_Sample.Windows
             IsGoogleHidden = true;
 
             runGoogleAPIKey.Text = HiddenText;
+            runEngineID.Text = GoogleEngineID;
+
             ChangeGoogleState(VerifyType.NotChecked);
         }
 
@@ -130,7 +150,7 @@ namespace PlurCrawler_Sample.Windows
                     text = "인증됨";
                     break;
                 case VerifyType.NotChecked:
-                    brush = Brushes.Orange;
+                    brush = Brushes.DarkOrange;
                     text = "확인되지 않음";
                     break;
                 case VerifyType.Invalid:
@@ -139,6 +159,7 @@ namespace PlurCrawler_Sample.Windows
                     text = "유효하지 않음";
                     break;
             }
+
             runGoogleAPIKey.Foreground = brush;
             runGoogleAvailable.Foreground = brush;
             runEngineID.Foreground = brush;
@@ -146,7 +167,7 @@ namespace PlurCrawler_Sample.Windows
             runGoogleAvailable.Text = text;
         }
 
-        public void ChangeGoogleState(bool enabled)
+        public void ChangeEditable(bool enabled)
         {
             bool flag;
             if (enabled)
@@ -179,13 +200,6 @@ namespace PlurCrawler_Sample.Windows
 
             IsGoogleHidden = !IsGoogleHidden;
         }
-
-
         #endregion
-
-        private void Button_Click()
-        {
-
-        }
     }
 }
