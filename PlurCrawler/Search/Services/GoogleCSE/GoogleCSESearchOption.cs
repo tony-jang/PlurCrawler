@@ -9,6 +9,20 @@ namespace PlurCrawler.Search.Services.GoogleCSE
 {
     public class GoogleCSESearchOption : IDateSearchOption
     {
+        public GoogleCSESearchOption GetDefault()
+        {
+            return new GoogleCSESearchOption()
+            {
+                DateRange = new DateRange(),
+                SearchCount = 10,
+                SplitWithDate = false,
+                UseDateSearch = false,
+                OutputServices = OutputFormat.Json,
+                Offset = 0,
+                Language = LanguageCode.Korean
+            };
+        }
+
         /// <summary>
         /// 검색할 검색어입니다.
         /// </summary>

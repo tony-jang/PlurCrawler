@@ -63,12 +63,45 @@ namespace PlurCrawler_Sample
             dict = new Dictionary<ISearcher, TaskProgressBar>();
         }
 
-        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            #region [  Initalization  ]
+
+            _detailsOption = (DetailsOption)frOption.Content;
+            _vertificationManager = (VertificationManager)frVertManager.Content;
+
+            #endregion
+
+#if DEBUG
+
             var serializer = new ObjectSerializer<GoogleCSESearchOption>();
 
+            GoogleCSESearchOption opt = serializer.Deserialize(AppSetting.Default.GoogleOption);
+
+            _detailsOption.LoadGoogle(opt);
+
+            //foreach (PropertyInfo mi in typeof(GoogleCSESearchResult).GetProperties())
+            //{
+            //Console.Write("test");
+            //string s = (string)GetPropValue(new GoogleCSESearchResult()
+            //{
+            //    OriginalURL = "http://naver.com"
+            //}, "OriginalURL");
+
+            //MessageBox.Show(s);
+            //}
+#endif
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            #region [  세팅 저장  ]
+
+            var serializer = new ObjectSerializer<GoogleCSESearchOption>();
             AppSetting.Default.GoogleOption = serializer.Serialize(_detailsOption.GetGoogleCSESearchOption());
             AppSetting.Default.Save();
+
+            #endregion
         }
 
         private void CheckChanged(object sender, RoutedEventArgs e)
@@ -199,37 +232,6 @@ namespace PlurCrawler_Sample
         public static object GetPropValue(object src, string propName)
         {
             return src.GetType().GetProperty(propName).GetValue(src, null);
-        }
-
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            #region [  Initalization  ]
-
-            _detailsOption = (DetailsOption)frOption.Content;
-            _vertificationManager = (VertificationManager)frVertManager.Content;
-
-            #endregion
-
-#if DEBUG
-
-
-            var serializer = new ObjectSerializer<GoogleCSESearchOption>();
-
-            GoogleCSESearchOption opt = serializer.Deserialize(AppSetting.Default.GoogleOption);
-
-            _detailsOption.LoadGoogle(opt);
-
-            //foreach (PropertyInfo mi in typeof(GoogleCSESearchResult).GetProperties())
-            //{
-            //Console.Write("test");
-            //string s = (string)GetPropValue(new GoogleCSESearchResult()
-            //{
-            //    OriginalURL = "http://naver.com"
-            //}, "OriginalURL");
-
-            //MessageBox.Show(s);
-            //}
-#endif
         }
     }
 }
