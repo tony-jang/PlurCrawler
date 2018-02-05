@@ -52,6 +52,10 @@ namespace PlurCrawler.Search.Services.GoogleCSE
             get => (int)OutputServices;
             set => OutputServices = (OutputFormat)value;
         }
-        
+
+        /// <summary>
+        /// 날짜형 검색을 사용할지에 대한 여부를 결정합니다.
+        /// </summary>
+        public bool UseDate { get; set; }
     }
 }

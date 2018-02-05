@@ -45,5 +45,10 @@ namespace PlurCrawler.Search.Services.Youtube
         /// 출력할 서비스들을 선택합니다.
         /// </summary>
         public OutputFormat OutputServices { get; set; }
+
+        /// <summary>
+        /// 날짜형 검색을 사용할지에 대한 여부를 결정합니다.
+        /// </summary>
+        public bool UseDate { get; set; }
     }
 }
