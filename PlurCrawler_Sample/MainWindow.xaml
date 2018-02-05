@@ -64,40 +64,67 @@
                 <ColumnDefinition Width="5"/>
                 <ColumnDefinition Width="300" MinWidth="300"/>
             </Grid.ColumnDefinitions>
-            <TabControl x:Name="mainTabControl" SelectedIndex="1" BorderBrush="{x:Null}">
-                <TabControl.Resources>
-                    <Style TargetType="{x:Type TabItem}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type TabItem}">
-                                    <ContentPresenter Content="{TemplateBinding ContentTemplate}"/>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style> 
-                </TabControl.Resources>
-                <TabItem x:Name="tiLog">
-                    <ListView x:Name="lvLog">
-                        <ListViewItem Content="[System] 검색 시스템을 초기화중입니다."/>
-                        <ListViewItem Content="[System] ....."/>
-                    </ListView>
-                </TabItem>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
 
-                <TabItem x:Name="tiVertification">
-                    <Frame x:Name="frVertManager"
+                <TextBlock x:Name="tbSelectedName" Text="인증 관리자" FontWeight="Bold" Margin="5" FontSize="14"/>
+
+                <TabControl x:Name="mainTabControl" SelectedIndex="1" Grid.Row="1" BorderBrush="{x:Null}">
+                    <TabControl.Resources>
+                        <Style TargetType="{x:Type TabItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type TabItem}">
+                                        <ContentPresenter Content="{TemplateBinding ContentTemplate}"/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </TabControl.Resources>
+                    <TabItem x:Name="tiLog" Tag="작업 로그">
+                        <ListView x:Name="lvLog">
+                            <ListViewItem Content="[System] 검색 시스템을 초기화중입니다."/>
+                            <ListViewItem Content="[System] ....."/>
+                        </ListView>
+                    </TabItem>
+
+                    <TabItem x:Name="tiVertification" Tag="인증 관리자">
+                        <Frame x:Name="frVertManager"
                         Source="/PlurCrawler_Sample;component/Windows/VertificationManager.xaml" NavigationUIVisibility="Hidden"/>
-                </TabItem>
-            </TabControl>
-
+                    </TabItem>
+                </TabControl>
+            </Grid>
+            
             <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
             <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition/>
                     <RowDefinition Height="5"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
+
                 <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="btnLog" Content="작업 로그" Padding="5" Margin="5"/>
+                    <Button x:Name="btnVertManager" Content="인증 관리자" Padding="5" Margin="5" Grid.Row="0" Grid.Column="1"/>
+                    <Button x:Name="btnTaskReport" Content="작업 보고서" Padding="5" Margin="5" Grid.Row="1" Grid.Column="0"/>
+                    <Button x:Name="btnOpenWiki" Content="PlurCrawler 위키" Padding="5" Margin="5" Grid.Row="1" Grid.Column="1"/>
+                </Grid>
+                
+                <Grid Grid.Row="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition/>
@@ -112,9 +139,9 @@
                     </ListView>
                 </Grid>
 
-                <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch"/>
+                <GridSplitter Grid.Row="2" HorizontalAlignment="Stretch"/>
 
-                <Frame x:Name="frOption" Grid.Row="2" Source="/PlurCrawler_Sample;component/Windows/DetailsOption.xaml" NavigationUIVisibility="Hidden" />
+                <Frame x:Name="frOption" Grid.Row="3" Source="/PlurCrawler_Sample;component/Windows/DetailsOption.xaml" NavigationUIVisibility="Hidden" />
             </Grid>
             
         </Grid>

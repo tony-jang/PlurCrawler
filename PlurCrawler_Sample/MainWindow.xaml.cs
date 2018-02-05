@@ -16,6 +16,7 @@ using PlurCrawler_Sample.Export;
 
 using AppSetting = PlurCrawler_Sample.Properties.Settings;
 using System.IO;
+using System.Windows.Controls;
 
 namespace PlurCrawler_Sample
 {
@@ -44,8 +45,23 @@ namespace PlurCrawler_Sample
 
             cbYoutubeService.Checked += CheckChanged;
             cbYoutubeService.Unchecked += CheckChanged;
-            
+
+            btnLog.Click += BtnLog_Click;
+            btnVertManager.Click += BtnVertManager_Click;
+
             dict = new Dictionary<ISearcher, TaskProgressBar>();
+        }
+
+        private void BtnVertManager_Click(object sender, RoutedEventArgs e)
+        {
+            mainTabControl.SelectedIndex = 1;
+            tbSelectedName.Text = (mainTabControl.SelectedItem as TabItem).Tag.ToString();
+        }
+
+        private void BtnLog_Click(object sender, RoutedEventArgs e)
+        {
+            mainTabControl.SelectedIndex = 0;
+            tbSelectedName.Text = (mainTabControl.SelectedItem as TabItem).Tag.ToString();
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
