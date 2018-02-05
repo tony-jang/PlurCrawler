@@ -48,10 +48,10 @@
                                             <Setter Property="Margin" Value="0,0,0,5"/>
                                         </Style>
                                     </StackPanel.Resources>
-                                    <CheckBox Content="MySQL"/>
-                                    <CheckBox Content="MS-SQL"/>
-                                    <CheckBox Content="Json File"/>
-                                    <CheckBox Content="CSV File"/>
+                                    <CheckBox x:Name="cbOutput1" Content="CSV File" Tag="1"/>
+                                    <CheckBox x:Name="cbOutput2" Content="Json File" Tag="2"/>
+                                    <CheckBox x:Name="cbOutput3" Content="MySQL" Tag="4"/>
+                                    <CheckBox x:Name="cbOutput4" Content="MS-SQL" Tag="8"/>
                                 </StackPanel>
                             </ctrl:PropertyGroupBox>
 

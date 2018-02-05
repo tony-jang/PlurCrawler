@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using PlurCrawler.Common;
+using PlurCrawler.Format.Common;
 
 namespace PlurCrawler_Sample.Windows
 {
@@ -34,6 +35,8 @@ namespace PlurCrawler_Sample.Windows
         /// <param name="option"></param>
         public void LoadGoogle(GoogleCSESearchOption option)
         {
+            if (option == null)
+                return;
             drpGoogle.Since = option.DateRange.Since.GetValueOrDefault();
             drpGoogle.Until = option.DateRange.Until.GetValueOrDefault();
             tbGooglePageOffset.Text = option.Offset.ToString();
@@ -52,8 +55,15 @@ namespace PlurCrawler_Sample.Windows
                 Offset = ulong.Parse(tbGooglePageOffset.Text),
                 SplitWithDate = rbGoogleSplitWithDate.IsChecked.GetValueOrDefault(),
                 SearchCount = ulong.Parse(tbGoogleSearchCount.Text),
-                OutputServices = (PlurCrawler.Format.Common.OutputFormat)5
+                OutputServices = CalculateService()
             };
+        }
+
+        private OutputFormat CalculateService()
+        {
+            CheckBox[] cbs = { cbOutput1, cbOutput2, cbOutput3, cbOutput4 };
+
+            return (OutputFormat)cbs.Select(i => int.Parse(i.Tag.ToString())).Sum();
         }
 
         public void GoogleEnableChange(bool enable)
