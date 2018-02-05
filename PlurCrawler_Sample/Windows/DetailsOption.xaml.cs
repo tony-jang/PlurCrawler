@@ -52,6 +52,7 @@ namespace PlurCrawler_Sample.Windows
                 Offset = ulong.Parse(tbGooglePageOffset.Text),
                 SplitWithDate = rbGoogleSplitWithDate.IsChecked.GetValueOrDefault(),
                 SearchCount = ulong.Parse(tbGoogleSearchCount.Text),
+                OutputServices = (PlurCrawler.Format.Common.OutputFormat)5
             };
         }
 
