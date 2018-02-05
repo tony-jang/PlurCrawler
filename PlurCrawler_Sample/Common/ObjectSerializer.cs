@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 namespace PlurCrawler_Sample.Common
 {
-    public class ObjectSerializer<T>
+    public class ObjectSerializer<T> where T : class
     {
         public string Serialize(T obj)
         {
@@ -22,6 +22,9 @@ namespace PlurCrawler_Sample.Common
 
         public T Deserialize(string str)
         {
+            if (string.IsNullOrEmpty(str))
+                return null;
+
             var xmlSerializer = new XmlSerializer(typeof(T));
 
             return (T)xmlSerializer.Deserialize(StringToStream(str));
