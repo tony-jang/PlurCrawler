@@ -1,35 +1,31 @@
-﻿using Newtonsoft.Json;
-using PlurCrawler.Format.Base;
-using PlurCrawler.Search.Base;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
+using PlurCrawler.Format.Base;
+using PlurCrawler.Search.Base;
+
 namespace PlurCrawler.Format
 {
     public class JsonFormat<TResult> : BaseFormat<TResult, string> where TResult : ISearchResult
     {
-        public override string Formatting(TResult resultData)
+        public override string FormattingData(IEnumerable<TResult> resultData)
         {
-            return JsonConvert.SerializeObject(resultData);
+            string json = JsonConvert.SerializeObject(resultData);
+            return JToken.Parse(json).ToString(Formatting.Indented);
         }
 
         public bool SaveFile(string fileLocation, string data)
         {
-            try
-            {
-                var sw = new StreamWriter(fileLocation, false);
-                sw.Write(data);
+            File.WriteAllBytes(fileLocation, Encoding.UTF8.GetBytes(data));
 
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            return true;
         }
     }
 }

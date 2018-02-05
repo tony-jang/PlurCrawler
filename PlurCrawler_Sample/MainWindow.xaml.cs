@@ -1,36 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-using PlurCrawler;
-using PlurCrawler.Search;
 using PlurCrawler.Search.Services.GoogleCSE;
 using PlurCrawler.Search.Services.Twitter;
 using PlurCrawler.Search.Services.Youtube;
 using PlurCrawler.Search.Common;
-using PlurCrawler.Tokens.Credentials;
-using PlurCrawler.Tokens.Tokenizer;
-using PlurCrawler_Sample.Windows;
 using PlurCrawler.Search.Base;
+
+using PlurCrawler_Sample.Windows;
 using PlurCrawler_Sample.Controls;
 using PlurCrawler_Sample.Common;
-
-using Newtonsoft.Json;
+using PlurCrawler_Sample.Export;
 
 using AppSetting = PlurCrawler_Sample.Properties.Settings;
+using System.IO;
 
 namespace PlurCrawler_Sample
 {
@@ -225,7 +210,9 @@ namespace PlurCrawler_Sample
                 googleCSESearcher.SearchFinished += GoogleCSESearcher_SearchFinished;
 
                 IEnumerable<GoogleCSESearchResult> googleResult = googleCSESearcher.Search(option);
-                
+
+                ExportManager.JsonExport(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "TestFile.json"), googleResult);
+
                 Dispatcher.Invoke(() => {
                     googleSearching = false;
                     _detailsOption.GoogleEnableChange(true);
