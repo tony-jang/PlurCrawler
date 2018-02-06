@@ -1,5 +1,5 @@
 ﻿using System;
-
+using PlurCrawler.Extension;
 using PlurCrawler.Tokens.Credentials;
 using PlurCrawler.Tokens.Tokenizer.Base;
 using Tweetinvi;
@@ -38,8 +38,9 @@ namespace PlurCrawler.Tokens.Tokenizer
         /// <returns></returns>
         public string GetURL(TwitterCredentials credentials)
         {
-            if (string.IsNullOrEmpty(credentials.ConsumerKey) || string.IsNullOrEmpty(credentials.ConsumerSecret))
+            if (credentials.ConsumerKey.IsNullOrEmpty() || credentials.ConsumerSecret.IsNullOrEmpty())
                 return null;
+
             try
             {
                 var appCredentials = new tiModels.TwitterCredentials(credentials.ConsumerKey, credentials.ConsumerSecret);
