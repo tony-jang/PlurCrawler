@@ -44,6 +44,8 @@ namespace PlurCrawler_Sample.Windows
             tbGooglePageOffset.Text = option.Offset.ToString();
             tbGoogleSearchCount.Text = option.SearchCount.ToString();
 
+            useDate.IsChecked = option.UseDateSearch;
+
             if (option.SplitWithDate)
                 rbGoogleSplitWithDate.IsChecked = true;
             else
@@ -55,6 +57,7 @@ namespace PlurCrawler_Sample.Windows
             return new GoogleCSESearchOption()
             {
                 DateRange = new DateRange(drpGoogle.Since, drpGoogle.Until),
+                UseDateSearch = useDate.IsChecked.GetValueOrDefault(),
                 Offset = (ulong)tbGooglePageOffset.GetIntOrDefault(),
                 SplitWithDate = rbGoogleSplitWithDate.IsChecked.GetValueOrDefault(),
                 SearchCount = (ulong)tbGoogleSearchCount.GetIntOrDefault(),

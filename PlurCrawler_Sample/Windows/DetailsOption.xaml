@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:PlurCrawler_Sample.Windows"
       xmlns:ctrl="clr-namespace:PlurCrawler_Sample.Controls"
       mc:Ignorable="d" 
-      d:DesignHeight="400" d:DesignWidth="300" MinWidth="300"
+      d:DesignHeight="600" d:DesignWidth="300" MinWidth="300"
       Title="DetailsOption">
     <Grid>
         <TabControl TabStripPlacement="Top">
@@ -55,7 +55,15 @@
                                 </StackPanel>
                             </ctrl:PropertyGroupBox>
 
-                            <ctrl:DateRangePicker x:Name="drpGoogle" PropertyName="검색 범위" Since="2018-02-02" Until="2018-02-03"/>
+                            <ctrl:PropertyGroupBox Header="검색 범위사용">
+                                <CheckBox x:Name="useDate" Content="사용" Margin="5"/>
+                            </ctrl:PropertyGroupBox>
+                            
+                            
+                            <ctrl:DateRangePicker x:Name="drpGoogle" 
+                                                  PropertyName="검색 범위" 
+                                                  Since="2018-02-02" Until="2018-02-03" 
+                                                  IsEnabled="{Binding Path=IsChecked, ElementName=useDate}"/>
                         </StackPanel>
                     </ScrollViewer>
 
@@ -65,6 +73,7 @@
                             해당 서비스에서 검색을 수행중 일때에는<LineBreak/>설정 변경이 불가합니다.
                         </TextBlock>
                     </Grid>
+                    
                 </Grid>
             </TabItem>
             <TabItem Header="Youtube"/>

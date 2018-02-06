@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
+using System.IO;
 
 using PlurCrawler.Search.Services.GoogleCSE;
 using PlurCrawler.Search.Services.Twitter;
@@ -15,8 +17,6 @@ using PlurCrawler_Sample.Common;
 using PlurCrawler_Sample.Export;
 
 using AppSetting = PlurCrawler_Sample.Properties.Settings;
-using System.IO;
-using System.Windows.Controls;
 
 namespace PlurCrawler_Sample
 {

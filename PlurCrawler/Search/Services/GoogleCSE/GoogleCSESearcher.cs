@@ -9,6 +9,7 @@ using PlurCrawler.Search.Common;
 using Google.Apis.Customsearch.v1;
 using Google.Apis.Customsearch.v1.Data;
 using Google.Apis.Services;
+using PlurCrawler.Extension;
 
 namespace PlurCrawler.Search.Services.GoogleCSE
 {
@@ -87,7 +88,9 @@ namespace PlurCrawler.Search.Services.GoogleCSE
             request.Cx = SearchEngineId;
             request.Start = (long)option.Offset;
 
-            // TODO : 날짜 설정 추가
+            if (option.UseDateSearch)
+                request.Sort = $@"date:r:{option.DateRange.Since.GetValueOrDefault().To8LengthYear()
+                                       }:{option.DateRange.Until.GetValueOrDefault().To8LengthYear()}";
 
             return request;
         }
@@ -97,7 +100,6 @@ namespace PlurCrawler.Search.Services.GoogleCSE
             var results = new List<Result>();
             IList<Result> paging = new List<Result>();
             int count = 0;
-
             long tempCount = targetCount;
 
             while ((paging != null) && tempCount > 0)
