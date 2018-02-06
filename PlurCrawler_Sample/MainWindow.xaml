@@ -70,9 +70,9 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <TextBlock x:Name="tbSelectedName" Text="인증 관리자" FontWeight="Bold" Margin="5" FontSize="14"/>
+                <TextBlock x:Name="tbSelectedName" Text="작업 로그" FontWeight="Bold" Margin="5" FontSize="14"/>
 
-                <TabControl x:Name="mainTabControl" SelectedIndex="1" Grid.Row="1" BorderBrush="{x:Null}">
+                <TabControl x:Name="mainTabControl" SelectedIndex="0" Grid.Row="1" BorderBrush="{x:Null}">
                     <TabControl.Resources>
                         <Style TargetType="{x:Type TabItem}">
                             <Setter Property="Template">
