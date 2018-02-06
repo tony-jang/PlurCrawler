@@ -95,6 +95,11 @@
                         <Frame x:Name="frVertManager"
                         Source="/PlurCrawler_Sample;component/Windows/VertificationManager.xaml" NavigationUIVisibility="Hidden"/>
                     </TabItem>
+
+                    <TabItem x:Name="tiTaskReport" Tag="작업 보고서">
+                        <Frame x:Name="frTaskReport"
+                        Source="/PlurCrawler_Sample;component/Windows/TaskReport.xaml" NavigationUIVisibility="Hidden"/>
+                    </TabItem>
                 </TabControl>
             </Grid>
             

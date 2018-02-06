@@ -91,6 +91,9 @@
     <Compile Include="Windows\DetailsOption.xaml.cs">
       <DependentUpon>DetailsOption.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\TaskReport.xaml.cs">
+      <DependentUpon>TaskReport.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\VertificationManager.xaml.cs">
       <DependentUpon>VertificationManager.xaml</DependentUpon>
     </Compile>
@@ -120,6 +123,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\DetailsOption.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\TaskReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -51,6 +51,7 @@ namespace PlurCrawler_Sample
 
             btnLog.Click += BtnLog_Click;
             btnVertManager.Click += BtnVertManager_Click;
+            btnTaskReport.Click += BtnTaskReport_Click;
 
             #endregion
 
@@ -152,19 +153,25 @@ namespace PlurCrawler_Sample
                 btnSearch.IsEnabled = false;
         }
 
-        private void BtnVertManager_Click(object sender, RoutedEventArgs e)
-        {
-            mainTabControl.SelectedIndex = 1;
-            tbSelectedName.Text = (mainTabControl.SelectedItem as TabItem).Tag.ToString();
-        }
-
         private void BtnLog_Click(object sender, RoutedEventArgs e)
         {
             mainTabControl.SelectedIndex = 0;
             tbSelectedName.Text = (mainTabControl.SelectedItem as TabItem).Tag.ToString();
         }
 
-#endregion
+        private void BtnVertManager_Click(object sender, RoutedEventArgs e)
+        {
+            mainTabControl.SelectedIndex = 1;
+            tbSelectedName.Text = (mainTabControl.SelectedItem as TabItem).Tag.ToString();
+        }
+        
+        private void BtnTaskReport_Click(object sender, RoutedEventArgs e)
+        {
+            mainTabControl.SelectedIndex = 2;
+            tbSelectedName.Text = (mainTabControl.SelectedItem as TabItem).Tag.ToString();
+        }
+
+        #endregion
 
         bool googleSearching = false,
             youtubeSearching = false,

@@ -1,0 +1,98 @@
+﻿<Page x:Class="PlurCrawler_Sample.Windows.TaskReport"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PlurCrawler_Sample.Windows"
+      xmlns:controls="clr-namespace:PlurCrawler_Sample.Controls"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="600"
+      Title="TaskReport">
+
+    <Grid Background="White">
+        <ScrollViewer>
+            <StackPanel Margin="10,20">
+                <controls:PropertyGroupBox Header="검색 일자">
+                    <TextBlock>
+                        <Run Text="2017-01-04 PM 5:00" Foreground="Green"/>
+                    </TextBlock>
+                </controls:PropertyGroupBox>
+
+                <controls:PropertyGroupBox Header="검색 요청 갯수">
+                    <TextBlock Foreground="Green">
+                        <Run Text="10"/>개
+                    </TextBlock>
+                </controls:PropertyGroupBox>
+
+                <controls:PropertyGroupBox Header="검색 성공 여부">
+                    <TextBlock Foreground="Green">
+                        <Run Text="성공한 요청"/>
+                    </TextBlock>
+                </controls:PropertyGroupBox>
+
+                <controls:PropertyGroupBox Header="요청한 서비스">
+                    <TextBlock Foreground="Green">
+                        <Run Text="Google Custom Search Engine"/>
+                    </TextBlock>
+                </controls:PropertyGroupBox>
+
+                <controls:PropertyGroupBox Header="사용한 인증 정보">
+                    <TextBlock Foreground="Green">
+                        <Run Text="Al*************"/>
+                    </TextBlock>
+                </controls:PropertyGroupBox>
+
+                <Grid Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="데이터 재가공" FontSize="15"/>
+                    <TextBlock Grid.Row="1" Text="이미 검색이 끝난 데이터를 재가공합니다. 프로그램이 종료되기 전까지 가능합니다." TextWrapping="Wrap"/>
+
+                    <Grid Grid.Row="2">
+                        <Grid Margin="0,15,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Content="CSV File로 내보내기" Padding="5" Margin="5"/>
+                            <Button Content="MySQL로 내보내기" Padding="5" Margin="5" Grid.Row="0" Grid.Column="1"/>
+                            <Button Content="MS-SQL로 내보내기" Padding="5" Margin="5" Grid.Row="1" Grid.Column="0"/>
+                            <Button Content="Json File로 내보내기" Padding="5" Margin="5" Grid.Row="1" Grid.Column="1"/>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                <Grid Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="보고서 삭제/내보내기" FontSize="15"/>
+                    <TextBlock Grid.Row="1" Text="해당 검색 결과의 정보를 내보냅니다." TextWrapping="Wrap"/>
+
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button Content="보고서 삭제" Margin="5" Padding="5"/>
+                        <Button Content="보고서 내보내기" Margin="5" Padding="5" Grid.Column="1"/>
+                    </Grid>
+                </Grid>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
