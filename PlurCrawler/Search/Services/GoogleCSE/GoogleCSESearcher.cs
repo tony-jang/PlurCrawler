@@ -49,9 +49,12 @@ namespace PlurCrawler.Search.Services.GoogleCSE
         /// <param name="searchEngineId">검색 엔진 ID 입니다.</param>
         public void Vertification(string apiKey, string searchEngineId)
         {
+            if (apiKey.IsNullOrEmpty() || searchEngineId.IsNullOrEmpty())
+                return;
+
             this.ApiKey = apiKey;
             this.SearchEngineId = searchEngineId;
-                
+
             IsVerification = true;
         }
 
