@@ -82,5 +82,17 @@ namespace PlurCrawler_Sample.Properties {
                 this["GoogleVertified"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string EngineUsage {
+            get {
+                return ((string)(this["EngineUsage"]));
+            }
+            set {
+                this["EngineUsage"] = value;
+            }
+        }
     }
 }

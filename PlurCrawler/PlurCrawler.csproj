@@ -142,6 +142,7 @@
   <ItemGroup>
     <Compile Include="Extension\DateTimeEx.cs" />
     <Compile Include="Extension\EnumEx.cs" />
+    <Compile Include="Extension\StringEx.cs" />
     <Compile Include="Format\Base\BaseFormat.cs" />
     <Compile Include="Format\Base\BaseFormatReturn.cs" />
     <Compile Include="Format\Base\IFormat.cs" />

@@ -10,6 +10,7 @@ using PlurCrawler.Search.Services.Twitter;
 using PlurCrawler.Search.Services.Youtube;
 using PlurCrawler.Search.Common;
 using PlurCrawler.Search.Base;
+using PlurCrawler.Extension;
 
 using PlurCrawler_Sample.Windows;
 using PlurCrawler_Sample.Controls;
@@ -74,7 +75,7 @@ namespace PlurCrawler_Sample
             
             // 인증 정보 불러오기
 
-            if (!string.IsNullOrEmpty(AppSetting.Default.GoogleCredentials))
+            if (!AppSetting.Default.GoogleCredentials.IsNullOrEmpty())
             {
                 string[] credentials =
                     AppSetting.Default.GoogleCredentials.Split(new string[] { "//" }, StringSplitOptions.None);
@@ -82,6 +83,16 @@ namespace PlurCrawler_Sample
                 _vertManager.SetGoogleKey(credentials[0], credentials[1]);
 
                 _vertManager.ChangeGoogleState(AppSetting.Default.GoogleVertified);
+            }
+            
+            if (!AppSetting.Default.EngineUsage.IsNullOrEmpty())
+            {
+                string[] engineBools =
+                    AppSetting.Default.EngineUsage.Split(new string[] { "|" }, StringSplitOptions.None);
+
+                cbGoogleService.IsChecked = Convert.ToBoolean(engineBools[0]);
+                cbTwitterService.IsChecked = Convert.ToBoolean(engineBools[1]);
+                cbYoutubeService.IsChecked = Convert.ToBoolean(engineBools[2]);
             }
             
             #endregion
@@ -109,6 +120,10 @@ namespace PlurCrawler_Sample
 
             var serializer = new ObjectSerializer<GoogleCSESearchOption>();
             AppSetting.Default.GoogleOption = serializer.Serialize(_detailsOption.GetGoogleCSESearchOption());
+
+            AppSetting.Default.EngineUsage = $@"{cbGoogleService.IsChecked.ToString()
+                                              }|{cbTwitterService.IsChecked.ToString()
+                                              }|{cbYoutubeService.IsChecked.ToString()}";
 
 
             // 인증 정보 저장
@@ -223,12 +238,19 @@ namespace PlurCrawler_Sample
                         tb.Message = "결과를 내보낼 위치가 없습니다.";
                         isCanceled = true;
                     }
+
+                    googleCSESearcher.Vertification(googleKey, googleID);
+
+                    if (!googleCSESearcher.IsVerification) // 인증되지 않았을 경우
+                    {
+                        tb.Maximum = 1;
+                        tb.Message = "API키가 인증되지 않았습니다.";
+                        isCanceled = true;
+                    }
                 });
 
                 if (!isCanceled)
                 {
-                    googleCSESearcher.Vertification(googleKey, googleID);
-
                     googleCSESearcher.SearchProgressChanged += GoogleCSESearcher_SearchProgressChanged;
                     googleCSESearcher.SearchFinished += GoogleCSESearcher_SearchFinished;
 
