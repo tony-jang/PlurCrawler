@@ -14,7 +14,7 @@
                 <Grid>
                     <ScrollViewer x:Name="svGoogle" VerticalScrollBarVisibility="Auto">
                         <StackPanel Margin="0,10">
-                            <ctrl:PropertyTextBox x:Name="tbGoogleSearchCount" PropertyName="검색 갯수" 
+                            <ctrl:PropertyTextBox x:Name="tbGoogleSearchCount" PropertyName="검색 갯수" DigitOnly="True" 
                             Description="* 기본은 10개입니다.&#x0a;* 검색 타입에 따라서 의미가 달라집니다."/>
 
                             <ctrl:PropertyGroupBox Header="갯수 기준">
@@ -24,7 +24,7 @@
                                 </WrapPanel>
                             </ctrl:PropertyGroupBox>
 
-                            <ctrl:PropertyTextBox x:Name="tbGooglePageOffset" PropertyName="페이지 오프셋" 
+                            <ctrl:PropertyTextBox x:Name="tbGooglePageOffset" PropertyName="페이지 오프셋" DigitOnly="True"
                                 Description="* 검색을 표시할 오프셋을 나타냅니다.&#x0a;(예를 들어 5라면 6번째 부터 출력합니다)"/>
 
                             <ctrl:PropertyGroupBox x:Name="gbOutputData" Header="출력할 데이터">

@@ -55,9 +55,9 @@ namespace PlurCrawler_Sample.Windows
             return new GoogleCSESearchOption()
             {
                 DateRange = new DateRange(drpGoogle.Since, drpGoogle.Until),
-                Offset = ulong.Parse(tbGooglePageOffset.Text),
+                Offset = (ulong)tbGooglePageOffset.GetIntOrDefault(),
                 SplitWithDate = rbGoogleSplitWithDate.IsChecked.GetValueOrDefault(),
-                SearchCount = ulong.Parse(tbGoogleSearchCount.Text),
+                SearchCount = (ulong)tbGoogleSearchCount.GetIntOrDefault(),
                 OutputServices = CalculateService()
             };
         }
