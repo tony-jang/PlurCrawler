@@ -32,6 +32,8 @@ namespace PlurCrawler_Sample
         {
             InitializeComponent();
 
+            #region [  Event Connection  ]
+
             this.Loaded += MainWindow_Loaded;
             this.Closing += MainWindow_Closing;
 
@@ -49,19 +51,9 @@ namespace PlurCrawler_Sample
             btnLog.Click += BtnLog_Click;
             btnVertManager.Click += BtnVertManager_Click;
 
+            #endregion
+
             dict = new Dictionary<ISearcher, TaskProgressBar>();
-        }
-
-        private void BtnVertManager_Click(object sender, RoutedEventArgs e)
-        {
-            mainTabControl.SelectedIndex = 1;
-            tbSelectedName.Text = (mainTabControl.SelectedItem as TabItem).Tag.ToString();
-        }
-
-        private void BtnLog_Click(object sender, RoutedEventArgs e)
-        {
-            mainTabControl.SelectedIndex = 0;
-            tbSelectedName.Text = (mainTabControl.SelectedItem as TabItem).Tag.ToString();
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -133,6 +125,8 @@ namespace PlurCrawler_Sample
             #endregion
         }
 
+        #region [  UI EventHandler  ]
+
         private void CheckChanged(object sender, RoutedEventArgs e)
         {
             if (cbGoogleService.IsChecked.GetValueOrDefault() ||
@@ -142,6 +136,20 @@ namespace PlurCrawler_Sample
             else
                 btnSearch.IsEnabled = false;
         }
+
+        private void BtnVertManager_Click(object sender, RoutedEventArgs e)
+        {
+            mainTabControl.SelectedIndex = 1;
+            tbSelectedName.Text = (mainTabControl.SelectedItem as TabItem).Tag.ToString();
+        }
+
+        private void BtnLog_Click(object sender, RoutedEventArgs e)
+        {
+            mainTabControl.SelectedIndex = 0;
+            tbSelectedName.Text = (mainTabControl.SelectedItem as TabItem).Tag.ToString();
+        }
+
+#endregion
 
         bool googleSearching = false,
             youtubeSearching = false,
@@ -217,11 +225,7 @@ namespace PlurCrawler_Sample
                     }
                 });
 
-                if (isCanceled)
-                {
-                    return;
-                }
-                else
+                if (!isCanceled)
                 {
                     googleCSESearcher.Vertification(googleKey, googleID);
 
