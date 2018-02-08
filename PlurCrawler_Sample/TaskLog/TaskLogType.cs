@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlurCrawler.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,13 @@ namespace PlurCrawler_Sample.TaskLog
 {
     public enum TaskLogType
     {
+        [Note("시스템")]
         System,
+        [Note("준비")]
         SearchReady,
+        [Note("검색중")]
         Searching,
+        [Note("실패")]
         SearchFailed,
     }
 }

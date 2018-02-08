@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlurCrawler_Sample"
         xmlns:ctrl="clr-namespace:PlurCrawler_Sample.Controls"
-        xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1000">
     <Grid>
@@ -85,10 +84,10 @@
                         </Style>
                     </TabControl.Resources>
                     <TabItem x:Name="tiLog" Tag="작업 로그">
-                        <ListView x:Name="lvLog">
-                            <ListViewItem Content="[System] 검색 시스템을 초기화중입니다."/>
-                            <ListViewItem Content="[System] ....."/>
-                        </ListView>
+                        <ListBox x:Name="lvLog">
+                            <ctrl:LogItem Date="2017-04-03 00:16:30"/>
+                            <TextBlock Text="[System] ....."/>
+                        </ListBox>
                     </TabItem>
 
                     <TabItem x:Name="tiVertification" Tag="인증 관리자">

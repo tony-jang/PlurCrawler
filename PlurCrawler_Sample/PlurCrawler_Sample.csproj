@@ -79,6 +79,7 @@
     <Compile Include="Common\ObjectSerializer.cs" />
     <Compile Include="Controls\CloseableTabItem.cs" />
     <Compile Include="Controls\DatePickerRange.cs" />
+    <Compile Include="Controls\LogItem.cs" />
     <Compile Include="Controls\PathButton.cs" />
     <Compile Include="Controls\PropertyGroupBox.cs" />
     <Compile Include="Controls\PropertyPasswordBox.cs" />
