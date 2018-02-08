@@ -1,6 +1,6 @@
 ﻿using PlurCrawler.Attributes;
 using PlurCrawler.Extension;
-using PlurCrawler_Sample.TaskLog;
+using PlurCrawler_Sample.TaskLogs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,9 +18,25 @@ namespace PlurCrawler_Sample.Controls
         public LogItem()
         {
             this.Style = FindResource("LogItemStyle") as Style;
+        }
 
-            Date = DateTime.Now;
-            Message = "검색 설정에 실패했습니다. 자세한 내용은 여기를 확인해주세요,";
+        public TaskLog TaskLog
+        {
+            get
+            {
+                return new TaskLog()
+                {
+                    DateTime = Date,
+                    LogType = TaskLogType,
+                    Message = Message
+                };
+            }
+            set
+            {
+                Date = value.DateTime;
+                TaskLogType = value.LogType;
+                Message = value.Message;
+            }
         }
 
         public static DependencyProperty MessageProperty = DependencyHelper.Register();
@@ -31,12 +47,19 @@ namespace PlurCrawler_Sample.Controls
             set => SetValue(MessageProperty, value);
         }
         
-
         #region [  Date Property  ]
 
         public static readonly DependencyProperty DateProperty 
-            = DependencyHelper.Register();
-        
+            = DependencyHelper.Register(new PropertyMetadata(default(DateTime), new PropertyChangedCallback(OnDatePropertyChanged)));
+
+        private static void OnDatePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is LogItem itm)
+            {
+                itm.SetValue(DateStringPropertyKey, itm.Date.ToString("MM/dd HH:mm"));
+            }
+        }
+
         private static readonly DependencyPropertyKey DateStringPropertyKey =
             DependencyHelper.RegisterReadOnly(new PropertyMetadata(""));
 
