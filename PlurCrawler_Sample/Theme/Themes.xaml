@@ -323,11 +323,18 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:LogItem}">
-                    <Grid Margin="3">
-                        <TextBlock>
-                            [<Run Text="{TemplateBinding TaskLogTypeString}"/>] [<Run Text="{TemplateBinding DateString}"/>] <Run Text="{TemplateBinding Message}"/>
+                    <Grid Background="{TemplateBinding Background}">
+                        <TextBlock Margin="3" Foreground="{TemplateBinding Foreground}">
+                        [<Run Text="{TemplateBinding DateString}"/>] [<Run Text="{TemplateBinding TaskLogTypeString}"/>]
+                        <Run Text="{TemplateBinding Message}"/>
                         </TextBlock>
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#FF446FBB"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

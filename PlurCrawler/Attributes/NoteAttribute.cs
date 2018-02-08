@@ -17,6 +17,9 @@ namespace PlurCrawler.Attributes
             this.Message = message;
         }
         
+        /// <summary>
+        /// 메세지를 나타냅니다.
+        /// </summary>
         public string Message { get; set; }
     }
 }

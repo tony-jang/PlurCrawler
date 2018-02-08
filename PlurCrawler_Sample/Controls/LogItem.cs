@@ -1,4 +1,6 @@
-﻿using PlurCrawler_Sample.TaskLog;
+﻿using PlurCrawler.Attributes;
+using PlurCrawler.Extension;
+using PlurCrawler_Sample.TaskLog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -75,7 +77,7 @@ namespace PlurCrawler_Sample.Controls
             get => (TaskLogType)GetValue(TaskLogTypeProperty);
             set
             {
-                SetValue(TaskLogTypeStringPropertyKey, value.ToString());
+                SetValue(TaskLogTypeStringPropertyKey, value.GetAttributeFromEnum<NoteAttribute>().Message);
                 SetValue(TaskLogTypeProperty, value);
             }
         }

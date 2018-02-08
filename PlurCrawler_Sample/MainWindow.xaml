@@ -86,6 +86,9 @@
                     <TabItem x:Name="tiLog" Tag="작업 로그">
                         <ListBox x:Name="lvLog">
                             <ctrl:LogItem Date="2017-04-03 00:16:30"/>
+                            <ctrl:LogItem Date="2017-04-03 00:16:30"/>
+                            <ctrl:LogItem Date="2017-04-03 00:16:30"/>
+                            <ctrl:LogItem Date="2017-04-03 00:16:30"/>
                             <TextBlock Text="[System] ....."/>
                         </ListBox>
                     </TabItem>
