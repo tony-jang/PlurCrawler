@@ -20,7 +20,6 @@ namespace PlurCrawler_Sample.Controls
             this.Style = FindResource("LogItemStyle") as Style;
 
             Date = DateTime.Now;
-            TaskLogType = TaskLogType.SearchFailed;
             Message = "검색 설정에 실패했습니다. 자세한 내용은 여기를 확인해주세요,";
         }
 
@@ -64,10 +63,18 @@ namespace PlurCrawler_Sample.Controls
         #region [  Task Log Type Property  ]
 
         public static readonly DependencyProperty TaskLogTypeProperty
-            = DependencyHelper.Register();
+            = DependencyHelper.Register(new PropertyMetadata(TaskLogType.System, new PropertyChangedCallback(OnTaskLogTypeChanged)));
+
+        private static void OnTaskLogTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is LogItem itm)
+            {
+                itm.SetValue(TaskLogTypeStringPropertyKey, itm.TaskLogType.GetAttributeFromEnum<NoteAttribute>().Message);
+            }
+        }
 
         private static readonly DependencyPropertyKey TaskLogTypeStringPropertyKey =
-            DependencyHelper.RegisterReadOnly(new PropertyMetadata(""));
+            DependencyHelper.RegisterReadOnly(new PropertyMetadata("시스템"));
 
         public static readonly DependencyProperty TaskLogTypeStringProperty =
             TaskLogTypeStringPropertyKey.DependencyProperty;
