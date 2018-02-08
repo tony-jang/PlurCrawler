@@ -87,8 +87,10 @@
     <Compile Include="Common\VerifyType.cs" />
     <Compile Include="Controls\TaskProgressBar.cs" />
     <Compile Include="Export\ExportManager.cs" />
-    <Compile Include="TaskLog\TaskLogManager.cs" />
-    <Compile Include="TaskLog\TaskLogType.cs" />
+    <Compile Include="TaskLogs\TaskLog.cs" />
+    <Compile Include="TaskLogs\TaskLogEventArgs.cs" />
+    <Compile Include="TaskLogs\TaskLogManager.cs" />
+    <Compile Include="TaskLogs\TaskLogType.cs" />
     <Compile Include="Windows\DetailsOption.xaml.cs">
       <DependentUpon>DetailsOption.xaml</DependentUpon>
     </Compile>

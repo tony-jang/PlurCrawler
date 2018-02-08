@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlurCrawler_Sample.TaskLog
+namespace PlurCrawler_Sample.TaskLogs
 {
     public enum TaskLogType
     {
