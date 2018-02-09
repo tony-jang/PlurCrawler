@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using PlurCrawler.Extension;
 using PlurCrawler.Tokens.Credentials;
 using PlurCrawler.Tokens.Tokenizer;
 using PlurCrawler_Sample.Common;
@@ -24,20 +24,22 @@ namespace PlurCrawler_Sample.Windows
     /// </summary>
     public partial class VertificationManager : Page
     {
-        const string HiddenText = "******************";
+        const string _hiddenText = "******************";
 
         public VertificationManager()
         {
             InitializeComponent();
 
-            btnGoogleOK.Click += BtnGoogleOK_Click;
+            btnGoogleKeyOK.Click += BtnGoogleKeyOK_Click;
             btnGoogleViewHidden.Click += BtnGoogleViewHidden_Click;
-            btnTwitterPINAuth.Click += BtnTwitterPINAuth_Click;
+            btnGoogleIdOK.Click += BtnGoogleIdOK_Click;
 
+            btnTwitterPINAuth.Click += BtnTwitterPINAuth_Click;
             btnTwitterReqURL.Click += BtnTwitterReqURL_Click;
 
             signGoogle.Visibility = Visibility.Hidden;
         }
+
 
         #region [  Twitter  ]
 
@@ -93,8 +95,15 @@ namespace PlurCrawler_Sample.Windows
         #endregion
 
         #region [  Google CSE  ]
+        
+        public VerifyType GoogleAPIVerifyType { get; internal set; }
 
-        private bool IsGoogleHidden { get; set; }
+        public VerifyType GoogleEngineIDVerifyType { get; internal set; }
+
+        /// <summary>
+        /// 구글의 키 상태가 암호화되어 있는 상태인지를 나타냅니다.
+        /// </summary>
+        private bool IsGoogleEncrypt { get; set; }
 
         /// <summary>
         /// 구글의 API 키를 나타냅니다.
@@ -107,41 +116,47 @@ namespace PlurCrawler_Sample.Windows
         public string GoogleEngineID { get; private set; }
 
         /// <summary>
-        /// 구글 키를 세팅합니다.
+        /// 구글 API 키를 세팅합니다.
         /// </summary>
         /// <param name="key">Google API Key입니다.</param>
-        /// <param name="googleEngineId">Google Engine Id입니다.</param>
-        public void SetGoogleKey(string key, string googleEngineId)
+        public void SetGoogleKey(string key)
         {
-            tbGoogleKey.Clear();
-            tbEngineID.Clear();
-            
-            if (string.IsNullOrEmpty(key) ||
-                string.IsNullOrEmpty(googleEngineId))
+            if (key.IsNullOrEmpty())
             {
                 tbGoogleMsg.Visibility = Visibility.Visible;
-                tbGoogleMsg.Text = "API Key 또는 Engine ID는 빈칸일 수 없습니다.";
+                tbGoogleMsg.Text = "API Key는 빈칸일 수 없습니다.";
                 return;
             }
-            else
-            {
-                tbGoogleMsg.Visibility = Visibility.Hidden;
-            }
+
+            tbGoogleMsg.Visibility = Visibility.Hidden;
 
             GoogleAPIKey = key;
-            GoogleEngineID = googleEngineId;
+            runGoogleAPIKey.Text = _hiddenText;
+            IsGoogleEncrypt = true;
 
-            IsGoogleHidden = true;
-
-            runGoogleAPIKey.Text = HiddenText;
-            runEngineID.Text = GoogleEngineID;
-
-            ChangeGoogleState(VerifyType.NotChecked);
+            ChangeGoogleState(VerifyType.NotChecked, true);
         }
 
-        public VerifyType GoogleVerifyType { get; internal set; }
+        /// <summary>
+        /// 구글 Engine ID를 세팅합니다.
+        /// </summary>
+        /// <param name="key">Google API Key입니다.</param>
+        public void SetGoogleEngineID(string id)
+        {
+            if (id.IsNullOrEmpty())
+            {
+                tbGoogleMsg.Visibility = Visibility.Visible;
+                tbGoogleMsg.Text = "Engine ID는 빈칸일 수 없습니다.";
+                return;
+            }
 
-        public void ChangeGoogleState(VerifyType verifyType)
+            tbGoogleMsg.Visibility = Visibility.Hidden;
+            GoogleEngineID = id;
+
+            ChangeGoogleState(VerifyType.NotChecked, false);
+        }
+        
+        public void ChangeGoogleState(VerifyType verifyType, bool isAPIKey)
         {
             Brush brush;
             string text;
@@ -162,48 +177,57 @@ namespace PlurCrawler_Sample.Windows
                     break;
             }
 
-            GoogleVerifyType = verifyType;
+            GoogleAPIVerifyType = verifyType;
 
-            runGoogleAPIKey.Foreground = brush;
-            runGoogleAvailable.Foreground = brush;
-            runEngineID.Foreground = brush;
-
-            runGoogleAvailable.Text = text;
+            if (isAPIKey)
+            {
+                // API Key
+                tbGoogleAPIKey.Foreground = brush;
+                runGoogleAPIKey.Text = _hiddenText;
+                runGoogleAPIVert.Text = text;
+                IsGoogleEncrypt = true;
+            }
+            else
+            {
+                // Engine ID
+                tbGoogleEngineID.Foreground = brush;
+                runGoogleEngineID.Text = GoogleEngineID;
+                runGoogleEngineIDVert.Text = text;
+            }
         }
 
         public void ChangeEditable(bool enabled)
         {
-            bool flag;
-            if (enabled)
-            {
-                signGoogle.Visibility = Visibility.Hidden;
-                flag = true;
-            }
-            else
-            {
-                signGoogle.Visibility = Visibility.Visible;
-                flag = false;
-            }
-
-            tbGoogleInfo.IsEnabled = flag;
-            tbEngineID.IsEnabled = flag;
-            btnGoogleOK.IsEnabled = flag;
+            signGoogle.Visibility = (enabled) ? Visibility.Hidden : Visibility.Visible;
+            tbGoogleInfo.IsEnabled = enabled;
+            btnGoogleKeyOK.IsEnabled = enabled;
+            btnGoogleIdOK.IsEnabled = enabled;
         }
 
-        private void BtnGoogleOK_Click(object sender, RoutedEventArgs e)
+        private void BtnGoogleKeyOK_Click(object sender, RoutedEventArgs e)
         {
-            SetGoogleKey(tbGoogleKey.Text, tbEngineID.Text);
+            SetGoogleKey(tbGoogleKey.Text);
+
+            tbGoogleKey.Clear();
+        }
+        
+        private void BtnGoogleIdOK_Click(object sender, RoutedEventArgs e)
+        {
+            SetGoogleEngineID(tbGoogleID.Text);
+
+            tbGoogleID.Clear();
         }
 
         private void BtnGoogleViewHidden_Click(object sender, RoutedEventArgs e)
         {
-            if (IsGoogleHidden)
+            if (IsGoogleEncrypt)
                 runGoogleAPIKey.Text = GoogleAPIKey;
             else
-                runGoogleAPIKey.Text = HiddenText;
+                runGoogleAPIKey.Text = _hiddenText;
 
-            IsGoogleHidden = !IsGoogleHidden;
+            IsGoogleEncrypt = !IsGoogleEncrypt;
         }
+
         #endregion
     }
 }
