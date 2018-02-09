@@ -81,9 +81,10 @@ namespace PlurCrawler_Sample
                 string[] credentials =
                     AppSetting.Default.GoogleCredentials.Split(new string[] { "//" }, StringSplitOptions.None);
 
-                _vertManager.SetGoogleKey(credentials[0], credentials[1]);
+                _vertManager.SetGoogleKey(credentials[0]);
+                _vertManager.SetGoogleEngineID(credentials[1]);
 
-                _vertManager.ChangeGoogleState(AppSetting.Default.GoogleVertified);
+                //_vertManager.ChangeGoogleState(AppSetting.Default.GoogleIDVertified);
             }
             
             if (!AppSetting.Default.EngineUsage.IsNullOrEmpty())
