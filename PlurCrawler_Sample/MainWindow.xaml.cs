@@ -16,6 +16,7 @@ using PlurCrawler_Sample.Windows;
 using PlurCrawler_Sample.Controls;
 using PlurCrawler_Sample.Common;
 using PlurCrawler_Sample.Export;
+using PlurCrawler_Sample.TaskLogs;
 
 using AppSetting = PlurCrawler_Sample.Properties.Settings;
 
@@ -28,6 +29,7 @@ namespace PlurCrawler_Sample
     {
         DetailsOption _detailsOption;
         VertificationManager _vertManager;
+        TaskLogManager _logManager;
 
         public MainWindow()
         {
@@ -62,9 +64,12 @@ namespace PlurCrawler_Sample
         {
             #region [  Initalization  ]
 
+            lvLog.Items.Clear();
+
             _detailsOption = (DetailsOption)frOption.Content;
             _vertManager = (VertificationManager)frVertManager.Content;
-
+            _logManager = new TaskLogManager();
+            
             #endregion
 
             #region [  Load Setting  ]
@@ -96,9 +101,9 @@ namespace PlurCrawler_Sample
                 cbTwitterService.IsChecked = Convert.ToBoolean(engineBools[1]);
                 cbYoutubeService.IsChecked = Convert.ToBoolean(engineBools[2]);
             }
-            
-            #endregion
 
+            #endregion
+            
 #if DEBUG
             
             //foreach (PropertyInfo mi in typeof(GoogleCSESearchResult).GetProperties())
@@ -284,7 +289,8 @@ namespace PlurCrawler_Sample
                 var itm = dict[sender as ISearcher];
                 itm.Value = itm.Maximum;
                 itm.Message = "검색이 완료되었습니다.";
-                _vertManager.ChangeGoogleState(VerifyType.Verified);
+                _vertManager.ChangeGoogleState(VerifyType.Verified, true);
+                _vertManager.ChangeGoogleState(VerifyType.Verified, false);
             });
         }
 

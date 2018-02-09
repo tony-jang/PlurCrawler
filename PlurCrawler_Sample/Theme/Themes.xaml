@@ -390,4 +390,35 @@
         </Setter>
     </Style>
 
+    <Style x:Key="ImageCheckBoxStyle" TargetType="{x:Type local:ImageCheckBox}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ImageCheckBox}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Image x:Name="img" Grid.Column="0" 
+                               Width="{TemplateBinding Height}"
+                               Height="{TemplateBinding Height}"
+                               Margin="0,0,5,0"
+                               Source="{TemplateBinding Source}"/>
+
+                        <ContentPresenter VerticalAlignment="Center" Grid.Column="1" Content="{TemplateBinding Content}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="FontWeight" Value="Normal"/>
+                            <Setter TargetName="img" Property="Source" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DisabledSource}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
 </ResourceDictionary>

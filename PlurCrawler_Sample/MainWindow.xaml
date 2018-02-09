@@ -5,34 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlurCrawler_Sample"
         xmlns:ctrl="clr-namespace:PlurCrawler_Sample.Controls"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1000">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid>
-            <Grid.Resources>
-                <Style TargetType="{x:Type ctrl:ImageTextBlock}" BasedOn="{StaticResource {x:Type ctrl:ImageTextBlock}}">
-                    <Setter Property="Margin" Value="5"/>
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                    <Setter Property="HorizontalAlignment" Value="Center"/>
-                    <Setter Property="Background" Value="Transparent"/>
-                </Style>
-            </Grid.Resources>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-
-            <ctrl:ImageTextBlock x:Name="authGoogleCheck" Text="인증되지 않음" Source="Resources/icon_google.png" Foreground="Red"/>
-            <ctrl:ImageTextBlock x:Name="authTwitterCheck" Text="인증되지 않음" Source="Resources/icon_twitter.png" Grid.Column="1" Foreground="Red"/>
-            <ctrl:ImageTextBlock x:Name="authYoutubeCheck" Text="인증되지 않음" Source="Resources/icon_youtube.png" Grid.Column="2" Foreground="Red"/>
-        </Grid>
-        <Grid Grid.Row="1">
             <GroupBox Header="검색어 방식" Margin="5">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -49,15 +30,29 @@
                     <Button x:Name="btnSearch" Grid.Column="2" Margin="5,0" Content="작업 시작" VerticalAlignment="Center" Padding="30,5" IsEnabled="False"/>
                     <Grid Grid.Row="1" Grid.ColumnSpan="2">
                         <WrapPanel HorizontalAlignment="Center">
-                            <CheckBox x:Name="cbGoogleService" Margin="5" Content="구글 CSE"/>
-                            <CheckBox x:Name="cbTwitterService" Margin="5" Content="트위터" Grid.Column="1"/>
-                            <CheckBox x:Name="cbYoutubeService" Margin="5" Content="유튜브" Grid.Column="2"/>
+                            <WrapPanel.Resources>
+                                <Style x:Key="ImageCheckBoxStyle2" TargetType="{x:Type ctrl:ImageCheckBox}" BasedOn="{StaticResource ImageCheckBoxStyle}">
+                                    <Setter Property="Height" Value="20"/>
+                                </Style>
+                            </WrapPanel.Resources>
+                            <TextBlock Text="검색 엔진 선택 - " VerticalAlignment="Center"/>
+                            <ctrl:ImageCheckBox x:Name="cbGoogleService" Margin="5" Content="Google CSE" 
+                                                Source="Resources/icon_google.png" 
+                                                DisabledSource="Resources/icon_google_gray.png"
+                                                Style="{StaticResource ImageCheckBoxStyle2}"/>
+                            <ctrl:ImageCheckBox x:Name="cbTwitterService" Margin="5" Content="트위터" 
+                                                Source="Resources/icon_twitter.png" 
+                                                DisabledSource="Resources/icon_twitter_gray.png"
+                                                Style="{StaticResource ImageCheckBoxStyle2}"/>
+                            <ctrl:ImageCheckBox x:Name="cbYoutubeService" Margin="5" Content="유튜브"
+                                                Source="Resources/icon_youtube.png" DisabledSource="Resources/icon_youtube_gray.png"
+                                                Style="{StaticResource ImageCheckBoxStyle2}"/>
                         </WrapPanel>
                     </Grid>
                 </Grid>
             </GroupBox>
         </Grid>
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="5"/>
@@ -85,11 +80,10 @@
                     </TabControl.Resources>
                     <TabItem x:Name="tiLog" Tag="작업 로그">
                         <ListBox x:Name="lvLog">
+                            <ctrl:LogItem Date="2017-04-03 00:16:30" TaskLogType="SearchReady"/>
+                            <ctrl:LogItem Date="2017-04-03 00:16:30" TaskLogType="Searching" Message="asdf"/>
                             <ctrl:LogItem Date="2017-04-03 00:16:30"/>
                             <ctrl:LogItem Date="2017-04-03 00:16:30"/>
-                            <ctrl:LogItem Date="2017-04-03 00:16:30"/>
-                            <ctrl:LogItem Date="2017-04-03 00:16:30"/>
-                            <TextBlock Text="[System] ....."/>
                         </ListBox>
                     </TabItem>
 
