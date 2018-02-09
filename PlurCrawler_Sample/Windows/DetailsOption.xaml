@@ -96,9 +96,9 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Image Width="16" 
-                               Source="/PlurCrawler_Sample;component/Resources/icon_youtube.png" 
+                               Source="/PlurCrawler_Sample;component/Resources/icon_twitter.png" 
                                Margin="0,0,3,0"/>
-                        <TextBlock Text="Youtube" Grid.Column="1" VerticalAlignment="Center"/>
+                        <TextBlock Text="Twitter" Grid.Column="1" VerticalAlignment="Center"/>
                     </Grid>
                 </TabItem.Header>
             </TabItem>
@@ -110,9 +110,9 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Image Width="16" 
-                               Source="/PlurCrawler_Sample;component/Resources/icon_twitter.png" 
+                               Source="/PlurCrawler_Sample;component/Resources/icon_youtube.png" 
                                Margin="0,0,3,0"/>
-                        <TextBlock Text="Twitter" Grid.Column="1" VerticalAlignment="Center"/>
+                        <TextBlock Text="Youtube" Grid.Column="1" VerticalAlignment="Center"/>
                     </Grid>
                 </TabItem.Header>
             </TabItem>
