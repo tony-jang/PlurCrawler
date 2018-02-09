@@ -74,12 +74,12 @@ namespace PlurCrawler_Sample.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("NotChecked")]
-        public global::PlurCrawler_Sample.Common.VerifyType GoogleVertified {
+        public global::PlurCrawler_Sample.Common.VerifyType GoogleIDVertified {
             get {
-                return ((global::PlurCrawler_Sample.Common.VerifyType)(this["GoogleVertified"]));
+                return ((global::PlurCrawler_Sample.Common.VerifyType)(this["GoogleIDVertified"]));
             }
             set {
-                this["GoogleVertified"] = value;
+                this["GoogleIDVertified"] = value;
             }
         }
         
@@ -92,6 +92,18 @@ namespace PlurCrawler_Sample.Properties {
             }
             set {
                 this["EngineUsage"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string GoogleKeyVertified {
+            get {
+                return ((string)(this["GoogleKeyVertified"]));
+            }
+            set {
+                this["GoogleKeyVertified"] = value;
             }
         }
     }

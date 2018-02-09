@@ -14,10 +14,13 @@
     <Setting Name="GoogleCredentials" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="GoogleVertified" Type="PlurCrawler_Sample.Common.VerifyType" Scope="User">
+    <Setting Name="GoogleIDVertified" Type="PlurCrawler_Sample.Common.VerifyType" Scope="User">
       <Value Profile="(Default)">NotChecked</Value>
     </Setting>
     <Setting Name="EngineUsage" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="GoogleKeyVertified" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

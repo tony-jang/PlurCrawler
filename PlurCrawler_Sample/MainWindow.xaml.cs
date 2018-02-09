@@ -133,7 +133,7 @@ namespace PlurCrawler_Sample
                 string.IsNullOrEmpty(_vertManager.GoogleEngineID)))
             {
                 AppSetting.Default.GoogleCredentials = $"{_vertManager.GoogleAPIKey}//{_vertManager.GoogleEngineID}";
-                AppSetting.Default.GoogleVertified = _vertManager.GoogleVerifyType;
+                AppSetting.Default.GoogleIDVertified = _vertManager.GoogleAPIVerifyType;
             }
 
             AppSetting.Default.Save();
