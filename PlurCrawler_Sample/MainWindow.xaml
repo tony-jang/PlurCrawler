@@ -7,7 +7,7 @@
         xmlns:ctrl="clr-namespace:PlurCrawler_Sample.Controls"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1000">
+        Title="PlurCrawler" Height="700" Width="1000">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -133,13 +133,14 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="작업 목록" Margin="5"/>
-                    <ListView x:Name="lvTask" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListView x:Name="lvTask" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                              ScrollViewer.CanContentScroll="False">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
                             </Style>
                         </ListBox.ItemContainerStyle>
-                        <ctrl:TaskProgressBar Title="작업"/>
+                        <ctrl:TaskProgressBar Title="작업" Message="asdf"/>
                     </ListView>
                 </Grid>
 

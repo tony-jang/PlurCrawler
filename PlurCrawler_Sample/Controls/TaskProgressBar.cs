@@ -10,6 +10,7 @@ using WPFExtension;
 namespace PlurCrawler_Sample.Controls
 {
     [TemplatePart(Name = "pb", Type = typeof(ProgressBar))]
+    [TemplatePart(Name = "closeBtn", Type = typeof(PathButton))]
     public class TaskProgressBar : ListViewItem
     {
         public TaskProgressBar()
@@ -18,6 +19,7 @@ namespace PlurCrawler_Sample.Controls
         }
 
         ProgressBar pb;
+        PathButton btn;
 
         bool init = false;
 
@@ -28,6 +30,9 @@ namespace PlurCrawler_Sample.Controls
             base.OnApplyTemplate();
 
             pb = base.GetTemplateChild("pb") as ProgressBar;
+            btn = base.GetTemplateChild("closeBtn") as PathButton;
+
+            btn.Click += Btn_Click;
 
             init = true;
 
@@ -35,8 +40,14 @@ namespace PlurCrawler_Sample.Controls
                 Value = savedValue;
 
             if (savedMaximum != default(double))
-            {
                 Maximum = savedMaximum;
+        }
+
+        private void Btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.Parent is ItemsControl lv)
+            {
+                lv.Items.Remove(this);
             }
         }
 

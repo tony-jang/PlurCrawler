@@ -289,8 +289,7 @@
     </Style>
 
     <Style x:Key="TaskProgressBarStyle" TargetType="{x:Type local:TaskProgressBar}">
-        <Setter Property="Margin" Value="5,5,5,0"/>
-
+        <Setter Property="Margin" Value="5"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:TaskProgressBar}">
@@ -304,17 +303,35 @@
                             <ColumnDefinition/>
                             <ColumnDefinition Width="Auto" MinWidth="30"/>
                         </Grid.ColumnDefinitions>
+                        <Grid.Effect>
+                            <DropShadowEffect ShadowDepth="0" Color="#FFBFBFBF"/>
+                        </Grid.Effect>
                         
-                        <TextBlock Text="{TemplateBinding Title}" Margin="3,0,3,3" FontSize="13" FontWeight="Bold"/>
+                        <Border Background="White" 
+                                Grid.RowSpan="3" Grid.ColumnSpan="2"
+                                CornerRadius="10"/>
+
+                        <TextBlock Text="{TemplateBinding Title}" Margin="10,5" FontSize="13" FontWeight="Bold"/>
                         
-                        <ProgressBar x:Name="pb" Grid.Row="1" Height="10"/>
+                        <ProgressBar x:Name="pb" Grid.Row="1" Margin="4" Height="10"/>
+
+                        <local:PathButton x:Name="closeBtn"
+                                          Grid.Column="1" Margin="5"
+                                          Data="{StaticResource EndPath}" 
+                                          Fill="#FFA0A0A0" Foreground="Black" 
+                                          ContentWidth="15" ContentHeight="15" 
+                                          BorderBrush="#00000000" 
+                                          Background="#00DDDDDD"
+                                          HorizontalAlignment="Right"
+                                          VerticalAlignment="Center"/>
 
                         <TextBlock Grid.Column="1" Grid.RowSpan="3"
                                    Margin="10,0" TextAlignment="Right"
                                    VerticalAlignment="Center">
                             <Run Text="{Binding Path=Value, ElementName=pb}"/>/<Run Text="{Binding  Path=Maximum, ElementName=pb}"/>
                         </TextBlock>
-                        <TextBlock Grid.Row="2" Text="{TemplateBinding Message}" Margin="3,3,3,0"/>
+                        <TextBlock Grid.Row="2" Text="{TemplateBinding Message}" 
+                                   Margin="10,5"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
