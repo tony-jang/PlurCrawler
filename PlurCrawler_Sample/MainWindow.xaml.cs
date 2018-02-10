@@ -11,6 +11,7 @@ using PlurCrawler.Search.Services.Youtube;
 using PlurCrawler.Search.Common;
 using PlurCrawler.Search.Base;
 using PlurCrawler.Extension;
+using PlurCrawler.Format;
 
 using PlurCrawler_Sample.Windows;
 using PlurCrawler_Sample.Controls;
@@ -103,19 +104,18 @@ namespace PlurCrawler_Sample
             }
 
             #endregion
-            
-#if DEBUG
-            
-            //foreach (PropertyInfo mi in typeof(GoogleCSESearchResult).GetProperties())
-            //{
-            //Console.Write("test");
-            //string s = (string)GetPropValue(new GoogleCSESearchResult()
-            //{
-            //    OriginalURL = "http://naver.com"
-            //}, "OriginalURL");
 
-            //MessageBox.Show(s);
-            //}
+#if DEBUG
+
+            //var csvformat = new CSVFormat<GoogleCSESearchResult>();
+
+            //csvformat.FormattingData(new List<GoogleCSESearchResult>() { new GoogleCSESearchResult()
+            //{
+            //    OriginalURL = "www.naver.com",
+            //    PublishedDate = DateTime.Now,
+            //    Snippet = "jasdfkjklasdfkjl;adsfs",
+            //    Title = "asdf"
+            //}});
 #endif
         }
 
@@ -270,7 +270,7 @@ namespace PlurCrawler_Sample
 
                     IEnumerable<GoogleCSESearchResult> googleResult = googleCSESearcher.Search(option);
 
-                    ExportManager.JsonExport(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "TestFile.json"), googleResult);
+                    ExportManager.CSVExport(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "TestFile.csv"), googleResult);
                 }
 
                 Dispatcher.Invoke(() => {
@@ -304,11 +304,6 @@ namespace PlurCrawler_Sample
                 itm.Value = args.Value;
             });
             
-        }
-
-        public static object GetPropValue(object src, string propName)
-        {
-            return src.GetType().GetProperty(propName).GetValue(src, null);
         }
     }
 }

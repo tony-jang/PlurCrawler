@@ -21,5 +21,15 @@ namespace PlurCrawler_Sample.Export
             
             str.SaveAsFile(fileLocation);
         }
+
+        public static void CSVExport<TResult>(string fileLocation, IEnumerable<TResult> searchResult)
+            where TResult : ISearchResult
+        {
+            var csvFormat = new CSVFormat<TResult>();
+
+            string str = csvFormat.FormattingData(searchResult);
+
+            str.SaveAsFile(fileLocation);
+        }
     }
 }
