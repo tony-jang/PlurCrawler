@@ -1,5 +1,4 @@
-﻿using PlurCrawler.Search.Services.GoogleCSE;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +15,7 @@ using System.Windows.Shapes;
 
 using PlurCrawler.Common;
 using PlurCrawler.Format.Common;
+using PlurCrawler.Search.Services.GoogleCSE;
 
 namespace PlurCrawler_Sample.Windows
 {
@@ -43,6 +43,11 @@ namespace PlurCrawler_Sample.Windows
 
             tbGooglePageOffset.Text = option.Offset.ToString();
             tbGoogleSearchCount.Text = option.SearchCount.ToString();
+
+            cbOutput1.IsChecked = option.OutputServices.HasFlag(OutputFormat.CSV);
+            cbOutput2.IsChecked = option.OutputServices.HasFlag(OutputFormat.Json);
+            cbOutput3.IsChecked = option.OutputServices.HasFlag(OutputFormat.MySQL);
+            cbOutput4.IsChecked = option.OutputServices.HasFlag(OutputFormat.MSSQL);
 
             useDate.IsChecked = option.UseDateSearch;
 

@@ -178,9 +178,7 @@ namespace PlurCrawler_Sample.Windows
                     text = "유효하지 않음";
                     break;
             }
-
-            GoogleAPIVerifyType = verifyType;
-
+            
             if (isAPIKey)
             {
                 // API Key
@@ -188,6 +186,8 @@ namespace PlurCrawler_Sample.Windows
                 runGoogleAPIKey.Text = _hiddenText;
                 runGoogleAPIVert.Text = text;
                 IsGoogleEncrypt = true;
+
+                GoogleAPIVerifyType = verifyType;
             }
             else
             {
@@ -195,6 +195,8 @@ namespace PlurCrawler_Sample.Windows
                 tbGoogleEngineID.Foreground = brush;
                 runGoogleEngineID.Text = GoogleEngineID;
                 runGoogleEngineIDVert.Text = text;
+
+                GoogleEngineIDVerifyType = verifyType;
             }
         }
 

@@ -90,7 +90,8 @@ namespace PlurCrawler_Sample
                 _vertManager.SetGoogleKey(credentials[0]);
                 _vertManager.SetGoogleEngineID(credentials[1]);
 
-                //_vertManager.ChangeGoogleState(AppSetting.Default.GoogleIDVertified);
+                _vertManager.ChangeGoogleState(AppSetting.Default.GoogleKeyVertified, true);
+                _vertManager.ChangeGoogleState(AppSetting.Default.GoogleIDVertified, false);
             }
             
             if (!AppSetting.Default.EngineUsage.IsNullOrEmpty())
