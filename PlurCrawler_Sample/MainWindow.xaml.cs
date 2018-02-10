@@ -135,11 +135,12 @@ namespace PlurCrawler_Sample
 
             // 인증 정보 저장
 
-            if (!(string.IsNullOrEmpty(_vertManager.GoogleAPIKey) ||
-                string.IsNullOrEmpty(_vertManager.GoogleEngineID)))
+            if (!_vertManager.GoogleAPIKey.IsNullOrEmpty() ||
+                !_vertManager.GoogleEngineID.IsNullOrEmpty())
             {
                 AppSetting.Default.GoogleCredentials = $"{_vertManager.GoogleAPIKey}//{_vertManager.GoogleEngineID}";
-                AppSetting.Default.GoogleIDVertified = _vertManager.GoogleAPIVerifyType;
+                AppSetting.Default.GoogleKeyVertified = _vertManager.GoogleAPIVerifyType;
+                AppSetting.Default.GoogleIDVertified = _vertManager.GoogleEngineIDVerifyType;
             }
 
             AppSetting.Default.Save();

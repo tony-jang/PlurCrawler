@@ -89,6 +89,7 @@
     <Compile Include="Converter\HalfConverter.cs" />
     <Compile Include="Export\ExportManager.cs" />
     <Compile Include="Controls\ImageCheckBox.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="TaskLogs\TaskLog.cs" />
     <Compile Include="TaskLogs\TaskLogEventArgs.cs" />
     <Compile Include="TaskLogs\TaskLogManager.cs" />

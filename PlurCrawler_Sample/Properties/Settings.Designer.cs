@@ -97,10 +97,10 @@ namespace PlurCrawler_Sample.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string GoogleKeyVertified {
+        [global::System.Configuration.DefaultSettingValueAttribute("NotChecked")]
+        public global::PlurCrawler_Sample.Common.VerifyType GoogleKeyVertified {
             get {
-                return ((string)(this["GoogleKeyVertified"]));
+                return ((global::PlurCrawler_Sample.Common.VerifyType)(this["GoogleKeyVertified"]));
             }
             set {
                 this["GoogleKeyVertified"] = value;

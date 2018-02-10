@@ -20,8 +20,8 @@
     <Setting Name="EngineUsage" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="GoogleKeyVertified" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="GoogleKeyVertified" Type="PlurCrawler_Sample.Common.VerifyType" Scope="User">
+      <Value Profile="(Default)">NotChecked</Value>
     </Setting>
   </Settings>
 </SettingsFile>
