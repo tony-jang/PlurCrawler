@@ -1,4 +1,5 @@
-﻿using PlurCrawler.Format.Base;
+﻿using PlurCrawler.Extension;
+using PlurCrawler.Format.Base;
 using PlurCrawler.Search.Base;
 using System;
 using System.Collections.Generic;
@@ -26,8 +27,10 @@ namespace PlurCrawler.Format
                     object obj = GetPropValue(item, property);
 
                     string data = DeterminationType(obj);
-
-                    sb.Append($"\"{data}\",");
+                    if (!data.IsNullOrEmpty())
+                        sb.Append($"\"{data}\",");
+                    else
+                        sb.Append(",");
                 }
                 sb.Append(Environment.NewLine);
             }
