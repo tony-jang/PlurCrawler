@@ -27,7 +27,9 @@
                     </Grid.RowDefinitions>
                     <TextBlock Margin="5,0" Text="검색어" Grid.Column="0" VerticalAlignment="Center"/>
                     <TextBox x:Name="tbQuery" Margin="10,0" Text="" Grid.Column="1" VerticalAlignment="Center"/>
-                    <Button x:Name="btnSearch" Grid.Column="2" Margin="5,0" Content="작업 시작" VerticalAlignment="Center" Padding="30,5" IsEnabled="False"/>
+                    <Button x:Name="btnSearch" Grid.Column="2" 
+                            Margin="5,0" Content="작업 시작" Style="{StaticResource ButtonStyle}"
+                            VerticalAlignment="Center" Padding="30,5" IsEnabled="False"/>
                     <Grid Grid.Row="1" Grid.ColumnSpan="2">
                         <WrapPanel HorizontalAlignment="Center">
                             <WrapPanel.Resources>
@@ -79,9 +81,9 @@
                         </Style>
                     </TabControl.Resources>
                     <TabItem x:Name="tiLog" Tag="작업 로그">
-                        <ListBox x:Name="lvLog">
+                        <ListBox x:Name="lvLog" >
                             <ctrl:LogItem Date="2017-04-03 00:16:30" TaskLogType="SearchReady"/>
-                            <ctrl:LogItem Date="2017-04-03 00:16:30" TaskLogType="Searching" Message="asdf"/>
+                            <ctrl:LogItem Date="2017-04-03 00:14:30" TaskLogType="Searching" Message="Debug"/>
                             <ctrl:LogItem Date="2017-04-03 00:16:30"/>
                             <ctrl:LogItem Date="2017-04-03 00:16:30"/>
                         </ListBox>
@@ -119,10 +121,10 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <Button x:Name="btnLog" Content="작업 로그" Padding="5" Margin="5"/>
-                    <Button x:Name="btnVertManager" Content="인증 관리자" Padding="5" Margin="5" Grid.Row="0" Grid.Column="1"/>
-                    <Button x:Name="btnTaskReport" Content="작업 보고서" Padding="5" Margin="5" Grid.Row="1" Grid.Column="0"/>
-                    <Button x:Name="btnOpenWiki" Content="PlurCrawler 위키" Padding="5" Margin="5" Grid.Row="1" Grid.Column="1"/>
+                    <Button x:Name="btnLog" Content="작업 로그" Padding="5" Margin="5" Style="{StaticResource ButtonStyle}"/>
+                    <Button x:Name="btnVertManager" Content="인증 관리자" Padding="5" Margin="5" Grid.Row="0" Grid.Column="1" Style="{StaticResource ButtonStyle}"/>
+                    <Button x:Name="btnTaskReport" Content="작업 보고서" Padding="5" Margin="5" Grid.Row="1" Grid.Column="0" Style="{StaticResource ButtonStyle}"/>
+                    <Button x:Name="btnOpenWiki" Content="PlurCrawler 위키" Padding="5" Margin="5" Grid.Row="1" Grid.Column="1" Style="{StaticResource ButtonStyle}"/>
                 </Grid>
                 
                 <Grid Grid.Row="1">
@@ -137,6 +139,7 @@
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
                             </Style>
                         </ListBox.ItemContainerStyle>
+                        <ctrl:TaskProgressBar Title="작업"/>
                     </ListView>
                 </Grid>
 
