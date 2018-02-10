@@ -20,12 +20,5 @@ namespace PlurCrawler.Format
             string json = JsonConvert.SerializeObject(resultData);
             return JToken.Parse(json).ToString(Formatting.Indented);
         }
-
-        public bool SaveFile(string fileLocation, string data)
-        {
-            File.WriteAllBytes(fileLocation, Encoding.UTF8.GetBytes(data));
-
-            return true;
-        }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using PlurCrawler.Extension;
 using PlurCrawler.Format;
 using PlurCrawler.Search.Base;
 
@@ -17,8 +18,8 @@ namespace PlurCrawler_Sample.Export
             var jsonFormat = new JsonFormat<TResult>();
 
             string str = jsonFormat.FormattingData(searchResult);
-
-            jsonFormat.SaveFile(fileLocation, str);
+            
+            str.SaveAsFile(fileLocation);
         }
     }
 }
