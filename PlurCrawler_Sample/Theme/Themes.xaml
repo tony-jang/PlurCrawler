@@ -421,7 +421,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+    <Style TargetType="{x:Type Button}">
         <Style.Resources>
             <conv:HalfConverter x:Key="halfConverter"/>
         </Style.Resources>
