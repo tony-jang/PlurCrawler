@@ -20,17 +20,22 @@ namespace PlurCrawler.Extension
         /// <param name="str">저장할 String 데이터입니다.</param>
         /// <param name="fileLocation">저장할 파일 위치입니다.</param>
         /// <returns></returns>
-        public static bool SaveAsFile(this string str, string fileLocation)
+        public static bool SaveAsFile(this string str, string fileLocation, Encoding encoding)
         {
             try
             {
-                File.WriteAllBytes(fileLocation, Encoding.UTF8.GetBytes(str));
+                File.WriteAllText(fileLocation, str, encoding);
                 return true;
             }
             catch (Exception)
             {
                 return false;
             }
+        }
+
+        public static bool SaveAsFile(this string str, string fileLocation)
+        {
+            return SaveAsFile(str, fileLocation, Encoding.UTF8);
         }
     }
 }
