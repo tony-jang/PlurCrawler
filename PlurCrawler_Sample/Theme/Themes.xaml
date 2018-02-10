@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:cm="clr-namespace:PlurCrawler_Sample.Commands"
-                    xmlns:local="clr-namespace:PlurCrawler_Sample.Controls">
-
+                    xmlns:local="clr-namespace:PlurCrawler_Sample.Controls"
+                    xmlns:conv="clr-namespace:PlurCrawler_Sample.Converter">
     <StreamGeometry x:Key="EndPath">M2.1884144,33.948415C0.17737393,31.937374 0.11539951,31.753666 0.91285887,30.167338 1.3738599,29.250302 3.9220578,26.346334 6.575521,23.714076 9.2289843,21.081818 11.4,18.510484 11.4,18 11.4,17.489516 9.2289843,14.918182 6.575521,12.285924 3.9220578,9.6536658 1.3918621,6.7857846 0.95286405,5.9128546 0.24157448,4.498484 0.29322573,4.1671555 1.4273428,2.8692044 4.4345855,-0.57246332 4.2114413,-0.64568514 11.079512,6.0364362L17.399999,12.1858 23.720487,6.0364362C30.588558,-0.64568514 30.365414,-0.57246332 33.372656,2.8692044 34.506773,4.1671555 34.558425,4.498484 33.847135,5.9128546 33.408137,6.7857846 30.877941,9.6536658 28.224478,12.285924 25.571015,14.918182 23.399999,17.489516 23.399999,18 23.399999,18.510484 25.571015,21.081818 28.224478,23.714076 30.877941,26.346334 33.408137,29.214215 33.847135,30.087145 34.558425,31.501516 34.506773,31.832845 33.372656,33.130796 30.364772,36.573197 30.590558,36.647632 23.697503,29.941202L17.354032,23.769477 11.827016,29.172463C4.0647851,36.760504,4.6904735,36.450473,2.1884144,33.948415z</StreamGeometry>
 
     <Style TargetType="{x:Type local:ImageTextBlock}">
@@ -422,6 +422,9 @@
     </Style>
 
     <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+        <Style.Resources>
+            <conv:HalfConverter x:Key="halfConverter"/>
+        </Style.Resources>
         <Setter Property="Background" Value="White"/>
         <Setter Property="BorderBrush" Value="#FFB4B4B4"/>
 
@@ -432,7 +435,7 @@
                         <Border Background="{TemplateBinding Background}" 
                                 BorderBrush="{TemplateBinding BorderBrush}" 
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="15">
+                                CornerRadius="{Binding Path=ActualHeight, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource halfConverter}}">
                             <ContentPresenter Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Border>
                     </Grid>

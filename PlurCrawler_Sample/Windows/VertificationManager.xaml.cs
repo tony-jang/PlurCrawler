@@ -130,6 +130,8 @@ namespace PlurCrawler_Sample.Windows
 
             tbGoogleMsg.Visibility = Visibility.Hidden;
 
+            btnGoogleViewHidden.IsEnabled = true;
+
             GoogleAPIKey = key;
             runGoogleAPIKey.Text = _hiddenText;
             IsGoogleEncrypt = true;
