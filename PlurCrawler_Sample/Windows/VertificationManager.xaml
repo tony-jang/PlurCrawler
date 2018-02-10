@@ -11,7 +11,19 @@
 
     <Grid>
         <TabControl>
-            <TabItem Header="Google CSE">
+            <TabItem Style="{DynamicResource TabItemStyle}">
+                <TabItem.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Image Width="16" 
+                               Source="/PlurCrawler_Sample;component/Resources/icon_google.png" 
+                               Margin="0,0,3,0"/>
+                        <TextBlock Text="Google CSE" Grid.Column="1" VerticalAlignment="Center"/>
+                    </Grid>
+                </TabItem.Header>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -90,7 +102,19 @@
                     </Grid>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="Twitter">
+            <TabItem Style="{DynamicResource TabItemStyle}">
+                <TabItem.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Image Width="16" 
+                               Source="/PlurCrawler_Sample;component/Resources/icon_twitter.png" 
+                               Margin="0,0,3,0"/>
+                        <TextBlock Text="Twitter" Grid.Column="1" VerticalAlignment="Center"/>
+                    </Grid>
+                </TabItem.Header>
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -172,7 +196,19 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="Youtube">
+            <TabItem Style="{DynamicResource TabItemStyle}">
+                <TabItem.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Image Width="16" 
+                               Source="/PlurCrawler_Sample;component/Resources/icon_youtube.png" 
+                               Margin="0,0,3,0"/>
+                        <TextBlock Text="Youtube" Grid.Column="1" VerticalAlignment="Center"/>
+                    </Grid>
+                </TabItem.Header>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <Grid>
                         <Grid.RowDefinitions>
