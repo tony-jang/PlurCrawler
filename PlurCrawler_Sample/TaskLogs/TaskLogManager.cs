@@ -9,12 +9,15 @@ namespace PlurCrawler_Sample.TaskLogs
 {
     public class TaskLogManager
     {
-        public delegate void LogAddedDelegate(object sender, TaskLog taskLog);
+        public delegate void LogDelegate(object sender, TaskLog taskLog);
 
-        public delegate void LogDeletedDelegate(object sender, TaskLog taskLog);
+        public event LogDelegate LogAdded;
 
-        // TODO : Add LogAdded/Deleted Event Handler
-
+        internal void OnLogAdded(object sender, TaskLog taskLog)
+        {
+            LogAdded?.Invoke(sender, taskLog);
+        }
+        
         public TaskLogManager()
         {
             // TODO: Implement
@@ -38,6 +41,12 @@ namespace PlurCrawler_Sample.TaskLogs
         
         public void AddLog(string message, TaskLogType type)
         {
+            OnLogAdded(this, new TaskLog()
+            {
+                DateTime = DateTime.Now,
+                LogType = type,
+                Message = message
+            });
             // TODO: Implement
         }
     }

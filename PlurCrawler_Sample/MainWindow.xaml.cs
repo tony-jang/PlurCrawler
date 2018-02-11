@@ -36,6 +36,12 @@ namespace PlurCrawler_Sample
         {
             InitializeComponent();
 
+            #region [  Initalization  ]
+            
+            _logManager = new TaskLogManager();
+
+            #endregion
+
             #region [  Event Connection  ]
 
             this.Loaded += MainWindow_Loaded;
@@ -56,20 +62,32 @@ namespace PlurCrawler_Sample
             btnVertManager.Click += BtnVertManager_Click;
             btnTaskReport.Click += BtnTaskReport_Click;
 
+            _logManager.LogAdded += _logManager_LogAdded;
+
             #endregion
 
             dict = new Dictionary<ISearcher, TaskProgressBar>();
         }
 
+        private void _logManager_LogAdded(object sender, TaskLog taskLog)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                lvLog.Items.Add(new LogItem()
+                {
+                    TaskLog = taskLog
+                });
+            });
+        }
+
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            #region [  Initalization  ]
+            #region [  Initalization UI  ]
 
             lvLog.Items.Clear();
 
             _detailsOption = (DetailsOption)frOption.Content;
             _vertManager = (VertificationManager)frVertManager.Content;
-            _logManager = new TaskLogManager();
             
             #endregion
 
@@ -220,13 +238,12 @@ namespace PlurCrawler_Sample
                 var googleCSESearcher = new GoogleCSESearcher();
 
                 bool isCanceled = false;
-
-                string googleKey = string.Empty,
-                       googleID = string.Empty;
-
+                
                 GoogleCSESearchOption option = null;
                 Dispatcher.Invoke(() =>
                 {
+                    _logManager.AddLog("Google CSE 검색 엔진을 초기화중입니다.", TaskLogType.SearchReady);
+
                     // 옵션 초기화
                     option = _detailsOption.GetGoogleCSESearchOption();
                     option.Query = tbQuery.Text;
@@ -234,9 +251,6 @@ namespace PlurCrawler_Sample
 
                 Dispatcher.Invoke(() =>
                 {
-                    googleKey = _vertManager.GoogleAPIKey;
-                    googleID = _vertManager.GoogleEngineID;
-
                     var tb = new TaskProgressBar()
                     {
                         Title = "Google CSE 검색",
@@ -251,15 +265,18 @@ namespace PlurCrawler_Sample
                     {
                         tb.Maximum = 1;
                         tb.Message = "결과를 내보낼 위치가 없습니다.";
+                        _logManager.AddLog("검색을 내보낼 위치가 없습니다.", TaskLogType.SearchFailed);
                         isCanceled = true;
                     }
 
-                    googleCSESearcher.Vertification(googleKey, googleID);
+                    googleCSESearcher.Vertification(_vertManager.GoogleAPIKey,
+                        _vertManager.GoogleEngineID);
 
                     if (!googleCSESearcher.IsVerification) // 인증되지 않았을 경우
                     {
                         tb.Maximum = 1;
                         tb.Message = "API키가 인증되지 않았습니다.";
+                        _logManager.AddLog("API키가 인증되지 않았습니다.", TaskLogType.SearchFailed);
                         isCanceled = true;
                     }
                 });
@@ -270,7 +287,7 @@ namespace PlurCrawler_Sample
                     googleCSESearcher.SearchFinished += GoogleCSESearcher_SearchFinished;
 
                     IEnumerable<GoogleCSESearchResult> googleResult = googleCSESearcher.Search(option);
-
+                    _logManager.AddLog("CSV 파일로 내보내기에 성공했습니다.", TaskLogType.Searching);
                     ExportManager.CSVExport(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "TestFile.csv"), googleResult);
                 }
 
@@ -281,6 +298,7 @@ namespace PlurCrawler_Sample
                 });
             });
 
+            thr.SetApartmentState(ApartmentState.STA);
             thr.Start();
         }
 
@@ -291,6 +309,7 @@ namespace PlurCrawler_Sample
                 var itm = dict[sender as ISearcher];
                 itm.Value = itm.Maximum;
                 itm.Message = "검색이 완료되었습니다.";
+                _logManager.AddLog("검색이 완료되었습니다.", TaskLogType.Searching);
                 _vertManager.ChangeGoogleState(VerifyType.Verified, true);
                 _vertManager.ChangeGoogleState(VerifyType.Verified, false);
             });
