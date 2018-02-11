@@ -152,6 +152,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\PrimaryKeyAttribute.cs" />
     <Compile Include="Extension\DateTimeEx.cs" />
     <Compile Include="Extension\EnumEx.cs" />
     <Compile Include="Extension\StringEx.cs" />

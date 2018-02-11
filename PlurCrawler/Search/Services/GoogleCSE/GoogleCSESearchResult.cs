@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using PlurCrawler.Attributes;
 using PlurCrawler.Search.Base;
 
 namespace PlurCrawler.Search.Services.GoogleCSE
@@ -26,6 +27,7 @@ namespace PlurCrawler.Search.Services.GoogleCSE
         /// <summary>
         /// 해당 검색 결과의 제목을 나타냅니다.
         /// </summary>
+        [PrimaryKey]
         public string Title { get; set; }
 
         /// <summary>

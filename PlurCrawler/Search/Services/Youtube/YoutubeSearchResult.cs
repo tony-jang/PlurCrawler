@@ -1,9 +1,11 @@
-﻿using PlurCrawler.Search.Base;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+using PlurCrawler.Attributes;
+using PlurCrawler.Search.Base;
 
 namespace PlurCrawler.Search.Services.Youtube
 {
@@ -17,6 +19,7 @@ namespace PlurCrawler.Search.Services.Youtube
         /// <summary>
         /// 해당 동영상의 원본 URL을 가져옵니다.
         /// </summary>
+        [PrimaryKey]
         public string OriginalURL { get; set; }
 
         /// <summary>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using PlurCrawler.Attributes;
 using PlurCrawler.Search.Base;
 
 namespace PlurCrawler.Search.Services.Twitter
@@ -23,6 +24,7 @@ namespace PlurCrawler.Search.Services.Twitter
         /// <summary>
         /// 올린 사람의 닉네임과 내용 10자로 이루어진 제목입니다.
         /// </summary>
+        [PrimaryKey]
         public string Title { get; set; }
 
         /// <summary>
