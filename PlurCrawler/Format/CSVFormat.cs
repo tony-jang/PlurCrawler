@@ -1,12 +1,13 @@
-﻿using PlurCrawler.Extension;
-using PlurCrawler.Format.Base;
-using PlurCrawler.Search.Base;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+
+using PlurCrawler.Extension;
+using PlurCrawler.Format.Base;
+using PlurCrawler.Search.Base;
 
 namespace PlurCrawler.Format
 {

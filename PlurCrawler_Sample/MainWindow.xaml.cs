@@ -29,7 +29,7 @@ namespace PlurCrawler_Sample
         DetailsOption _detailsOption;
         VertificationManager _vertManager;
         TaskLogManager _logManager;
-        
+
         Dictionary<ISearcher, TaskProgressBar> dict;
 
         public MainWindow()
@@ -85,6 +85,7 @@ namespace PlurCrawler_Sample
             #region [  Initalization UI  ]
 
             lvLog.Items.Clear();
+            lvTask.Items.Clear();
 
             _detailsOption = (DetailsOption)frOption.Content;
             _vertManager = (VertificationManager)frVertManager.Content;
