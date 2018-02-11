@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using WPFExtension;
 
 namespace PlurCrawler_Sample.Controls
@@ -49,6 +50,26 @@ namespace PlurCrawler_Sample.Controls
             {
                 lv.Items.Remove(this);
             }
+        }
+
+        private Dispatcher Dispatcher => Common.GlobalData.MainWindowDispatcher;
+
+        public void SetValue(string title = null, string message = null, double value = -1, double maximum = -1)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                if (title != null)
+                    Title = title;
+
+                if (message != null)
+                    Message = message;
+
+                if (value != -1)
+                    Value = value;
+
+                if (maximum != -1)
+                    Maximum = maximum;
+            });
         }
 
         public static DependencyProperty TitleProperty = DependencyHelper.Register();
