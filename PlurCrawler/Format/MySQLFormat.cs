@@ -4,9 +4,11 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 
 using PlurCrawler.Format.Base;
 using PlurCrawler.Search.Base;
+using PlurCrawler.Attributes;
 
 using MySql.Data.MySqlClient;
 
@@ -63,7 +65,43 @@ namespace PlurCrawler.Format
         {
             if (IsOpened != ConnectionState.Open)
                 Connection.Open();
+
+            string primaryKeyProperty;
+            IEnumerable<PropertyInfo> properties = typeof(TResult).GetProperties();
+
+            try
+            {
+                primaryKeyProperty = properties.Where(i => i.GetCustomAttributes(typeof(PrimaryKeyAttribute), true).Count() >= 1)
+                                               .First()
+                                               .Name;
+            }
+            catch (Exception)
+            {
+                // 예외처리: 아무런 Primary Key가 없을 경우 임시로 첫번째의 프로퍼티를 Primary Key로 사용
+                primaryKeyProperty = properties.First().Name;
+            }
             
+            string baseQuery = $"INSERT INTO {TableName} values({string.Join(", ", properties.Select(i => $"@{i.Name}"))})";
+            
+            foreach (TResult data in resultData)
+            {
+                try
+                {
+                    MySqlCommand cm = Connection.CreateCommand();
+
+                    cm.CommandText = baseQuery;
+
+                    foreach (PropertyInfo prop in properties)
+                    {
+                        cm.Parameters.AddWithValue($"@{prop}", prop.GetValue(data));
+                    }
+
+                    cm.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+                }
+            }
         }
     }
 }

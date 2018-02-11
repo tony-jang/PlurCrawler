@@ -64,7 +64,7 @@ namespace PlurCrawler.Format
         }
         private static object GetPropValue(object src, string propName)
         {
-            return src.GetType().GetProperty(propName).GetValue(src, null);
+            return src.GetType().GetProperty(propName).GetValue(src);
         }
     }
 }
