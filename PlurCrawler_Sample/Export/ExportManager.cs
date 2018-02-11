@@ -31,5 +31,11 @@ namespace PlurCrawler_Sample.Export
 
             str.SaveAsFile(fileLocation);
         }
+
+        public static void MySQLExport<TResult>(string fileLocation, IEnumerable<TResult> searchResult, MySQLFormat<TResult> mySQLFormat)
+            where TResult : ISearchResult
+        {
+            mySQLFormat.FormattingData(searchResult);
+        }
     }
 }
