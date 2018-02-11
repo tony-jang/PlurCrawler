@@ -38,10 +38,12 @@ namespace PlurCrawler_Sample
             Thread thr = new Thread(() =>
             {
                 var googleCSESearcher = new GoogleCSESearcher();
-
                 bool isCanceled = false;
-
                 GoogleCSESearchOption option = null;
+
+                googleCSESearcher.SearchProgressChanged += GoogleCSESearcher_SearchProgressChanged;
+                googleCSESearcher.SearchFinished += GoogleCSESearcher_SearchFinished;
+
                 Dispatcher.Invoke(() =>
                 {
                     _logManager.AddLog("Google CSE 검색 엔진을 초기화중입니다.", TaskLogType.SearchReady);
@@ -49,10 +51,7 @@ namespace PlurCrawler_Sample
                     // 옵션 초기화
                     option = _detailsOption.GetGoogleCSESearchOption();
                     option.Query = tbQuery.Text;
-                });
 
-                Dispatcher.Invoke(() =>
-                {
                     var tb = new TaskProgressBar();
 
                     tb.SetValue(title: "Google CSE 검색", message: "검색이 진행중입니다.", maximum: option.SearchCount);
@@ -80,9 +79,6 @@ namespace PlurCrawler_Sample
 
                 if (!isCanceled)
                 {
-                    googleCSESearcher.SearchProgressChanged += GoogleCSESearcher_SearchProgressChanged;
-                    googleCSESearcher.SearchFinished += GoogleCSESearcher_SearchFinished;
-
                     IEnumerable<GoogleCSESearchResult> googleResult = googleCSESearcher.Search(option);
                     _logManager.AddLog("CSV 파일로 내보내기에 성공했습니다.", TaskLogType.Searching);
                     ExportManager.CSVExport(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "TestFile.csv"), googleResult);

@@ -10,6 +10,6 @@ namespace PlurCrawler.Format.Base
     public abstract class BaseFormat<TResult> : IFormat<TResult>
                                                 where TResult : ISearchResult
     {
-        public abstract void Formatting(TResult resultData);
+        public abstract void FormattingData(IEnumerable<TResult> resultData);
     }
 }
