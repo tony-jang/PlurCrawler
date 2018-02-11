@@ -52,24 +52,20 @@ namespace PlurCrawler_Sample.Controls
             }
         }
 
-        private Dispatcher Dispatcher => Common.GlobalData.MainWindowDispatcher;
-
         public void SetValue(string title = null, string message = null, double value = -1, double maximum = -1)
         {
-            Dispatcher.Invoke(() =>
-            {
-                if (title != null)
-                    Title = title;
+            if (title != null)
+                Title = title;
 
-                if (message != null)
-                    Message = message;
+            if (message != null)
+                Message = message;
 
-                if (value != -1)
-                    Value = value;
+            if (value != -1)
+                Value = value;
 
-                if (maximum != -1)
-                    Maximum = maximum;
-            });
+            if (maximum != -1)
+                Maximum = maximum;
+
         }
 
         public static DependencyProperty TitleProperty = DependencyHelper.Register();

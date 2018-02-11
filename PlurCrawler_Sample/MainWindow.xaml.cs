@@ -18,7 +18,6 @@ using PlurCrawler_Sample.Common;
 using PlurCrawler_Sample.TaskLogs;
 
 using AppSetting = PlurCrawler_Sample.Properties.Settings;
-using PlurCrawler_Sample.Search;
 
 namespace PlurCrawler_Sample
 {
@@ -214,7 +213,6 @@ namespace PlurCrawler_Sample
             {
                 // Youtube Service In Here.
             }
-
         }
     }
 }

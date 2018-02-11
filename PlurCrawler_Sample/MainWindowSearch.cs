@@ -23,6 +23,7 @@ namespace PlurCrawler_Sample
             youtubeSearching = false,
             twitterSearching = false;
 
+        #region [  Google CSE  ]
 
         public void SearchGoogle()
         {
@@ -52,20 +53,16 @@ namespace PlurCrawler_Sample
 
                 Dispatcher.Invoke(() =>
                 {
-                    var tb = new TaskProgressBar()
-                    {
-                        Title = "Google CSE 검색",
-                        Maximum = option.SearchCount,
-                        Message = "검색이 진행중입니다."
-                    };
+                    var tb = new TaskProgressBar();
+
+                    tb.SetValue(title: "Google CSE 검색", message: "검색이 진행중입니다.", maximum: option.SearchCount);
 
                     lvTask.Items.Add(tb);
                     dict[googleCSESearcher] = tb;
 
                     if (option.OutputServices == PlurCrawler.Format.Common.OutputFormat.None)
                     {
-                        tb.Maximum = 1;
-                        tb.Message = "결과를 내보낼 위치가 없습니다.";
+                        tb.SetValue(message: "결과를 내보낼 위치가 없습니다.", maximum: 1);
                         _logManager.AddLog("검색을 내보낼 위치가 없습니다.", TaskLogType.SearchFailed);
                         isCanceled = true;
                     }
@@ -75,8 +72,7 @@ namespace PlurCrawler_Sample
 
                     if (!googleCSESearcher.IsVerification) // 인증되지 않았을 경우
                     {
-                        tb.Maximum = 1;
-                        tb.Message = "API키가 인증되지 않았습니다.";
+                        tb.SetValue(message: "API키가 인증되지 않았습니다.", maximum: 1);
                         _logManager.AddLog("API키가 인증되지 않았습니다.", TaskLogType.SearchFailed);
                         isCanceled = true;
                     }
@@ -107,10 +103,11 @@ namespace PlurCrawler_Sample
         {
             Dispatcher.Invoke(() =>
             {
-                var itm = dict[sender as ISearcher];
-                itm.Value = itm.Maximum;
-                itm.Message = "검색이 완료되었습니다.";
+                TaskProgressBar itm = dict[sender as ISearcher];
+                itm.SetValue(value: itm.Maximum, message: "검색이 완료되었습니다.");
+
                 _logManager.AddLog("검색이 완료되었습니다.", TaskLogType.Searching);
+
                 _vertManager.ChangeGoogleState(VerifyType.Verified, true);
                 _vertManager.ChangeGoogleState(VerifyType.Verified, false);
             });
@@ -121,10 +118,12 @@ namespace PlurCrawler_Sample
             Dispatcher.Invoke(() =>
             {
                 var itm = dict[sender as ISearcher];
-                itm.Maximum = args.Maximum;
-                itm.Value = args.Value;
+                itm.SetValue(maximum: args.Maximum, value: args.Value);
             });
-
         }
+
+        #endregion
+
+
     }
 }
