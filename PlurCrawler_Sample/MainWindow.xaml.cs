@@ -126,6 +126,12 @@ namespace PlurCrawler_Sample
 
 #if DEBUG
 
+            var mysql = new MySQLFormat<GoogleCSESearchResult>();
+
+            mysql.Initalization("localhost", "root", "-", "plurcrawler");
+
+            mysql.FormattingData(null);
+
             //var csvformat = new CSVFormat<GoogleCSESearchResult>();
 
             //csvformat.FormattingData(new List<GoogleCSESearchResult>() { new GoogleCSESearchResult()

@@ -90,8 +90,7 @@ namespace PlurCrawler_Sample
                     _vertManager.ChangeEditable(true);
                 });
             });
-
-            thr.SetApartmentState(ApartmentState.STA);
+            
             thr.Start();
         }
 
