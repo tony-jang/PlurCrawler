@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PlurCrawler.Common
 {
@@ -37,6 +38,24 @@ namespace PlurCrawler.Common
         {
             get => _until;
             set => _until = (value > Since) ? value : _until;
+        }
+
+        /// <summary>
+        /// 시작 날짜와 끝 날짜를 모두 <see cref="IEnumerable{T}"/>로 반환합니다.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<DateTime> GetDateRange()
+        {
+            var list = new List<DateTime>();
+            DateTime startDate = Since.GetValueOrDefault().Date;
+
+            while (Until.GetValueOrDefault().Date >= startDate)
+            {
+                list.Add(startDate);
+                startDate = startDate.AddDays(1);
+            }
+
+            return list;
         }
     }
 }
