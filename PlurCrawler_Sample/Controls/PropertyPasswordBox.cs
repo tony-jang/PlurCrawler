@@ -60,7 +60,7 @@ namespace PlurCrawler_Sample.Controls
 
         public string Password
         {
-            get => pwBox.Password;
+            get => pwBox?.Password;
             set
             {
                 if (pwBox == null)
