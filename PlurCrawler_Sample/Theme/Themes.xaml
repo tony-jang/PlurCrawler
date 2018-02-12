@@ -80,6 +80,9 @@
                         <Trigger Property="AccentName" Value="True">
                             <Setter Property="FontWeight" TargetName="tbPropName" Value="Bold"/>
                         </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="LightGray"/>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

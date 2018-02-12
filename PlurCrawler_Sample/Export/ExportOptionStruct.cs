@@ -42,6 +42,8 @@ namespace PlurCrawler_Sample.Export
 
         public string MySQLConnString { get; set; }
 
+        public bool MySQLManualInput { get; set; }
+
         #endregion
     }
 }
