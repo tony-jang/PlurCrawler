@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PlurCrawler_Sample.Windows"
-      xmlns:ctrls="clr-namespace:PlurCrawler_Sample.Controls"
+      xmlns:ctrl="clr-namespace:PlurCrawler_Sample.Controls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="600"
       Title="ExportOption">
@@ -13,22 +13,25 @@
         <TabControl>
             <TabItem Style="{DynamicResource TabItemStyle}">
                 <TabItem.Header>
-                    <ctrls:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/icon_json.png" Text="Json Format" Height="20"/>
+                    <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/icon_json.png" Text="Json Format" Height="20"/>
+                </TabItem.Header>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Style="{DynamicResource TabItemStyle}">
+                <TabItem.Header>
+                    <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/Icon_csv.png" Height="20" Text="CSV Format"/>
                 </TabItem.Header>
             </TabItem>
             <TabItem Style="{DynamicResource TabItemStyle}">
                 <TabItem.Header>
-                    <ctrls:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/Icon_csv.png" Height="20" Text="CSV Format"/>
+                    <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/Icon_mysql.png" Height="20" Text="MySQL"/>
                 </TabItem.Header>
             </TabItem>
             <TabItem Style="{DynamicResource TabItemStyle}">
                 <TabItem.Header>
-                    <ctrls:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/Icon_mysql.png" Height="20" Text="MySQL"/>
-                </TabItem.Header>
-            </TabItem>
-            <TabItem Style="{DynamicResource TabItemStyle}">
-                <TabItem.Header>
-                    <ctrls:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/Icon_access.png" Height="20" Text="Access DB"/>
+                    <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/Icon_access.png" Height="20" Text="Access DB"/>
                 </TabItem.Header>
             </TabItem>
         </TabControl>
