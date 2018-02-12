@@ -12,6 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Forms;
+
+using Microsoft.Win32;
+using System.IO;
 
 namespace PlurCrawler_Sample.Windows
 {
@@ -23,6 +27,27 @@ namespace PlurCrawler_Sample.Windows
         public ExportOption()
         {
             InitializeComponent();
+            setLocationPath.Click += SetLocationPath_Click;
+        }
+
+        private void SetLocationPath_Click(object sender, RoutedEventArgs e)
+        {
+            jsonExportFolder.Text = GetFolderPath(jsonExportFolder.Text);
+        }
+
+        public string GetFolderPath(string startPath)
+        {
+            var folderDialog = new FolderBrowserDialog();
+
+            if (Directory.Exists(startPath))
+                folderDialog.SelectedPath = startPath;
+
+            if (folderDialog.ShowDialog() == DialogResult.OK)
+            {
+                return folderDialog.SelectedPath;
+            }
+
+            return startPath;
         }
     }
 }

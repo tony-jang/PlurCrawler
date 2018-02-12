@@ -97,6 +97,11 @@
                         <Frame x:Name="frTaskReport"
                         Source="/PlurCrawler_Sample;component/Windows/TaskReport.xaml" NavigationUIVisibility="Hidden"/>
                     </TabItem>
+
+                    <TabItem x:Name="tiExportOption" Tag="내보내기 옵션">
+                        <Frame x:Name="frExportOption"
+                        Source="/PlurCrawler_Sample;component/Windows/ExportOption.xaml" NavigationUIVisibility="Hidden"/>
+                    </TabItem>
                 </TabControl>
             </Grid>
             
@@ -123,7 +128,7 @@
                     <Button x:Name="btnLog" Content="작업 로그" Padding="5" Margin="5"/>
                     <Button x:Name="btnVertManager" Content="인증 관리자" Padding="5" Margin="5" Grid.Row="0" Grid.Column="1"/>
                     <Button x:Name="btnTaskReport" Content="작업 보고서" Padding="5" Margin="5" Grid.Row="1" Grid.Column="0"/>
-                    <Button x:Name="btnOpenWiki" Content="PlurCrawler 위키" Padding="5" Margin="5" Grid.Row="1" Grid.Column="1"/>
+                    <Button x:Name="btnExportOption" Content="내보내기 옵션" Padding="5" Margin="5" Grid.Row="1" Grid.Column="1"/>
                 </Grid>
                 
                 <Grid Grid.Row="1">

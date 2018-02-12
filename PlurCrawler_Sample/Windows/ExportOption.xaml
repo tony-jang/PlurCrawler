@@ -16,18 +16,83 @@
                     <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/icon_json.png" Text="Json Format" Height="20"/>
                 </TabItem.Header>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    
+                    <StackPanel Margin="10">
+                        <Grid Margin="10,10,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ctrl:PropertyTextBox x:Name="jsonExportFolder" PropertyName="파일을 내보낼 위치" Margin="0" Description="파일을 내보낼 위치를 선택합니다."/>
+                            <Button x:Name="setJsonLocationPath" Content="..." Grid.Column="1" Height="25" Width="25" VerticalAlignment="Center" Margin="5,0"/>
+                        </Grid>
+                        <ctrl:PropertyTextBox x:Name="jsonExportName" PropertyName="파일 이름" Margin="10" Description="파일의 이름을 결정합니다. [확장자 제외]"/>
+                        <ctrl:PropertyGroupBox Header="파일 중복 설정">
+                            <WrapPanel>
+                                <TextBlock Text="파일 이름이 중복될때" Margin="10,0"/>
+                                <ComboBox SelectedIndex="0">
+                                    <ComboBoxItem Content="내용을 이어서 저장"/>
+                                    <ComboBoxItem Content="덮어씌우기"/>
+                                    <ComboBoxItem Content="앞에 (1) 붙여서 저장"/>
+                                </ComboBox>
+                            </WrapPanel>
+                        </ctrl:PropertyGroupBox>
+
+                        <ctrl:PropertyGroupBox Header="Json 정리">
+                            <CheckBox x:Name="cbUseJsonSort" Content="사용"/>
+                        </ctrl:PropertyGroupBox>
+
+
+
+                    </StackPanel>
                 </ScrollViewer>
             </TabItem>
             <TabItem Style="{DynamicResource TabItemStyle}">
                 <TabItem.Header>
                     <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/Icon_csv.png" Height="20" Text="CSV Format"/>
                 </TabItem.Header>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <Grid Margin="10,10,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ctrl:PropertyTextBox x:Name="csvExportFolder" PropertyName="파일을 내보낼 위치" Margin="0" Description="파일을 내보낼 위치를 선택합니다."/>
+                            <Button x:Name="setCsvLocationPath" Content="..." Grid.Column="1" Height="25" Width="25" VerticalAlignment="Center" Margin="5,0"/>
+                        </Grid>
+                        <ctrl:PropertyTextBox x:Name="csvExportName" PropertyName="파일 이름" Margin="10" Description="파일의 이름을 결정합니다. [확장자 제외]"/>
+                        <ctrl:PropertyGroupBox Header="파일 중복 설정">
+                            <WrapPanel>
+                                <TextBlock Text="파일 이름이 중복될때" Margin="10,0"/>
+                                <ComboBox SelectedIndex="0">
+                                    <ComboBoxItem Content="내용을 이어서 저장"/>
+                                    <ComboBoxItem Content="덮어씌우기"/>
+                                    <ComboBoxItem Content="앞에 (1) 붙여서 저장"/>
+                                </ComboBox>
+                            </WrapPanel>
+                        </ctrl:PropertyGroupBox>
+                    </StackPanel>
+                </ScrollViewer>
             </TabItem>
             <TabItem Style="{DynamicResource TabItemStyle}">
                 <TabItem.Header>
                     <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/Icon_mysql.png" Height="20" Text="MySQL"/>
                 </TabItem.Header>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <StackPanel x:Name="spInputData">
+                            <ctrl:PropertyTextBox x:Name="mysqlConnAddr" PropertyName="접속할 주소" Margin="10" Description="MySQL을 통해서 접속할 주소를 선택합니다."/>
+                            <ctrl:PropertyTextBox x:Name="mysqlUserID" PropertyName="유저 ID" Margin="10" Description="접속할때 쓰일 유저 ID를 입력합니다."/>
+                            <ctrl:PropertyPasswordBox x:Name="mysqlUserPw" PropertyName="유저 비밀번호" Margin="10" Description="접속할때 쓰일 유저 비밀번호를 입력합니다."/>
+                            <ctrl:PropertyTextBox x:Name="mysqlDatabaseName" PropertyName="데이터베이스 이름" Margin="10" Description="접속할 데이터베이스를 입력합니다."/>
+                        </StackPanel>
+
+                        <CheckBox Content="직접 입력하기" Margin="10"/>
+                        
+                        <ctrl:PropertyTextBox PropertyName="접속 쿼리" Description="DB 접속 쿼리를 직접 작성합니다."/>
+
+                    </StackPanel>
+                </ScrollViewer>
             </TabItem>
             <TabItem Style="{DynamicResource TabItemStyle}">
                 <TabItem.Header>

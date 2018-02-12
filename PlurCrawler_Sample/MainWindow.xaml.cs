@@ -63,6 +63,7 @@ namespace PlurCrawler_Sample
             btnLog.Click += BtnLog_Click;
             btnVertManager.Click += BtnVertManager_Click;
             btnTaskReport.Click += BtnTaskReport_Click;
+            btnExportOption.Click += BtnExportOption_Click;
 
             _logManager.LogAdded += _logManager_LogAdded;
 
@@ -127,9 +128,9 @@ namespace PlurCrawler_Sample
 
 #if DEBUG
 
-            var mysql = new MySQLFormat<GoogleCSESearchResult>("localhost", "root", "-", "plurcrawler", "google");
+            //var mysql = new MySQLFormat<GoogleCSESearchResult>("localhost", "root", "-", "plurcrawler", "google");
             
-            mysql.FormattingData(null);
+            //mysql.FormattingData(null);
 
             //var csvformat = new CSVFormat<GoogleCSESearchResult>();
 
@@ -202,8 +203,14 @@ namespace PlurCrawler_Sample
             tbSelectedName.Text = (mainTabControl.SelectedItem as TabItem).Tag.ToString();
         }
 
-        #endregion
+        private void BtnExportOption_Click(object sender, RoutedEventArgs e)
+        {
+            mainTabControl.SelectedIndex = 3;
+            tbSelectedName.Text = (mainTabControl.SelectedItem as TabItem).Tag.ToString();
+        }
         
+        #endregion
+
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
             if (cbGoogleService.IsChecked.GetValueOrDefault())
