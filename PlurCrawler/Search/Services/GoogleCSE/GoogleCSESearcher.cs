@@ -67,14 +67,23 @@ namespace PlurCrawler.Search.Services.GoogleCSE
         {
             CseResource.ListRequest request = BuildRequest(searchOption);
 
-            IEnumerable<Result> results = Search(request, (long)searchOption.Offset, (long)searchOption.SearchCount);
+            if (searchOption.SplitWithDate)
+            {
+                IEnumerable<Result> results = Search(request, (long)searchOption.Offset, (long)searchOption.SearchCount);
 
-            OnSearchFinished(this);
+                OnSearchFinished(this);
 
-            if (results.Count() == 0)
-                return Enumerable.Empty<GoogleCSESearchResult>();
+                if (results.Count() == 0)
+                    return Enumerable.Empty<GoogleCSESearchResult>();
 
-            return ConvertType(results);
+                return ConvertType(results);
+            }
+            else
+            {
+                // TODO: Implements
+
+                return null;
+            }
         }
 
         #region [  Private Method  ]
