@@ -23,6 +23,11 @@ namespace PlurCrawler_Sample
             youtubeSearching = false,
             twitterSearching = false;
 
+        public void AddLog(string message, TaskLogType type)
+        {
+            _logManager.AddLog(message, type);
+        }
+
         #region [  Google CSE  ]
 
         public void SearchGoogle()
@@ -46,7 +51,7 @@ namespace PlurCrawler_Sample
 
                 Dispatcher.Invoke(() =>
                 {
-                    _logManager.AddLog("Google CSE 검색 엔진을 초기화중입니다.", TaskLogType.SearchReady);
+                    AddLog("Google CSE 검색 엔진을 초기화중입니다.", TaskLogType.SearchReady);
 
                     // 옵션 초기화
                     option = _detailsOption.GetGoogleCSESearchOption();
@@ -62,7 +67,7 @@ namespace PlurCrawler_Sample
                     if (option.OutputServices == PlurCrawler.Format.Common.OutputFormat.None)
                     {
                         tb.SetValue(message: "결과를 내보낼 위치가 없습니다.", maximum: 1);
-                        _logManager.AddLog("검색을 내보낼 위치가 없습니다.", TaskLogType.SearchFailed);
+                        AddLog("검색을 내보낼 위치가 없습니다.", TaskLogType.SearchFailed);
                         isCanceled = true;
                     }
 
@@ -72,7 +77,7 @@ namespace PlurCrawler_Sample
                     if (!googleCSESearcher.IsVerification) // 인증되지 않았을 경우
                     {
                         tb.SetValue(message: "API키가 인증되지 않았습니다.", maximum: 1);
-                        _logManager.AddLog("API키가 인증되지 않았습니다.", TaskLogType.SearchFailed);
+                        AddLog("API키가 인증되지 않았습니다.", TaskLogType.SearchFailed);
                         isCanceled = true;
                     }
                 });
@@ -80,7 +85,7 @@ namespace PlurCrawler_Sample
                 if (!isCanceled)
                 {
                     IEnumerable<GoogleCSESearchResult> googleResult = googleCSESearcher.Search(option);
-                    _logManager.AddLog("CSV 파일로 내보내기에 성공했습니다.", TaskLogType.Searching);
+                    AddLog("CSV 파일로 내보내기에 성공했습니다.", TaskLogType.Searching);
                     ExportManager.CSVExport(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "TestFile.csv"), googleResult);
                 }
 
