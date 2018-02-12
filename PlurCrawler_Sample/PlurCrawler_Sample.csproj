@@ -98,6 +98,9 @@
     <Compile Include="Windows\DetailsOption.xaml.cs">
       <DependentUpon>DetailsOption.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\ExportOption.xaml.cs">
+      <DependentUpon>ExportOption.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\TaskReport.xaml.cs">
       <DependentUpon>TaskReport.xaml</DependentUpon>
     </Compile>
@@ -130,6 +133,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\DetailsOption.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ExportOption.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -194,6 +201,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\icon_google_tooltip.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icon_json.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icon_csv.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icon_mysql.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icon_access.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
