@@ -80,12 +80,7 @@
                         </Style>
                     </TabControl.Resources>
                     <TabItem x:Name="tiLog" Tag="작업 로그">
-                        <ListBox x:Name="lvLog" >
-                            <ctrl:LogItem Date="2017-04-03 00:16:30" TaskLogType="SearchReady"/>
-                            <ctrl:LogItem Date="2017-04-03 00:14:30" TaskLogType="Searching" Message="Debug"/>
-                            <ctrl:LogItem Date="2017-04-03 00:16:30"/>
-                            <ctrl:LogItem Date="2017-04-03 00:16:30"/>
-                        </ListBox>
+                        <ListBox x:Name="lvLog" />
                     </TabItem>
 
                     <TabItem x:Name="tiVertification" Tag="인증 관리자">
