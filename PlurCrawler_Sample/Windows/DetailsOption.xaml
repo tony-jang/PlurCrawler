@@ -12,16 +12,7 @@
         <TabControl TabStripPlacement="Top">
             <TabItem Style="{DynamicResource TabItemStyle}">
                 <TabItem.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Image Width="16" 
-                               Source="/PlurCrawler_Sample;component/Resources/icon_google.png" 
-                               Margin="0,0,3,0"/>
-                        <TextBlock Text="Google CSE" Grid.Column="1" VerticalAlignment="Center"/>
-                    </Grid>
+                    <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/icon_google.png" Text="Google CSE" Height="16"/>
                 </TabItem.Header>
                 <Grid>
                     <ScrollViewer x:Name="svGoogle" VerticalScrollBarVisibility="Auto">
@@ -90,30 +81,12 @@
             </TabItem>
             <TabItem Style="{DynamicResource TabItemStyle}">
                 <TabItem.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Image Width="16" 
-                               Source="/PlurCrawler_Sample;component/Resources/icon_twitter.png" 
-                               Margin="0,0,3,0"/>
-                        <TextBlock Text="Twitter" Grid.Column="1" VerticalAlignment="Center"/>
-                    </Grid>
+                    <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/icon_twitter.png" Text="Twitter" Height="16"/>
                 </TabItem.Header>
             </TabItem>
             <TabItem Style="{DynamicResource TabItemStyle}">
                 <TabItem.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Image Width="16" 
-                               Source="/PlurCrawler_Sample;component/Resources/icon_youtube.png" 
-                               Margin="0,0,3,0"/>
-                        <TextBlock Text="Youtube" Grid.Column="1" VerticalAlignment="Center"/>
-                    </Grid>
+                    <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/icon_youtube.png" Text="Youtube" Height="16"/>
                 </TabItem.Header>
             </TabItem>
         </TabControl>

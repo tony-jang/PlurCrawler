@@ -381,7 +381,7 @@
                             BorderThickness="1,1,1,0" />
                         <ContentPresenter
                             x:Name="contentPresenter"
-                            Margin="15,5"
+                            Margin="14,5"
                             HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}"
                             VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}"
                             Content="{TemplateBinding Header}"
