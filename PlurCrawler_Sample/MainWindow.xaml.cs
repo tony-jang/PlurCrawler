@@ -29,6 +29,7 @@ namespace PlurCrawler_Sample
         DetailsOption _detailsOption;
         VertificationManager _vertManager;
         TaskLogManager _logManager;
+        ExportOption _exportOption;
 
         Dictionary<ISearcher, TaskProgressBar> dict;
 
@@ -90,15 +91,18 @@ namespace PlurCrawler_Sample
 
             _detailsOption = (DetailsOption)frOption.Content;
             _vertManager = (VertificationManager)frVertManager.Content;
-            
+            _exportOption = (ExportOption)frExportOption.Content;
+
             #endregion
 
             #region [  Load Setting  ]
 
+
             var serializer = new ObjectSerializer<GoogleCSESearchOption>();
             GoogleCSESearchOption opt = serializer.Deserialize(AppSetting.Default.GoogleOption);
-
             _detailsOption.LoadGoogle(opt);
+
+            _exportOption.LoadSettingFromString(AppSetting.Default.ExportOption);
             
             // 인증 정보 불러오기
 
@@ -150,14 +154,15 @@ namespace PlurCrawler_Sample
 
             // 옵션 저장
 
+            AppSetting.Default.ExportOption = _exportOption.ExportSettingString();
+
             var serializer = new ObjectSerializer<GoogleCSESearchOption>();
             AppSetting.Default.GoogleOption = serializer.Serialize(_detailsOption.GetGoogleCSESearchOption());
 
             AppSetting.Default.EngineUsage = $@"{cbGoogleService.IsChecked.ToString()
                                               }|{cbTwitterService.IsChecked.ToString()
                                               }|{cbYoutubeService.IsChecked.ToString()}";
-
-
+            
             // 인증 정보 저장
 
             if (!_vertManager.GoogleAPIKey.IsNullOrEmpty() ||

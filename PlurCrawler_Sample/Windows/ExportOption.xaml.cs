@@ -16,6 +16,8 @@ using System.Windows.Forms;
 
 using Microsoft.Win32;
 using System.IO;
+using PlurCrawler_Sample.Export;
+using PlurCrawler_Sample.Common;
 
 namespace PlurCrawler_Sample.Windows
 {
@@ -27,13 +29,64 @@ namespace PlurCrawler_Sample.Windows
         public ExportOption()
         {
             InitializeComponent();
-            setLocationPath.Click += SetLocationPath_Click;
+            setJsonLocationPath.Click += SetJsonLocationPath_Click;
         }
 
-        private void SetLocationPath_Click(object sender, RoutedEventArgs e)
+        #region [  Json  ]
+
+        public void LoadSettingFromString(string optionString)
+        {
+            if (string.IsNullOrEmpty(optionString))
+                return;
+
+            var serializer = new ObjectSerializer<ExportOptionStruct>();
+            var itm = serializer.Deserialize(optionString);
+
+            jsonExportFolder.Text = itm.JsonFolderLocation ;
+            jsonExportName.Text = itm.JsonFileName;
+            cbOverlapOption.SelectedIndex = itm.JsonOverlapOption;
+            cbUseJsonSort.IsChecked = itm.JsonSort;
+            csvExportFolder.Text = itm.CSVFolderLocation;
+            csvExportName.Text = itm.CSVFileName;
+            csvOverlapOption.SelectedIndex = itm.CSVOverlapOption;
+            mysqlConnAddr.Text = itm.MySQLConnAddr;
+            mysqlUserID.Text = itm.MySQLUserID;
+            mysqlUserPw.Password = itm.MySQLUserPassword;
+            mysqlDatabaseName.Text = itm.MySQLDatabaseName;
+            mysqlSelfConnQuery.Text = itm.MySQLConnString;
+        }
+
+        public string ExportSettingString()
+        {
+            var optStr = new ExportOptionStruct()
+            {
+                JsonFolderLocation = jsonExportFolder.Text,
+                JsonFileName = jsonExportName.Text,
+                JsonOverlapOption = cbOverlapOption.SelectedIndex,
+                JsonSort = cbUseJsonSort.IsChecked.GetValueOrDefault(),
+                CSVFolderLocation = csvExportFolder.Text,
+                CSVFileName = csvExportName.Text,
+                CSVOverlapOption = csvOverlapOption.SelectedIndex,
+                MySQLConnAddr = mysqlConnAddr.Text,
+                MySQLUserID = mysqlUserID.Text,
+                MySQLUserPassword = mysqlUserPw.Password,
+                MySQLDatabaseName = mysqlDatabaseName.Text,
+                MySQLConnString = mysqlSelfConnQuery.Text
+            };
+
+            var serializer = new ObjectSerializer<ExportOptionStruct>();
+
+            return serializer.Serialize(optStr);
+        }
+
+        private void SetJsonLocationPath_Click(object sender, RoutedEventArgs e)
         {
             jsonExportFolder.Text = GetFolderPath(jsonExportFolder.Text);
         }
+
+        #endregion
+
+
 
         public string GetFolderPath(string startPath)
         {

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using WPFExtension;
 
 namespace PlurCrawler_Sample.Controls
@@ -15,6 +16,8 @@ namespace PlurCrawler_Sample.Controls
         public PropertyPasswordBox()
         {
             this.Style = (Style)FindResource("PropertyPasswordBoxStyle");
+
+
         }
 
 
@@ -22,8 +25,16 @@ namespace PlurCrawler_Sample.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+            
             pwBox = base.GetTemplateChild("pwBox") as PasswordBox;
+
+            if (!string.IsNullOrEmpty(savedPassword))
+            {
+                pwBox.Password = savedPassword;
+            }
         }
+
+        private string savedPassword;
 
         public static DependencyProperty PropertyNameProperty = DependencyHelper.Register();
         public static DependencyProperty DescriptionProperty = DependencyHelper.Register();
@@ -50,7 +61,15 @@ namespace PlurCrawler_Sample.Controls
         public string Password
         {
             get => pwBox.Password;
-            set => pwBox.Password = value;
+            set
+            {
+                if (pwBox == null)
+                {
+                    savedPassword = value;
+                    return;
+                }
+                pwBox.Password = value;
+            }
         }
     }
 }

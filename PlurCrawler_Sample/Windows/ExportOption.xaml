@@ -29,7 +29,7 @@
                         <ctrl:PropertyGroupBox Header="파일 중복 설정">
                             <WrapPanel>
                                 <TextBlock Text="파일 이름이 중복될때" Margin="10,0"/>
-                                <ComboBox SelectedIndex="0">
+                                <ComboBox x:Name="cbOverlapOption" SelectedIndex="0">
                                     <ComboBoxItem Content="내용을 이어서 저장"/>
                                     <ComboBoxItem Content="덮어씌우기"/>
                                     <ComboBoxItem Content="앞에 (1) 붙여서 저장"/>
@@ -64,7 +64,7 @@
                         <ctrl:PropertyGroupBox Header="파일 중복 설정">
                             <WrapPanel>
                                 <TextBlock Text="파일 이름이 중복될때" Margin="10,0"/>
-                                <ComboBox SelectedIndex="0">
+                                <ComboBox x:Name="csvOverlapOption" SelectedIndex="0">
                                     <ComboBoxItem Content="내용을 이어서 저장"/>
                                     <ComboBoxItem Content="덮어씌우기"/>
                                     <ComboBoxItem Content="앞에 (1) 붙여서 저장"/>
@@ -89,7 +89,7 @@
 
                         <CheckBox Content="직접 입력하기" Margin="10"/>
                         
-                        <ctrl:PropertyTextBox PropertyName="접속 쿼리" Description="DB 접속 쿼리를 직접 작성합니다."/>
+                        <ctrl:PropertyTextBox x:Name="mysqlSelfConnQuery" PropertyName="접속 쿼리" Description="DB 접속 쿼리를 직접 작성합니다."/>
 
                     </StackPanel>
                 </ScrollViewer>

@@ -106,5 +106,17 @@ namespace PlurCrawler_Sample.Properties {
                 this["GoogleKeyVertified"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ExportOption {
+            get {
+                return ((string)(this["ExportOption"]));
+            }
+            set {
+                this["ExportOption"] = value;
+            }
+        }
     }
 }
