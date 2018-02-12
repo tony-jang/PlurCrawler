@@ -12,6 +12,6 @@ namespace PlurCrawler.Format.Common
         CSV = 1,
         Json = 2,
         MySQL = 4,
-        MSSQL = 8,
+        AccessDB = 8,
     }
 }

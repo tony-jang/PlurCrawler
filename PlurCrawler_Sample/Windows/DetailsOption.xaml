@@ -63,7 +63,7 @@
                                     <CheckBox x:Name="cbOutput1" Content="CSV File" Tag="1"/>
                                     <CheckBox x:Name="cbOutput2" Content="Json File" Tag="2"/>
                                     <CheckBox x:Name="cbOutput3" Content="MySQL" Tag="4"/>
-                                    <CheckBox x:Name="cbOutput4" Content="MS-SQL" Tag="8"/>
+                                    <CheckBox x:Name="cbOutput4" Content="Access DB" Tag="8"/>
                                 </StackPanel>
                             </ctrl:PropertyGroupBox>
 

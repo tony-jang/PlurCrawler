@@ -47,7 +47,7 @@ namespace PlurCrawler_Sample.Windows
             cbOutput1.IsChecked = option.OutputServices.HasFlag(OutputFormat.CSV);
             cbOutput2.IsChecked = option.OutputServices.HasFlag(OutputFormat.Json);
             cbOutput3.IsChecked = option.OutputServices.HasFlag(OutputFormat.MySQL);
-            cbOutput4.IsChecked = option.OutputServices.HasFlag(OutputFormat.MSSQL);
+            cbOutput4.IsChecked = option.OutputServices.HasFlag(OutputFormat.AccessDB);
 
             useDate.IsChecked = option.UseDateSearch;
 
