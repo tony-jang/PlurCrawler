@@ -67,7 +67,7 @@ namespace PlurCrawler.Search.Services.GoogleCSE
         {
             CseResource.ListRequest request = BuildRequest(searchOption);
 
-            if (searchOption.SplitWithDate)
+            if (!searchOption.SplitWithDate)
             {
                 IEnumerable<Result> results = Search(request, (long)searchOption.Offset, (long)searchOption.SearchCount);
 
@@ -80,9 +80,18 @@ namespace PlurCrawler.Search.Services.GoogleCSE
             }
             else
             {
-                // TODO: Implements
+                if (!searchOption.UseDateSearch) // DateSearch가 아닌데 날짜별로 구분할 수 없으므로 null 반환
+                    return null;
 
-                return null;
+                var results = new List<Result>();
+                
+                foreach(DateTime dt in searchOption.DateRange.GetDateRange())
+                {
+                    request.Sort = $"date:r:{dt.To8LengthYear()}:{dt.To8LengthYear()}";
+                    results.AddRange(Search(request, (long)searchOption.Offset, (long)searchOption.SearchCount));
+                }
+                
+                return ConvertType(results);
             }
         }
 
@@ -106,7 +115,7 @@ namespace PlurCrawler.Search.Services.GoogleCSE
 
             return request;
         }
-
+        
         private IEnumerable<Result> Search(CseResource.ListRequest request, long offset, long targetCount)
         {
             var results = new List<Result>();
@@ -149,16 +158,6 @@ namespace PlurCrawler.Search.Services.GoogleCSE
         }
 
         #endregion
-
-        /// <summary>
-        /// 검색 옵션을 무시한 채로 지정된 하루만 검색합니다.
-        /// </summary>
-        /// <param name="time">검색할 날짜입니다.</param>
-        /// <param name="searchOption">검색 옵션입니다.</param>
-        /// <returns></returns>
-        public IEnumerable<GoogleCSESearchResult> SearchOneDay(DateTime time, GoogleCSESearchOption searchOption)
-        {
-            return null;
-        }
+        
     }
 }
