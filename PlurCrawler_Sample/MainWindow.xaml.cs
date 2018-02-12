@@ -96,8 +96,7 @@ namespace PlurCrawler_Sample
             #endregion
 
             #region [  Load Setting  ]
-
-
+            
             var serializer = new ObjectSerializer<GoogleCSESearchOption>();
             GoogleCSESearchOption opt = serializer.Deserialize(AppSetting.Default.GoogleOption);
             _detailsOption.LoadGoogle(opt);
@@ -127,13 +126,15 @@ namespace PlurCrawler_Sample
                 cbTwitterService.IsChecked = Convert.ToBoolean(engineBools[1]);
                 cbYoutubeService.IsChecked = Convert.ToBoolean(engineBools[2]);
             }
+            
+            AddLog("설정 불러오기가 완료되었습니다.", TaskLogType.System);
 
             #endregion
 
 #if DEBUG
 
             //var mysql = new MySQLFormat<GoogleCSESearchResult>("localhost", "root", "-", "plurcrawler", "google");
-            
+
             //mysql.FormattingData(null);
 
             //var csvformat = new CSVFormat<GoogleCSESearchResult>();
