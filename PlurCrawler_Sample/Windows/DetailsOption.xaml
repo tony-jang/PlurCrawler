@@ -30,7 +30,7 @@
                             <ctrl:PropertyTextBox x:Name="tbGooglePageOffset" PropertyName="페이지 오프셋" DigitOnly="True"
                                 Description="* 검색을 표시할 오프셋을 나타냅니다.&#x0a;(예를 들어 5라면 6번째 부터 출력합니다)"/>
 
-                            <ctrl:PropertyGroupBox x:Name="gbOutputData" Header="출력할 데이터">
+                            <!--<ctrl:PropertyGroupBox x:Name="gbOutputData" Header="출력할 데이터">
                                 <StackPanel>
                                     <StackPanel.Resources>
                                         <Style TargetType="{x:Type CheckBox}">
@@ -42,7 +42,7 @@
                                     <CheckBox Content="미리보기"/>
                                     <CheckBox Content="올라온 날짜"/>
                                 </StackPanel>
-                            </ctrl:PropertyGroupBox>
+                            </ctrl:PropertyGroupBox>-->
 
                             <ctrl:PropertyGroupBox x:Name="gbOutputLoc" Header="출력할 위치">
                                 <StackPanel>
