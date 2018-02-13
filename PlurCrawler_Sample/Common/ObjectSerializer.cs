@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
+using PlurCrawler.Extension;
+
 namespace PlurCrawler_Sample.Common
 {
     public class ObjectSerializer<T> where T : class
@@ -22,7 +24,7 @@ namespace PlurCrawler_Sample.Common
 
         public T Deserialize(string str)
         {
-            if (string.IsNullOrEmpty(str))
+            if (str.IsNullOrEmpty())
                 return null;
 
             var xmlSerializer = new XmlSerializer(typeof(T));

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+
+using PlurCrawler.Extension;
+
 using WPFExtension;
 
 namespace PlurCrawler_Sample.Controls
@@ -28,7 +31,7 @@ namespace PlurCrawler_Sample.Controls
             
             pwBox = base.GetTemplateChild("pwBox") as PasswordBox;
 
-            if (!string.IsNullOrEmpty(savedPassword))
+            if (!savedPassword.IsNullOrEmpty())
             {
                 pwBox.Password = savedPassword;
             }

@@ -51,7 +51,7 @@ namespace PlurCrawler_Sample.Windows
             string errMsg1 = "PIN 번호가 잘못 입력되었습니다.";
             string errMsg2 = "PIN 번호는 비어있을 수 없습니다.";
 
-            if (string.IsNullOrEmpty(tbTwitterPIN.Text))
+            if (tbTwitterPIN.Text.IsNullOrEmpty())
             {
                 tbTwitterPINMsg.Text = errMsg2;
                 tbTwitterPINMsg.Visibility = Visibility.Visible;
@@ -82,7 +82,7 @@ namespace PlurCrawler_Sample.Windows
             string errMsg1 = "잘못된 Consumer Key 또는 Consumer Secret이 입력되었습니다.";
             string errMsg2 = "Consumer Key또는 Consumer Secret은 빈칸일 수 없습니다.";
 
-            if (string.IsNullOrEmpty(tbTwitterKey.Text) || string.IsNullOrEmpty(tbTwitterSecret.Password))
+            if (tbTwitterKey.Text.IsNullOrEmpty() || tbTwitterSecret.Password.IsNullOrEmpty())
             {
                 tbTwitterMsg.Visibility = Visibility.Visible;
                 tbTwitterMsg.Text = errMsg2;
@@ -95,7 +95,7 @@ namespace PlurCrawler_Sample.Windows
 
             string url = tokenizer.GetURL(credentials);
 
-            if (!string.IsNullOrEmpty(url))
+            if (!url.IsNullOrEmpty())
             {
                 tbTwitterMsg.Visibility = Visibility.Hidden;
 

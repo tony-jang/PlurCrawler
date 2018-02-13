@@ -6,6 +6,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+
+using PlurCrawler.Extension;
+
 using WPFExtension;
 
 namespace PlurCrawler_Sample.Controls
@@ -27,7 +30,7 @@ namespace PlurCrawler_Sample.Controls
 
         public int GetIntOrDefault()
         {
-            if (string.IsNullOrEmpty(this.Text))
+            if (this.Text.IsNullOrEmpty())
                 return 0;
 
             if (int.TryParse(this.Text, out int i))

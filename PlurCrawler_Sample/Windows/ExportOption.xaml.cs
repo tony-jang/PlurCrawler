@@ -36,7 +36,7 @@ namespace PlurCrawler_Sample.Windows
 
         public void LoadSettingFromString(string optionString)
         {
-            if (string.IsNullOrEmpty(optionString))
+            if (optionString.IsNullOrEmpty())
                 return;
 
             var serializer = new ObjectSerializer<ExportOptionStruct>();
