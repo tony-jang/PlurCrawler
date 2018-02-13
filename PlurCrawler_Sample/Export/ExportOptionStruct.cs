@@ -29,7 +29,6 @@ namespace PlurCrawler_Sample.Export
 
         #endregion
 
-
         #region [  MySQL  ]
 
         public string MySQLConnAddr { get; set; }

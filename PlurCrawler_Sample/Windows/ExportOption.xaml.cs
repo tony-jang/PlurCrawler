@@ -13,11 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Forms;
-
-using Microsoft.Win32;
 using System.IO;
+
+using PlurCrawler.Extension;
+
 using PlurCrawler_Sample.Export;
 using PlurCrawler_Sample.Common;
+
+using Microsoft.Win32;
+
+using IOPath = System.IO.Path;
 
 namespace PlurCrawler_Sample.Windows
 {
@@ -32,7 +37,7 @@ namespace PlurCrawler_Sample.Windows
             setJsonLocationPath.Click += SetJsonLocationPath_Click;
         }
 
-        #region [  Json  ]
+        #region [  Setting Load / Save  ]
 
         public void LoadSettingFromString(string optionString)
         {
@@ -91,7 +96,9 @@ namespace PlurCrawler_Sample.Windows
 
         #endregion
 
+        public string JsonPathFileName => IOPath.Combine(jsonExportFolder.Text, $"{jsonExportName.Text}.json");
 
+        public string JsonPath => jsonExportFolder.Text;
 
         public string GetFolderPath(string startPath)
         {

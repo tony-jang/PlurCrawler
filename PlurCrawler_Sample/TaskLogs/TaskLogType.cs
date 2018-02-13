@@ -16,6 +16,8 @@ namespace PlurCrawler_Sample.TaskLogs
         [Note("검색중")]
         Searching,
         [Note("실패")]
-        SearchFailed,
+        Failed,
+        [Note("완료")]
+        Complete,
     }
 }

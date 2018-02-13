@@ -80,8 +80,8 @@ namespace PlurCrawler.Search.Services.GoogleCSE
             }
             else
             {
-                if (!searchOption.UseDateSearch) // DateSearch가 아닌데 날짜별로 구분할 수 없으므로 null 반환
-                    return null;
+                if (!searchOption.UseDateSearch) // DateSearch가 아닌데 날짜별로 구분할 수 없으므로 예외 발생
+                    throw new InvaildOptionException("날짜를 사용하지 않는데 날짜별로 구분해 검색할 수 없습니다.");
 
                 var results = new List<Result>();
                 

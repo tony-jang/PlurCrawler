@@ -220,6 +220,12 @@ namespace PlurCrawler_Sample
 
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
+            if (tbQuery.Text.IsNullOrEmpty())
+            {
+                AddLog("검색어가 없습니다.", TaskLogType.Failed);
+                return;
+            }
+
             if (cbGoogleService.IsChecked.GetValueOrDefault())
                 SearchGoogle();
 
