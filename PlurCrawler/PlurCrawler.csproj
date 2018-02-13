@@ -186,7 +186,7 @@
     <Compile Include="Search\Base\ISearchOption.cs" />
     <Compile Include="Attributes\NoteAttribute.cs" />
     <Compile Include="Search\Common\SearchSortOptions.cs" />
-    <Compile Include="Search\Common\SearchOptionTypeException.cs" />
+    <Compile Include="Search\Common\InvaildOptionException.cs" />
     <Compile Include="Search\Base\ISearchResult.cs" />
     <Compile Include="Tokens\Credentials\GoogleCredentials.cs" />
     <Compile Include="Tokens\OAuth\EventArg\AuthFailedEventArgs.cs" />
