@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PlurCrawler_Sample"
         xmlns:ctrl="clr-namespace:PlurCrawler_Sample.Controls"
         mc:Ignorable="d"
-        Title="PlurCrawler" Height="700" Width="1000">
+        Title="PlurCrawler" Height="700" Width="1000" MinHeight="500" MinWidth="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -80,7 +80,7 @@
                         </Style>
                     </TabControl.Resources>
                     <TabItem x:Name="tiLog" Tag="작업 로그">
-                        <ListBox x:Name="lvLog" />
+                        <ListBox x:Name="lvLog" ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
                     </TabItem>
 
                     <TabItem x:Name="tiVertification" Tag="인증 관리자">
