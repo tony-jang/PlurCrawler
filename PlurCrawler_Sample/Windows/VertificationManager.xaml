@@ -120,10 +120,10 @@
                                     <Grid>
                                         <StackPanel x:Name="spTwitterCredentials">
                                             <TextBlock Text="트위터 웹 인증을 위해서 Consumer Key와 Consumer Secret을 입력해주세요."/>
-                                            <ctrl:PropertyTextBox x:Name="tbTwitterKey" PropertyName="Consumer Key" Margin="5"/>
-                                            <ctrl:PropertyPasswordBox x:Name="tbTwitterSecret" PropertyName="Consumer Secret" Margin="5"/>
+                                            <ctrl:PropertyTextBox x:Name="tbTwitterKey" PropertyName="Consumer Key" Margin="5" Description="Twitter Application Management에서 확인할 수 있는 Consumer Key입니다."/>
+                                            <ctrl:PropertyPasswordBox x:Name="tbTwitterSecret" PropertyName="Consumer Secret" Margin="5" Description="Twitter Application Management에서 확인할 수 있는 Consumer Secret입니다."/>
 
-                                            <Button x:Name="btnTwitterReqURL" HorizontalAlignment="Right" Content="인증 URL 요청" Padding="10,5"/>
+                                            <Button x:Name="btnTwitterReqURL" HorizontalAlignment="Right" Content="인증 URL 요청" Padding="10,5" Margin="0,10,0,0"/>
                                         </StackPanel>
                                     </Grid>
                                 </TabItem>
@@ -133,7 +133,16 @@
                                             <TextBlock Text="트위터 웹 인증의 완료를 위해서 아래 화면에 표시되는 PIN 번호를 입력해주세요."/>
                                             <ctrl:PropertyTextBox x:Name="tbTwitterPIN" PropertyName="PIN Number" Margin="5"/>
 
-                                            <Button x:Name="btnTwitterPINAuth" HorizontalAlignment="Right" Content="확인" Padding="30,5"/>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock x:Name="tbTwitterPINMsg" Foreground="Red" VerticalAlignment="Center"
+                                                           Visibility="Hidden"/>
+                                                <Button x:Name="btnTwitterPINAuth" HorizontalAlignment="Right" 
+                                                        Content="확인" Padding="30,5" Grid.Column="1"/>
+                                            </Grid>
                                         </StackPanel>
                                     </Grid>
                                 </TabItem>

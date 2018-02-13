@@ -48,13 +48,33 @@ namespace PlurCrawler_Sample.Windows
 
         private void BtnTwitterPINAuth_Click(object sender, RoutedEventArgs e)
         {
-            tcTwitterAuth.SelectedIndex = 2;
+            string errMsg1 = "PIN 번호가 잘못 입력되었습니다.";
+            string errMsg2 = "PIN 번호는 비어있을 수 없습니다.";
+
+            if (string.IsNullOrEmpty(tbTwitterPIN.Text))
+            {
+                tbTwitterPINMsg.Text = errMsg2;
+                tbTwitterPINMsg.Visibility = Visibility.Visible;
+                return;
+            }
+
+            
             string pinNumber = tbTwitterPIN.Text;
 
             credentials.InputPIN(pinNumber);
-            tokenizer.CredentialsCertification(credentials);
+            try
+            {
+                tokenizer.CredentialsCertification(credentials);
 
-            wbTwitter.Visibility = Visibility.Hidden;
+                tbTwitterPINMsg.Visibility = Visibility.Hidden;
+                wbTwitter.Visibility = Visibility.Hidden;
+                tcTwitterAuth.SelectedIndex = 2;
+            }
+            catch (CredentialsTypeException)
+            {
+                tbTwitterPINMsg.Text = errMsg1;
+                tbTwitterPINMsg.Visibility = Visibility.Visible;
+            }
         }
 
         private void BtnTwitterReqURL_Click(object sender, RoutedEventArgs e)
