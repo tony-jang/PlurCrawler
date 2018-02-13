@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PlurCrawler.Search;
+using PlurCrawler_Sample.Report;
 
 namespace PlurCrawler_Sample.Windows
 {
@@ -23,6 +25,39 @@ namespace PlurCrawler_Sample.Windows
         public TaskReport()
         {
             InitializeComponent();
+        }
+
+        private List<TaskReportData> _datas;
+
+        public void AddReport(TaskReportData data)
+        {
+            _datas.Add(data);
+        }
+
+        public void SetReport(TaskReportData data)
+        {
+            tbSearchDate.Text = data.SearchDate.ToString("yyyy-mm-dd tt hh:mm");
+            tbSearchCount.Text = data.SearchCount.ToString();
+            switch (data.SearchResult)
+            {
+                case SearchResult.Success:
+                    tbSearchResult.Foreground = Brushes.Green;
+                    tbSearchResult.Text = "성공한 요청";
+                    break;
+                case SearchResult.Fail_InvaildSetting:
+                    tbSearchResult.Foreground = Brushes.Red;
+                    tbSearchResult.Text = "실패 - 올바르지 않은 설정";
+                    break;
+                case SearchResult.Fail_APIError:
+                    tbSearchResult.Foreground = Brushes.Red;
+                    tbSearchResult.Text = "실패 - API 오류로 인한 실패";
+                    break;
+            }
+
+            string[] serviceString = { "Google Custom Search Engine", "Youtube", "Twitter" };
+            tbRequestService.Text = serviceString[(int)data.RequestService];
+
+
         }
     }
 }

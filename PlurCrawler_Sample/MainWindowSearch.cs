@@ -11,6 +11,7 @@ using PlurCrawler.Search.Base;
 using PlurCrawler.Search.Common;
 using PlurCrawler.Search.Services.GoogleCSE;
 using PlurCrawler.Format.Common;
+using PlurCrawler.Extension;
 
 using PlurCrawler_Sample.Common;
 using PlurCrawler_Sample.Controls;
@@ -27,6 +28,8 @@ namespace PlurCrawler_Sample
 
         public void AddLog(string message, TaskLogType type)
         {
+            if (mainTabControl.SelectedIndex != 0)
+                mainTabControl.SelectedIndex = 0;
             _logManager.AddLog(message, type);
         }
 
@@ -90,8 +93,7 @@ namespace PlurCrawler_Sample
                     {
                         IEnumerable<GoogleCSESearchResult> googleResult = googleCSESearcher.Search(option);
 
-                        AddLog("CSV 파일로 내보내기에 성공했습니다.", TaskLogType.Searching);
-                        ExportManager.CSVExport(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "TestFile.csv"), googleResult);
+                        Export(option, googleResult);
                     }
                     catch (InvaildOptionException)
                     {
@@ -110,33 +112,53 @@ namespace PlurCrawler_Sample
             thr.Start();
         }
 
-        public void Export(GoogleCSESearchOption option, IEnumerable<ISearchResult> result)
+        public void Export(ISearchOption option, IEnumerable<ISearchResult> result)
         {
-            if (option.OutputServices.HasFlag(OutputFormat.Json))
+            Dispatcher.Invoke(() =>
             {
-                string path = _exportOption.JsonPathFileName;
-
-                if (Directory.Exists(path))
+                if (option.OutputServices.HasFlag(OutputFormat.Json))
                 {
-                    ExportManager.JsonExport(path, result);
-                }
-                else
-                {
-                    AddLog("파일을 Json으로 내보내기 실패했습니다. [파일이 없습니다.]", TaskLogType.Failed);
-                }
-            }
-            else if (option.OutputServices.HasFlag(OutputFormat.CSV))
-            {
-                
-            }
-            else if (option.OutputServices.HasFlag(OutputFormat.MySQL))
-            {
+                    string fullPath = _exportOption.JsonPathFileName;
 
-            }
-            else if (option.OutputServices.HasFlag(OutputFormat.AccessDB))
-            {
-                // TODO: Implements
-            }
+                    string path = _exportOption.JsonPath;
+
+                    string fileName = _exportOption.JsonFileName;
+
+                    if (!fileName.IsNullOrEmpty())
+                    {
+                        AddLog("파일을 Json 형식으로 내보내기 실패했습니다. [파일명 입력란이 비어있습니다.]", TaskLogType.Failed);
+                        return;
+                    }
+
+                    if (Directory.Exists(path))
+                    {
+                        ExportManager.JsonExport(fullPath, result);
+                    }
+                    else
+                    {
+                        if (path.IsNullOrEmpty())
+                        {
+                            AddLog("파일을 Json 형식으로 내보내기 실패했습니다. [폴더 입력란이 비어있습니다.]", TaskLogType.Failed);
+                        }
+                        else if (!Directory.Exists(path))
+                        {
+                            AddLog("파일을 Json 형식으로 내보내기 실패했습니다. [해당하는 경로가 없습니다.]", TaskLogType.Failed);
+                        }
+                    }
+                }
+                else if (option.OutputServices.HasFlag(OutputFormat.CSV))
+                {
+
+                }
+                else if (option.OutputServices.HasFlag(OutputFormat.MySQL))
+                {
+
+                }
+                else if (option.OutputServices.HasFlag(OutputFormat.AccessDB))
+                {
+                    // TODO: Implements
+                }
+            });
         }
 
         private void GoogleCSESearcher_SearchFinished(object sender)

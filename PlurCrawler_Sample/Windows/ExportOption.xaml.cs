@@ -96,9 +96,20 @@ namespace PlurCrawler_Sample.Windows
 
         #endregion
 
+        /// <summary>
+        /// Json으로 내보낼 경로 + 파일 이름을 나타냅니다.
+        /// </summary>
         public string JsonPathFileName => IOPath.Combine(jsonExportFolder.Text, $"{jsonExportName.Text}.json");
 
+        /// <summary>
+        /// Json으로 내보낼 폴더를 나타냅니다.
+        /// </summary>
         public string JsonPath => jsonExportFolder.Text;
+
+        /// <summary>
+        /// Json으로 내보낼 파일 이름 부분만 나타냅니다.
+        /// </summary>
+        public string JsonFileName => jsonExportName.Text;
 
         public string GetFolderPath(string startPath)
         {

@@ -9,7 +9,7 @@ using PlurCrawler.Search.Base;
 
 namespace PlurCrawler_Sample.Report
 {
-    public class TaskReport
+    public class TaskReportData
     {
         public DateTime SearchDate { get; set; }
 
