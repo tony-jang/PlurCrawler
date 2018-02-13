@@ -56,7 +56,7 @@ namespace PlurCrawler_Sample.Controls
         {
             if (d is LogItem itm)
             {
-                itm.SetValue(DateStringPropertyKey, itm.Date.ToString("MM/dd HH:mm"));
+                itm.SetValue(DateStringPropertyKey, itm.Date.ToString("MM/dd HH:mm:ss"));
             }
         }
 
@@ -77,7 +77,7 @@ namespace PlurCrawler_Sample.Controls
             set
             {
                 SetValue(DateProperty, value);
-                SetValue(DateStringPropertyKey, value.ToString("MM/dd HH:mm"));
+                SetValue(DateStringPropertyKey, value.ToString("MM/dd HH:mm:ss"));
             }
         }
 
