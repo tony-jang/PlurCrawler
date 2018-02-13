@@ -10,35 +10,45 @@
       Title="TaskReport">
 
     <Grid Background="White">
-        <ScrollViewer>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>    
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <ListView Grid.Row="1">
+            <ListViewItem Content="2018-02-13 오후 2:27 요청"/>
+        </ListView>
+        <Grid Grid.ColumnSpan="2">
+            <Button VerticalAlignment="Center" HorizontalAlignment="Left" Content="> 목록 보이기" Margin="5,0" Padding="5"/>
+        </Grid>
+        
+        <ScrollViewer Grid.Row="1" Grid.Column="1">
             <StackPanel Margin="10,20">
                 <controls:PropertyGroupBox Header="검색 일자">
-                    <TextBlock>
+                    <TextBlock x:Name="tbSearchDate">
                         <Run Text="2017-01-04 PM 5:00" Foreground="Green"/>
                     </TextBlock>
                 </controls:PropertyGroupBox>
 
                 <controls:PropertyGroupBox Header="검색 요청 갯수">
-                    <TextBlock Foreground="Green">
+                    <TextBlock x:Name="tbSearchCount" Foreground="Green">
                         <Run Text="10"/>개
                     </TextBlock>
                 </controls:PropertyGroupBox>
 
                 <controls:PropertyGroupBox Header="검색 성공 여부">
-                    <TextBlock Foreground="Green">
+                    <TextBlock x:Name="tbSearchResult" Foreground="Green">
                         <Run Text="성공한 요청"/>
                     </TextBlock>
                 </controls:PropertyGroupBox>
 
                 <controls:PropertyGroupBox Header="요청한 서비스">
-                    <TextBlock Foreground="Green">
+                    <TextBlock x:Name="tbRequestService" Foreground="Green">
                         <Run Text="Google Custom Search Engine"/>
-                    </TextBlock>
-                </controls:PropertyGroupBox>
-
-                <controls:PropertyGroupBox Header="사용한 인증 정보">
-                    <TextBlock Foreground="Green">
-                        <Run Text="Al*************"/>
                     </TextBlock>
                 </controls:PropertyGroupBox>
 

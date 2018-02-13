@@ -92,6 +92,8 @@
     <Compile Include="Controls\ImageCheckBox.cs" />
     <Compile Include="Export\ExportOptionStruct.cs" />
     <Compile Include="MainWindowSearch.cs" />
+    <Compile Include="Report\SearchResult.cs" />
+    <Compile Include="Report\TaskReport.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="TaskLogs\TaskLog.cs" />
     <Compile Include="TaskLogs\TaskLogEventArgs.cs" />
