@@ -63,9 +63,9 @@ namespace PlurCrawler_Sample.Windows
             {
                 DateRange = new DateRange(drpGoogle.Since, drpGoogle.Until),
                 UseDateSearch = useDate.IsChecked.GetValueOrDefault(),
-                Offset = (ulong)tbGooglePageOffset.GetIntOrDefault(),
+                Offset = tbGooglePageOffset.GetIntOrDefault(),
                 SplitWithDate = rbGoogleSplitWithDate.IsChecked.GetValueOrDefault(),
-                SearchCount = (ulong)tbGoogleSearchCount.GetIntOrDefault(),
+                SearchCount = tbGoogleSearchCount.GetIntOrDefault(),
                 OutputServices = CalculateService()
             };
         }
