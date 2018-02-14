@@ -22,6 +22,8 @@ namespace PlurCrawler_Sample.Controls
             this.Style = (Style)FindResource("DateRangePickerStyle");
         }
 
+        DateTime saveSince, saveUntil;
+
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -29,17 +31,21 @@ namespace PlurCrawler_Sample.Controls
             dpSince = base.GetTemplateChild("dpSince") as DatePicker;
             dpUntil = base.GetTemplateChild("dpUntil") as DatePicker;
 
+            if (saveSince != default(DateTime))
+                dpSince.SelectedDate = saveSince;
 
-            //dpSince.DisplayDateStart = new DateTime(2005, 1, 1);
-            //dpUntil.DisplayDateStart = new DateTime(2005, 1, 1);
+            if (saveUntil != default(DateTime))
+                dpUntil.SelectedDate = saveUntil;
 
-            //dpSince.DisplayDateEnd = DateTime.Today;
-            //dpUntil.DisplayDateEnd = DateTime.Today;
+            dpSince.SelectedDateChanged += DpSince_SelectedDateChanged;
+        }
+
+        private void DpSince_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MessageBox.Show(Since.ToLongDateString());
         }
 
         public static DependencyProperty PropertyNameProperty = DependencyHelper.Register();
-        public static DependencyProperty SinceProperty = DependencyHelper.Register();
-        public static DependencyProperty UntilProperty = DependencyHelper.Register();
 
         public string PropertyName
         {
@@ -49,14 +55,26 @@ namespace PlurCrawler_Sample.Controls
 
         public DateTime Since
         {
-            get => (DateTime)GetValue(SinceProperty);
-            set => SetValue(SinceProperty, value);
+            get => dpSince.SelectedDate.GetValueOrDefault();
+            set
+            {
+                if (dpSince == null)
+                    saveSince = value;
+                else
+                    dpSince.SelectedDate = value;
+            }
         }
 
         public DateTime Until
         {
-            get => (DateTime)GetValue(UntilProperty);
-            set => SetValue(UntilProperty, value);
+            get => dpUntil.SelectedDate.GetValueOrDefault();
+            set
+            {
+                if (dpUntil == null)
+                    saveUntil = value;
+                else
+                    dpUntil.SelectedDate = value;
+            }
         }
     }
 }

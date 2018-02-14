@@ -139,7 +139,7 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <DatePicker x:Name="dpSince" Grid.Row="0"  SelectedDate="{TemplateBinding Since}"/>
+                            <DatePicker x:Name="dpSince" Grid.Row="0"/>
                             <TextBlock Grid.Row="1" Text="~" 
                                        VerticalAlignment="Center" 
                                        HorizontalAlignment="Center"
@@ -149,7 +149,7 @@
                                     <RotateTransform CenterX="0.5" CenterY="0.5" Angle="90"/>
                                  </TextBlock.LayoutTransform>
                             </TextBlock>
-                            <DatePicker x:Name="dpUntil" Grid.Row="2" SelectedDate="{TemplateBinding Until}"/>
+                            <DatePicker x:Name="dpUntil" Grid.Row="2"/>
                         </Grid>
                     </Grid>
                 </ControlTemplate>
