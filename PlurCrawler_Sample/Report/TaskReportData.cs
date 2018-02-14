@@ -11,6 +11,7 @@ namespace PlurCrawler_Sample.Report
 {
     public class TaskReportData
     {
+        public string Query { get; set; }
         public DateTime SearchDate { get; set; }
 
         public int SearchCount { get; set; }

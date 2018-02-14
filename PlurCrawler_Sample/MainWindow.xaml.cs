@@ -31,6 +31,7 @@ namespace PlurCrawler_Sample
         VertificationManager _vertManager;
         TaskLogManager _logManager;
         ExportOption _exportOption;
+        TaskReport _taskReport;
 
         Dictionary<ISearcher, TaskProgressBar> dict;
 
@@ -93,6 +94,7 @@ namespace PlurCrawler_Sample
             _detailsOption = (DetailsOption)frOption.Content;
             _vertManager = (VertificationManager)frVertManager.Content;
             _exportOption = (ExportOption)frExportOption.Content;
+            _taskReport = (TaskReport)frTaskReport.Content;
 
             #endregion
 

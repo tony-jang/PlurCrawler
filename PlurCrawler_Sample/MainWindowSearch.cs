@@ -17,6 +17,7 @@ using PlurCrawler_Sample.Common;
 using PlurCrawler_Sample.Controls;
 using PlurCrawler_Sample.Export;
 using PlurCrawler_Sample.TaskLogs;
+using PlurCrawler_Sample.Report;
 
 namespace PlurCrawler_Sample
 {
@@ -28,9 +29,13 @@ namespace PlurCrawler_Sample
 
         public void AddLog(string message, TaskLogType type)
         {
-            if (mainTabControl.SelectedIndex != 0)
-                mainTabControl.SelectedIndex = 0;
-            _logManager.AddLog(message, type);
+            Dispatcher.Invoke(() =>
+            {
+                if (mainTabControl.SelectedIndex != 0)
+                    mainTabControl.SelectedIndex = 0;
+                _logManager.AddLog(message, type);
+            });
+            
         }
 
         #region [  Google CSE  ]
@@ -49,6 +54,7 @@ namespace PlurCrawler_Sample
             {
                 var googleCSESearcher = new GoogleCSESearcher();
                 bool isCanceled = false;
+                SearchResult searchResultInfo = SearchResult.Fail_APIError;
                 GoogleCSESearchOption option = null;
 
                 googleCSESearcher.SearchProgressChanged += GoogleCSESearcher_SearchProgressChanged;
@@ -73,6 +79,8 @@ namespace PlurCrawler_Sample
                     {
                         tb.SetValue(message: "결과를 내보낼 위치가 없습니다.", maximum: 1);
                         AddLog("검색을 내보낼 위치가 없습니다.", TaskLogType.Failed);
+
+                        searchResultInfo = SearchResult.Fail_InvaildSetting;
                         isCanceled = true;
                     }
 
@@ -83,26 +91,43 @@ namespace PlurCrawler_Sample
                     {
                         tb.SetValue(message: "API키가 인증되지 않았습니다.", maximum: 1);
                         AddLog("API키가 인증되지 않았습니다.", TaskLogType.Failed);
+
+                        searchResultInfo = SearchResult.Fail_APIError;
                         isCanceled = true;
                     }
                 });
+
+                IEnumerable<GoogleCSESearchResult> googleResult = null;
 
                 if (!isCanceled)
                 {
                     try
                     {
-                        IEnumerable<GoogleCSESearchResult> googleResult = googleCSESearcher.Search(option);
-
+                        googleResult = googleCSESearcher.Search(option);
+                        searchResultInfo = SearchResult.Success;
                         Export(option, googleResult);
                     }
                     catch (InvaildOptionException)
                     {
                         AddLog("'Google CSE' 검색 중 오류가 발생했습니다. [날짜를 사용하지 않은 상태에서는 '하루 기준' 옵션을 사용할 수 없습니다.]", TaskLogType.Failed);
+                        searchResultInfo = SearchResult.Fail_InvaildSetting;
                     }
-
                 }
 
                 Dispatcher.Invoke(() => {
+
+                    _taskReport.AddReport(new TaskReportData()
+                    {
+                        Query = option.Query,
+                        RequestService = ServiceKind.GoogleCSE,
+                        SearchCount = option.SearchCount,
+                        SearchData = googleResult,
+                        SearchDate = DateTime.Now,
+                        SearchResult = searchResultInfo,
+                    });
+
+                    _taskReport.SetLastReport();
+
                     googleSearching = false;
                     _detailsOption.GoogleEnableChange(true);
                     _vertManager.ChangeEditable(true);
@@ -111,6 +136,31 @@ namespace PlurCrawler_Sample
             
             thr.Start();
         }
+
+        private void GoogleCSESearcher_SearchFinished(object sender)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                TaskProgressBar itm = dict[sender as ISearcher];
+                itm.SetValue(value: itm.Maximum, message: "검색이 완료되었습니다.");
+
+                _logManager.AddLog("검색이 완료되었습니다.", TaskLogType.Searching);
+
+                _vertManager.ChangeGoogleState(VerifyType.Verified, true);
+                _vertManager.ChangeGoogleState(VerifyType.Verified, false);
+            });
+        }
+
+        private void GoogleCSESearcher_SearchProgressChanged(object sender, ProgressEventArgs args)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                var itm = dict[sender as ISearcher];
+                itm.SetValue(maximum: args.Maximum, value: args.Value);
+            });
+        }
+
+        #endregion
 
         public void Export(ISearchOption option, IEnumerable<ISearchResult> result)
         {
@@ -161,30 +211,6 @@ namespace PlurCrawler_Sample
             });
         }
 
-        private void GoogleCSESearcher_SearchFinished(object sender)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                TaskProgressBar itm = dict[sender as ISearcher];
-                itm.SetValue(value: itm.Maximum, message: "검색이 완료되었습니다.");
 
-                _logManager.AddLog("검색이 완료되었습니다.", TaskLogType.Searching);
-
-                _vertManager.ChangeGoogleState(VerifyType.Verified, true);
-                _vertManager.ChangeGoogleState(VerifyType.Verified, false);
-            });
-        }
-
-        private void GoogleCSESearcher_SearchProgressChanged(object sender, ProgressEventArgs args)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                var itm = dict[sender as ISearcher];
-                itm.SetValue(maximum: args.Maximum, value: args.Value);
-            });
-        }
-
-        #endregion
-        
     }
 }
