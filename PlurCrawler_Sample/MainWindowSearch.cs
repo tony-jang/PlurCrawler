@@ -168,43 +168,68 @@ namespace PlurCrawler_Sample
             {
                 if (option.OutputServices.HasFlag(OutputFormat.Json))
                 {
-                    string fullPath = _exportOption.JsonPathFileName;
-
-                    string path = _exportOption.JsonPath;
-
+                    string fullPath = _exportOption.JsonFullPath;
+                    string folder = _exportOption.JsonFolderPath;
                     string fileName = _exportOption.JsonFileName;
 
-                    if (!fileName.IsNullOrEmpty())
+                    if (fileName.IsNullOrEmpty())
                     {
                         AddLog("파일을 Json 형식으로 내보내기 실패했습니다. [파일명 입력란이 비어있습니다.]", TaskLogType.Failed);
-                        return;
-                    }
-
-                    if (Directory.Exists(path))
-                    {
-                        ExportManager.JsonExport(fullPath, result);
+                        
                     }
                     else
                     {
-                        if (path.IsNullOrEmpty())
+                        if (Directory.Exists(folder))
                         {
-                            AddLog("파일을 Json 형식으로 내보내기 실패했습니다. [폴더 입력란이 비어있습니다.]", TaskLogType.Failed);
+                            ExportManager.JsonExport(fullPath, result);
                         }
-                        else if (!Directory.Exists(path))
+                        else
                         {
-                            AddLog("파일을 Json 형식으로 내보내기 실패했습니다. [해당하는 경로가 없습니다.]", TaskLogType.Failed);
+                            if (folder.IsNullOrEmpty())
+                            {
+                                AddLog("파일을 Json 형식으로 내보내기 실패했습니다. [폴더 입력란이 비어있습니다.]", TaskLogType.Failed);
+                            }
+                            else if (!Directory.Exists(folder))
+                            {
+                                AddLog("파일을 Json 형식으로 내보내기 실패했습니다. [해당하는 경로가 없습니다.]", TaskLogType.Failed);
+                            }
                         }
                     }
                 }
-                else if (option.OutputServices.HasFlag(OutputFormat.CSV))
+                if (option.OutputServices.HasFlag(OutputFormat.CSV))
+                {
+                    string fullPath = _exportOption.CSVFullPath;
+                    string folder = _exportOption.CSVFolderPath;
+                    string fileName = _exportOption.JsonFileName;
+
+                    if (fileName.IsNullOrEmpty())
+                    {
+                        AddLog("파일을 CSV 형식으로 내보내기 실패했습니다. [파일명 입력란이 비어있습니다.]", TaskLogType.Failed);
+                    }
+                    else
+                    {
+                        if (Directory.Exists(folder))
+                        {
+                            ExportManager.CSVExport(fullPath, result);
+                        }
+                        else
+                        {
+                            if (folder.IsNullOrEmpty())
+                            {
+                                AddLog("파일을 CSV 형식으로 내보내기 실패했습니다. [폴더 입력란이 비어있습니다.]", TaskLogType.Failed);
+                            }
+                            else if (!Directory.Exists(folder))
+                            {
+                                AddLog("파일을 CSV 형식으로 내보내기 실패했습니다. [해당하는 경로가 없습니다.]", TaskLogType.Failed);
+                            }
+                        }
+                    }
+                }
+                if (option.OutputServices.HasFlag(OutputFormat.MySQL))
                 {
 
                 }
-                else if (option.OutputServices.HasFlag(OutputFormat.MySQL))
-                {
-
-                }
-                else if (option.OutputServices.HasFlag(OutputFormat.AccessDB))
+                if (option.OutputServices.HasFlag(OutputFormat.AccessDB))
                 {
                     // TODO: Implements
                 }

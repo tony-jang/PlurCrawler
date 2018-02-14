@@ -35,8 +35,9 @@ namespace PlurCrawler_Sample.Windows
         {
             InitializeComponent();
             setJsonLocationPath.Click += SetJsonLocationPath_Click;
+            setCsvLocationPath.Click += SetCsvLocationPath_Click;
         }
-
+        
         #region [  Setting Load / Save  ]
 
         public void LoadSettingFromString(string optionString)
@@ -89,6 +90,25 @@ namespace PlurCrawler_Sample.Windows
             return serializer.Serialize(optStr);
         }
 
+        #endregion
+
+        #region [  Json  ]
+
+        /// <summary>
+        /// Json으로 내보낼 경로 + 파일 이름을 나타냅니다.
+        /// </summary>
+        public string JsonFullPath => IOPath.Combine(jsonExportFolder.Text, $"{jsonExportName.Text}.json");
+
+        /// <summary>
+        /// Json으로 내보낼 폴더를 나타냅니다.
+        /// </summary>
+        public string JsonFolderPath => jsonExportFolder.Text;
+
+        /// <summary>
+        /// Json으로 내보낼 파일 이름 부분만 나타냅니다.
+        /// </summary>
+        public string JsonFileName => jsonExportName.Text;
+
         private void SetJsonLocationPath_Click(object sender, RoutedEventArgs e)
         {
             jsonExportFolder.Text = GetFolderPath(jsonExportFolder.Text);
@@ -96,22 +116,31 @@ namespace PlurCrawler_Sample.Windows
 
         #endregion
 
-        /// <summary>
-        /// Json으로 내보낼 경로 + 파일 이름을 나타냅니다.
-        /// </summary>
-        public string JsonPathFileName => IOPath.Combine(jsonExportFolder.Text, $"{jsonExportName.Text}.json");
+        #region [  CSV  ]
 
         /// <summary>
-        /// Json으로 내보낼 폴더를 나타냅니다.
+        /// CSV로 내보낼 경로 + 파일 이름을 나타냅니다.
         /// </summary>
-        public string JsonPath => jsonExportFolder.Text;
+        public string CSVFullPath => IOPath.Combine(csvExportFolder.Text, $"{csvExportName.Text}.csv");
 
         /// <summary>
-        /// Json으로 내보낼 파일 이름 부분만 나타냅니다.
+        /// CSV로 내보낼 폴더를 나타냅니다.
         /// </summary>
-        public string JsonFileName => jsonExportName.Text;
+        public string CSVFolderPath => csvExportFolder.Text;
 
-        public string GetFolderPath(string startPath)
+        /// <summary>
+        /// CSV로 내보낼 파일 이름 부분만 나타냅니다.
+        /// </summary>
+        public string CSVFileName => csvExportName.Text;
+
+        private void SetCsvLocationPath_Click(object sender, RoutedEventArgs e)
+        {
+            csvExportFolder.Text = GetFolderPath(csvExportFolder.Text);
+        }
+
+        #endregion
+
+        private string GetFolderPath(string startPath)
         {
             var folderDialog = new FolderBrowserDialog();
 
