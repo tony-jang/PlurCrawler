@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PlurCrawler_Sample.Windows"
-      xmlns:controls="clr-namespace:PlurCrawler_Sample.Controls"
+      xmlns:ctrls="clr-namespace:PlurCrawler_Sample.Controls"
       xmlns:system="clr-namespace:System;assembly=mscorlib"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="600"
@@ -31,31 +31,55 @@
         
         <ScrollViewer Grid.Row="1" Grid.Column="1">
             <StackPanel Margin="10,20">
-                <controls:PropertyGroupBox Header="검색어">
+                <ctrls:PropertyGroupBox Header="검색어">
                     <TextBlock x:Name="tbSearchQuery" Foreground="Green" Text=""/>
-                </controls:PropertyGroupBox>
+                </ctrls:PropertyGroupBox>
 
-                <controls:PropertyGroupBox Header="검색 일자">
+                <ctrls:PropertyGroupBox Header="검색 일자">
                     <TextBlock x:Name="tbSearchDate" Foreground="Green" Text="2017-01-04 오후 5:00"/>
-                </controls:PropertyGroupBox>
+                </ctrls:PropertyGroupBox>
 
-                <controls:PropertyGroupBox Header="검색 요청 갯수">
+                <ctrls:PropertyGroupBox Header="검색 요청 갯수">
                     <TextBlock x:Name="tbSearchCount" Foreground="Green">
                         <Run Text="10"/>개
                     </TextBlock>
-                </controls:PropertyGroupBox>
+                </ctrls:PropertyGroupBox>
 
-                <controls:PropertyGroupBox Header="검색 성공 여부">
+                <ctrls:PropertyGroupBox Header="검색 성공 여부">
                     <TextBlock x:Name="tbSearchResult" Foreground="Green">
                         <Run Text="성공한 요청"/>
                     </TextBlock>
-                </controls:PropertyGroupBox>
+                </ctrls:PropertyGroupBox>
 
-                <controls:PropertyGroupBox Header="요청한 서비스">
+                <ctrls:PropertyGroupBox Header="요청한 서비스">
                     <TextBlock x:Name="tbRequestService" Foreground="Green">
                         <Run Text="Google Custom Search Engine"/>
                     </TextBlock>
-                </controls:PropertyGroupBox>
+                </ctrls:PropertyGroupBox>
+
+                <ctrls:PropertyGroupBox Header="Json으로 내보내기">
+                    <TextBlock x:Name="tbSaveJson">
+                        <Run Text="실패 - 저장 위치가 선택되지 않음" Foreground="Red"/>
+                    </TextBlock>
+                </ctrls:PropertyGroupBox>
+
+                <ctrls:PropertyGroupBox Header="CSV로 내보내기">
+                    <TextBlock>
+                        <Run Text="외부로 내보내도록 설정되지 않음"/>
+                    </TextBlock>
+                </ctrls:PropertyGroupBox>
+
+                <ctrls:PropertyGroupBox Header="MySQL로 내보내기">
+                    <TextBlock>
+                        <Run Text="실패 - Host가 연결되지 않음" Foreground="Red"/>
+                    </TextBlock>
+                </ctrls:PropertyGroupBox>
+
+                <ctrls:PropertyGroupBox Header="Access DB로 내보내기">
+                    <TextBlock>
+                        <Run Text="성공" Foreground="Green"/>
+                    </TextBlock>
+                </ctrls:PropertyGroupBox>
             </StackPanel>
         </ScrollViewer>
     </Grid>

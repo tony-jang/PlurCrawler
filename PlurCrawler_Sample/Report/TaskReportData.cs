@@ -21,5 +21,7 @@ namespace PlurCrawler_Sample.Report
         public ServiceKind RequestService { get; set; }
 
         public IEnumerable<ISearchResult> SearchData { get; set; }
+
+        public JsonExportResult JsonExportResult { get; set; }
     }
 }
