@@ -99,19 +99,25 @@ namespace PlurCrawler_Sample
             #endregion
 
             #region [  Load Setting  ]
-            
+
+            #region [  Details Option 불러오기  ]
+
             var serializer = new ObjectSerializer<GoogleCSESearchOption>();
             GoogleCSESearchOption opt = serializer.Deserialize(AppSetting.Default.GoogleOption);
+
             _detailsOption.LoadGoogle(opt);
+            
+            // TODO: 트위터, 유튜브 설정 불러오기 구현
+
+            #endregion
 
             _exportOption.LoadSettingFromString(AppSetting.Default.ExportOption);
-            
-            // 인증 정보 불러오기
+
+            #region [  Vertification Manager 불러오기  ]
 
             if (!AppSetting.Default.GoogleCredentials.IsNullOrEmpty())
             {
-                string[] credentials =
-                    AppSetting.Default.GoogleCredentials.Split(new string[] { "//" }, StringSplitOptions.None);
+                string[] credentials = AppSetting.Default.GoogleCredentials.Split("//");
 
                 _vertManager.SetGoogleKey(credentials[0]);
                 _vertManager.SetGoogleEngineID(credentials[1]);
@@ -119,7 +125,18 @@ namespace PlurCrawler_Sample
                 _vertManager.ChangeGoogleState(AppSetting.Default.GoogleKeyVertified, true);
                 _vertManager.ChangeGoogleState(AppSetting.Default.GoogleIDVertified, false);
             }
-            
+
+            if (!AppSetting.Default.TwitterCredentials.IsNullOrEmpty())
+            {
+                string[] credentials = AppSetting.Default.TwitterCredentials.Split("//");
+
+                _vertManager.SetTwitterAuthPair(credentials[0], credentials[1]);
+            }
+
+            #endregion
+
+            #region [  MainWindow 컨트롤  ]
+
             if (!AppSetting.Default.EngineUsage.IsNullOrEmpty())
             {
                 string[] engineBools =
@@ -129,7 +146,9 @@ namespace PlurCrawler_Sample
                 cbTwitterService.IsChecked = Convert.ToBoolean(engineBools[1]);
                 cbYoutubeService.IsChecked = Convert.ToBoolean(engineBools[2]);
             }
-            
+
+            #endregion
+
             AddLog("설정 불러오기가 완료되었습니다.", TaskLogType.System);
 
             #endregion
@@ -176,6 +195,9 @@ namespace PlurCrawler_Sample
                 AppSetting.Default.GoogleKeyVertified = _vertManager.GoogleAPIVerifyType;
                 AppSetting.Default.GoogleIDVertified = _vertManager.GoogleEngineIDVerifyType;
             }
+
+            AppSetting.Default.TwitterCredentials = $"{_vertManager.TwitterKey}//{_vertManager.TwitterSecret}";
+
 
             AppSetting.Default.Save();
 

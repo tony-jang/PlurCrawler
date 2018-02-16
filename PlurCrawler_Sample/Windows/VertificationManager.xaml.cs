@@ -36,16 +36,29 @@ namespace PlurCrawler_Sample.Windows
 
             btnTwitterPINAuth.Click += BtnTwitterPINAuth_Click;
             btnTwitterReqURL.Click += BtnTwitterReqURL_Click;
+            btnTwitterViewHidden.Click += BtnTwitterViewHidden_Click;
+            btnTwitterNewAuth.Click += BtnTwitterNewAuth_Click;
 
             signGoogle.Visibility = Visibility.Hidden;
         }
-
-
+        
         #region [  Twitter  ]
+
+        public void SetTwitterAuthPair(string key, string secret)
+        {
+            tbTwitterKey.Text = key;
+            tbTwitterSecret.Password = secret;
+        }
+
+        public string TwitterKey => tbTwitterKey.Text;
+
+        public string TwitterSecret => tbTwitterSecret.Password;
+
+        private bool IsTwitterEncrypt { get; set; } = true;
 
         TwitterTokenizer tokenizer;
         TwitterCredentials credentials;
-
+        
         private void BtnTwitterPINAuth_Click(object sender, RoutedEventArgs e)
         {
             string errMsg1 = "PIN 번호가 잘못 입력되었습니다.";
@@ -69,11 +82,17 @@ namespace PlurCrawler_Sample.Windows
                 tbTwitterPINMsg.Visibility = Visibility.Hidden;
                 wbTwitter.Visibility = Visibility.Hidden;
                 tcTwitterAuth.SelectedIndex = 2;
+                tbTwitterPIN.Clear();
+
+                runTwitterKey.Text = tbTwitterKey.Text;
+                runTwitterSecret.Text = _hiddenText;
             }
             catch (CredentialsTypeException)
             {
                 tbTwitterPINMsg.Text = errMsg1;
                 tbTwitterPINMsg.Visibility = Visibility.Visible;
+                string url = GetTwitterURL();
+                wbTwitter.Navigate(url);
             }
         }
 
@@ -89,19 +108,13 @@ namespace PlurCrawler_Sample.Windows
 
                 return;
             }
-
-            credentials = new TwitterCredentials(tbTwitterKey.Text, tbTwitterSecret.Password);
-            tokenizer = new TwitterTokenizer();
-
-            string url = tokenizer.GetURL(credentials);
+            
+            string url = GetTwitterURL();
 
             if (!url.IsNullOrEmpty())
             {
                 tbTwitterMsg.Visibility = Visibility.Hidden;
-
-                runTwitterID.Text = tbTwitterKey.Text;
-                runTwitterSecret.Text = runTwitterSecret.Text; 
-
+                wbTwitter.Visibility = Visibility.Visible;
                 tcTwitterAuth.SelectedIndex = 1;
                 wbTwitter.Navigate(url);
             }
@@ -112,10 +125,34 @@ namespace PlurCrawler_Sample.Windows
             }
         }
 
+        private string GetTwitterURL()
+        {
+            credentials = new TwitterCredentials(tbTwitterKey.Text, tbTwitterSecret.Password);
+            tokenizer = new TwitterTokenizer();
+
+            return tokenizer.GetURL(credentials);
+        }
+
+        private void BtnTwitterViewHidden_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsTwitterEncrypt)
+                runTwitterSecret.Text = TwitterSecret;
+            else
+                runTwitterSecret.Text = _hiddenText;
+
+            IsTwitterEncrypt = !IsTwitterEncrypt;
+        }
+        
+        private void BtnTwitterNewAuth_Click(object sender, RoutedEventArgs e)
+        {
+            tcTwitterAuth.SelectedIndex = 0;
+            IsTwitterEncrypt = true;
+        }
+
         #endregion
 
         #region [  Google CSE  ]
-        
+
         public VerifyType GoogleAPIVerifyType { get; internal set; }
 
         public VerifyType GoogleEngineIDVerifyType { get; internal set; }
@@ -123,7 +160,7 @@ namespace PlurCrawler_Sample.Windows
         /// <summary>
         /// 구글의 키 상태가 암호화되어 있는 상태인지를 나타냅니다.
         /// </summary>
-        private bool IsGoogleEncrypt { get; set; }
+        private bool IsGoogleEncrypt { get; set; } = true;
 
         /// <summary>
         /// 구글의 API 키를 나타냅니다.

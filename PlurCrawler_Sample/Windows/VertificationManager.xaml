@@ -155,7 +155,7 @@
                                         <TextBlock Text="인증 정보 관리" FontSize="20"/>
                                         <StackPanel Grid.Row="1">
                                             <TextBlock TextTrimming="CharacterEllipsis" VerticalAlignment="Center" Margin="0,10,0,0">
-                                                    Consumer ID : <Run x:Name="runTwitterID" Text="fjkdls;jalk;sdfasdf" Foreground="Green"/>
+                                                    Consumer Key : <Run x:Name="runTwitterKey" Text="-" Foreground="Green"/>
                                             </TextBlock>
                                             <Grid Margin="0,10,0,0">
                                                 <Grid.ColumnDefinitions>
@@ -163,9 +163,9 @@
                                                     <ColumnDefinition Width="Auto"/>
                                                 </Grid.ColumnDefinitions>
                                                 <TextBlock TextTrimming="CharacterEllipsis" VerticalAlignment="Center">
-                                                    Consumer Secret : <Run x:Name="runTwitterSecret" Text="AIzaSyDuJa0F9nJzUwTOJyPZeBqkbEPwHoxwTG4" Foreground="Green"/>
+                                                    Consumer Secret : <Run x:Name="runTwitterSecret" Text="-" Foreground="Green"/>
                                                 </TextBlock>
-                                                <Button x:Name="btnTwitterViewHidden" Grid.Column="1" Content="Consumer Secret 감추기" Padding="10,5"/>
+                                                <Button x:Name="btnTwitterViewHidden" Grid.Column="1" Content="Secret 감추기/보이기" Padding="10,5"/>
                                             </Grid>
 
                                             <Button x:Name="btnTwitterNewAuth" Content="인증 새로 받기" HorizontalAlignment="Right" Padding="10,5" Margin="0,10,0,0"/>

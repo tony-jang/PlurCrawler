@@ -37,5 +37,10 @@ namespace PlurCrawler.Extension
         {
             return SaveAsFile(str, fileLocation, Encoding.UTF8);
         }
+
+        public static string[] Split(this string str, string seperator, StringSplitOptions stringSplitOptions = StringSplitOptions.None)
+        {
+            return str.Split(new string[] { seperator }, stringSplitOptions);
+        }
     }
 }

@@ -118,5 +118,17 @@ namespace PlurCrawler_Sample.Properties {
                 this["ExportOption"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string TwitterCredentials {
+            get {
+                return ((string)(this["TwitterCredentials"]));
+            }
+            set {
+                this["TwitterCredentials"] = value;
+            }
+        }
     }
 }
