@@ -94,6 +94,8 @@ namespace PlurCrawler_Sample.Windows
 
         #region [  Json  ]
 
+        public bool UseJsonSort => cbUseJsonSort.IsChecked.GetValueOrDefault();
+
         /// <summary>
         /// Json으로 내보낼 경로 + 파일 이름을 나타냅니다.
         /// </summary>

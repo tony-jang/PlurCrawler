@@ -93,7 +93,10 @@
     <Compile Include="Export\ExportOptionStruct.cs" />
     <Compile Include="MainWindowSearch.cs" />
     <Compile Include="Report\BoolAttribute.cs" />
-    <Compile Include="Report\JsonExportResult.cs" />
+    <Compile Include="Report\Result\CSVExportResult.cs" />
+    <Compile Include="Report\Result\ExportResultPack.cs" />
+    <Compile Include="Report\Result\JsonExportResult.cs" />
+    <Compile Include="Report\Result\MySQLExportResult.cs" />
     <Compile Include="Report\SearchResult.cs" />
     <Compile Include="Report\TaskReportData.cs" />
     <Compile Include="Settings.cs" />

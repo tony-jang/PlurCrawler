@@ -15,10 +15,16 @@ namespace PlurCrawler.Format
 {
     public class JsonFormat<TResult> : BaseFormat<TResult, string> where TResult : ISearchResult
     {
+        public JsonFormat(bool indented)
+        {
+            this.Indented = indented;
+        }
+
+        public bool Indented { get; set; }
+
         public override string FormattingData(IEnumerable<TResult> resultData)
         {
-            string json = JsonConvert.SerializeObject(resultData);
-            return JToken.Parse(json).ToString(Formatting.Indented);
+            return JsonConvert.SerializeObject(resultData, (Indented ? Formatting.Indented : Formatting.None));
         }
     }
 }

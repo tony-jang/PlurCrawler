@@ -12,8 +12,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PlurCrawler.Attributes;
+using PlurCrawler.Extension;
+using PlurCrawler.Format.Common;
 using PlurCrawler.Search;
 using PlurCrawler_Sample.Report;
+using PlurCrawler_Sample.Report.Result;
 
 namespace PlurCrawler_Sample.Windows
 {
@@ -97,6 +101,25 @@ namespace PlurCrawler_Sample.Windows
                     tbSearchResult.Text = "실패 - API 오류로 인한 실패";
                     break;
             }
+
+            TextBlock[] tbList = { tbJsonInfo, tbCSVInfo, tbMySQLInfo, tbAccessDBInfo };
+            Enum[] resultEnumList = { data.JsonExportResult, data.CSVExportResult, data.MySQLExportResult };
+            Enum[] serviceEnumList = { OutputFormat.Json, OutputFormat.CSV, OutputFormat.MySQL, OutputFormat.AccessDB };
+
+            for (int i = 0; i <= 2; i++)
+            {
+                tbList[i].Text = resultEnumList[i].GetAttributeFromEnum<NoteAttribute>().Message;
+
+                if (data.OutputFormat.HasFlag(serviceEnumList[i]))
+                {
+                    tbList[i].Foreground = (resultEnumList[i].GetAttributeFromEnum<BoolAttribute>().Value ? Brushes.Green : Brushes.Red);
+                }
+                else
+                {
+                    tbList[i].Foreground = Brushes.Black;
+                }
+            }
+            
             string[] serviceString = { "Google Custom Search Engine", "Youtube", "Twitter" };
             tbRequestService.Text = serviceString[(int)data.RequestService];
 

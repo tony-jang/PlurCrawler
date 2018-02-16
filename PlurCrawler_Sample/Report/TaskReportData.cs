@@ -4,8 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using PlurCrawler.Format.Common;
 using PlurCrawler.Search;
 using PlurCrawler.Search.Base;
+
+using PlurCrawler_Sample.Report.Result;
 
 namespace PlurCrawler_Sample.Report
 {
@@ -20,8 +23,14 @@ namespace PlurCrawler_Sample.Report
         
         public ServiceKind RequestService { get; set; }
 
+        public OutputFormat OutputFormat { get; set; }
+
         public IEnumerable<ISearchResult> SearchData { get; set; }
 
         public JsonExportResult JsonExportResult { get; set; }
+
+        public CSVExportResult CSVExportResult { get; set; }
+
+        public MySQLExportResult MySQLExportResult { get; set; }
     }
 }

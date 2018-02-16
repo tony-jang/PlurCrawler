@@ -12,10 +12,10 @@ namespace PlurCrawler_Sample.Export
 {
     static class ExportManager
     {
-        public static void JsonExport<TResult>(string fileLocation, IEnumerable<TResult> searchResult) 
+        public static void JsonExport<TResult>(string fileLocation, IEnumerable<TResult> searchResult, bool indented = true) 
             where TResult : ISearchResult
         {
-            var jsonFormat = new JsonFormat<TResult>();
+            var jsonFormat = new JsonFormat<TResult>(indented);
 
             string str = jsonFormat.FormattingData(searchResult);
             

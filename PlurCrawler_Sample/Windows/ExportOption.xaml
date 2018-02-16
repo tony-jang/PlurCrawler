@@ -87,7 +87,7 @@
                             <ctrl:PropertyTextBox x:Name="mysqlConnAddr" PropertyName="접속할 주소" Margin="10" Description="MySQL을 통해서 접속할 주소를 선택합니다."/>
                             <ctrl:PropertyTextBox x:Name="mysqlUserID" PropertyName="유저 ID" Margin="10" Description="접속할때 쓰일 유저 ID를 입력합니다."/>
                             <ctrl:PropertyPasswordBox x:Name="mysqlUserPw" PropertyName="유저 비밀번호" Margin="10" Description="접속할때 쓰일 유저 비밀번호를 입력합니다."/>
-                            <ctrl:PropertyTextBox x:Name="mysqlDatabaseName" PropertyName="데이터베이스 이름" Margin="10" Description="접속할 데이터베이스를 입력합니다."/>
+                            <ctrl:PropertyTextBox x:Name="mysqlDatabaseName" PropertyName="데이터베이스 이름" Margin="10" Description="접속할 데이터베이스 이름을 입력합니다."/>
                         </StackPanel>
 
                         <CheckBox x:Name="cbMySQLManualInput" Content="직접 입력하기" Margin="10"/>

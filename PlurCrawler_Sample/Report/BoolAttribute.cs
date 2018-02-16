@@ -9,7 +9,6 @@ namespace PlurCrawler_Sample.Report
     [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
     sealed class BoolAttribute : Attribute
     {
-        // This is a positional argument
         public BoolAttribute(bool value)
         {
             this.Value = value;
