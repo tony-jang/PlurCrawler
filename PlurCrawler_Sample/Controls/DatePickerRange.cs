@@ -36,15 +36,8 @@ namespace PlurCrawler_Sample.Controls
 
             if (saveUntil != default(DateTime))
                 dpUntil.SelectedDate = saveUntil;
-
-            dpSince.SelectedDateChanged += DpSince_SelectedDateChanged;
         }
-
-        private void DpSince_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-            MessageBox.Show(Since.ToLongDateString());
-        }
-
+        
         public static DependencyProperty PropertyNameProperty = DependencyHelper.Register();
 
         public string PropertyName
