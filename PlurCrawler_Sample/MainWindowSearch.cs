@@ -46,7 +46,7 @@ namespace PlurCrawler_Sample
 
             googleSearching = true;
             _detailsOption.GoogleEnableChange(false);
-            _vertManager.ChangeEditable(false);
+            _vertManager.ChangeEditable(false, ServiceKind.GoogleCSE);
 
             Thread thr = new Thread(() =>
             {
@@ -164,7 +164,17 @@ namespace PlurCrawler_Sample
 
         #endregion
 
+        public void TwitterSearch()
+        {
+            if (twitterSearching)
+                return;
 
+            twitterSearching = true;
+            _detailsOption.TwitterEnableChange(false);
+            _vertManager.ChangeEditable(false, ServiceKind.Twitter);
+
+            // TODO: 
+        }
 
         public ExportResultPack Export(OutputFormat format, IEnumerable<ISearchResult> result)
         {

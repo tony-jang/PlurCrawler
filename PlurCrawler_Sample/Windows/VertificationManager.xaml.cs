@@ -12,10 +12,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+
+using PlurCrawler_Sample.Common;
+
 using PlurCrawler.Extension;
+using PlurCrawler.Search;
 using PlurCrawler.Tokens.Credentials;
 using PlurCrawler.Tokens.Tokenizer;
-using PlurCrawler_Sample.Common;
 
 namespace PlurCrawler_Sample.Windows
 {
@@ -257,12 +260,28 @@ namespace PlurCrawler_Sample.Windows
             }
         }
 
-        public void ChangeEditable(bool enabled)
+        public void ChangeEditable(bool enabled, ServiceKind kind)
         {
-            signGoogle.Visibility = (enabled) ? Visibility.Hidden : Visibility.Visible;
-            tbGoogleInfo.IsEnabled = enabled;
-            btnGoogleKeyOK.IsEnabled = enabled;
-            btnGoogleIdOK.IsEnabled = enabled;
+            switch (kind)
+            {
+                case ServiceKind.GoogleCSE:
+                    signGoogle.Visibility = (enabled) ? Visibility.Hidden : Visibility.Visible;
+                    tbGoogleInfo.IsEnabled = enabled;
+                    btnGoogleKeyOK.IsEnabled = enabled;
+                    btnGoogleIdOK.IsEnabled = enabled;
+                    break;
+                case ServiceKind.Twitter:
+                    signTwitter.Visibility = (enabled) ? Visibility.Hidden : Visibility.Visible;
+                    btnTwitterNewAuth.IsEnabled = enabled;
+                    btnTwitterPINAuth.IsEnabled = enabled;
+                    btnTwitterReqURL.IsEnabled = enabled;
+                    btnTwitterViewHidden.IsEnabled = enabled;
+                    tbTwitterKey.IsEnabled = enabled;
+                    tbTwitterPIN.IsEnabled = enabled;
+                    tbTwitterSecret.IsEnabled = enabled;
+                    break;
+            }
+            
         }
 
         private void BtnGoogleKeyOK_Click(object sender, RoutedEventArgs e)

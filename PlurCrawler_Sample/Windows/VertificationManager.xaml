@@ -177,6 +177,11 @@
                                     </Grid>
                                 </TabItem>
                             </TabControl>
+                            <Grid x:Name="signTwitter" Background="#CCFFFFFF" Visibility="Hidden">
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center">
+                                    해당 서비스에서 검색을 수행중 일때에는<LineBreak/>검색 API 토큰 변경이 불가합니다.
+                                </TextBlock>
+                            </Grid>
                         </Grid>
                         
                         <TextBlock x:Name="tbTwitterMsg" Text="잘못된 Consumer Key 또는 Consumer Secret이 입력되었습니다." Visibility="Hidden" Foreground="Red"/>

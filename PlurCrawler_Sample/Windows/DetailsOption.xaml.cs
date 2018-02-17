@@ -131,5 +131,19 @@ namespace PlurCrawler_Sample.Windows
                 signGoogle.Visibility = Visibility.Visible;
             }
         }
+
+        public void TwitterEnableChange(bool enable)
+        {
+            if (enable)
+            {
+                svTwitter.IsEnabled = true;
+                signTwitter.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                svTwitter.IsEnabled = false;
+                signTwitter.Visibility = Visibility.Visible;
+            }
+        }
     }
 }
