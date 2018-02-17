@@ -164,14 +164,16 @@ namespace PlurCrawler_Sample
 
         #endregion
 
-        public ExportResultPack Export(OutputFormat option, IEnumerable<ISearchResult> result)
+
+
+        public ExportResultPack Export(OutputFormat format, IEnumerable<ISearchResult> result)
         {
             ExportResultPack pack = null;
             Dispatcher.Invoke(() =>
             {
                 pack = new ExportResultPack();
 
-                if (option.HasFlag(OutputFormat.Json))
+                if (format.HasFlag(OutputFormat.Json))
                 {
                     string fullPath = _exportOption.JsonFullPath;
                     string folder = _exportOption.JsonFolderPath;
@@ -205,7 +207,7 @@ namespace PlurCrawler_Sample
                         }
                     }
                 }
-                if (option.HasFlag(OutputFormat.CSV))
+                if (format.HasFlag(OutputFormat.CSV))
                 {
                     string fullPath = _exportOption.CSVFullPath;
                     string folder = _exportOption.CSVFolderPath;
@@ -239,11 +241,11 @@ namespace PlurCrawler_Sample
                         }
                     }
                 }
-                if (option.HasFlag(OutputFormat.MySQL))
+                if (format.HasFlag(OutputFormat.MySQL))
                 {
 
                 }
-                if (option.HasFlag(OutputFormat.AccessDB))
+                if (format.HasFlag(OutputFormat.AccessDB))
                 {
                     // TODO: Implements
                 }

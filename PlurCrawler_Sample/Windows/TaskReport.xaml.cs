@@ -12,12 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+
 using PlurCrawler.Attributes;
 using PlurCrawler.Extension;
 using PlurCrawler.Format.Common;
 using PlurCrawler.Search;
+using PlurCrawler.Search.Base;
+
 using PlurCrawler_Sample.Report;
-using PlurCrawler_Sample.Report.Result;
 
 namespace PlurCrawler_Sample.Windows
 {
@@ -31,9 +33,57 @@ namespace PlurCrawler_Sample.Windows
             InitializeComponent();
             _datas = new List<TaskReportData>();
 
+            #region [  Add EventHandler  ]
+
             lvReportList.SelectionChanged += LvReportList_SelectionChanged;
 
             btnShowList.Click += BtnShowList_Click;
+
+            btnJsonExport.Click += BtnJsonExport_Click;
+            btnCSVExport.Click += BtnCSVExport_Click;
+            btnMySQLExport.Click += BtnMySQLExport_Click;
+            btnAccessDBExport.Click += BtnAccessDBExport_Click;
+
+            #endregion
+
+            ChangeButtonEnabled(false);
+        }
+
+        public void ChangeButtonEnabled(bool isEnabled)
+        {
+            btnJsonExport.IsEnabled = isEnabled;
+            btnCSVExport.IsEnabled = isEnabled;
+            btnMySQLExport.IsEnabled = isEnabled;
+            btnAccessDBExport.IsEnabled = isEnabled;
+        }
+
+        public delegate void ExportRequestDelegate(OutputFormat format, IEnumerable<ISearchResult> result);
+
+        public event ExportRequestDelegate ExportRequest;
+
+        private void OnExportRequest(OutputFormat format, IEnumerable<ISearchResult> result)
+        {
+            ExportRequest?.Invoke(format, result);
+        }
+
+        private void BtnAccessDBExport_Click(object sender, RoutedEventArgs e)
+        {
+            OnExportRequest(OutputFormat.AccessDB, SelectionResult);
+        }
+
+        private void BtnMySQLExport_Click(object sender, RoutedEventArgs e)
+        {
+            OnExportRequest(OutputFormat.MySQL, SelectionResult);
+        }
+
+        private void BtnCSVExport_Click(object sender, RoutedEventArgs e)
+        {
+            OnExportRequest(OutputFormat.CSV, SelectionResult);
+        }
+
+        private void BtnJsonExport_Click(object sender, RoutedEventArgs e)
+        {
+            OnExportRequest(OutputFormat.Json, SelectionResult);
         }
 
         private void BtnShowList_Click(object sender, RoutedEventArgs e)
@@ -52,13 +102,15 @@ namespace PlurCrawler_Sample.Windows
             btnShowList.Tag = !(bool)btnShowList.Tag;
         }
 
-        public int SelectedIndex { get; internal set; }
-
         private void LvReportList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (lvReportList.SelectedIndex != -1)
                 SetReport(lvReportList.SelectedIndex);
         }
+
+        public int SelectedIndex { get; private set; } = -1;
+
+        private IEnumerable<ISearchResult> SelectionResult => _datas[SelectedIndex].SearchData;
 
         private List<TaskReportData> _datas;
 
@@ -71,16 +123,23 @@ namespace PlurCrawler_Sample.Windows
         public void SetReport(int index)
         {
             SetReport(_datas[index]);
+
+            SelectedIndex = index;
         }
 
         public void SetLastReport()
         {
             if (_datas.Count > 0)
+            {
                 SetReport(_datas[_datas.Count - 1]);
+                SelectedIndex = _datas.Count - 1;
+            }
         }
 
         private void SetReport(TaskReportData data)
         {
+            ChangeButtonEnabled(true);
+
             Brush brush = null;
 
             tbSearchQuery.Text = data.Query;

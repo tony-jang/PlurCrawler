@@ -36,24 +36,24 @@
                 </ctrls:PropertyGroupBox>
 
                 <ctrls:PropertyGroupBox Header="검색 일자">
-                    <TextBlock x:Name="tbSearchDate" Foreground="Green" Text="2017-01-04 오후 5:00"/>
+                    <TextBlock x:Name="tbSearchDate" Foreground="Green" Text="-"/>
                 </ctrls:PropertyGroupBox>
 
                 <ctrls:PropertyGroupBox Header="검색 요청 갯수">
                     <TextBlock x:Name="tbSearchCount" Foreground="Green">
-                        <Run Text="10"/>개
+                        <Run Text="-"/>개
                     </TextBlock>
                 </ctrls:PropertyGroupBox>
 
                 <ctrls:PropertyGroupBox Header="검색 성공 여부">
                     <TextBlock x:Name="tbSearchResult" Foreground="Green">
-                        <Run Text="성공한 요청"/>
+                        <Run Text="-"/>
                     </TextBlock>
                 </ctrls:PropertyGroupBox>
 
                 <ctrls:PropertyGroupBox Header="요청한 서비스">
                     <TextBlock x:Name="tbRequestService" Foreground="Green">
-                        <Run Text="Google Custom Search Engine"/>
+                        <Run Text="-"/>
                     </TextBlock>
                 </ctrls:PropertyGroupBox>
 
@@ -65,8 +65,8 @@
                             <ColumnDefinition/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock x:Name="tbJsonInfo"  Text="성공" Foreground="Green" VerticalAlignment="Center"/>
-                        <Button x:Name="btnJsonExport" Grid.Column="1" Content="다시 내보내기" Padding="10,5"/>
+                        <TextBlock x:Name="tbJsonInfo"  Text="-" Foreground="Green" VerticalAlignment="Center"/>
+                        <Button x:Name="btnJsonExport" Grid.Column="1" Content="내보내기" Padding="10,5"/>
                     </Grid>
                 </ctrls:PropertyGroupBox>
 
@@ -76,8 +76,8 @@
                             <ColumnDefinition/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock x:Name="tbCSVInfo" Text="성공" Foreground="Green" VerticalAlignment="Center"/>
-                        <Button x:Name="btnCSVExport" Grid.Column="1" Content="다시 내보내기" Padding="10,5"/>
+                        <TextBlock x:Name="tbCSVInfo" Text="-" Foreground="Green" VerticalAlignment="Center"/>
+                        <Button x:Name="btnCSVExport" Grid.Column="1" Content="내보내기" Padding="10,5"/>
                     </Grid>
                 </ctrls:PropertyGroupBox>
 
@@ -87,8 +87,8 @@
                             <ColumnDefinition/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock x:Name="tbMySQLInfo" Text="성공" Foreground="Green" VerticalAlignment="Center"/>
-                        <Button x:Name="btnMySQLExport" Grid.Column="1" Content="다시 내보내기" Padding="10,5"/>
+                        <TextBlock x:Name="tbMySQLInfo" Text="-" Foreground="Green" VerticalAlignment="Center"/>
+                        <Button x:Name="btnMySQLExport" Grid.Column="1" Content="내보내기" Padding="10,5"/>
                     </Grid>
                 </ctrls:PropertyGroupBox>
 
@@ -98,8 +98,8 @@
                             <ColumnDefinition/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock x:Name="tbAccessDBInfo" Text="성공" Foreground="Green" VerticalAlignment="Center"/>
-                        <Button x:Name="btnAccessDBExport" Grid.Column="1" Content="다시 내보내기" Padding="10,5"/>
+                        <TextBlock x:Name="tbAccessDBInfo" Text="-" Foreground="Green" VerticalAlignment="Center"/>
+                        <Button x:Name="btnAccessDBExport" Grid.Column="1" Content="내보내기" Padding="10,5"/>
                     </Grid>
                 </ctrls:PropertyGroupBox>
             </StackPanel>

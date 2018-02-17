@@ -11,6 +11,7 @@ using PlurCrawler.Search.Common;
 using PlurCrawler.Search.Base;
 using PlurCrawler.Extension;
 using PlurCrawler.Format;
+using PlurCrawler.Format.Common;
 
 using PlurCrawler_Sample.Windows;
 using PlurCrawler_Sample.Controls;
@@ -42,7 +43,7 @@ namespace PlurCrawler_Sample
             #region [  Initalization  ]
             
             _logManager = new TaskLogManager();
-
+            
             dict = new Dictionary<ISearcher, TaskProgressBar>();
 
             #endregion
@@ -68,9 +69,22 @@ namespace PlurCrawler_Sample
             btnTaskReport.Click += BtnTaskReport_Click;
             btnExportOption.Click += BtnExportOption_Click;
 
-            _logManager.LogAdded += _logManager_LogAdded;
+            mainTabControl.SelectionChanged += MainTabControl_SelectionChanged;
 
+            _logManager.LogAdded += _logManager_LogAdded;
+            
             #endregion
+        }
+
+        private void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (mainTabControl.SelectedIndex != -1)
+                tbSelectedName.Text = (mainTabControl.SelectedItem as TabItem).Tag.ToString();
+        }
+
+        private void _taskReport_ExportRequest(OutputFormat format, IEnumerable<ISearchResult> result)
+        {
+            Export(format, result);
         }
 
         private void _logManager_LogAdded(object sender, TaskLog taskLog)
@@ -90,11 +104,13 @@ namespace PlurCrawler_Sample
 
             lvLog.Items.Clear();
             lvTask.Items.Clear();
-
+            
             _detailsOption = (DetailsOption)frOption.Content;
             _vertManager = (VertificationManager)frVertManager.Content;
             _exportOption = (ExportOption)frExportOption.Content;
             _taskReport = (TaskReport)frTaskReport.Content;
+            
+            _taskReport.ExportRequest += _taskReport_ExportRequest;
 
             #endregion
 
@@ -219,25 +235,21 @@ namespace PlurCrawler_Sample
         private void BtnLog_Click(object sender, RoutedEventArgs e)
         {
             mainTabControl.SelectedIndex = 0;
-            tbSelectedName.Text = (mainTabControl.SelectedItem as TabItem).Tag.ToString();
         }
 
         private void BtnVertManager_Click(object sender, RoutedEventArgs e)
         {
             mainTabControl.SelectedIndex = 1;
-            tbSelectedName.Text = (mainTabControl.SelectedItem as TabItem).Tag.ToString();
         }
         
         private void BtnTaskReport_Click(object sender, RoutedEventArgs e)
         {
             mainTabControl.SelectedIndex = 2;
-            tbSelectedName.Text = (mainTabControl.SelectedItem as TabItem).Tag.ToString();
         }
 
         private void BtnExportOption_Click(object sender, RoutedEventArgs e)
         {
             mainTabControl.SelectedIndex = 3;
-            tbSelectedName.Text = (mainTabControl.SelectedItem as TabItem).Tag.ToString();
         }
         
         #endregion
