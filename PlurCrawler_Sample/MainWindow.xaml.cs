@@ -118,11 +118,16 @@ namespace PlurCrawler_Sample
 
             #region [  Details Option 불러오기  ]
 
-            var serializer = new ObjectSerializer<GoogleCSESearchOption>();
-            GoogleCSESearchOption opt = serializer.Deserialize(AppSetting.Default.GoogleOption);
+            var googleSerializer = new ObjectSerializer<GoogleCSESearchOption>();
+            GoogleCSESearchOption opt = googleSerializer.Deserialize(AppSetting.Default.GoogleOption);
 
             _detailsOption.LoadGoogle(opt);
-            
+
+            var twitterSerializer = new ObjectSerializer<TwitterSearchOption>();
+            TwitterSearchOption opt2 = twitterSerializer.Deserialize(AppSetting.Default.TwitterOption);
+
+            _detailsOption.LoadTwitter(opt2);
+
             // TODO: 트위터, 유튜브 설정 불러오기 구현
 
             #endregion
@@ -195,9 +200,12 @@ namespace PlurCrawler_Sample
 
             AppSetting.Default.ExportOption = _exportOption.ExportSettingString();
 
-            var serializer = new ObjectSerializer<GoogleCSESearchOption>();
-            AppSetting.Default.GoogleOption = serializer.Serialize(_detailsOption.GetGoogleCSESearchOption());
+            var googleSerializer = new ObjectSerializer<GoogleCSESearchOption>();
+            AppSetting.Default.GoogleOption = googleSerializer.Serialize(_detailsOption.GetGoogleCSESearchOption());
 
+            var twitterSerializer = new ObjectSerializer<TwitterSearchOption>();
+            AppSetting.Default.TwitterOption = twitterSerializer.Serialize(_detailsOption.GetTwitterSearchOption());
+            
             AppSetting.Default.EngineUsage = $@"{cbGoogleService.IsChecked.ToString()
                                               }|{cbTwitterService.IsChecked.ToString()
                                               }|{cbYoutubeService.IsChecked.ToString()}";

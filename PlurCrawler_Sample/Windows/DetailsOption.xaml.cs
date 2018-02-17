@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using PlurCrawler.Common;
 using PlurCrawler.Format.Common;
 using PlurCrawler.Search.Services.GoogleCSE;
+using PlurCrawler.Search.Services.Twitter;
 
 namespace PlurCrawler_Sample.Windows
 {
@@ -44,12 +45,12 @@ namespace PlurCrawler_Sample.Windows
             tbGooglePageOffset.Text = option.Offset.ToString();
             tbGoogleSearchCount.Text = option.SearchCount.ToString();
 
-            cbOutput1.IsChecked = option.OutputServices.HasFlag(OutputFormat.CSV);
-            cbOutput2.IsChecked = option.OutputServices.HasFlag(OutputFormat.Json);
-            cbOutput3.IsChecked = option.OutputServices.HasFlag(OutputFormat.MySQL);
-            cbOutput4.IsChecked = option.OutputServices.HasFlag(OutputFormat.AccessDB);
+            goCbOutput1.IsChecked = option.OutputServices.HasFlag(OutputFormat.CSV);
+            goCbOutput2.IsChecked = option.OutputServices.HasFlag(OutputFormat.Json);
+            goCbOutput3.IsChecked = option.OutputServices.HasFlag(OutputFormat.MySQL);
+            goCbOutput4.IsChecked = option.OutputServices.HasFlag(OutputFormat.AccessDB);
 
-            useDate.IsChecked = option.UseDateSearch;
+            useGoogleDate.IsChecked = option.UseDateSearch;
 
             if (option.SplitWithDate)
                 rbGoogleSplitWithDate.IsChecked = true;
@@ -62,17 +63,55 @@ namespace PlurCrawler_Sample.Windows
             return new GoogleCSESearchOption()
             {
                 DateRange = new DateRange(drpGoogle.Since, drpGoogle.Until),
-                UseDateSearch = useDate.IsChecked.GetValueOrDefault(),
+                UseDateSearch = useGoogleDate.IsChecked.GetValueOrDefault(),
                 Offset = tbGooglePageOffset.GetIntOrDefault(),
                 SplitWithDate = rbGoogleSplitWithDate.IsChecked.GetValueOrDefault(),
                 SearchCount = tbGoogleSearchCount.GetIntOrDefault(),
-                OutputServices = CalculateService()
+                OutputServices = CalculateService(),
             };
+        }
+
+        public void LoadTwitter(TwitterSearchOption option)
+        {
+            if (option == null)
+                option = TwitterSearchOption.GetDefault();
+
+            drpTwitter.Since = option.DateRange.Since.GetValueOrDefault();
+            drpTwitter.Until = option.DateRange.Until.GetValueOrDefault();
+
+            tbTwitterPageOffset.Text = option.Offset.ToString();
+            tbTwitterSearchCount.Text = option.SearchCount.ToString();
+
+            twCbOutput1.IsChecked = option.OutputServices.HasFlag(OutputFormat.CSV);
+            twCbOutput2.IsChecked = option.OutputServices.HasFlag(OutputFormat.Json);
+            twCbOutput3.IsChecked = option.OutputServices.HasFlag(OutputFormat.MySQL);
+            twCbOutput4.IsChecked = option.OutputServices.HasFlag(OutputFormat.AccessDB);
+
+            useTwitterDate.IsChecked = option.UseDateSearch;
+
+            if (option.SplitWithDate)
+                rbTwitterSplitWithDate.IsChecked = true;
+            else
+                rbTwitterNoSplit.IsChecked = true;
+        }
+
+        public TwitterSearchOption GetTwitterSearchOption()
+        {
+            return new TwitterSearchOption()
+            {
+                DateRange = new DateRange(drpTwitter.Since, drpTwitter.Until),
+                UseDateSearch = useTwitterDate.IsChecked.GetValueOrDefault(),
+                Offset = tbTwitterPageOffset.GetIntOrDefault(),
+                SplitWithDate = rbTwitterSplitWithDate.IsChecked.GetValueOrDefault(),
+                SearchCount = tbTwitterSearchCount.GetIntOrDefault(),
+                OutputServices = CalculateService(),
+            };
+
         }
 
         private OutputFormat CalculateService()
         {
-            CheckBox[] cbs = { cbOutput1, cbOutput2, cbOutput3, cbOutput4 };
+            CheckBox[] cbs = { goCbOutput1, goCbOutput2, goCbOutput3, goCbOutput4 };
 
             return (OutputFormat)cbs.Where(i => i.IsChecked.GetValueOrDefault())
                 .Select(i => int.Parse(i.Tag.ToString()))

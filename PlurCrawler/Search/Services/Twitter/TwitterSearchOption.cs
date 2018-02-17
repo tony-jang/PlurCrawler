@@ -1,16 +1,31 @@
-﻿using PlurCrawler.Search.Base;
-using PlurCrawler.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using PlurCrawler.Format.Common;
+using PlurCrawler.Search.Base;
+using PlurCrawler.Common;
 
 namespace PlurCrawler.Search.Services.Twitter
 {
     public class TwitterSearchOption : IDateSearchOption
     {
+        public static TwitterSearchOption GetDefault()
+        {
+            return new TwitterSearchOption()
+            {
+                DateRange = new DateRange(),
+                SearchCount = 10,
+                SplitWithDate = false,
+                UseDateSearch = false,
+                OutputServices = OutputFormat.Json | OutputFormat.CSV,
+                Offset = 0,
+                Language = LanguageCode.All
+            }
+        }
+
         /// <summary>
         /// 검색할 검색어입니다.
         /// </summary>
