@@ -104,6 +104,7 @@ namespace PlurCrawler_Sample
                     {
                         googleResult = googleCSESearcher.Search(option);
                         searchResultInfo = SearchResult.Success;
+                        AddLog("검색 결과를 내보내는 중입니다.", TaskLogType.Searching);
                         pack = Export(option.OutputServices, googleResult);
                     }
                     catch (InvaildOptionException)
@@ -186,6 +187,7 @@ namespace PlurCrawler_Sample
                         if (Directory.Exists(folder))
                         {
                             ExportManager.JsonExport(fullPath, result, _exportOption.UseJsonSort);
+                            AddLog($"Json으로 성공적으로 내보냈습니다. 저장 위치 : {fullPath}", TaskLogType.Complete);
                             pack.JsonExportResult = JsonExportResult.Success;
                         }
                         else
@@ -219,6 +221,7 @@ namespace PlurCrawler_Sample
                         if (Directory.Exists(folder))
                         {
                             ExportManager.CSVExport(fullPath, result);
+                            AddLog($"CSV로 성공적으로 내보냈습니다. 저장 위치 : {fullPath}", TaskLogType.Complete);
                             pack.CSVExportResult = CSVExportResult.Success;
                         }
                         else
