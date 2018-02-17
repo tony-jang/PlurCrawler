@@ -58,6 +58,8 @@ namespace PlurCrawler.Search.Services.GoogleCSE
             IsVerification = true;
         }
 
+        // TODO: DateSearch시 Maximum값 현재 값 조정하는 변수 만들기
+
         /// <summary>
         /// Google Custom Search를 이용해 검색을 실시합니다.
         /// </summary>
