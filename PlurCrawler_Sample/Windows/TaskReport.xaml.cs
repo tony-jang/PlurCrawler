@@ -103,7 +103,10 @@ namespace PlurCrawler_Sample.Windows
             }
 
             TextBlock[] tbList = { tbJsonInfo, tbCSVInfo, tbMySQLInfo, tbAccessDBInfo };
-            Enum[] resultEnumList = { data.JsonExportResult, data.CSVExportResult, data.MySQLExportResult };
+            Enum[] resultEnumList = { data.ExportResultPack.JsonExportResult,
+                                      data.ExportResultPack.CSVExportResult,
+                                      data.ExportResultPack.MySQLExportResult};
+
             Enum[] serviceEnumList = { OutputFormat.Json, OutputFormat.CSV, OutputFormat.MySQL, OutputFormat.AccessDB };
 
             for (int i = 0; i <= 2; i++)

@@ -27,10 +27,6 @@ namespace PlurCrawler_Sample.Report
 
         public IEnumerable<ISearchResult> SearchData { get; set; }
 
-        public JsonExportResult JsonExportResult { get; set; }
-
-        public CSVExportResult CSVExportResult { get; set; }
-
-        public MySQLExportResult MySQLExportResult { get; set; }
+        public ExportResultPack ExportResultPack { get; set; }
     }
 }

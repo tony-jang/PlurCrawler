@@ -10,6 +10,8 @@ namespace PlurCrawler_Sample.Report.Result
 {
     public enum JsonExportResult
     {
+        [Note("외부로 내보내도록 설정되지 않음")]
+        NotSet,
         [Note("실패 - 파일 이름이 Null 입니다.")]
         [Bool(false)]
         Fail_FileNameNull,
@@ -22,8 +24,6 @@ namespace PlurCrawler_Sample.Report.Result
         [Note("실패 - 파일 엑세스 권한이 거부되었습니다.")]
         [Bool(false)]
         Fail_FileAccessDenied,
-        [Note("외부로 내보내도록 설정되지 않음")]
-        NotSet,
         [Note("성공")]
         [Bool(true)]
         Success

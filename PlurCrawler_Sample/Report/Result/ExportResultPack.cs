@@ -8,11 +8,11 @@ namespace PlurCrawler_Sample.Report.Result
 {
     public class ExportResultPack
     {
-        public CSVExportResult? CSVExportResult { get; set; } = null;
+        public CSVExportResult CSVExportResult { get; set; } = CSVExportResult.NotSet;
 
-        public JsonExportResult? JsonExportResult { get; set; } = null;
+        public JsonExportResult JsonExportResult { get; set; } = JsonExportResult.NotSet;
 
-        public MySQLExportResult? MySQLExportResult { get; set; } = null;
+        public MySQLExportResult MySQLExportResult { get; set; } = MySQLExportResult.NotSet;
 
     }
 }

@@ -1,24 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-
-using PlurCrawler.Search;
-using PlurCrawler.Search.Base;
-using PlurCrawler.Search.Common;
-using PlurCrawler.Search.Services.GoogleCSE;
-using PlurCrawler.Format.Common;
-using PlurCrawler.Extension;
 
 using PlurCrawler_Sample.Common;
 using PlurCrawler_Sample.Controls;
 using PlurCrawler_Sample.Export;
-using PlurCrawler_Sample.TaskLogs;
 using PlurCrawler_Sample.Report;
 using PlurCrawler_Sample.Report.Result;
+using PlurCrawler_Sample.TaskLogs;
+
+using PlurCrawler.Extension;
+using PlurCrawler.Format.Common;
+using PlurCrawler.Search;
+using PlurCrawler.Search.Base;
+using PlurCrawler.Search.Common;
+using PlurCrawler.Search.Services.GoogleCSE;
 
 namespace PlurCrawler_Sample
 {
@@ -99,6 +96,7 @@ namespace PlurCrawler_Sample
                 });
 
                 IEnumerable<GoogleCSESearchResult> googleResult = null;
+                ExportResultPack pack = null;
 
                 if (!isCanceled)
                 {
@@ -106,7 +104,7 @@ namespace PlurCrawler_Sample
                     {
                         googleResult = googleCSESearcher.Search(option);
                         searchResultInfo = SearchResult.Success;
-                        Export(option.OutputServices, googleResult);
+                        pack = Export(option.OutputServices, googleResult);
                     }
                     catch (InvaildOptionException)
                     {
@@ -125,7 +123,8 @@ namespace PlurCrawler_Sample
                         SearchData = googleResult,
                         SearchDate = DateTime.Now,
                         SearchResult = searchResultInfo,
-                        OutputFormat = option.OutputServices
+                        OutputFormat = option.OutputServices,
+                        ExportResultPack = pack
                     });
 
                     _taskReport.SetLastReport();
@@ -220,6 +219,7 @@ namespace PlurCrawler_Sample
                         if (Directory.Exists(folder))
                         {
                             ExportManager.CSVExport(fullPath, result);
+                            pack.CSVExportResult = CSVExportResult.Success;
                         }
                         else
                         {
