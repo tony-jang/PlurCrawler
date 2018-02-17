@@ -40,6 +40,8 @@ namespace PlurCrawler.Common
             set => _until = value;
         }
 
+        public bool Vaild => Since < Until;
+
         /// <summary>
         /// 시작 날짜와 끝 날짜를 모두 <see cref="IEnumerable{T}"/>로 반환합니다.
         /// </summary>
