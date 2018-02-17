@@ -23,7 +23,7 @@ namespace PlurCrawler.Search.Services.Twitter
                 OutputServices = OutputFormat.Json | OutputFormat.CSV,
                 Offset = 0,
                 Language = LanguageCode.All
-            }
+            };
         }
 
         /// <summary>
