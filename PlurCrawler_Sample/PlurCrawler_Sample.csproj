@@ -78,6 +78,7 @@
     </ApplicationDefinition>
     <Compile Include="Commands\TabItemCommand.cs" />
     <Compile Include="Common\ObjectSerializer.cs" />
+    <Compile Include="Common\SettingManager.cs" />
     <Compile Include="Controls\CloseableTabItem.cs" />
     <Compile Include="Controls\DatePickerRange.cs" />
     <Compile Include="Controls\LogItem.cs" />

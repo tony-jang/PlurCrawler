@@ -46,6 +46,7 @@ namespace PlurCrawler_Sample
             
             dict = new Dictionary<ISearcher, TaskProgressBar>();
 
+            SettingManager.Init();
             #endregion
 
             #region [  Event Connection  ]
