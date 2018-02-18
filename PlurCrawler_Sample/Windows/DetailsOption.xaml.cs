@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 
 using PlurCrawler.Common;
 using PlurCrawler.Format.Common;
+using PlurCrawler.Search;
 using PlurCrawler.Search.Services.GoogleCSE;
 using PlurCrawler.Search.Services.Twitter;
 
@@ -67,7 +68,7 @@ namespace PlurCrawler_Sample.Windows
                 Offset = tbGooglePageOffset.GetIntOrDefault(),
                 SplitWithDate = rbGoogleSplitWithDate.IsChecked.GetValueOrDefault(),
                 SearchCount = tbGoogleSearchCount.GetIntOrDefault(),
-                OutputServices = CalculateService(),
+                OutputServices = CalculateService(ServiceKind.GoogleCSE),
             };
         }
 
@@ -104,14 +105,18 @@ namespace PlurCrawler_Sample.Windows
                 Offset = tbTwitterPageOffset.GetIntOrDefault(),
                 SplitWithDate = rbTwitterSplitWithDate.IsChecked.GetValueOrDefault(),
                 SearchCount = tbTwitterSearchCount.GetIntOrDefault(),
-                OutputServices = CalculateService(),
+                OutputServices = CalculateService(ServiceKind.Twitter),
             };
 
         }
 
-        private OutputFormat CalculateService()
+        private OutputFormat CalculateService(ServiceKind kind)
         {
-            CheckBox[] cbs = { goCbOutput1, goCbOutput2, goCbOutput3, goCbOutput4 };
+            CheckBox[] cbs = null;
+            if (kind == ServiceKind.GoogleCSE)
+                cbs = new CheckBox[]{ goCbOutput1, goCbOutput2, goCbOutput3, goCbOutput4 };
+            else if (kind == ServiceKind.Twitter)
+                cbs = new CheckBox[] { twCbOutput1, twCbOutput2, twCbOutput3, twCbOutput4 };
 
             return (OutputFormat)cbs.Where(i => i.IsChecked.GetValueOrDefault())
                 .Select(i => int.Parse(i.Tag.ToString()))
