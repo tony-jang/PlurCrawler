@@ -19,6 +19,7 @@ using PlurCrawler.Extension;
 using PlurCrawler.Search;
 using PlurCrawler.Tokens.Credentials;
 using PlurCrawler.Tokens.Tokenizer;
+using System.ComponentModel;
 
 namespace PlurCrawler_Sample.Windows
 {
@@ -47,7 +48,22 @@ namespace PlurCrawler_Sample.Windows
             tbTwitterKey.TextChanged += TbTwitterKey_TextChanged;
             tbTwitterSecret.PasswordChanged += TbTwitterSecret_PasswordChanged;
 
+            SettingManager.GoogleCredentials.PropertyChanged += GoogleCredentials_PropertyChanged;
+
             this.Loaded += VertificationManager_Loaded;
+        }
+
+        private void GoogleCredentials_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case "Item2":
+                    ChangeGoogleState(SettingManager.GoogleCredentials.Item2, true);
+                    break;
+                case "Item4":
+                    ChangeGoogleState(SettingManager.GoogleCredentials.Item4, false);
+                    break;
+            }
         }
 
         private void TbTwitterSecret_PasswordChanged(object sender, EventArgs e)
@@ -63,17 +79,16 @@ namespace PlurCrawler_Sample.Windows
         private void VertificationManager_Loaded(object sender, RoutedEventArgs e)
         {
             if (!SettingManager.GoogleCredentials.Item1.IsNullOrEmpty())
-                SetGoogleKey(SettingManager.GoogleCredentials.Item1);
+                SetGoogleKey(SettingManager.GoogleCredentials.Item1, true);
             if (!SettingManager.GoogleCredentials.Item3.IsNullOrEmpty())
-                SetGoogleEngineID(SettingManager.GoogleCredentials.Item3);
-            
+                SetGoogleEngineID(SettingManager.GoogleCredentials.Item3, true);
+
+            ChangeGoogleState(SettingManager.GoogleCredentials.Item2, true);
+            ChangeGoogleState(SettingManager.GoogleCredentials.Item4, false);
+
             SetTwitterAuthPair(SettingManager.TwitterCredentials.Item1, SettingManager.TwitterCredentials.Item2);
         }
         
-        #region [  Setting Connection  ]
-
-        #endregion
-
         #region [  Twitter  ]
 
         public void SetTwitterAuthPair(string key, string secret)
@@ -210,6 +225,11 @@ namespace PlurCrawler_Sample.Windows
         /// <param name="key">Google API Key입니다.</param>
         public void SetGoogleKey(string key)
         {
+            SetGoogleKey(key, false);
+        }
+
+        private void SetGoogleKey(string key, bool systemInput)
+        {
             if (key.IsNullOrEmpty())
             {
                 tbGoogleMsg.Visibility = Visibility.Visible;
@@ -225,9 +245,11 @@ namespace PlurCrawler_Sample.Windows
             runGoogleAPIKey.Text = _hiddenText;
             IsGoogleEncrypt = true;
 
-            SettingManager.GoogleCredentials.Item1 = key;
-
-            ChangeGoogleState(VerifyType.NotChecked, true);
+            if (!systemInput)
+            {
+                SettingManager.GoogleCredentials.Item1 = key;
+                SettingManager.GoogleCredentials.Item2 = VerifyType.NotChecked;
+            }
         }
 
         /// <summary>
@@ -235,6 +257,11 @@ namespace PlurCrawler_Sample.Windows
         /// </summary>
         /// <param name="key">Google API Key입니다.</param>
         public void SetGoogleEngineID(string id)
+        {
+            SetGoogleEngineID(id);
+        }
+
+        public void SetGoogleEngineID(string id, bool systemInput)
         {
             if (id.IsNullOrEmpty())
             {
@@ -246,11 +273,13 @@ namespace PlurCrawler_Sample.Windows
             tbGoogleMsg.Visibility = Visibility.Hidden;
             GoogleEngineID = id;
 
-            SettingManager.GoogleCredentials.Item3 = id;
-
-            ChangeGoogleState(VerifyType.NotChecked, false);
+            if (!systemInput)
+            {
+                SettingManager.GoogleCredentials.Item3 = id;
+                SettingManager.GoogleCredentials.Item4 = VerifyType.NotChecked;
+            }
         }
-        
+
         public void ChangeGoogleState(VerifyType verifyType, bool isAPIKey)
         {
             Brush brush;
@@ -281,7 +310,6 @@ namespace PlurCrawler_Sample.Windows
                 IsGoogleEncrypt = true;
 
                 GoogleAPIVerifyType = verifyType;
-                SettingManager.GoogleCredentials.Item2 = verifyType;
             }
             else
             {
@@ -291,7 +319,6 @@ namespace PlurCrawler_Sample.Windows
                 runGoogleEngineIDVert.Text = text;
 
                 GoogleEngineIDVerifyType = verifyType;
-                SettingManager.GoogleCredentials.Item4 = verifyType;
             }
         }
 

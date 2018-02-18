@@ -147,8 +147,8 @@ namespace PlurCrawler_Sample
 
                 _logManager.AddLog("검색이 완료되었습니다.", TaskLogType.Searching);
 
-                _vertManager.ChangeGoogleState(VerifyType.Verified, true);
-                _vertManager.ChangeGoogleState(VerifyType.Verified, false);
+                SettingManager.GoogleCredentials.Item2 = VerifyType.Verified;
+                SettingManager.GoogleCredentials.Item4 = VerifyType.Verified;
             });
         }
 
