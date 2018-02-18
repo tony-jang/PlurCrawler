@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel;
 
 using PlurCrawler.Search.Base;
 using PlurCrawler.Search;
 using PlurCrawler.Search.Common;
+using PlurCrawler.Extension;
 
 using Google.Apis.Customsearch.v1;
 using Google.Apis.Customsearch.v1.Data;
 using Google.Apis.Services;
-using PlurCrawler.Extension;
 
 namespace PlurCrawler.Search.Services.GoogleCSE
 {
@@ -41,7 +42,7 @@ namespace PlurCrawler.Search.Services.GoogleCSE
         /// 검색 엔진 ID 입니다.
         /// </summary>
         public string SearchEngineId { get; private set; }
-
+        
         /// <summary>
         /// ApiKey와 SearchEngineId를 새로 고칩니다. 유효성 검사는 하지 않습니다.
         /// </summary>
