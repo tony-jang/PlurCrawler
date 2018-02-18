@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-
+using Newtonsoft.Json;
 using PlurCrawler.Extension;
 
 namespace PlurCrawler_Sample.Common
@@ -14,37 +14,15 @@ namespace PlurCrawler_Sample.Common
     {
         public string Serialize(T obj)
         {
-            var xmlSerializer = new XmlSerializer(obj.GetType());
-
-            var stream = new MemoryStream();
-            xmlSerializer.Serialize(stream, obj);
-
-            return StreamToString(stream);
+            return JsonConvert.SerializeObject(obj);
         }
 
         public T Deserialize(string str)
         {
             if (str.IsNullOrEmpty())
                 return null;
-
-            var xmlSerializer = new XmlSerializer(typeof(T));
-
-            return (T)xmlSerializer.Deserialize(StringToStream(str));
-        }
-
-        public static string StreamToString(Stream stream)
-        {
-            stream.Position = 0;
-            using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
-            {
-                return reader.ReadToEnd();
-            }
-        }
-
-        public static Stream StringToStream(string src)
-        {
-            byte[] byteArray = Encoding.UTF8.GetBytes(src);
-            return new MemoryStream(byteArray);
+            
+            return JsonConvert.DeserializeObject<T>(str);
         }
     }
 }
