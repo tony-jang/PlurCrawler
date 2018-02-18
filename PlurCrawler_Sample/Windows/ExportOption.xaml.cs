@@ -45,7 +45,7 @@ namespace PlurCrawler_Sample.Windows
             if (optionString.IsNullOrEmpty())
                 return;
 
-            var serializer = new ObjectSerializer<ExportOptionStruct>();
+            var serializer = new ObjectSerializer<ExportOptionSetting>();
             var itm = serializer.Deserialize(optionString);
 
             jsonExportFolder.Text = itm.JsonFolderLocation ;
@@ -68,7 +68,7 @@ namespace PlurCrawler_Sample.Windows
 
         public string ExportSettingString()
         {
-            var optStr = new ExportOptionStruct()
+            var optStr = new ExportOptionSetting()
             {
                 JsonFolderLocation = jsonExportFolder.Text,
                 JsonFileName = jsonExportName.Text,
@@ -85,7 +85,7 @@ namespace PlurCrawler_Sample.Windows
                 MySQLConnString = mysqlSelfConnQuery.Text
             };
 
-            var serializer = new ObjectSerializer<ExportOptionStruct>();
+            var serializer = new ObjectSerializer<ExportOptionSetting>();
 
             return serializer.Serialize(optStr);
         }

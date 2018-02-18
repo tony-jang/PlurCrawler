@@ -90,7 +90,7 @@
     <Compile Include="Converter\HalfConverter.cs" />
     <Compile Include="Export\ExportManager.cs" />
     <Compile Include="Controls\ImageCheckBox.cs" />
-    <Compile Include="Export\ExportOptionStruct.cs" />
+    <Compile Include="Export\ExportOptionSetting.cs" />
     <Compile Include="MainWindowSearch.cs" />
     <Compile Include="Report\BoolAttribute.cs" />
     <Compile Include="Report\Result\CSVExportResult.cs" />
