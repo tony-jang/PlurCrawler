@@ -132,7 +132,7 @@ namespace PlurCrawler_Sample
 
                     googleSearching = false;
                     _detailsOption.GoogleEnableChange(true);
-                    _vertManager.ChangeEditable(true);
+                    _vertManager.ChangeEditable(true, ServiceKind.GoogleCSE);
                 });
             });
             
