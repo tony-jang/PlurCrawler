@@ -34,41 +34,61 @@ namespace PlurCrawler_Sample.Windows
         public ExportOption()
         {
             InitializeComponent();
+
+            LoadSetting(SettingManager.ExportOptionSetting);
+
             setJsonLocationPath.Click += SetJsonLocationPath_Click;
             setCsvLocationPath.Click += SetCsvLocationPath_Click;
+
+            jsonExportFolder.TextChanged += SettingChanged;
+            jsonExportName.TextChanged += SettingChanged;
+            jsonOverlapOption.SelectionChanged += SettingChanged;
+            cbUseJsonSort.Checked += SettingChanged;
+            cbUseJsonSort.Unchecked += SettingChanged;
+
+            csvExportFolder.TextChanged += SettingChanged;
+            csvExportName.TextChanged += SettingChanged;
+            csvOverlapOption.SelectionChanged += SettingChanged;
+
+            mysqlConnAddr.TextChanged += SettingChanged;
+            mysqlUserID.TextChanged += SettingChanged;
+            mysqlUserPw.PasswordChanged += SettingChanged;
+            mysqlDatabaseName.TextChanged += SettingChanged;
+
+            cbMySQLManualInput.Checked += SettingChanged;
+            mysqlSelfConnQuery.TextChanged += SettingChanged;
         }
-        
+
+        public void SettingChanged(object sender, EventArgs e)
+        {
+            SettingManager.ExportOptionSetting = ExportSetting();
+        }
+
         #region [  Setting Load / Save  ]
 
-        public void LoadSettingFromString(string optionString)
+        public void LoadSetting(ExportOptionSetting option)
         {
-            if (optionString.IsNullOrEmpty())
-                return;
+            jsonExportFolder.Text = option.JsonFolderLocation ;
+            jsonExportName.Text = option.JsonFileName;
+            jsonOverlapOption.SelectedIndex = option.JsonOverlapOption;
+            cbUseJsonSort.IsChecked = option.JsonSort;
 
-            var serializer = new ObjectSerializer<ExportOptionSetting>();
-            var itm = serializer.Deserialize(optionString);
+            csvExportFolder.Text = option.CSVFolderLocation;
+            csvExportName.Text = option.CSVFileName;
+            csvOverlapOption.SelectedIndex = option.CSVOverlapOption;
 
-            jsonExportFolder.Text = itm.JsonFolderLocation ;
-            jsonExportName.Text = itm.JsonFileName;
-            jsonOverlapOption.SelectedIndex = itm.JsonOverlapOption;
-            cbUseJsonSort.IsChecked = itm.JsonSort;
+            mysqlConnAddr.Text = option.MySQLConnAddr;
+            mysqlUserID.Text = option.MySQLUserID;
+            mysqlUserPw.Password = option.MySQLUserPassword;
+            mysqlDatabaseName.Text = option.MySQLDatabaseName;
 
-            csvExportFolder.Text = itm.CSVFolderLocation;
-            csvExportName.Text = itm.CSVFileName;
-            csvOverlapOption.SelectedIndex = itm.CSVOverlapOption;
-
-            mysqlConnAddr.Text = itm.MySQLConnAddr;
-            mysqlUserID.Text = itm.MySQLUserID;
-            mysqlUserPw.Password = itm.MySQLUserPassword;
-            mysqlDatabaseName.Text = itm.MySQLDatabaseName;
-
-            cbMySQLManualInput.IsChecked = itm.MySQLManualInput;
-            mysqlSelfConnQuery.Text = itm.MySQLConnString;
+            cbMySQLManualInput.IsChecked = option.MySQLManualInput;
+            mysqlSelfConnQuery.Text = option.MySQLConnString;
         }
 
-        public string ExportSettingString()
+        public ExportOptionSetting ExportSetting()
         {
-            var optStr = new ExportOptionSetting()
+            var option = new ExportOptionSetting()
             {
                 JsonFolderLocation = jsonExportFolder.Text,
                 JsonFileName = jsonExportName.Text,
@@ -85,9 +105,7 @@ namespace PlurCrawler_Sample.Windows
                 MySQLConnString = mysqlSelfConnQuery.Text
             };
 
-            var serializer = new ObjectSerializer<ExportOptionSetting>();
-
-            return serializer.Serialize(optStr);
+            return option;
         }
 
         #endregion
@@ -95,22 +113,7 @@ namespace PlurCrawler_Sample.Windows
         #region [  Json  ]
 
         public bool UseJsonSort => cbUseJsonSort.IsChecked.GetValueOrDefault();
-
-        /// <summary>
-        /// Json으로 내보낼 경로 + 파일 이름을 나타냅니다.
-        /// </summary>
-        public string JsonFullPath => IOPath.Combine(jsonExportFolder.Text, $"{jsonExportName.Text}.json");
-
-        /// <summary>
-        /// Json으로 내보낼 폴더를 나타냅니다.
-        /// </summary>
-        public string JsonFolderPath => jsonExportFolder.Text;
-
-        /// <summary>
-        /// Json으로 내보낼 파일 이름 부분만 나타냅니다.
-        /// </summary>
-        public string JsonFileName => jsonExportName.Text;
-
+        
         private void SetJsonLocationPath_Click(object sender, RoutedEventArgs e)
         {
             jsonExportFolder.Text = GetFolderPath(jsonExportFolder.Text);
@@ -119,21 +122,6 @@ namespace PlurCrawler_Sample.Windows
         #endregion
 
         #region [  CSV  ]
-
-        /// <summary>
-        /// CSV로 내보낼 경로 + 파일 이름을 나타냅니다.
-        /// </summary>
-        public string CSVFullPath => IOPath.Combine(csvExportFolder.Text, $"{csvExportName.Text}.csv");
-
-        /// <summary>
-        /// CSV로 내보낼 폴더를 나타냅니다.
-        /// </summary>
-        public string CSVFolderPath => csvExportFolder.Text;
-
-        /// <summary>
-        /// CSV로 내보낼 파일 이름 부분만 나타냅니다.
-        /// </summary>
-        public string CSVFileName => csvExportName.Text;
 
         private void SetCsvLocationPath_Click(object sender, RoutedEventArgs e)
         {

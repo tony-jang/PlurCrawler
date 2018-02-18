@@ -138,8 +138,6 @@ namespace PlurCrawler_Sample.Windows
 
         private void SetReport(TaskReportData data)
         {
-            ChangeButtonEnabled(true);
-
             Brush brush = null;
 
             tbSearchQuery.Text = data.Query;
@@ -161,26 +159,35 @@ namespace PlurCrawler_Sample.Windows
                     break;
             }
 
-            TextBlock[] tbList = { tbJsonInfo, tbCSVInfo, tbMySQLInfo, tbAccessDBInfo };
-            Enum[] resultEnumList = { data.ExportResultPack.JsonExportResult,
+            ChangeButtonEnabled(data.SearchResult == SearchResult.Success);
+
+            try
+            {
+                TextBlock[] tbList = { tbJsonInfo, tbCSVInfo, tbMySQLInfo, tbAccessDBInfo };
+                Enum[] resultEnumList = { data.ExportResultPack.JsonExportResult,
                                       data.ExportResultPack.CSVExportResult,
                                       data.ExportResultPack.MySQLExportResult};
 
-            Enum[] serviceEnumList = { OutputFormat.Json, OutputFormat.CSV, OutputFormat.MySQL, OutputFormat.AccessDB };
+                Enum[] serviceEnumList = { OutputFormat.Json, OutputFormat.CSV, OutputFormat.MySQL, OutputFormat.AccessDB };
 
-            for (int i = 0; i <= 2; i++)
-            {
-                tbList[i].Text = resultEnumList[i].GetAttributeFromEnum<NoteAttribute>().Message;
+                for (int i = 0; i <= 2; i++)
+                {
+                    tbList[i].Text = resultEnumList[i].GetAttributeFromEnum<NoteAttribute>().Message;
 
-                if (data.OutputFormat.HasFlag(serviceEnumList[i]))
-                {
-                    tbList[i].Foreground = (resultEnumList[i].GetAttributeFromEnum<BoolAttribute>().Value ? Brushes.Green : Brushes.Red);
-                }
-                else
-                {
-                    tbList[i].Foreground = Brushes.Black;
+                    if (data.OutputFormat.HasFlag(serviceEnumList[i]))
+                    {
+                        tbList[i].Foreground = (resultEnumList[i].GetAttributeFromEnum<BoolAttribute>().Value ? Brushes.Green : Brushes.Red);
+                    }
+                    else
+                    {
+                        tbList[i].Foreground = Brushes.Black;
+                    }
                 }
             }
+            catch (Exception)
+            {
+            }
+            
             
             string[] serviceString = { "Google Custom Search Engine", "Youtube", "Twitter" };
             tbRequestService.Text = serviceString[(int)data.RequestService];
@@ -190,6 +197,7 @@ namespace PlurCrawler_Sample.Windows
 
         private void SetForeground(Brush brush)
         {
+            tbSearchQuery.Foreground = brush;
             tbSearchResult.Foreground = brush;
             tbSearchDate.Foreground = brush;
             tbRequestService.Foreground = brush;

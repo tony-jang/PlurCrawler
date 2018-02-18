@@ -78,6 +78,7 @@ namespace PlurCrawler_Sample.Common
 
             // End Of Load
 
+            ExportOptionSetting.PropertyChanged += ExportOptionSetting_PropertyChanged;
             GoogleCSESearchOption.PropertyChanged += GoogleCSESearchOption_PropertyChanged;
             TwitterSearchOption.PropertyChanged += TwitterSearchOption_PropertyChanged;
             EngineUsage.PropertyChanged += EngineUsage_PropertyChanged;
@@ -85,7 +86,6 @@ namespace PlurCrawler_Sample.Common
 
             TwitterCredentials.PropertyChanged += TwitterCredentials_PropertyChanged;
         }
-
 
         private static AppSetting AppSetting => AppSetting.Default;
 
@@ -130,6 +130,14 @@ namespace PlurCrawler_Sample.Common
             AppSetting.Save();
         }
 
+        private static void ExportOptionSetting_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var serializer = new ObjectSerializer<ExportOptionSetting>();
+            AppSetting.ExportOption = serializer.Serialize(ExportOptionSetting);
+
+            AppSetting.Save();
+        }
+
         #endregion
 
         private static ExportOptionSetting _exportOptionSetting;
@@ -140,7 +148,7 @@ namespace PlurCrawler_Sample.Common
             set
             {
                 _exportOptionSetting = value;
-
+                ExportOptionSetting_PropertyChanged(value, new PropertyChangedEventArgs("ExportOptionSetting"));
             }
         }
         

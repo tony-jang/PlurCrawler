@@ -63,7 +63,7 @@ namespace PlurCrawler_Sample
                     AddLog("Google CSE 검색 엔진을 초기화중입니다.", TaskLogType.SearchReady);
 
                     // 옵션 초기화
-                    option = _detailsOption.GetGoogleCSESearchOption();
+                    option = SettingManager.GoogleCSESearchOption;
                     option.Query = tbQuery.Text;
 
                     var tb = new TaskProgressBar();
@@ -82,8 +82,7 @@ namespace PlurCrawler_Sample
                         isCanceled = true;
                     }
 
-                    googleCSESearcher.Vertification(_vertManager.GoogleAPIKey,
-                        _vertManager.GoogleEngineID);
+                    googleCSESearcher.Vertification(SettingManager.GoogleCredentials.Item1, SettingManager.GoogleCredentials.Item3);
 
                     if (!googleCSESearcher.IsVerification) // 인증되지 않았을 경우
                     {
@@ -185,9 +184,10 @@ namespace PlurCrawler_Sample
 
                 if (format.HasFlag(OutputFormat.Json))
                 {
-                    string fullPath = _exportOption.JsonFullPath;
-                    string folder = _exportOption.JsonFolderPath;
-                    string fileName = _exportOption.JsonFileName;
+                    string folder = SettingManager.ExportOptionSetting.JsonFolderLocation;
+                    string fileName = SettingManager.ExportOptionSetting.JsonFileName;
+
+                    string fullPath = Path.Combine(folder, $"{fileName}.json");
 
                     if (fileName.IsNullOrEmpty())
                     {
@@ -198,7 +198,7 @@ namespace PlurCrawler_Sample
                     {
                         if (Directory.Exists(folder))
                         {
-                            ExportManager.JsonExport(fullPath, result, _exportOption.UseJsonSort);
+                            ExportManager.JsonExport(fullPath, result, SettingManager.ExportOptionSetting.JsonSort);
                             AddLog($"Json으로 성공적으로 내보냈습니다. 저장 위치 : {fullPath}", TaskLogType.Complete);
                             pack.JsonExportResult = JsonExportResult.Success;
                         }
@@ -219,9 +219,10 @@ namespace PlurCrawler_Sample
                 }
                 if (format.HasFlag(OutputFormat.CSV))
                 {
-                    string fullPath = _exportOption.CSVFullPath;
-                    string folder = _exportOption.CSVFolderPath;
-                    string fileName = _exportOption.JsonFileName;
+                    string folder = SettingManager.ExportOptionSetting.CSVFolderLocation;
+                    string fileName = SettingManager.ExportOptionSetting.CSVFileName;
+
+                    string fullPath = Path.Combine(folder, $"{fileName}.csv");
 
                     if (fileName.IsNullOrEmpty())
                     {

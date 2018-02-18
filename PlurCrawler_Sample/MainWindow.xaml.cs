@@ -4,14 +4,12 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 
-using PlurCrawler.Search.Services.GoogleCSE;
-using PlurCrawler.Search.Services.Twitter;
-using PlurCrawler.Search.Services.Youtube;
 using PlurCrawler.Search.Common;
 using PlurCrawler.Search.Base;
 using PlurCrawler.Extension;
 using PlurCrawler.Format;
 using PlurCrawler.Format.Common;
+using PlurCrawler.Common;
 
 using PlurCrawler_Sample.Windows;
 using PlurCrawler_Sample.Controls;
@@ -47,12 +45,20 @@ namespace PlurCrawler_Sample
             dict = new Dictionary<ISearcher, TaskProgressBar>();
 
             SettingManager.Init();
+
+            Pair<bool,bool,bool> eUsage = SettingManager.EngineUsage;
+
+            cbGoogleService.IsChecked = eUsage.Item1;
+            cbTwitterService.IsChecked = eUsage.Item2;
+            cbYoutubeService.IsChecked = eUsage.Item3;
+
+            btnSearch.IsEnabled = eUsage.Item1 || eUsage.Item2 || eUsage.Item3;
+
             #endregion
 
             #region [  Event Connection  ]
 
             this.Loaded += MainWindow_Loaded;
-            this.Closing += MainWindow_Closing;
 
             btnSearch.Click += BtnSearch_Click;
 
@@ -115,66 +121,6 @@ namespace PlurCrawler_Sample
 
             #endregion
 
-            #region [  Load Setting  ]
-
-            #region [  Details Option 불러오기  ]
-
-            var googleSerializer = new ObjectSerializer<GoogleCSESearchOption>();
-            GoogleCSESearchOption opt = googleSerializer.Deserialize(AppSetting.Default.GoogleOption);
-
-            _detailsOption.LoadGoogle(opt);
-
-            var twitterSerializer = new ObjectSerializer<TwitterSearchOption>();
-            TwitterSearchOption opt2 = twitterSerializer.Deserialize(AppSetting.Default.TwitterOption);
-
-            _detailsOption.LoadTwitter(opt2);
-
-            // TODO: 트위터, 유튜브 설정 불러오기 구현
-
-            #endregion
-
-            _exportOption.LoadSettingFromString(AppSetting.Default.ExportOption);
-
-            #region [  Vertification Manager 불러오기  ]
-
-            if (!AppSetting.Default.GoogleCredentials.IsNullOrEmpty())
-            {
-                string[] credentials = AppSetting.Default.GoogleCredentials.Split("//");
-
-                _vertManager.SetGoogleKey(credentials[0]);
-                _vertManager.SetGoogleEngineID(credentials[1]);
-
-                _vertManager.ChangeGoogleState(AppSetting.Default.GoogleKeyVertified, true);
-                _vertManager.ChangeGoogleState(AppSetting.Default.GoogleIDVertified, false);
-            }
-
-            if (!AppSetting.Default.TwitterCredentials.IsNullOrEmpty())
-            {
-                string[] credentials = AppSetting.Default.TwitterCredentials.Split("//");
-
-                _vertManager.SetTwitterAuthPair(credentials[0], credentials[1]);
-            }
-
-            #endregion
-
-            #region [  MainWindow 컨트롤  ]
-
-            if (!AppSetting.Default.EngineUsage.IsNullOrEmpty())
-            {
-                string[] engineBools =
-                    AppSetting.Default.EngineUsage.Split(new string[] { "|" }, StringSplitOptions.None);
-
-                cbGoogleService.IsChecked = Convert.ToBoolean(engineBools[0]);
-                cbTwitterService.IsChecked = Convert.ToBoolean(engineBools[1]);
-                cbYoutubeService.IsChecked = Convert.ToBoolean(engineBools[2]);
-            }
-
-            #endregion
-
-            AddLog("설정 불러오기가 완료되었습니다.", TaskLogType.System);
-
-            #endregion
-
 #if DEBUG
 
             //var mysql = new MySQLFormat<GoogleCSESearchResult>("localhost", "root", "-", "plurcrawler", "google");
@@ -192,43 +138,7 @@ namespace PlurCrawler_Sample
             //}});
 #endif
         }
-
-        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            #region [  Save Setting  ]
-
-            // 옵션 저장
-
-            AppSetting.Default.ExportOption = _exportOption.ExportSettingString();
-
-            var googleSerializer = new ObjectSerializer<GoogleCSESearchOption>();
-            AppSetting.Default.GoogleOption = googleSerializer.Serialize(_detailsOption.GetGoogleCSESearchOption());
-
-            var twitterSerializer = new ObjectSerializer<TwitterSearchOption>();
-            AppSetting.Default.TwitterOption = twitterSerializer.Serialize(_detailsOption.GetTwitterSearchOption());
-            
-            AppSetting.Default.EngineUsage = $@"{cbGoogleService.IsChecked.ToString()
-                                              }|{cbTwitterService.IsChecked.ToString()
-                                              }|{cbYoutubeService.IsChecked.ToString()}";
-            
-            // 인증 정보 저장
-
-            if (!_vertManager.GoogleAPIKey.IsNullOrEmpty() ||
-                !_vertManager.GoogleEngineID.IsNullOrEmpty())
-            {
-                AppSetting.Default.GoogleCredentials = $"{_vertManager.GoogleAPIKey}//{_vertManager.GoogleEngineID}";
-                AppSetting.Default.GoogleKeyVertified = _vertManager.GoogleAPIVerifyType;
-                AppSetting.Default.GoogleIDVertified = _vertManager.GoogleEngineIDVerifyType;
-            }
-
-            AppSetting.Default.TwitterCredentials = $"{_vertManager.TwitterKey}//{_vertManager.TwitterSecret}";
-
-
-            AppSetting.Default.Save();
-
-            #endregion
-        }
-
+        
         #region [  UI EventHandler  ]
 
         private void CheckChanged(object sender, RoutedEventArgs e)
@@ -239,6 +149,10 @@ namespace PlurCrawler_Sample
                 btnSearch.IsEnabled = true;
             else
                 btnSearch.IsEnabled = false;
+
+            SettingManager.EngineUsage.Item1 = cbGoogleService.IsChecked.GetValueOrDefault();
+            SettingManager.EngineUsage.Item2 = cbTwitterService.IsChecked.GetValueOrDefault();
+            SettingManager.EngineUsage.Item3 = cbYoutubeService.IsChecked.GetValueOrDefault();
         }
 
         private void BtnLog_Click(object sender, RoutedEventArgs e)

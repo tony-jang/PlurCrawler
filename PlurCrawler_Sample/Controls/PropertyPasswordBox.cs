@@ -19,10 +19,14 @@ namespace PlurCrawler_Sample.Controls
         public PropertyPasswordBox()
         {
             this.Style = (Style)FindResource("PropertyPasswordBoxStyle");
-
-
         }
 
+        public event EventHandler PasswordChanged;
+
+        private void OnPasswordChanged(object sender, EventArgs e)
+        {
+            PasswordChanged?.Invoke(sender, e);
+        }
 
         PasswordBox pwBox;
         public override void OnApplyTemplate()
@@ -30,6 +34,8 @@ namespace PlurCrawler_Sample.Controls
             base.OnApplyTemplate();
             
             pwBox = base.GetTemplateChild("pwBox") as PasswordBox;
+
+            pwBox.PasswordChanged += OnPasswordChanged;
 
             if (!savedPassword.IsNullOrEmpty())
             {

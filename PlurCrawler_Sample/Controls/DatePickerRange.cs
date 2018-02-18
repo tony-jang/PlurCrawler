@@ -15,6 +15,13 @@ namespace PlurCrawler_Sample.Controls
     [TemplatePart(Name = "dpUntil", Type = typeof(DatePicker))]
     class DateRangePicker : Control
     {
+        public event EventHandler DateChanged;
+
+        private void OnDateChanged(object sender, EventArgs e)
+        {
+            DateChanged?.Invoke(sender, e);
+        }
+
         DatePicker dpSince, dpUntil;
 
         public DateRangePicker()
@@ -30,12 +37,15 @@ namespace PlurCrawler_Sample.Controls
 
             dpSince = base.GetTemplateChild("dpSince") as DatePicker;
             dpUntil = base.GetTemplateChild("dpUntil") as DatePicker;
-
+            
             if (saveSince != default(DateTime))
                 dpSince.SelectedDate = saveSince;
 
             if (saveUntil != default(DateTime))
                 dpUntil.SelectedDate = saveUntil;
+
+            dpSince.SelectedDateChanged += OnDateChanged;
+            dpUntil.SelectedDateChanged += OnDateChanged;
         }
         
         public static DependencyProperty PropertyNameProperty = DependencyHelper.Register();

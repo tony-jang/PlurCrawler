@@ -19,6 +19,8 @@ using PlurCrawler.Search;
 using PlurCrawler.Search.Services.GoogleCSE;
 using PlurCrawler.Search.Services.Twitter;
 
+using PlurCrawler_Sample.Common;
+
 namespace PlurCrawler_Sample.Windows
 {
     /// <summary>
@@ -29,8 +31,56 @@ namespace PlurCrawler_Sample.Windows
         public DetailsOption()
         {
             InitializeComponent();
+
+            LoadGoogle(SettingManager.GoogleCSESearchOption);
+            LoadTwitter(SettingManager.TwitterSearchOption);
+
+            #region [  Sync With Setting  ]
+
+            tbGoogleSearchCount.TextChanged += GoogleSettingChanged;
+            rbGoogleNoSplit.Checked += GoogleSettingChanged;
+            rbGoogleSplitWithDate.Checked += GoogleSettingChanged;
+            tbGooglePageOffset.TextChanged += GoogleSettingChanged;
+            goCbOutput1.Checked += GoogleSettingChanged;
+            goCbOutput2.Checked += GoogleSettingChanged;
+            goCbOutput3.Checked += GoogleSettingChanged;
+            goCbOutput4.Checked += GoogleSettingChanged;
+            goCbOutput1.Unchecked += GoogleSettingChanged;
+            goCbOutput2.Unchecked += GoogleSettingChanged;
+            goCbOutput3.Unchecked += GoogleSettingChanged;
+            goCbOutput4.Unchecked += GoogleSettingChanged;
+            useGoogleDate.Checked += GoogleSettingChanged;
+            useGoogleDate.Unchecked += GoogleSettingChanged;
+            drpGoogle.DateChanged += GoogleSettingChanged;
+
+            tbTwitterSearchCount.TextChanged += TwitterSettingChanged;
+            rbTwitterNoSplit.Checked += TwitterSettingChanged;
+            rbTwitterSplitWithDate.Checked += TwitterSettingChanged;
+            twCbOutput1.Checked += TwitterSettingChanged;
+            twCbOutput2.Checked += TwitterSettingChanged;
+            twCbOutput3.Checked += TwitterSettingChanged;
+            twCbOutput4.Checked += TwitterSettingChanged;
+            twCbOutput1.Unchecked += TwitterSettingChanged;
+            twCbOutput2.Unchecked += TwitterSettingChanged;
+            twCbOutput3.Unchecked += TwitterSettingChanged;
+            twCbOutput4.Unchecked += TwitterSettingChanged;
+            useTwitterDate.Checked += GoogleSettingChanged;
+            useTwitterDate.Unchecked += GoogleSettingChanged;
+            drpTwitter.DateChanged += TwitterSettingChanged;
+
+            #endregion
+        }
+        
+        private void GoogleSettingChanged(object sender, EventArgs e)
+        {
+            SettingManager.GoogleCSESearchOption = GetGoogleCSESearchOption();
         }
 
+        private void TwitterSettingChanged(object sender, EventArgs e)
+        {
+            SettingManager.TwitterSearchOption = GetTwitterSearchOption();
+        }
+        
         /// <summary>
         /// 구글 파트에서 설정을 불러옵니다.
         /// </summary>
