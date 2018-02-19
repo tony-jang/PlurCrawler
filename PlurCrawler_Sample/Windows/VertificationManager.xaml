@@ -205,10 +205,13 @@
                         <StackPanel Margin="10">
                             <StackPanel>
                                 <TextBlock x:Name="tbYTInfo"  Text="유튜브 인증을 위한 API Key를 입력해주세요."/>
-                                <ctrl:PropertyTextBox PropertyName="API Key" x:Name="tbYTKey" Margin="0,10,0,0"/>
+                                <ctrl:PropertyTextBox PropertyName="API Key" x:Name="tbYTKey" Margin="0,10,0,0" Description="API Key는 Google API Console에서 확인할 수 있습니다." />
                                 <Button x:Name="btnYTOK" Content="적용" Margin="0,5" Padding="20,5" HorizontalAlignment="Right"/>
                             </StackPanel>
 
+                            <Grid>
+                                <TextBlock x:Name="tbYTMsg" Text="API Key 또는 Engine ID는 빈칸일 수 없습니다." Foreground="Red" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Hidden"/>
+                            </Grid>
                         </StackPanel>
 
                         <Grid Grid.Row="1" Margin="10">
@@ -223,15 +226,13 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock TextTrimming="CharacterEllipsis" VerticalAlignment="Center">
-                                        API Key : <Run x:Name="runYTAPIKey" Text="AIzaSyDuJa0F9nJzUwTOJyPZeBqkbEPwHoxwTG4" Foreground="Green"/>
+                                    <TextBlock x:Name="tbYoutubeAPIKey" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" Foreground="Red">
+                                        <Run Text="API Key :" Foreground="Black"/>
+                                        <Run x:Name="runYoutubeAPIKey" Text="API Key가 입력되지 않음"/>
+                                        (<Run x:Name="runYoutubeAPIVert" Text="인증되지 않음"/>)
                                     </TextBlock>
                                     <Button x:Name="btnYTViewHidden" Grid.Column="1" Content="숨겨진 키 보기/감추기" Padding="10,5"/>
                                 </Grid>
-
-                                <TextBlock Margin="0,10,0,0">
-                                    유효성 : <Run x:Name="runYTAvailable" Text="인증됨" Foreground="Green"/>
-                                </TextBlock>
 
                                 <TextBlock Margin="0,10,0,0" TextWrapping="Wrap">
                                     ※ API Key가 최초에 변경되었을때에는<LineBreak/>　최초 해당 API Key로 호출이 진행되었을때 유효성이 검증됩니다.

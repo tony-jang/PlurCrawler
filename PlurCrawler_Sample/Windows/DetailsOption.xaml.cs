@@ -18,7 +18,7 @@ using PlurCrawler.Format.Common;
 using PlurCrawler.Search;
 using PlurCrawler.Search.Services.GoogleCSE;
 using PlurCrawler.Search.Services.Twitter;
-
+using PlurCrawler.Search.Services.Youtube;
 using PlurCrawler_Sample.Common;
 
 namespace PlurCrawler_Sample.Windows
@@ -34,6 +34,7 @@ namespace PlurCrawler_Sample.Windows
 
             LoadGoogle(SettingManager.GoogleCSESearchOption);
             LoadTwitter(SettingManager.TwitterSearchOption);
+            LoadYoutube(SettingManager.YoutubeSearchOption);
 
             #region [  Sync With Setting  ]
 
@@ -68,6 +69,23 @@ namespace PlurCrawler_Sample.Windows
             cbTwitterRetweet.Unchecked += TwitterSettingChanged;
             drpTwitter.DateChanged += TwitterSettingChanged;
             drpTwitter.Loaded += DrpTwitter_Loaded;
+
+            tbYoutubeSearchCount.TextChanged += YoutubeSettingChanged;
+            rbYoutubeNoSplit.Checked += YoutubeSettingChanged;
+            rbYoutubeSplitWithDate.Checked += YoutubeSettingChanged;
+            tbYoutubePageOffset.TextChanged += YoutubeSettingChanged;
+            ytCbOutput1.Checked += YoutubeSettingChanged;
+            ytCbOutput2.Checked += YoutubeSettingChanged;
+            ytCbOutput3.Checked += YoutubeSettingChanged;
+            ytCbOutput4.Checked += YoutubeSettingChanged;
+            ytCbOutput1.Unchecked += YoutubeSettingChanged;
+            ytCbOutput2.Unchecked += YoutubeSettingChanged;
+            ytCbOutput3.Unchecked += YoutubeSettingChanged;
+            ytCbOutput4.Unchecked += YoutubeSettingChanged;
+            useYoutubeDate.Checked += YoutubeSettingChanged;
+            useYoutubeDate.Unchecked += YoutubeSettingChanged;
+            drpYoutube.DateChanged += YoutubeSettingChanged;
+
             #endregion
         }
 
@@ -86,7 +104,12 @@ namespace PlurCrawler_Sample.Windows
         {
             SettingManager.TwitterSearchOption = GetTwitterSearchOption();
         }
-        
+
+        private void YoutubeSettingChanged(object sender, EventArgs e)
+        {
+            SettingManager.YoutubeSearchOption = GetYoutubeSearchOption();
+        }
+
         /// <summary>
         /// 구글 파트에서 설정을 불러옵니다.
         /// </summary>
@@ -165,6 +188,48 @@ namespace PlurCrawler_Sample.Windows
             };
         }
 
+
+        /// <summary>
+        /// 유튜브 파트에서 설정을 불러옵니다.
+        /// </summary>
+        /// <param name="option"></param>
+        public void LoadYoutube(YoutubeSearchOption option)
+        {
+            if (option == null)
+                option = YoutubeSearchOption.GetDefault();
+
+            drpYoutube.Since = option.DateRange.Since.GetValueOrDefault();
+            drpYoutube.Until = option.DateRange.Until.GetValueOrDefault();
+
+            tbYoutubePageOffset.Text = option.Offset.ToString();
+            tbYoutubeSearchCount.Text = option.SearchCount.ToString();
+
+            ytCbOutput1.IsChecked = option.OutputServices.HasFlag(OutputFormat.CSV);
+            ytCbOutput2.IsChecked = option.OutputServices.HasFlag(OutputFormat.Json);
+            ytCbOutput3.IsChecked = option.OutputServices.HasFlag(OutputFormat.MySQL);
+            ytCbOutput4.IsChecked = option.OutputServices.HasFlag(OutputFormat.AccessDB);
+
+            useYoutubeDate.IsChecked = option.UseDateSearch;
+
+            if (option.SplitWithDate)
+                rbYoutubeSplitWithDate.IsChecked = true;
+            else
+                rbYoutubeNoSplit.IsChecked = true;
+        }
+
+        public YoutubeSearchOption GetYoutubeSearchOption()
+        {
+            return new YoutubeSearchOption()
+            {
+                DateRange = new DateRange(drpYoutube.Since, drpYoutube.Until),
+                UseDateSearch = useYoutubeDate.IsChecked.GetValueOrDefault(),
+                Offset = tbYoutubePageOffset.GetIntOrDefault(),
+                SplitWithDate = rbYoutubeSplitWithDate.IsChecked.GetValueOrDefault(),
+                SearchCount = tbYoutubeSearchCount.GetIntOrDefault(),
+                OutputServices = CalculateService(ServiceKind.Youtube),
+            };
+        }
+
         private OutputFormat CalculateService(ServiceKind kind)
         {
             CheckBox[] cbs = null;
@@ -172,6 +237,8 @@ namespace PlurCrawler_Sample.Windows
                 cbs = new CheckBox[]{ goCbOutput1, goCbOutput2, goCbOutput3, goCbOutput4 };
             else if (kind == ServiceKind.Twitter)
                 cbs = new CheckBox[] { twCbOutput1, twCbOutput2, twCbOutput3, twCbOutput4 };
+            else if (kind == ServiceKind.Youtube)
+                cbs = new CheckBox[] { ytCbOutput1, ytCbOutput2, ytCbOutput3, ytCbOutput4 };
 
             return (OutputFormat)cbs.Where(i => i.IsChecked.GetValueOrDefault())
                 .Select(i => int.Parse(i.Tag.ToString()))

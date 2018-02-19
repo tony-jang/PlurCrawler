@@ -42,15 +42,26 @@ namespace PlurCrawler_Sample.Windows
             btnTwitterReqURL.Click += BtnTwitterReqURL_Click;
             btnTwitterViewHidden.Click += BtnTwitterViewHidden_Click;
             btnTwitterNewAuth.Click += BtnTwitterNewAuth_Click;
-            
+
+            btnYTOK.Click += BtnYTOK_Click;
+            btnYTViewHidden.Click += BtnYTViewHidden_Click;
+
             signGoogle.Visibility = Visibility.Hidden;
+            signTwitter.Visibility = Visibility.Hidden;
 
             tbTwitterKey.TextChanged += TbTwitterKey_TextChanged;
             tbTwitterSecret.PasswordChanged += TbTwitterSecret_PasswordChanged;
 
             SettingManager.GoogleCredentials.PropertyChanged += GoogleCredentials_PropertyChanged;
+            SettingManager.YoutubeCredentials.PropertyChanged += YoutubeCredentials_PropertyChanged;
 
             this.Loaded += VertificationManager_Loaded;
+        }
+
+        private void YoutubeCredentials_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Item2")
+                ChangeYoutubeState(SettingManager.YoutubeCredentials.Item2);
         }
 
         private void GoogleCredentials_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -87,8 +98,42 @@ namespace PlurCrawler_Sample.Windows
             ChangeGoogleState(SettingManager.GoogleCredentials.Item4, false);
 
             SetTwitterAuthPair(SettingManager.TwitterCredentials.Item1, SettingManager.TwitterCredentials.Item2);
+
+            if (!SettingManager.YoutubeCredentials.Item1.IsNullOrEmpty())
+                SetYoutubeKey(SettingManager.YoutubeCredentials.Item1, true);
+
+            ChangeYoutubeState(SettingManager.GoogleCredentials.Item2);
         }
-        
+
+        private void ChangeYoutubeState(VerifyType verifyType)
+        {
+            Brush brush;
+            string text;
+            switch (verifyType)
+            {
+                case VerifyType.Verified:
+                    brush = Brushes.Green;
+                    text = "인증됨";
+                    break;
+                case VerifyType.NotChecked:
+                    brush = Brushes.DarkOrange;
+                    text = "확인되지 않음";
+                    break;
+                case VerifyType.Invalid:
+                default:
+                    brush = Brushes.Red;
+                    text = "유효하지 않음";
+                    break;
+            }
+            
+            tbYoutubeAPIKey.Foreground = brush;
+            runYoutubeAPIKey.Text = _hiddenText;
+            runYoutubeAPIVert.Text = text;
+            IsYoutubeEncrypt = true;
+
+            GoogleAPIVerifyType = verifyType;
+        }
+
         #region [  Twitter  ]
 
         public void SetTwitterAuthPair(string key, string secret)
@@ -368,6 +413,61 @@ namespace PlurCrawler_Sample.Windows
                 runGoogleAPIKey.Text = _hiddenText;
 
             IsGoogleEncrypt = !IsGoogleEncrypt;
+        }
+
+        #endregion
+
+        #region [  Youtube  ]
+
+        public VerifyType YoutubeVerifyType { get; internal set; }
+
+        private bool IsYoutubeEncrypt { get; set; } = true;
+
+        public string YoutubeAPIKey { get; private set; }
+
+        public void SetYoutubeKey(string key)
+        {
+            SetYoutubeKey(key, false);
+        }
+        public void SetYoutubeKey(string key, bool systemInput)
+        {
+            if (key.IsNullOrEmpty())
+            {
+                tbYTMsg.Visibility = Visibility.Visible;
+                tbYTMsg.Text = "API Key는 빈칸일 수 없습니다.";
+                return;
+            }
+
+            tbYTMsg.Visibility = Visibility.Hidden;
+
+            btnYTViewHidden.IsEnabled = true;
+
+            YoutubeAPIKey = key;
+            runYoutubeAPIKey.Text = _hiddenText;
+            IsYoutubeEncrypt = true;
+
+            if (!systemInput)
+            {
+                SettingManager.YoutubeCredentials.Item1 = key;
+                SettingManager.YoutubeCredentials.Item2 = VerifyType.NotChecked;
+            }
+        }
+
+        private void BtnYTOK_Click(object sender, RoutedEventArgs e)
+        {
+            SetYoutubeKey(tbYTKey.Text);
+
+            tbYTKey.Clear();
+        }
+
+        private void BtnYTViewHidden_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsYoutubeEncrypt)
+                runYoutubeAPIKey.Text = YoutubeAPIKey;
+            else
+                runYoutubeAPIKey.Text = _hiddenText;
+
+            IsYoutubeEncrypt = !IsYoutubeEncrypt;
         }
 
         #endregion

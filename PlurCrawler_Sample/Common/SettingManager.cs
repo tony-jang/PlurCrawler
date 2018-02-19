@@ -9,7 +9,7 @@ using PlurCrawler.Common;
 using PlurCrawler.Extension;
 using PlurCrawler.Search.Services.GoogleCSE;
 using PlurCrawler.Search.Services.Twitter;
-
+using PlurCrawler.Search.Services.Youtube;
 using PlurCrawler_Sample.Export;
 
 using AppSetting = PlurCrawler_Sample.Properties.Settings;
@@ -28,7 +28,19 @@ namespace PlurCrawler_Sample.Common
             _exportOptionSetting = new ObjectSerializer<ExportOptionSetting>().Deserialize(AppSetting.ExportOption);
 
             _googleCSESearchOption = new ObjectSerializer<GoogleCSESearchOption>().Deserialize(AppSetting.GoogleOption);
+
+            if (_googleCSESearchOption == null)
+                GoogleCSESearchOption = GoogleCSESearchOption.GetDefault();
+
             _twitterSearchOption = new ObjectSerializer<TwitterSearchOption>().Deserialize(AppSetting.TwitterOption);
+
+            if (_twitterSearchOption == null)
+                TwitterSearchOption = TwitterSearchOption.GetDefault();
+
+            _youtubeSearchOption = new ObjectSerializer<YoutubeSearchOption>().Deserialize(AppSetting.YoutubeOption);
+
+            if (_youtubeSearchOption == null)
+                YoutubeSearchOption = YoutubeSearchOption.GetDefault();
 
             if (AppSetting.GoogleCredentials.IsNullOrEmpty())
             {
@@ -60,6 +72,14 @@ namespace PlurCrawler_Sample.Common
                 Item2 = twcredentials[1],
             };
 
+
+            _youtubeCredentials = new Pair<string, VerifyType>()
+            {
+                Item1 = AppSetting.YoutubeCredentials,
+                Item2 = AppSetting.YoutubeVertified,
+            };
+
+
             if (AppSetting.EngineUsage.IsNullOrEmpty())
             {
                 AppSetting.EngineUsage = "False|False|False";
@@ -83,8 +103,9 @@ namespace PlurCrawler_Sample.Common
             TwitterSearchOption.PropertyChanged += TwitterSearchOption_PropertyChanged;
             EngineUsage.PropertyChanged += EngineUsage_PropertyChanged;
             GoogleCredentials.PropertyChanged += GoogleCredentials_PropertyChanged;
-
             TwitterCredentials.PropertyChanged += TwitterCredentials_PropertyChanged;
+            YoutubeCredentials.PropertyChanged += YoutubeCredentials_PropertyChanged;
+            YoutubeSearchOption.PropertyChanged += YoutubeSearchOption_PropertyChanged;
         }
 
         private static AppSetting AppSetting => AppSetting.Default;
@@ -107,9 +128,25 @@ namespace PlurCrawler_Sample.Common
             AppSetting.Save();
         }
         
+        private static void YoutubeSearchOption_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var serializer = new ObjectSerializer<YoutubeSearchOption>();
+            AppSetting.YoutubeOption = serializer.Serialize(YoutubeSearchOption);
+
+            AppSetting.Save();
+        }
+
+        private static void YoutubeCredentials_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            AppSetting.YoutubeCredentials = YoutubeCredentials.Item1;
+            AppSetting.YoutubeVertified = YoutubeCredentials.Item2;
+
+            AppSetting.Save();
+        }
+        
         private static void TwitterCredentials_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            AppSetting.Default.TwitterCredentials = $"{TwitterCredentials.Item1}//{TwitterCredentials.Item2}";
+            AppSetting.TwitterCredentials = $"{TwitterCredentials.Item1}//{TwitterCredentials.Item2}";
 
             AppSetting.Save();
         }
@@ -223,6 +260,29 @@ namespace PlurCrawler_Sample.Common
             }
         }
 
+        private static Pair<string, VerifyType> _youtubeCredentials;
+
+        public static Pair<string, VerifyType> YoutubeCredentials
+        {
+            get => _youtubeCredentials;
+            set
+            {
+                _youtubeCredentials = value;
+                YoutubeCredentials_PropertyChanged(value, new PropertyChangedEventArgs("YoutubeCredentials"));
+            }
+        }
+
+        private static YoutubeSearchOption _youtubeSearchOption;
+
+        public static YoutubeSearchOption YoutubeSearchOption
+        {
+            get => _youtubeSearchOption;
+            set
+            {
+                _youtubeSearchOption = value;
+                YoutubeSearchOption_PropertyChanged(value, new PropertyChangedEventArgs("YoutubeSearchOption"));
+            }
+        }
     }
 }
 

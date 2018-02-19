@@ -130,5 +130,29 @@ namespace PlurCrawler_Sample.Properties {
                 this["TwitterCredentials"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string YoutubeCredentials {
+            get {
+                return ((string)(this["YoutubeCredentials"]));
+            }
+            set {
+                this["YoutubeCredentials"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NotChecked")]
+        public global::PlurCrawler_Sample.Common.VerifyType YoutubeVertified {
+            get {
+                return ((global::PlurCrawler_Sample.Common.VerifyType)(this["YoutubeVertified"]));
+            }
+            set {
+                this["YoutubeVertified"] = value;
+            }
+        }
     }
 }
