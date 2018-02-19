@@ -50,6 +50,46 @@
                                                 Style="{StaticResource ImageCheckBoxStyle2}"/>
                         </WrapPanel>
                     </Grid>
+                    <Grid Grid.Column="2" Grid.Row="1">
+                        <WrapPanel HorizontalAlignment="Center">
+                            <WrapPanel.Resources>
+                                <Style x:Key="ImageCheckBoxStyle2" TargetType="{x:Type ctrl:ImageCheckBox}" BasedOn="{StaticResource ImageCheckBoxStyle}">
+                                    <Setter Property="Height" Value="20"/>
+                                    <Setter Property="IsTabStop" Value="False"/>
+                                    <Setter Property="IsHitTestVisible" Value="False"/>
+                                </Style>
+                            </WrapPanel.Resources>
+                            <Grid Background="Transparent">
+                                <ctrl:ImageCheckBox x:Name="cbGoogleVertified" Margin="5"
+                                                    Source="Resources/icon_google.png" 
+                                                    DisabledSource="Resources/icon_google_gray.png"
+                                                    Style="{StaticResource ImageCheckBoxStyle2}">
+                                </ctrl:ImageCheckBox>
+                                <Grid.ToolTip>
+                                    <ToolTip Content="구글의 인증 상태가 표시될 예정입니다."/>
+                                </Grid.ToolTip>
+                            </Grid>
+                            <Grid Background="Transparent">
+                                <ctrl:ImageCheckBox x:Name="cbTwitterVertified" Margin="5"
+                                                    Source="Resources/icon_twitter.png" 
+                                                    DisabledSource="Resources/icon_twitter_gray.png"
+                                                    Style="{StaticResource ImageCheckBoxStyle2}"/>
+                                <Grid.ToolTip>
+                                    <ToolTip Content="트위터의 인증 상태가 표시될 예정입니다."/>
+                                </Grid.ToolTip>
+                            </Grid>
+                            <Grid Background="Transparent">
+                                <ctrl:ImageCheckBox x:Name="cbYoutubeVertified" Margin="5"
+                                                    Source="Resources/icon_youtube.png" 
+                                                    DisabledSource="Resources/icon_youtube_gray.png"
+                                                    Style="{StaticResource ImageCheckBoxStyle2}"/>
+                                <Grid.ToolTip>
+                                    <ToolTip Content="유튜브의 인증 상태가 표시될 예정입니다."/>
+                                </Grid.ToolTip>
+                            </Grid>
+                            
+                        </WrapPanel>
+                    </Grid>
                 </Grid>
             </GroupBox>
         </Grid>
