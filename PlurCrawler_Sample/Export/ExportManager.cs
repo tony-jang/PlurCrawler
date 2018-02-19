@@ -12,24 +12,24 @@ namespace PlurCrawler_Sample.Export
 {
     static class ExportManager
     {
-        public static void JsonExport<TResult>(string fileLocation, IEnumerable<TResult> searchResult, bool indented = true) 
+        public static bool JsonExport<TResult>(string fileLocation, IEnumerable<TResult> searchResult, bool indented = true) 
             where TResult : ISearchResult
         {
             var jsonFormat = new JsonFormat<TResult>(indented);
 
             string str = jsonFormat.FormattingData(searchResult);
             
-            str.SaveAsFile(fileLocation);
+            return str.SaveAsFile(fileLocation);
         }
 
-        public static void CSVExport<TResult>(string fileLocation, IEnumerable<TResult> searchResult)
+        public static bool CSVExport<TResult>(string fileLocation, IEnumerable<TResult> searchResult)
             where TResult : ISearchResult
         {
             var csvFormat = new CSVFormat<TResult>();
 
             string str = csvFormat.FormattingData(searchResult);
 
-            str.SaveAsFile(fileLocation);
+            return str.SaveAsFile(fileLocation);
         }
 
         public static void MySQLExport<TResult>(IEnumerable<TResult> searchResult, MySQLFormat<TResult> mySQLFormat)

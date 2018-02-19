@@ -15,10 +15,16 @@ namespace PlurCrawler.Format
     {
         public override string FormattingData(IEnumerable<TResult> resultData)
         {
+            if (resultData == null ||
+                resultData.Count() == 0)
+            {
+                return "";
+            }
+            
             StringBuilder sb = new StringBuilder();
 
             // 프로퍼티 목록 추출
-            IEnumerable<string> properties = typeof(TResult).GetProperties().Select(i => i.Name);
+            IEnumerable<string> properties = resultData.First().GetType().GetProperties().Select(i => i.Name);
             sb.AppendLine(string.Join(",", properties));
 
             foreach(TResult item in resultData)
