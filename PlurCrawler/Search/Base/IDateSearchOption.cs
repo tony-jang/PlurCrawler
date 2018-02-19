@@ -21,10 +21,5 @@ namespace PlurCrawler.Search.Base
         /// 날짜 별로 구분해서 검색합니다, 이 때 검색 갯수는 날짜 별로 변경됩니다. (기존: 10일 전체 30개) (이후: 1일 마다 30개)
         /// </summary>
         bool SplitWithDate { get; set; }
-
-        /// <summary>
-        /// 날짜형 검색을 사용할지에 대한 여부를 결정합니다.
-        /// </summary>
-        bool UseDateSearch { get; set; }
     }
 }

@@ -20,7 +20,6 @@ namespace PlurCrawler.Search.Services.Twitter
                 DateRange = new DateRange(),
                 SearchCount = 10,
                 SplitWithDate = false,
-                UseDateSearch = false,
                 OutputServices = OutputFormat.Json | OutputFormat.CSV,
                 Offset = 0,
                 Language = LanguageCode.All
@@ -138,20 +137,21 @@ namespace PlurCrawler.Search.Services.Twitter
                 OnPropertyChanged(this, new PropertyChangedEventArgs("OutputServices"));
             }
         }
-
-        private bool _useDateSearch;
+        
+        private bool _includeRetweets;
 
         /// <summary>
-        /// 날짜형 검색을 사용할지에 대한 여부를 결정합니다.
+        /// 리트윗을 포함할지에 대한 여부를 결정합니다.
         /// </summary>
-        public bool UseDateSearch
+        public bool IncludeRetweets
         {
-            get => _useDateSearch;
+            get => _includeRetweets;
             set
             {
-                _useDateSearch = value;
-                OnPropertyChanged(this, new PropertyChangedEventArgs("UseDateSearch"));
+                _includeRetweets = value;
+                OnPropertyChanged(this, new PropertyChangedEventArgs("IncludeRetweets"));
             }
         }
+
     }
 }

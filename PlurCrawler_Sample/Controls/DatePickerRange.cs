@@ -19,7 +19,25 @@ namespace PlurCrawler_Sample.Controls
 
         private void OnDateChanged(object sender, EventArgs e)
         {
+            if (sender == dpSince)
+                CheckDate(true);
+            else if (sender == dpUntil)
+                CheckDate(false);
             DateChanged?.Invoke(sender, e);
+        }
+
+        public void CheckDate(bool isDpSince)
+        {
+            if (isDpSince)
+            {
+                if (LimitSince != null && (dpSince.SelectedDate < LimitSince || dpSince.SelectedDate > LimitUntil))
+                    dpSince.SelectedDate = LimitSince;
+            }
+            else
+            {
+                if (LimitUntil != null && (dpUntil.SelectedDate > LimitUntil || dpUntil.SelectedDate < LimitSince))
+                    dpUntil.SelectedDate = LimitUntil;
+            }
         }
 
         DatePicker dpSince, dpUntil;
@@ -46,6 +64,20 @@ namespace PlurCrawler_Sample.Controls
 
             dpSince.SelectedDateChanged += OnDateChanged;
             dpUntil.SelectedDateChanged += OnDateChanged;
+
+            if (_limitSince != null)
+            {
+                CheckDate(true);
+                dpSince.DisplayDateStart = _limitSince;
+                dpUntil.DisplayDateStart = _limitSince;
+            }
+
+            if (_limitUntil != null)
+            {
+                CheckDate(false);
+                dpSince.DisplayDateEnd = _limitUntil;
+                dpUntil.DisplayDateEnd = _limitUntil;
+            }
         }
         
         public static DependencyProperty PropertyNameProperty = DependencyHelper.Register();
@@ -79,5 +111,45 @@ namespace PlurCrawler_Sample.Controls
                     dpUntil.SelectedDate = value;
             }
         }
+
+        private DateTime? _limitSince;
+
+        public DateTime? LimitSince
+        {
+            get => _limitSince;
+            set
+            {
+                _limitSince = value;
+                try
+                {
+                    dpSince.DisplayDateStart = _limitSince;
+                    dpUntil.DisplayDateStart = _limitSince;
+                }
+                catch (Exception)
+                {
+                }
+                
+            }
+        }
+        
+        private DateTime? _limitUntil;
+
+        public DateTime? LimitUntil
+        {
+            get => _limitUntil;
+            set
+            {
+                _limitUntil = value;
+                try
+                {
+                    dpSince.DisplayDateEnd = _limitUntil;
+                    dpUntil.DisplayDateEnd = _limitUntil;
+                }
+                catch (Exception)
+                {
+                }
+            }
+        }
+        
     }
 }

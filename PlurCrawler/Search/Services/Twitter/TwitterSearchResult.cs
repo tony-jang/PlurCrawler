@@ -38,9 +38,14 @@ namespace PlurCrawler.Search.Services.Twitter
         public string CreatorId { get; set; }
 
         /// <summary>
-        /// 해당 트윗이 리트윗 되었는지에 대한 여부를 가져옵니다.
+        /// 해당 트윗이 다른 사용자에 의해 리트윗 되었는지에 대한 여부를 가져옵니다.
         /// </summary>
         public bool IsRetweeted { get; set; }
+
+        /// <summary>
+        /// 해당 트윗이 리트윗 된 트윗인지에 대한 여부를 가져옵니다.
+        /// </summary>
+        public bool IsRetweet { get; set; }
 
         /// <summary>
         /// 해당 트윗의 텍스트를 가져옵니다.

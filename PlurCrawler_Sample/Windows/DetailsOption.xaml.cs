@@ -64,13 +64,19 @@ namespace PlurCrawler_Sample.Windows
             twCbOutput2.Unchecked += TwitterSettingChanged;
             twCbOutput3.Unchecked += TwitterSettingChanged;
             twCbOutput4.Unchecked += TwitterSettingChanged;
-            useTwitterDate.Checked += GoogleSettingChanged;
-            useTwitterDate.Unchecked += GoogleSettingChanged;
+            cbTwitterRetweet.Checked += TwitterSettingChanged;
+            cbTwitterRetweet.Unchecked += TwitterSettingChanged;
             drpTwitter.DateChanged += TwitterSettingChanged;
-
+            drpTwitter.Loaded += DrpTwitter_Loaded;
             #endregion
         }
-        
+
+        private void DrpTwitter_Loaded(object sender, RoutedEventArgs e)
+        {
+            drpTwitter.LimitSince = DateTime.Now.AddDays(-10);
+            drpTwitter.LimitUntil = DateTime.Now;
+        }
+
         private void GoogleSettingChanged(object sender, EventArgs e)
         {
             SettingManager.GoogleCSESearchOption = GetGoogleCSESearchOption();
@@ -137,8 +143,8 @@ namespace PlurCrawler_Sample.Windows
             twCbOutput2.IsChecked = option.OutputServices.HasFlag(OutputFormat.Json);
             twCbOutput3.IsChecked = option.OutputServices.HasFlag(OutputFormat.MySQL);
             twCbOutput4.IsChecked = option.OutputServices.HasFlag(OutputFormat.AccessDB);
-
-            useTwitterDate.IsChecked = option.UseDateSearch;
+            
+            cbTwitterRetweet.IsChecked = option.IncludeRetweets;
 
             if (option.SplitWithDate)
                 rbTwitterSplitWithDate.IsChecked = true;
@@ -151,13 +157,12 @@ namespace PlurCrawler_Sample.Windows
             return new TwitterSearchOption()
             {
                 DateRange = new DateRange(drpTwitter.Since, drpTwitter.Until),
-                UseDateSearch = useTwitterDate.IsChecked.GetValueOrDefault(),
                 Offset = tbTwitterPageOffset.GetIntOrDefault(),
                 SplitWithDate = rbTwitterSplitWithDate.IsChecked.GetValueOrDefault(),
                 SearchCount = tbTwitterSearchCount.GetIntOrDefault(),
                 OutputServices = CalculateService(ServiceKind.Twitter),
+                IncludeRetweets = cbTwitterRetweet.IsChecked.GetValueOrDefault(),
             };
-
         }
 
         private OutputFormat CalculateService(ServiceKind kind)

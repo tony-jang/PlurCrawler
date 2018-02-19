@@ -88,6 +88,12 @@
                             <ctrl:PropertyTextBox x:Name="tbTwitterSearchCount" PropertyName="검색 갯수" DigitOnly="True" 
                                 Description="* 기본은 10개입니다.&#x0a;* 검색 타입에 따라서 의미가 달라집니다."/>
 
+                            <TextBlock TextWrapping="Wrap" Margin="5" Foreground="Gray">
+                                - 하루 기준이면 검색 범위 * 검색 갯수<LineBreak/>
+                                - 전체 기준이면 검색 갯수를 날짜로 나눠 검색<LineBreak/>
+                                - 나눴을 시 나눈 숫자를 반올림하여 검색 (최소 1)
+                            </TextBlock>
+
                             <ctrl:PropertyGroupBox Header="갯수 기준">
                                 <WrapPanel>
                                     <RadioButton x:Name="rbTwitterNoSplit" Margin="5" Content="전체 기준" GroupName="twitterFindType" IsChecked="True"/>
@@ -126,14 +132,20 @@
                                 </StackPanel>
                             </ctrl:PropertyGroupBox>
 
-                            <ctrl:PropertyGroupBox Header="검색 범위사용">
-                                <CheckBox x:Name="useTwitterDate" Content="사용" Margin="5"/>
+
+                            <ctrl:PropertyGroupBox Header="리트윗 포함">
+                                <CheckBox x:Name="cbTwitterRetweet" Content="포함" Margin="5"/>
                             </ctrl:PropertyGroupBox>
 
                             <ctrl:DateRangePicker x:Name="drpTwitter" 
                                                   PropertyName="검색 범위" 
-                                                  Since="2018-02-02" Until="2018-02-03" 
-                                                  IsEnabled="{Binding Path=IsChecked, ElementName=useTwitterDate}"/>
+                                                  Since="2018-02-02" Until="2018-02-03"/>
+
+                            <TextBlock TextWrapping="Wrap" Margin="5" Foreground="Gray">
+                                - 일반적인 경우 검색 범위는 10일 이내여야 함<LineBreak/>
+                                - 프리미엄의 경우 30일 이내여야 함
+                            </TextBlock>
+
                         </StackPanel>
                     </ScrollViewer>
 

@@ -29,7 +29,7 @@ namespace PlurCrawler.Search.Services.Twitter
         /// <returns></returns>
         public override IEnumerable<TwitterSearchResult> Search(TwitterSearchOption searchOption)
         {
-            int maxid = 0;
+            long maxid = 0;
 
             IEnumerable<TwitterSearchResult> result = new List<TwitterSearchResult>();
             
@@ -63,7 +63,7 @@ namespace PlurCrawler.Search.Services.Twitter
                     if (maxid == -1)
                         break;
 
-                    searchCount -= count;
+                    searchCount = Maximum - Current;
                 }
 
                 OnSearchFinished(this);
@@ -93,33 +93,50 @@ namespace PlurCrawler.Search.Services.Twitter
             }
 
             // 내부 함수 - 갯수에 따른 검색 [최대 100개까지 호출 가능 // MaxId로 구분]
-            IEnumerable<TwitterSearchResult> Search(int searchCount, int maxId, DateTime time = default(DateTime))
+            IEnumerable<TwitterSearchResult> Search(int searchCount, long maxId, DateTime time = default(DateTime))
             {
                 var searchParam = new SearchTweetsParameters(searchOption.Query)
                 {
                     MaximumNumberOfResults = searchCount,
-                    Since = searchOption.DateRange.Since.GetValueOrDefault(),
-                    Until = searchOption.DateRange.Until.GetValueOrDefault(),
-                    MaxId = maxid
+                    MaxId = maxid,
+                    TweetSearchType = searchOption.IncludeRetweets ? TweetSearchType.All : TweetSearchType.OriginalTweetsOnly
                 };
+                
+                searchParam.Since = searchOption.DateRange.Since.GetValueOrDefault();
+                searchParam.Until = searchOption.DateRange.Until.GetValueOrDefault();
 
                 if (time != default(DateTime))
                 {
                     searchParam.Since = time;
                     searchParam.Until = time.AddDays(1);
                 }
-
-                Current += searchCount;
                 
                 ITweetSearchResult results = Tweetinvi.Search.SearchTweetsWithMetadata(searchParam);
 
                 if (results.Tweets != null)
                 {
-                    IEnumerable<TwitterSearchResult> tweets = results.Tweets
+                    var rawTweets = results.Tweets;
+                    Current += rawTweets.Count();
+
+                    IEnumerable<TwitterSearchResult> tweets = rawTweets
                         .Select(i => ConvertResult(i));
 
                     OnSearchProgressChanged(this, new ProgressEventArgs(Maximum, Current));
-                    return tweets;
+
+                    string nextResults = results.SearchQueryResults.ElementAt(0).SearchMetadata.NextResults;
+
+                    if (nextResults == null)
+                    {
+                        maxid = -1;
+                        return Enumerable.Empty<TwitterSearchResult>();
+                    }
+                    else
+                    {
+                        maxid = long.Parse(System.Web.HttpUtility.ParseQueryString(nextResults).Get("max_id"));
+                    }
+
+
+                        return tweets;
                 }
 
                 OnSearchProgressChanged(this, new ProgressEventArgs(Maximum, Current));
@@ -141,6 +158,7 @@ namespace PlurCrawler.Search.Services.Twitter
             {
                 Title = tweet.CreatedBy.Name + FormatTitle(tweet.Text),
                 IsRetweeted = tweet.Retweeted,
+                IsRetweet = tweet.IsRetweet,
                 PublishedDate = tweet.CreatedAt,
                 Text = tweet.FullText,
                 CreatorName = tweet.CreatedBy.Name,
