@@ -72,7 +72,7 @@ namespace PlurCrawler.Search.Services.GoogleCSE
 
             if (!searchOption.SplitWithDate)
             {
-                IEnumerable<Result> results = Search(request, (long)searchOption.Offset, (long)searchOption.SearchCount);
+                IEnumerable<Result> results = Search(request, searchOption.Offset, searchOption.SearchCount);
 
                 OnSearchFinished(this);
 
@@ -91,7 +91,7 @@ namespace PlurCrawler.Search.Services.GoogleCSE
                 foreach(DateTime dt in searchOption.DateRange.GetDateRange())
                 {
                     request.Sort = $"date:r:{dt.To8LengthYear()}:{dt.To8LengthYear()}";
-                    results.AddRange(Search(request, (long)searchOption.Offset, (long)searchOption.SearchCount));
+                    results.AddRange(Search(request, searchOption.Offset, searchOption.SearchCount));
                 }
                 
                 return ConvertType(results);
@@ -110,7 +110,7 @@ namespace PlurCrawler.Search.Services.GoogleCSE
             CseResource.ListRequest request = customSearchService.Cse.List(option.Query);
 
             request.Cx = SearchEngineId;
-            request.Start = (long)option.Offset;
+            request.Start = option.Offset;
 
             if (option.UseDateSearch)
                 request.Sort = $@"date:r:{option.DateRange.Since.GetValueOrDefault().To8LengthYear()
@@ -119,7 +119,7 @@ namespace PlurCrawler.Search.Services.GoogleCSE
             return request;
         }
         
-        private IEnumerable<Result> Search(CseResource.ListRequest request, long offset, long targetCount)
+        private IEnumerable<Result> Search(CseResource.ListRequest request, int offset, int targetCount)
         {
             var results = new List<Result>();
             IList<Result> paging = new List<Result>();

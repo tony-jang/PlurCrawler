@@ -42,7 +42,10 @@ namespace PlurCrawler_Sample
         {
             // 동일한 서비스는 끝나기 전까지 실행이 불가능함.
             if (googleSearching)
+            {
+                AddLog("이미 Google CSE 서비스에서 검색을 실행중입니다.", TaskLogType.Failed);
                 return;
+            }
 
             googleSearching = true;
             _detailsOption.GoogleEnableChange(false);
@@ -52,11 +55,11 @@ namespace PlurCrawler_Sample
             {
                 var googleCSESearcher = new GoogleCSESearcher();
                 bool isCanceled = false;
-                SearchResult searchResultInfo = SearchResult.Fail_APIError;
+                SearchResult info = SearchResult.Fail_APIError;
                 GoogleCSESearchOption option = null;
 
-                googleCSESearcher.SearchProgressChanged += GoogleCSESearcher_SearchProgressChanged;
-                googleCSESearcher.SearchFinished += GoogleCSESearcher_SearchFinished;
+                googleCSESearcher.SearchProgressChanged += Searcher_SearchProgressChanged;
+                googleCSESearcher.SearchFinished += Searcher_SearchFinished;
 
                 Dispatcher.Invoke(() =>
                 {
@@ -68,7 +71,7 @@ namespace PlurCrawler_Sample
 
                     var tb = new TaskProgressBar();
 
-                    tb.SetValue(title: "Google CSE 검색", message: "검색이 진행중입니다.", maximum: option.SearchCount);
+                    tb.SetValue(title: "Google CSE 검색", message: "검색이 진행중입니다.", maximum: 1);
 
                     lvTask.Items.Add(tb);
                     dict[googleCSESearcher] = tb;
@@ -78,7 +81,7 @@ namespace PlurCrawler_Sample
                         tb.SetValue(message: "결과를 내보낼 위치가 없습니다.", maximum: 1);
                         AddLog("검색을 내보낼 위치가 없습니다.", TaskLogType.Failed);
 
-                        searchResultInfo = SearchResult.Fail_InvaildSetting;
+                        info = SearchResult.Fail_InvaildSetting;
                         isCanceled = true;
                     }
 
@@ -89,7 +92,7 @@ namespace PlurCrawler_Sample
                         tb.SetValue(message: "API키가 인증되지 않았습니다.", maximum: 1);
                         AddLog("API키가 인증되지 않았습니다.", TaskLogType.Failed);
 
-                        searchResultInfo = SearchResult.Fail_APIError;
+                        info = SearchResult.Fail_APIError;
                         isCanceled = true;
                     }
                 });
@@ -102,14 +105,14 @@ namespace PlurCrawler_Sample
                     try
                     {
                         googleResult = googleCSESearcher.Search(option);
-                        searchResultInfo = SearchResult.Success;
+                        info = SearchResult.Success;
                         AddLog("검색 결과를 내보내는 중입니다.", TaskLogType.Searching);
                         pack = Export(option.OutputServices, googleResult);
                     }
                     catch (InvaildOptionException)
                     {
                         AddLog("'Google CSE' 검색 중 오류가 발생했습니다. [날짜를 사용하지 않은 상태에서는 '하루 기준' 옵션을 사용할 수 없습니다.]", TaskLogType.Failed);
-                        searchResultInfo = SearchResult.Fail_InvaildSetting;
+                        info = SearchResult.Fail_InvaildSetting;
                     }
                 }
 
@@ -122,7 +125,7 @@ namespace PlurCrawler_Sample
                         SearchCount = option.SearchCount,
                         SearchData = googleResult,
                         SearchDate = DateTime.Now,
-                        SearchResult = searchResultInfo,
+                        SearchResult = info,
                         OutputFormat = option.OutputServices,
                         ExportResultPack = pack
                     });
@@ -138,7 +141,7 @@ namespace PlurCrawler_Sample
             thr.Start();
         }
 
-        private void GoogleCSESearcher_SearchFinished(object sender)
+        private void Searcher_SearchFinished(object sender, EventArgs e)
         {
             Dispatcher.Invoke(() =>
             {
@@ -152,7 +155,7 @@ namespace PlurCrawler_Sample
             });
         }
 
-        private void GoogleCSESearcher_SearchProgressChanged(object sender, ProgressEventArgs args)
+        private void Searcher_SearchProgressChanged(object sender, ProgressEventArgs args)
         {
             Dispatcher.Invoke(() =>
             {
