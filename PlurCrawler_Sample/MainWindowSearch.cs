@@ -353,7 +353,7 @@ namespace PlurCrawler_Sample
                             catch (Exception ex)
                             {
                                 AddLog($"CSV으로 내보내던 중 알 수 없는 오류가 발생했습니다.{Environment.NewLine}{Environment.NewLine}{ex.ToString()}", TaskLogType.System);
-                                pack.JsonExportResult = JsonExportResult.Unknown;
+                                pack.CSVExportResult = CSVExportResult.Unknown;
                             }
                         }
                         else
