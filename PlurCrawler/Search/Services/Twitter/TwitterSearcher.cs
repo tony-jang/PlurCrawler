@@ -50,20 +50,28 @@ namespace PlurCrawler.Search.Services.Twitter
             }
             else
             {
-                // 날짜와 관계 없이 전체 검색
-                int searchCount = searchOption.SearchCount;
+                var dateRange = searchOption.DateRange.GetDateRange();
 
-                Maximum = searchCount;
-                
-                while (searchCount > 0)
+                Maximum = searchOption.SearchCount;
+
+                foreach (DateTime d in dateRange)
                 {
-                    int count = GetSearchCount(searchCount);
-                    result = result.Union(Search(count, maxid));
-                    
-                    if (maxid == -1)
-                        break;
+                    int searchCount = (int)Math.Round((double)(searchOption.SearchCount / dateRange.Count()));
 
-                    searchCount = Maximum - Current;
+                    if (searchCount == 0)
+                        searchCount = 1;
+
+                    while (searchCount > 0)
+                    {
+                        int count = GetSearchCount(searchCount);
+                        result = result.Union(Search(count, maxid));
+
+                        if (maxid == -1)
+                            break;
+
+                        result = result.Union(SearchOneDay(d));
+                        searchCount = Maximum - Current;
+                    }
                 }
 
                 OnSearchFinished(this);
@@ -135,8 +143,7 @@ namespace PlurCrawler.Search.Services.Twitter
                         maxid = long.Parse(System.Web.HttpUtility.ParseQueryString(nextResults).Get("max_id"));
                     }
 
-
-                        return tweets;
+                    return tweets;
                 }
 
                 OnSearchProgressChanged(this, new ProgressEventArgs(Maximum, Current));
