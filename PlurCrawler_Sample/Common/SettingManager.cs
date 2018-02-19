@@ -110,6 +110,8 @@ namespace PlurCrawler_Sample.Common
         private static void TwitterCredentials_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             AppSetting.Default.TwitterCredentials = $"{TwitterCredentials.Item1}//{TwitterCredentials.Item2}";
+
+            AppSetting.Save();
         }
 
         private static void GoogleCredentials_PropertyChanged(object sender, PropertyChangedEventArgs e)

@@ -189,9 +189,7 @@ namespace PlurCrawler_Sample
                 SearchGoogle();
 
             if (cbTwitterService.IsChecked.GetValueOrDefault())
-            {
-                // Twitter Service In Here.
-            }
+                TwitterSearch();
 
             if (cbYoutubeService.IsChecked.GetValueOrDefault())
             {

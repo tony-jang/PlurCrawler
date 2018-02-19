@@ -1,29 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading;
-
+﻿using PlurCrawler.Extension;
+using PlurCrawler.Format.Common;
+using PlurCrawler.Search;
+using PlurCrawler.Search.Base;
+using PlurCrawler.Search.Common;
+using PlurCrawler.Search.Services.GoogleCSE;
+using PlurCrawler.Search.Services.Twitter;
 using PlurCrawler_Sample.Common;
 using PlurCrawler_Sample.Controls;
 using PlurCrawler_Sample.Export;
 using PlurCrawler_Sample.Report;
 using PlurCrawler_Sample.Report.Result;
 using PlurCrawler_Sample.TaskLogs;
-
-using PlurCrawler.Extension;
-using PlurCrawler.Format.Common;
-using PlurCrawler.Search;
-using PlurCrawler.Search.Base;
-using PlurCrawler.Search.Common;
-using PlurCrawler.Search.Services.GoogleCSE;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading;
 
 namespace PlurCrawler_Sample
 {
     public partial class MainWindow
     {
         bool googleSearching = false,
-            youtubeSearching = false,
-            twitterSearching = false;
+            twitterSearching = false,
+            youtubeSearching = false;
 
         public void AddLog(string message, TaskLogType type)
         {
@@ -169,15 +168,102 @@ namespace PlurCrawler_Sample
         public void TwitterSearch()
         {
             if (twitterSearching)
+            {
+                AddLog("이미 Twitter 서비스에서 검색을 실행중입니다.", TaskLogType.Failed);
                 return;
-
+            }
+            
             twitterSearching = true;
             _detailsOption.TwitterEnableChange(false);
             _vertManager.ChangeEditable(false, ServiceKind.Twitter);
 
-            // TODO: 
-        }
+            Thread thr = new Thread(() =>
+            {
+                var twitterSearcher = new TwitterSearcher();
+                bool isCanceled = false;
+                SearchResult info = SearchResult.Fail_APIError;
+                TwitterSearchOption option = null;
 
+                twitterSearcher.SearchProgressChanged += Searcher_SearchProgressChanged;
+                twitterSearcher.SearchFinished += Searcher_SearchFinished;
+
+                Dispatcher.Invoke(() =>
+                {
+                    AddLog("Twitter 검색 엔진을 초기화중입니다.", TaskLogType.SearchReady);
+
+                    option = SettingManager.TwitterSearchOption;
+                    option.Query = tbQuery.Text;
+
+                    var tb = new TaskProgressBar();
+
+                    tb.SetValue(title: "Twitter 검색", message: "검색이 진행중입니다.", maximum: 1);
+
+                    lvTask.Items.Add(tb);
+                    dict[twitterSearcher] = tb;
+
+                    if (option.OutputServices == OutputFormat.None)
+                    {
+                        tb.SetValue(message: "결과를 내보낼 위치가 없습니다.", maximum: 1);
+                        AddLog("검색을 내보낼 위치가 없습니다.", TaskLogType.Failed);
+
+                        info = SearchResult.Fail_InvaildSetting;
+                        isCanceled = true;
+                    }
+
+                    if (!twitterSearcher.IsVerification)
+                    {
+                        tb.SetValue(message: "API키가 인증되지 않았습니다.", maximum: 1);
+                        AddLog("API키가 인증되지 않았습니다.", TaskLogType.Failed);
+
+                        info = SearchResult.Fail_APIError;
+                        isCanceled = true;
+                    }
+                });
+
+                IEnumerable<TwitterSearchResult> twitterResult = null;
+                ExportResultPack pack = null;
+
+                if (!isCanceled)
+                {
+                    try
+                    {
+                        twitterResult = twitterSearcher.Search(option);
+                        info = SearchResult.Success;
+                        AddLog("검색 결과를 내보내는 중입니다.", TaskLogType.Searching);
+                        pack = Export(option.OutputServices, twitterResult);
+                    }
+                    catch (InvaildOptionException)
+                    {
+                        AddLog("'Twitter' 검색 중 오류가 발생했습니다. [날짜를 사용하지 않은 상태에서는 '하루 기준' 옵션을 사용할 수 없습니다.]", TaskLogType.Failed);
+                        info = SearchResult.Fail_InvaildSetting;
+                    }
+                }
+
+                Dispatcher.Invoke(() =>
+                {
+                    _taskReport.AddReport(new TaskReportData()
+                    {
+                        Query = option.Query,
+                        RequestService = ServiceKind.Twitter,
+                        SearchCount = option.SearchCount,
+                        SearchData = twitterResult,
+                        SearchDate = DateTime.Now,
+                        SearchResult = info,
+                        OutputFormat = option.OutputServices,
+                        ExportResultPack = pack
+                    });
+
+                    _taskReport.SetLastReport();
+
+                    twitterSearching = false;
+                    _detailsOption.TwitterEnableChange(true);
+                    _vertManager.ChangeEditable(true, ServiceKind.Twitter);
+                });
+            });
+
+            thr.Start();
+        }
+        
         public ExportResultPack Export(OutputFormat format, IEnumerable<ISearchResult> result)
         {
             ExportResultPack pack = null;
@@ -201,9 +287,24 @@ namespace PlurCrawler_Sample
                     {
                         if (Directory.Exists(folder))
                         {
-                            ExportManager.JsonExport(fullPath, result, SettingManager.ExportOptionSetting.JsonSort);
-                            AddLog($"Json으로 성공적으로 내보냈습니다. 저장 위치 : {fullPath}", TaskLogType.Complete);
-                            pack.JsonExportResult = JsonExportResult.Success;
+                            try
+                            {
+                                if (ExportManager.JsonExport(fullPath, result, SettingManager.ExportOptionSetting.JsonSort))
+                                {
+                                    AddLog($"Json으로 성공적으로 내보냈습니다. 저장 위치 : {fullPath}", TaskLogType.Complete);
+                                    pack.JsonExportResult = JsonExportResult.Success;
+                                }
+                                else
+                                {
+                                    AddLog($"Json으로 내보낼 파일 위치에 접근 실패했습니다. 위치 : {fullPath}", TaskLogType.Failed);
+                                    pack.JsonExportResult = JsonExportResult.Fail_FileAccessDenied;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                AddLog($"Json으로 내보내던 중 알 수 없는 오류가 발생했습니다.{Environment.NewLine}{Environment.NewLine}{ex.ToString()}", TaskLogType.System);
+                                pack.JsonExportResult = JsonExportResult.Unknown;
+                            }
                         }
                         else
                         {
@@ -236,9 +337,24 @@ namespace PlurCrawler_Sample
                     {
                         if (Directory.Exists(folder))
                         {
-                            ExportManager.CSVExport(fullPath, result);
-                            AddLog($"CSV로 성공적으로 내보냈습니다. 저장 위치 : {fullPath}", TaskLogType.Complete);
-                            pack.CSVExportResult = CSVExportResult.Success;
+                            try
+                            {
+                                if (ExportManager.CSVExport(fullPath, result))
+                                {
+                                    AddLog($"CSV로 성공적으로 내보냈습니다. 저장 위치 : {fullPath}", TaskLogType.Complete);
+                                    pack.CSVExportResult = CSVExportResult.Success;
+                                }
+                                else
+                                {
+                                    AddLog($"CSV으로 내보낼 파일 위치에 접근 실패했습니다. 위치 : {fullPath}", TaskLogType.Failed);
+                                    pack.CSVExportResult = CSVExportResult.Fail_FileAccessDenied;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                AddLog($"CSV으로 내보내던 중 알 수 없는 오류가 발생했습니다.{Environment.NewLine}{Environment.NewLine}{ex.ToString()}", TaskLogType.System);
+                                pack.JsonExportResult = JsonExportResult.Unknown;
+                            }
                         }
                         else
                         {

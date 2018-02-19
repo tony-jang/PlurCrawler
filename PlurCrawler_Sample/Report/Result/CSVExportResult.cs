@@ -24,6 +24,9 @@ namespace PlurCrawler_Sample.Report.Result
         [Note("실패 - 파일 엑세스 권한이 거부되었습니다.")]
         [Bool(false)]
         Fail_FileAccessDenied,
+        [Note("실패 - 알 수 없는 오류가 발생했습니다.")]
+        [Bool(false)]
+        Unknown,
         [Note("성공")]
         [Bool(true)]
         Success,

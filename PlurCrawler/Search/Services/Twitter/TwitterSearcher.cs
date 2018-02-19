@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PlurCrawler.Search.Base;
+using PlurCrawler.Search.Common;
 using Tweetinvi.Models;
 using Tweetinvi.Parameters;
 
@@ -18,6 +19,9 @@ namespace PlurCrawler.Search.Services.Twitter
         /// </summary>
         public new bool IsVerification => Tweetinvi.Auth.Credentials != null;
 
+        private int Maximum { get; set; }
+        private int Current { get; set; } = 0;
+
         /// <summary>
         /// Twitter를 이용해 검색을 실시합니다.
         /// </summary>
@@ -28,43 +32,41 @@ namespace PlurCrawler.Search.Services.Twitter
             int maxid = 0;
 
             IEnumerable<TwitterSearchResult> result = new List<TwitterSearchResult>();
-
+            
             if (searchOption.SplitWithDate)
             {
-                if (searchOption.DateRange.Since != null)
+                var dateRange = searchOption.DateRange.GetDateRange();
+
+                Maximum = searchOption.SearchCount * dateRange.Count();
+
+                foreach(DateTime d in dateRange)
                 {
-                    DateTime time = searchOption.DateRange.Since.Value.Date;
-                    do
-                    {
-                        result = result.Union(SearchOneDay(time));
-                        
-                        if (time.Date == searchOption.DateRange.Until.Value.Date)
-                            break;
-
-                        time = time.AddDays(1);
-
-                    } while (true);
-
-                    return result;
+                    result = result.Union(SearchOneDay(d));
                 }
 
-                return null;
+                OnSearchFinished(this);
+
+                return result;
             }
             else
             {
                 // 날짜와 관계 없이 전체 검색
-                int searchCount = (int)searchOption.SearchCount;
+                int searchCount = searchOption.SearchCount;
+
+                Maximum = searchCount;
                 
                 while (searchCount > 0)
                 {
                     int count = GetSearchCount(searchCount);
                     result = result.Union(Search(count, maxid));
-
+                    
                     if (maxid == -1)
                         break;
 
                     searchCount -= count;
                 }
+
+                OnSearchFinished(this);
 
                 return result.ToList();
             }
@@ -72,7 +74,7 @@ namespace PlurCrawler.Search.Services.Twitter
             // 내부 함수 - 날짜에 다른 검색 [offset은 본 함수에서 호출]
             IEnumerable<TwitterSearchResult> SearchOneDay(DateTime time)
             {
-                int searchCount = (int)searchOption.SearchCount;
+                int searchCount = searchOption.SearchCount;
 
                 IEnumerable<TwitterSearchResult> tweetList = new List<TwitterSearchResult>();
 
@@ -107,6 +109,8 @@ namespace PlurCrawler.Search.Services.Twitter
                     searchParam.Until = time.AddDays(1);
                 }
 
+                Current += searchCount;
+                
                 ITweetSearchResult results = Tweetinvi.Search.SearchTweetsWithMetadata(searchParam);
 
                 if (results.Tweets != null)
@@ -114,9 +118,11 @@ namespace PlurCrawler.Search.Services.Twitter
                     IEnumerable<TwitterSearchResult> tweets = results.Tweets
                         .Select(i => ConvertResult(i));
 
+                    OnSearchProgressChanged(this, new ProgressEventArgs(Maximum, Current));
                     return tweets;
                 }
 
+                OnSearchProgressChanged(this, new ProgressEventArgs(Maximum, Current));
                 return new List<TwitterSearchResult>();
             }
         }

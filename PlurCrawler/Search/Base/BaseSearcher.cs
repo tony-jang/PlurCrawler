@@ -43,12 +43,10 @@ namespace PlurCrawler.Search.Base
             else
                 return itm.LanguageString;
         }
-
-        public delegate void SearchProgressDelegate(object sender, ProgressEventArgs args);
         public delegate void SearchResultDelegate(object sender);
 
-        public event SearchProgressDelegate SearchProgressChanged;
-        public event SearchResultDelegate SearchFinished;
+        public event EventHandler<ProgressEventArgs> SearchProgressChanged;
+        public event EventHandler SearchFinished;
 
         internal void OnSearchProgressChanged(object sender, ProgressEventArgs args)
         {
@@ -57,7 +55,7 @@ namespace PlurCrawler.Search.Base
 
         internal void OnSearchFinished(object sender)
         {
-            SearchFinished?.Invoke(sender);
+            SearchFinished?.Invoke(sender, new EventArgs());
         }
     }
 }
