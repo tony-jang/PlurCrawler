@@ -102,7 +102,7 @@ namespace PlurCrawler_Sample.Windows
             if (!SettingManager.YoutubeCredentials.Item1.IsNullOrEmpty())
                 SetYoutubeKey(SettingManager.YoutubeCredentials.Item1, true);
 
-            ChangeYoutubeState(SettingManager.GoogleCredentials.Item2);
+            ChangeYoutubeState(SettingManager.YoutubeCredentials.Item2);
         }
 
         private void ChangeYoutubeState(VerifyType verifyType)
@@ -131,7 +131,7 @@ namespace PlurCrawler_Sample.Windows
             runYoutubeAPIVert.Text = text;
             IsYoutubeEncrypt = true;
 
-            GoogleAPIVerifyType = verifyType;
+            YoutubeVerifyType = verifyType;
         }
 
         #region [  Twitter  ]
