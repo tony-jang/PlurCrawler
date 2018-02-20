@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -7,6 +8,9 @@ using PlurCrawler.Extension;
 using PlurCrawler.Format.Common;
 using PlurCrawler.Common;
 using PlurCrawler.Search;
+using PlurCrawler.Format;
+using PlurCrawler.Search.Services.GoogleCSE;
+using PlurCrawler.Search.Services.Youtube;
 
 using PlurCrawler_Sample.Windows;
 using PlurCrawler_Sample.Controls;
@@ -15,7 +19,6 @@ using PlurCrawler_Sample.TaskLogs;
 
 namespace PlurCrawler_Sample
 {
-
     /// <summary>
     /// MainWindow.xaml에 대한 상호 작용 논리
     /// </summary>
@@ -33,8 +36,14 @@ namespace PlurCrawler_Sample
         {
             InitializeComponent();
 
+            //var format = new MySQLFormat<YoutubeSearchResult>("localhost", "root", "asdf", "plurcrawler", "ttest");
+
+            //string str = format.GetCreateTableQuery();
+
+            //return;
+
             #region [  Initalization  ]
-            
+
             _logManager = new TaskLogManager();
             
             dict = new Dictionary<ISearcher, TaskProgressBar>();
@@ -74,8 +83,15 @@ namespace PlurCrawler_Sample
             mainTabControl.SelectionChanged += MainTabControl_SelectionChanged;
 
             _logManager.LogAdded += _logManager_LogAdded;
-            
+
+            this.Closing += MainWindow_Closing;
+
             #endregion
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Environment.Exit(0);
         }
 
         private void MainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
