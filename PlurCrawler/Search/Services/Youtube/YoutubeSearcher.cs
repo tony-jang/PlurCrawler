@@ -5,11 +5,19 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+
+using PlurCrawler.Search.Base;
+using PlurCrawler.Search;
+using PlurCrawler.Tokens.Credentials;
+using PlurCrawler.Search.Common;
+
+using Google;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
-using PlurCrawler.Search.Base;
-using PlurCrawler.Search;
+
+using YoutubeRequest = Google.Apis.YouTube.v3.SearchResource.ListRequest;
+using PlurCrawler.Extension;
 
 namespace PlurCrawler.Search.Services.Youtube
 {
@@ -37,85 +45,130 @@ namespace PlurCrawler.Search.Services.Youtube
         /// <returns></returns>
         public override IEnumerable<YoutubeSearchResult> Search(YoutubeSearchOption searchOption)
         {
+            try
+            {
+                YoutubeRequest listRequest = BuildRequest(searchOption);
+                
+
+                
+                List<YoutubeSearchResult> list = new List<YoutubeSearchResult>();
+
+                int remain = searchOption.SearchCount;
+                int count = 1;
+
+                string nextToken = string.Empty;
+                
+                while (true)
+                {
+                    if (!nextToken.IsNullOrEmpty())
+                    {
+                        listRequest.PageToken = nextToken;
+                    }
+
+                    SearchListResponse searchResponse = listRequest.Execute();
+
+                    nextToken = searchResponse.NextPageToken;
+
+                    var videos = new List<SearchResult>();
+
+                    foreach (SearchResult searchResult in searchResponse.Items)
+                    {
+                        if (searchResult.Id.Kind == "youtube#video")
+                        {
+                            videos.Add(searchResult);
+                            remain--;
+                        }
+                        if (remain <= 0)
+                            break;
+                    }
+
+                    foreach (SearchResult s in videos)
+                    {
+                        string title = s.Snippet.Title;
+                        string description = s.Snippet.Description;
+
+                        if (description.EndsWith("..."))
+                            description = GetFullDescription(s.Id.VideoId);
+
+                        list.Add(new YoutubeSearchResult()
+                        {
+                            Title = title,
+                            OriginalURL = $"{"http:"}//youtube.com/watch?v={s.Id.VideoId}",
+                            PublishedDate = s.Snippet.PublishedAt,
+                            ChannelTitle = s.Snippet.ChannelTitle,
+                            Description = description,
+                            ChannelId = s.Snippet.ChannelId
+                        });
+                        OnSearchProgressChanged(this, new ProgressEventArgs(searchOption.SearchCount, count++));
+                    }
+
+                    if (remain <= 0)
+                        break;
+                }
+                OnSearchFinished(this);
+
+                return list;
+            }
+            catch (GoogleApiException ex)
+            {
+                if (ex.Message.Contains("keyInvalid"))
+                    throw new CredentialsTypeException("키가 올바르게 입력되지 않았습니다.");
+                else
+                    throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public YoutubeRequest BuildRequest(YoutubeSearchOption searchOption)
+        {
             YouTubeService youtube = new YouTubeService(new BaseClientService.Initializer()
             {
-                ApiKey = "AIzaSyDuJa0F9nJzUwTOJyPZeBqkbEPwHoxwTG4"
+                ApiKey = ApiKey
             });
-
-            SearchResource.ListRequest listRequest = youtube.Search.List("snippet");
+            
+            YoutubeRequest listRequest = youtube.Search.List("snippet");
             listRequest.Q = searchOption.Query;
-            listRequest.PublishedAfter = searchOption.DateRange.Since;
-            listRequest.PublishedBefore = searchOption.DateRange.Until;
 
-            listRequest.Order = SearchResource.ListRequest.OrderEnum.Relevance;
-            listRequest.MaxResults = 25;
-            listRequest.SafeSearch = SearchResource.ListRequest.SafeSearchEnum.Strict;
-            SearchListResponse searchResponse = listRequest.Execute();
-
-            var videos = new List<SearchResult>();
-            var channels = new List<string>();
-            var playlists = new List<string>();
-
-            foreach (SearchResult searchResult in searchResponse.Items)
+            if (searchOption.UseDateSearch)
             {
-                // youtube#channel
-                // youtube#playlist
-                if (searchResult.Id.Kind == "youtube#video")
-                    videos.Add(searchResult);
+                listRequest.PublishedAfter = searchOption.DateRange.Since;
+                listRequest.PublishedBefore = searchOption.DateRange.Until;
             }
+            
+            listRequest.Order = YoutubeRequest.OrderEnum.Relevance;
 
-            List<YoutubeSearchResult> list = new List<YoutubeSearchResult>();
-            foreach (SearchResult s in videos)
-            {
-                string title = s.Snippet.Title;
-                string description = s.Snippet.Description;
+            int count = searchOption.SearchCount;
+            
+            listRequest.MaxResults = count <= 50 ? count : 50;
+            listRequest.SafeSearch = YoutubeRequest.SafeSearchEnum.Strict;
 
-                if (description.EndsWith("..."))
-                {
-                    description = GetFullDescription(s.Id.VideoId);
-                }
-
-                list.Add(new YoutubeSearchResult()
-                {
-                    Title = title,
-                    OriginalURL = $"{"http:"}//youtube.com/watch?v={s.Id.VideoId}",
-                    PublishedDate = s.Snippet.PublishedAt,
-                    ChannelTitle = s.Snippet.ChannelTitle,
-                    Description = description,
-                    ChannelId = s.Snippet.ChannelId
-                });
-            }
-
-            return list;
+            return listRequest;
         }
-
-        /// <summary>
-        /// 검색 옵션을 무시한 채로 지정된 하루만 검색합니다.
-        /// </summary>
-        /// <param name="time">검색할 날짜입니다.</param>
-        /// <param name="searchOption">검색 옵션입니다.</param>
-        /// <returns></returns>
-        public List<YoutubeSearchOption> SearchOneDay(DateTime time, YoutubeSearchOption searchOption)
-        {
-            return null;
-        }
-
 
         #region [  Utility  ]
-        private byte[] ToByteArray(String HexString)
+
+        private byte[] ToByteArray(string hexString)
         {
-            int NumberChars = HexString.Length;
+            int NumberChars = hexString.Length;
             byte[] bytes = new byte[NumberChars / 2];
             for (int i = 0; i < NumberChars; i += 2)
             {
-                bytes[i / 2] = Convert.ToByte(HexString.Substring(i, 2), 16);
+                bytes[i / 2] = Convert.ToByte(hexString.Substring(i, 2), 16);
             }
             return bytes;
         }
 
+        private string ToUnicode(string _longHexString)
+        {
+            return char.ConvertFromUtf32(Convert.ToInt32(_longHexString, 16));
+        }
+
         private string GetFullDescription(string videoId)
         {
-            string url = $"https://m.youtube.com/watch?v={videoId}";
+            string url = $"{"https"}://m.youtube.com/watch?v={videoId}";
 
             WebClient client = new WebClient();
 
@@ -126,6 +179,7 @@ namespace PlurCrawler.Search.Services.Youtube
 
             string mainPattern = @"(?<=\\""text\\"": \\"").+?(?=\\"")";
             string subPattern = @"\\\\u([\da-f]{2})([\da-f]{2})";
+            string subPattern2 = @"\\\\U([0-9a-f]{8})";
 
             code = code.Split(new string[] { "\\\"description" }, StringSplitOptions.None)[1];
             code = code.Split(new string[] { "\\\"runs\\\"" }, StringSplitOptions.None)[1];
@@ -141,6 +195,11 @@ namespace PlurCrawler.Search.Services.Youtube
                     byte[] bytes = ToByteArray(m2.Groups[2].Value + m2.Groups[1].Value);
 
                     temp = temp.Replace(m2.Value, new string(Encoding.Unicode.GetChars(bytes)));
+                }
+
+                foreach (Match m2 in Regex.Matches(m.Value, subPattern2))
+                {
+                    temp = temp.Replace(m2.Value, ToUnicode(m2.Groups[1].Value));
                 }
 
                 temp = temp.Replace(@"\\n", Environment.NewLine);

@@ -192,9 +192,7 @@ namespace PlurCrawler_Sample
                 TwitterSearch();
 
             if (cbYoutubeService.IsChecked.GetValueOrDefault())
-            {
-                // Youtube Service In Here.
-            }
+                YoutubeSearch();
         }
     }
 }

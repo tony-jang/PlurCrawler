@@ -73,7 +73,6 @@ namespace PlurCrawler_Sample.Windows
             tbYoutubeSearchCount.TextChanged += YoutubeSettingChanged;
             rbYoutubeNoSplit.Checked += YoutubeSettingChanged;
             rbYoutubeSplitWithDate.Checked += YoutubeSettingChanged;
-            tbYoutubePageOffset.TextChanged += YoutubeSettingChanged;
             ytCbOutput1.Checked += YoutubeSettingChanged;
             ytCbOutput2.Checked += YoutubeSettingChanged;
             ytCbOutput3.Checked += YoutubeSettingChanged;
@@ -200,8 +199,7 @@ namespace PlurCrawler_Sample.Windows
 
             drpYoutube.Since = option.DateRange.Since.GetValueOrDefault();
             drpYoutube.Until = option.DateRange.Until.GetValueOrDefault();
-
-            tbYoutubePageOffset.Text = option.Offset.ToString();
+            
             tbYoutubeSearchCount.Text = option.SearchCount.ToString();
 
             ytCbOutput1.IsChecked = option.OutputServices.HasFlag(OutputFormat.CSV);
@@ -223,7 +221,6 @@ namespace PlurCrawler_Sample.Windows
             {
                 DateRange = new DateRange(drpYoutube.Since, drpYoutube.Until),
                 UseDateSearch = useYoutubeDate.IsChecked.GetValueOrDefault(),
-                Offset = tbYoutubePageOffset.GetIntOrDefault(),
                 SplitWithDate = rbYoutubeSplitWithDate.IsChecked.GetValueOrDefault(),
                 SearchCount = tbYoutubeSearchCount.GetIntOrDefault(),
                 OutputServices = CalculateService(ServiceKind.Youtube),
@@ -270,6 +267,20 @@ namespace PlurCrawler_Sample.Windows
             {
                 svTwitter.IsEnabled = false;
                 signTwitter.Visibility = Visibility.Visible;
+            }
+        }
+
+        public void YoutubeEnableChange(bool enable)
+        {
+            if (enable)
+            {
+                svYoutube.IsEnabled = true;
+                signYoutube.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                svYoutube.IsEnabled = false;
+                signYoutube.Visibility = Visibility.Visible;
             }
         }
     }

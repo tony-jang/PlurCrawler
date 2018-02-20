@@ -18,11 +18,6 @@ namespace PlurCrawler.Search.Base
         int SearchCount { get; set; }
 
         /// <summary>
-        /// 페이지의 오프셋을 결정합니다. 예를 들어 4를 입력했다면 5번째 결과부터 출력됩니다.
-        /// </summary>
-        int Offset { get; set; }
-
-        /// <summary>
         /// 검색할 언어 코드를 입력합니다.
         /// </summary>
         LanguageCode Language { get; set; }

@@ -1,20 +1,23 @@
-﻿using PlurCrawler.Extension;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading;
+
+using PlurCrawler.Extension;
 using PlurCrawler.Format.Common;
 using PlurCrawler.Search;
 using PlurCrawler.Search.Base;
 using PlurCrawler.Search.Common;
 using PlurCrawler.Search.Services.GoogleCSE;
 using PlurCrawler.Search.Services.Twitter;
+using PlurCrawler.Search.Services.Youtube;
+using PlurCrawler.Tokens.Credentials;
 using PlurCrawler_Sample.Common;
 using PlurCrawler_Sample.Controls;
 using PlurCrawler_Sample.Export;
 using PlurCrawler_Sample.Report;
 using PlurCrawler_Sample.Report.Result;
 using PlurCrawler_Sample.TaskLogs;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading;
 
 namespace PlurCrawler_Sample
 {
@@ -64,7 +67,6 @@ namespace PlurCrawler_Sample
                 {
                     AddLog("Google CSE 검색 엔진을 초기화중입니다.", TaskLogType.SearchReady);
 
-                    // 옵션 초기화
                     option = SettingManager.GoogleCSESearchOption;
                     option.Query = tbQuery.Text;
 
@@ -116,7 +118,6 @@ namespace PlurCrawler_Sample
                 }
 
                 Dispatcher.Invoke(() => {
-
                     _taskReport.AddReport(new TaskReportData()
                     {
                         Query = option.Query,
@@ -140,30 +141,9 @@ namespace PlurCrawler_Sample
             thr.Start();
         }
 
-        private void Searcher_SearchFinished(object sender, EventArgs e)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                TaskProgressBar itm = dict[sender as ISearcher];
-                itm.SetValue(value: itm.Maximum, message: "검색이 완료되었습니다.");
-
-                _logManager.AddLog("검색이 완료되었습니다.", TaskLogType.Searching);
-
-                SettingManager.GoogleCredentials.Item2 = VerifyType.Verified;
-                SettingManager.GoogleCredentials.Item4 = VerifyType.Verified;
-            });
-        }
-
-        private void Searcher_SearchProgressChanged(object sender, ProgressEventArgs args)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                var itm = dict[sender as ISearcher];
-                itm.SetValue(maximum: args.Maximum, value: args.Value);
-            });
-        }
-
         #endregion
+
+        #region [  Twitter  ]
 
         public void TwitterSearch()
         {
@@ -263,7 +243,148 @@ namespace PlurCrawler_Sample
 
             thr.Start();
         }
+
+        #endregion
+
+        #region [  Youtube  ]
+
+        public void YoutubeSearch()
+        {
+            if (youtubeSearching)
+            {
+                AddLog("이미 Youtube 서비스에서 검색을 실행중입니다.", TaskLogType.Failed);
+                return;
+            }
+
+            youtubeSearching = true;
+            _detailsOption.YoutubeEnableChange(false);
+            _vertManager.ChangeEditable(false, ServiceKind.Youtube);
+
+            Thread thr = new Thread(() =>
+            {
+                var youtubeSearcher = new YoutubeSearcher();
+                bool isCanceled = false;
+                SearchResult info = SearchResult.Fail_APIError;
+                YoutubeSearchOption option = null;
+
+                youtubeSearcher.SearchProgressChanged += Searcher_SearchProgressChanged;
+                youtubeSearcher.SearchFinished += Searcher_SearchFinished;
+
+                Dispatcher.Invoke(() =>
+                {
+                    AddLog("Youtube 검색 엔진을 초기화중입니다.", TaskLogType.SearchReady);
+
+
+                    option = SettingManager.YoutubeSearchOption;
+                    option.Query = tbQuery.Text;
+
+                    var tb = new TaskProgressBar();
+
+                    tb.SetValue(title: "Youtube 검색", message: "검색이 진행중입니다.", maximum: 1);
+
+                    lvTask.Items.Add(tb);
+                    dict[youtubeSearcher] = tb;
+
+                    if (option.OutputServices == OutputFormat.None)
+                    {
+                        tb.SetValue(message: "결과를 내보낼 위치가 없습니다.", maximum: 1);
+                        AddLog("검색을 내보낼 위치가 없습니다.", TaskLogType.Failed);
+
+                        info = SearchResult.Fail_InvaildSetting;
+                        isCanceled = true;
+                    }
+
+                    youtubeSearcher.Vertification(SettingManager.YoutubeCredentials.Item1);
+
+                    if (!youtubeSearcher.IsVerification) // 인증되지 않았을 경우
+                    {
+                        tb.SetValue(message: "API키가 인증되지 않았습니다.", maximum: 1);
+                        AddLog("API키가 인증되지 않았습니다.", TaskLogType.Failed);
+
+                        info = SearchResult.Fail_APIError;
+                        isCanceled = true;
+                    }
+                });
+
+                IEnumerable<YoutubeSearchResult> youtubeResult = null;
+                ExportResultPack pack = null;
+
+                if (!isCanceled)
+                {
+                    try
+                    {
+                        youtubeResult = youtubeSearcher.Search(option);
+                        info = SearchResult.Success;
+                        AddLog("검색 결과를 내보내는 중입니다.", TaskLogType.Searching);
+                        pack = Export(option.OutputServices, youtubeResult);
+                    }
+                    catch (InvaildOptionException)
+                    {
+                        AddLog("'Youtube' 검색 중 오류가 발생했습니다. [날짜를 사용하지 않은 상태에서는 '하루 기준' 옵션을 사용할 수 없습니다.]", TaskLogType.Failed);
+                        info = SearchResult.Fail_InvaildSetting;
+                    }
+                    catch (CredentialsTypeException)
+                    {
+                        AddLog("'Youtube' 검색 중 오류가 발생했습니다. [Youtube의 API키가 올바르게 입력되지 않은거 같습니다.]", TaskLogType.Failed);
+                        info = SearchResult.Fail_APIError;
+                    }
+                }
+                
+                Dispatcher.Invoke(() => {
+
+                    _taskReport.AddReport(new TaskReportData()
+                    {
+                        Query = option.Query,
+                        RequestService = ServiceKind.Youtube,
+                        SearchCount = option.SearchCount,
+                        SearchData = youtubeResult,
+                        SearchDate = DateTime.Now,
+                        SearchResult = info,
+                        OutputFormat = option.OutputServices,
+                        ExportResultPack = pack
+                    });
+
+                    _taskReport.SetLastReport();
+
+                    youtubeSearching = false;
+                    _detailsOption.YoutubeEnableChange(true);
+                    _vertManager.ChangeEditable(true, ServiceKind.Youtube);
+                });
+            });
+
+            thr.Start();
+        }
+
+        #endregion
+
+        #region [  Common Events  ]
+
+        private void Searcher_SearchFinished(object sender, EventArgs e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                TaskProgressBar itm = dict[sender as ISearcher];
+                itm.SetValue(value: itm.Maximum, message: "검색이 완료되었습니다.");
+
+                _logManager.AddLog("검색이 완료되었습니다.", TaskLogType.Searching);
+
+                SettingManager.GoogleCredentials.Item2 = VerifyType.Verified;
+                SettingManager.GoogleCredentials.Item4 = VerifyType.Verified;
+            });
+        }
+
+        private void Searcher_SearchProgressChanged(object sender, ProgressEventArgs args)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                var itm = dict[sender as ISearcher];
+                itm.SetValue(maximum: args.Maximum, value: args.Value);
+            });
+        }
         
+        #endregion
+
+
         public ExportResultPack Export(OutputFormat format, IEnumerable<ISearchResult> result)
         {
             ExportResultPack pack = null;
@@ -373,7 +494,7 @@ namespace PlurCrawler_Sample
                 }
                 if (format.HasFlag(OutputFormat.MySQL))
                 {
-
+                    // TODO: Implements
                 }
                 if (format.HasFlag(OutputFormat.AccessDB))
                 {

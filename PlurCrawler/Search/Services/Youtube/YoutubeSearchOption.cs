@@ -26,7 +26,6 @@ namespace PlurCrawler.Search.Services.Youtube
                 SplitWithDate = false,
                 UseDateSearch = false,
                 OutputServices = OutputFormat.Json,
-                Offset = 0,
                 Language = LanguageCode.All
             };
         }
@@ -65,21 +64,6 @@ namespace PlurCrawler.Search.Services.Youtube
             {
                 _searchCount = value;
                 OnPropertyChanged(this, new PropertyChangedEventArgs("SearchCount"));
-            }
-        }
-
-        private int _offset;
-
-        /// <summary>
-        /// 페이지의 오프셋을 결정합니다. 예를 들어 4를 입력했다면 5번째 결과부터 출력됩니다.
-        /// </summary>
-        public int Offset
-        {
-            get => _offset;
-            set
-            {
-                _offset = value;
-                OnPropertyChanged(this, new PropertyChangedEventArgs("Offset"));
             }
         }
 

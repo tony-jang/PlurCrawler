@@ -146,9 +146,6 @@
                                 </WrapPanel>
                             </ctrl:PropertyGroupBox>
 
-                            <ctrl:PropertyTextBox x:Name="tbYoutubePageOffset" PropertyName="페이지 오프셋" DigitOnly="True"
-                                Description="* 검색을 표시할 오프셋을 나타냅니다.&#x0a;(예를 들어 5라면 6번째 부터 출력합니다)"/>
-
                             <ctrl:PropertyGroupBox x:Name="ytOutputLoc" Header="출력할 위치">
                                 <StackPanel>
                                     <StackPanel.Resources>
@@ -171,7 +168,7 @@
                             <ctrl:DateRangePicker x:Name="drpYoutube" 
                                                   PropertyName="검색 범위" 
                                                   Since="2018-02-02" Until="2018-02-03" 
-                                                  IsEnabled="{Binding Path=IsChecked, ElementName=useGoogleDate}"/>
+                                                  IsEnabled="{Binding Path=IsChecked, ElementName=useYoutubeDate}"/>
                         </StackPanel>
                     </ScrollViewer>
 
