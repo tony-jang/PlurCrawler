@@ -57,33 +57,33 @@ namespace PlurCrawler_Sample.Windows
             btnAccessDBExport.IsEnabled = isEnabled;
         }
 
-        public delegate void ExportRequestDelegate(OutputFormat format, IEnumerable<ISearchResult> result);
+        public delegate void ExportRequestDelegate(OutputFormat format, IEnumerable<ISearchResult> result, ServiceKind serviceKind);
 
         public event ExportRequestDelegate ExportRequest;
 
-        private void OnExportRequest(OutputFormat format, IEnumerable<ISearchResult> result)
+        private void OnExportRequest(OutputFormat format, IEnumerable<ISearchResult> result, ServiceKind serviceKind)
         {
-            ExportRequest?.Invoke(format, result);
+            ExportRequest?.Invoke(format, result, serviceKind);
         }
 
         private void BtnAccessDBExport_Click(object sender, RoutedEventArgs e)
         {
-            OnExportRequest(OutputFormat.AccessDB, SelectionResult);
+            OnExportRequest(OutputFormat.AccessDB, SelectionResult, ServiceKind);
         }
 
         private void BtnMySQLExport_Click(object sender, RoutedEventArgs e)
         {
-            OnExportRequest(OutputFormat.MySQL, SelectionResult);
+            OnExportRequest(OutputFormat.MySQL, SelectionResult, ServiceKind);
         }
 
         private void BtnCSVExport_Click(object sender, RoutedEventArgs e)
         {
-            OnExportRequest(OutputFormat.CSV, SelectionResult);
+            OnExportRequest(OutputFormat.CSV, SelectionResult, ServiceKind);
         }
 
         private void BtnJsonExport_Click(object sender, RoutedEventArgs e)
         {
-            OnExportRequest(OutputFormat.Json, SelectionResult);
+            OnExportRequest(OutputFormat.Json, SelectionResult, ServiceKind);
         }
 
         private void BtnShowList_Click(object sender, RoutedEventArgs e)
@@ -111,6 +111,8 @@ namespace PlurCrawler_Sample.Windows
         public int SelectedIndex { get; private set; } = -1;
 
         private IEnumerable<ISearchResult> SelectionResult => _datas[SelectedIndex].SearchData;
+
+        private ServiceKind ServiceKind => _datas[SelectedIndex].RequestService;
 
         private List<TaskReportData> _datas;
 

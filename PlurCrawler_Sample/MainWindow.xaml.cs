@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
-using PlurCrawler.Search.Common;
 using PlurCrawler.Search.Base;
 using PlurCrawler.Extension;
-using PlurCrawler.Format;
 using PlurCrawler.Format.Common;
 using PlurCrawler.Common;
+using PlurCrawler.Search;
 
 using PlurCrawler_Sample.Windows;
 using PlurCrawler_Sample.Controls;
 using PlurCrawler_Sample.Common;
 using PlurCrawler_Sample.TaskLogs;
-
-using AppSetting = PlurCrawler_Sample.Properties.Settings;
 
 namespace PlurCrawler_Sample
 {
@@ -89,9 +84,9 @@ namespace PlurCrawler_Sample
                 tbSelectedName.Text = (mainTabControl.SelectedItem as TabItem).Tag.ToString();
         }
 
-        private void _taskReport_ExportRequest(OutputFormat format, IEnumerable<ISearchResult> result)
+        private void _taskReport_ExportRequest(OutputFormat format, IEnumerable<ISearchResult> result, ServiceKind serviceKind)
         {
-            Export(format, result);
+            Export(format, result, serviceKind);
         }
 
         private void _logManager_LogAdded(object sender, TaskLog taskLog)

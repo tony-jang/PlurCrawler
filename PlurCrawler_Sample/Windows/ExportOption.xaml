@@ -26,9 +26,15 @@
                             <Button x:Name="setJsonLocationPath" Content="..." Grid.Column="1" Height="25" Width="25" VerticalAlignment="Center" Margin="5,0"/>
                         </Grid>
                         <ctrl:PropertyTextBox x:Name="jsonExportName" PropertyName="파일 이름" Margin="10,10,45,10" 
-                                                  Description="※ Json 파일의 이름을 결정합니다. [확장자 제외]&#x0a;※ 변수를 사용할 수 있습니다.&#x0a;%v1 : 년월일 | %v2 : 시:분:초"/>
+                                                  Description="※ Json 파일의 이름을 결정합니다. [확장자 제외]"/>
 
-                        <ctrl:PropertyGroupBox Header="파일 중복 설정" Margin="10,20,10,10">
+                        <TextBlock TextWrapping="Wrap" Margin="5" Foreground="Gray">
+                            - 파일 이름에 변수를 사용할 수 있습니다.<LineBreak/>
+                            - %v1 : 년월일 | %v2 : 시:분:초<LineBreak/>
+                            - 파일 이름 뒤에는 자동으로 엔진에 따른 텍스트가 따라붙습니다. (예. file_youtube.json)
+                        </TextBlock>
+
+                        <ctrl:PropertyGroupBox Header="파일 중복 설정">
                             <WrapPanel>
                                 <TextBlock Text="파일 이름이 중복될때" Margin="10,0"/>
                                 <ComboBox x:Name="jsonOverlapOption" SelectedIndex="0">
@@ -63,7 +69,15 @@
                             <Button x:Name="setCsvLocationPath" Content="..." Grid.Column="1" Height="25" Width="25" VerticalAlignment="Center" Margin="5,0"/>
                         </Grid>
                         <ctrl:PropertyTextBox x:Name="csvExportName" PropertyName="파일 이름" Margin="10,10,45,10" 
-                                              Description="※ CSV 파일의 이름을 결정합니다. [확장자 제외]&#x0a;※ 변수를 사용할 수 있습니다.&#x0a;%v1 : 년월일 | %v2 : 시:분:초"/>
+                                              Description="※ CSV 파일의 이름을 결정합니다. [확장자 제외]"/>
+
+
+                        <TextBlock TextWrapping="Wrap" Margin="5" Foreground="Gray">
+                            - 파일 이름에 변수를 사용할 수 있습니다.<LineBreak/>
+                            - %v1 : 년월일 | %v2 : 시:분:초<LineBreak/>
+                            - 파일 이름 뒤에는 자동으로 엔진에 따른 텍스트가 따라붙습니다. (예. file_youtube.csv)
+                        </TextBlock>
+
                         <ctrl:PropertyGroupBox Header="파일 중복 설정">
                             <WrapPanel>
                                 <TextBlock Text="파일 이름이 중복될때" Margin="10,0"/>

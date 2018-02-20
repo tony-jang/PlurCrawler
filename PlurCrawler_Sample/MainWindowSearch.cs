@@ -108,7 +108,7 @@ namespace PlurCrawler_Sample
                         googleResult = googleCSESearcher.Search(option);
                         info = SearchResult.Success;
                         AddLog("검색 결과를 내보내는 중입니다.", TaskLogType.Searching);
-                        pack = Export(option.OutputServices, googleResult);
+                        pack = Export(option.OutputServices, googleResult, ServiceKind.GoogleCSE);
                     }
                     catch (InvaildOptionException)
                     {
@@ -210,7 +210,7 @@ namespace PlurCrawler_Sample
                         twitterResult = twitterSearcher.Search(option);
                         info = SearchResult.Success;
                         AddLog("검색 결과를 내보내는 중입니다.", TaskLogType.Searching);
-                        pack = Export(option.OutputServices, twitterResult);
+                        pack = Export(option.OutputServices, twitterResult, ServiceKind.Twitter);
                     }
                     catch (InvaildOptionException)
                     {
@@ -316,7 +316,7 @@ namespace PlurCrawler_Sample
                         youtubeResult = youtubeSearcher.Search(option);
                         info = SearchResult.Success;
                         AddLog("검색 결과를 내보내는 중입니다.", TaskLogType.Searching);
-                        pack = Export(option.OutputServices, youtubeResult);
+                        pack = Export(option.OutputServices, youtubeResult, ServiceKind.Youtube);
                     }
                     catch (InvaildOptionException)
                     {
@@ -384,8 +384,22 @@ namespace PlurCrawler_Sample
         
         #endregion
 
+        public string GetServiceString(ServiceKind serviceKind)
+        {
+            switch (serviceKind)
+            {
+                case ServiceKind.GoogleCSE:
+                    return "_google";
+                case ServiceKind.Youtube:
+                    return "_youtube";
+                case ServiceKind.Twitter:
+                    return "_twitter";
+            }
 
-        public ExportResultPack Export(OutputFormat format, IEnumerable<ISearchResult> result)
+            return string.Empty;
+        }
+
+        public ExportResultPack Export(OutputFormat format, IEnumerable<ISearchResult> result, ServiceKind serviceKind)
         {
             ExportResultPack pack = null;
             Dispatcher.Invoke(() =>
@@ -397,7 +411,7 @@ namespace PlurCrawler_Sample
                     string folder = SettingManager.ExportOptionSetting.JsonFolderLocation;
                     string fileName = SettingManager.ExportOptionSetting.JsonFileName;
 
-                    string fullPath = Path.Combine(folder, $"{fileName}.json");
+                    string fullPath = Path.Combine(folder, $"{fileName}{GetServiceString(serviceKind)}.json");
 
                     if (fileName.IsNullOrEmpty())
                     {
@@ -446,8 +460,8 @@ namespace PlurCrawler_Sample
                 {
                     string folder = SettingManager.ExportOptionSetting.CSVFolderLocation;
                     string fileName = SettingManager.ExportOptionSetting.CSVFileName;
-
-                    string fullPath = Path.Combine(folder, $"{fileName}.csv");
+                    
+                    string fullPath = Path.Combine(folder, $"{fileName}{GetServiceString(serviceKind)}.csv");
 
                     if (fileName.IsNullOrEmpty())
                     {

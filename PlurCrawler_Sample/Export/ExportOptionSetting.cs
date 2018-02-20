@@ -52,7 +52,7 @@ namespace PlurCrawler_Sample.Export
             set
             {
                 _jsonOverlapOption = value;
-                OnPropertyChanged(this, new PropertyChangedEventArgs("JsonOverlapOption "));
+                OnPropertyChanged(this, new PropertyChangedEventArgs("JsonOverlapOption"));
             }
         }
 
