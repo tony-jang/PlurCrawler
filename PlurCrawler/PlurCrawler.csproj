@@ -152,6 +152,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\MySQLTypeAttribute.cs" />
     <Compile Include="Attributes\PrimaryKeyAttribute.cs" />
     <Compile Include="Common\Pair.cs" />
     <Compile Include="Extension\DateTimeEx.cs" />
