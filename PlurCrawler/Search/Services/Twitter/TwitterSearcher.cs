@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PlurCrawler.Search.Base;
 using PlurCrawler.Search.Common;
+
 using Tweetinvi.Models;
 using Tweetinvi.Parameters;
 
@@ -69,8 +70,7 @@ namespace PlurCrawler.Search.Services.Twitter
                         if (maxid == -1)
                             break;
 
-                        result = result.Union(SearchOneDay(d));
-                        searchCount = Maximum - Current;
+                        searchCount -= count;
                     }
                 }
 
@@ -118,9 +118,9 @@ namespace PlurCrawler.Search.Services.Twitter
                     searchParam.Since = time;
                     searchParam.Until = time.AddDays(1);
                 }
-                
-                ITweetSearchResult results = Tweetinvi.Search.SearchTweetsWithMetadata(searchParam);
 
+                ITweetSearchResult results = Tweetinvi.Search.SearchTweetsWithMetadata(searchParam);
+                
                 if (results.Tweets != null)
                 {
                     var rawTweets = results.Tweets;
