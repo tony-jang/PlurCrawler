@@ -18,8 +18,16 @@
                     <ScrollViewer x:Name="svGoogle" VerticalScrollBarVisibility="Auto">
                         <StackPanel Margin="0,10">
                             <ctrl:PropertyTextBox x:Name="tbGoogleSearchCount" PropertyName="검색 갯수" DigitOnly="True" 
-                            Description="* 기본은 10개입니다.&#x0a;* 검색 타입에 따라서 의미가 달라집니다."/>
+                            Description="* 기본은 10개입니다.&#x0a;* 10개 마다 나눠서 쿼리를 전송합니다.&#x0a;* 검색 타입에 따라서 의미가 달라집니다."/>
 
+                            <Grid Margin="10">
+                                <Rectangle Fill="LightGray"/>
+                                <TextBlock TextWrapping="Wrap" Margin="10">
+                                    구글 CSE는 무료 프로젝트일때 하루에 100회 쿼리 전송이 가능합니다.<LineBreak/>
+                                    추가 1000개의 쿼리당 5달러씩 결제가 가능하며 최대 쿼리는 하루에 10000개입니다.
+                                </TextBlock>
+                            </Grid>
+                            
                             <ctrl:PropertyGroupBox Header="갯수 기준">
                                 <WrapPanel>
                                     <RadioButton x:Name="rbGoogleNoSplit" Margin="5" Content="전체 기준" GroupName="googleFindType" IsChecked="True"/>
@@ -80,6 +88,16 @@
                                 - 나눴을 시 나눈 숫자를 반올림하여 검색 (최소 1)
                             </TextBlock>
 
+                            <Grid Margin="10">
+                                <Rectangle Fill="LightGray"/>
+                                <TextBlock TextWrapping="Wrap" Margin="10">
+                                    트위터는 스탠다드 검색일 경우 15분당 450개의 쿼리를 전송 할 수 있습니다.<LineBreak/>
+                                    프리미엄 검색의 경우 15분당 900개의 쿼리를 전송 할 수 있으며, 초당 10개로 제한됩니다.<LineBreak/>
+                                    유료 결제시 500개에서 100000개의 쿼리 요청이 가능합니다.<LineBreak/>
+                                    결제는 <Hyperlink Tag="https://developer.twitter.com/en/pricing" Click="Hyperlink_Click">여기서</Hyperlink> 상단의 Apply 버튼으로 가능합니다.
+                                </TextBlock>
+                            </Grid>
+
                             <ctrl:PropertyGroupBox Header="갯수 기준">
                                 <WrapPanel>
                                     <RadioButton x:Name="rbTwitterNoSplit" Margin="5" Content="전체 기준" GroupName="twitterFindType" IsChecked="True"/>
@@ -139,6 +157,15 @@
                             <ctrl:PropertyTextBox x:Name="tbYoutubeSearchCount" PropertyName="검색 갯수" DigitOnly="True" 
                             Description="* 기본은 10개입니다.&#x0a;* 검색 타입에 따라서 의미가 달라집니다."/>
 
+                            <Grid Margin="10">
+                                <Rectangle Fill="LightGray"/>
+                                <TextBlock TextWrapping="Wrap" Margin="10">
+                                    유튜브는 하루당 1,000,000 (백만) 번의 쿼리를 요청할 수 있으며,
+                                    100초당 3,000,000 (3백만) 번의 쿼리가 처리 허용 범위입니다.<LineBreak/>
+                                    더 많은 요청이 필요한 경우 <Hyperlink Tag="https://services.google.com/fb/forms/ytapiquotarequest/" Click="Hyperlink_Click">여기서</Hyperlink> 신청할 수 있습니다.
+                                </TextBlock>
+                            </Grid>
+                            
                             <ctrl:PropertyGroupBox Header="갯수 기준">
                                 <WrapPanel>
                                     <RadioButton x:Name="rbYoutubeNoSplit" Margin="5" Content="전체 기준" GroupName="youtubeFindType" IsChecked="True"/>

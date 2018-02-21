@@ -170,7 +170,7 @@ namespace PlurCrawler.Search.Services.Twitter
                 Text = tweet.FullText,
                 CreatorName = tweet.CreatedBy.Name,
                 CreatorId = tweet.CreatedBy.ScreenName,
-                OriginalURL = tweet.Url
+                OriginalURL = tweet.Url,
             };
         }
 

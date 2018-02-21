@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -281,6 +282,14 @@ namespace PlurCrawler_Sample.Windows
             {
                 svYoutube.IsEnabled = false;
                 signYoutube.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void Hyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Hyperlink hyper)
+            {
+                Process.Start(hyper.Tag.ToString());
             }
         }
     }
