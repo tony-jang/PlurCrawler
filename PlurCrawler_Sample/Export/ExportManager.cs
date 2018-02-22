@@ -36,6 +36,7 @@ namespace PlurCrawler_Sample.Export
             where TResult : ISearchResult
         {
             mySQLFormat.FormattingData(searchResult);
+            mySQLFormat.Dispose();
         }
     }
 }

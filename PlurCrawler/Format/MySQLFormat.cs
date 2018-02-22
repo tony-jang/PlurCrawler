@@ -19,65 +19,96 @@ namespace PlurCrawler.Format
 {
     public class MySQLFormat<TResult> : BaseFormat<TResult>, IDisposable where TResult : ISearchResult
     {
-        public MySQLFormat(string server, string userId, string password, string databaseName, string tableName)
-            : this($"server={server};userid={userId};password={password};database={databaseName};Charset=utf8;")
+        public MySQLFormat(string server, string userId, string password, string databaseName)
+            : this($"server={server};userid={userId};password={password};database={databaseName};Charset=euckr;")
         {
             this.Server = server;
             this.UserId = userId;
             this.Password = password;
             this.DataBaseName = databaseName;
         }
-        
+
         public MySQLFormat(string connStr)
         {
             Connection = new MySqlConnection(connStr);
         }
 
-        public string GetCreateTableQuery()
+        Type type;
+
+        private void CreateTable()
         {
-            Type t = typeof(TResult);
 
-            string tableName = string.Empty;
-
-            if (t == typeof(GoogleCSESearchResult))
+            if (!TableExists())
             {
-                tableName = "GoogleResult";
-            }
-            else if (t == typeof(TwitterSearchResult))
-            {
-                tableName = "Tweets";
-            }
-            else if (t == typeof(YoutubeSearchResult))
-            {
-                tableName = "YoutubeVideos";
-            }
-
-            StringBuilder sql = new StringBuilder();
-
-            sql.AppendLine($"CREATE TABLE {tableName} (");
-
-            var props = GetProperties();
-
-            string prim = props.Where(i => i.Item3).First().Item1;
-
-            foreach ((string, string, bool) prop in props)
-            {
-                sql.Append($"{prop.Item1} {prop.Item2}");
-                if (prop.Item3)
+                try
                 {
-                    sql.Append(" NOT NULL");
+                    string query = CreateTableQuery;
+                    using (MySqlCommand cmd = new MySqlCommand(query, Connection))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
                 }
-                sql.AppendLine(",");
+                catch (MySqlException ex)
+                {
+                    throw ex;
+                }
             }
+        }
 
-            sql.AppendLine($"primary key ({prim}));");
-            
-            return sql.ToString();
+        private string CreateTableQuery
+        {
+            get
+            {
+                StringBuilder sql = new StringBuilder();
+
+                sql.AppendLine($"CREATE TABLE {TableName} (");
+
+                var props = GetProperties();
+
+                string prim = props.Where(i => i.Item3).First().Item1;
+
+                foreach ((string, string, bool) prop in props)
+                {
+                    sql.Append($"{prop.Item1} {prop.Item2}");
+                    if (prop.Item3)
+                    {
+                        sql.Append(" NOT NULL");
+                    }
+                    sql.AppendLine(",");
+                }
+
+                sql.AppendLine($"primary key ({prim}));");
+
+                return sql.ToString();
+            }
         }
 
         string TableCheckQuery => $@"SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = '{
             DataBaseName}' AND table_name = '{TableName}';";
-        
+
+        private bool TableExists()
+        {
+            if (IsOpened != ConnectionState.Open)
+                Connection.Open();
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(TableCheckQuery, Connection);
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int count = reader.GetInt32(0);
+                        return count == 1;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+            return false;
+        }
+
         public string Server { get; set; }
 
         public string UserId { get; set; }
@@ -86,7 +117,7 @@ namespace PlurCrawler.Format
 
         public string DataBaseName { get; set; }
 
-        public string TableName { get; set; }
+        public string TableName { get; internal set; }
 
         private MySqlConnection Connection { get; set; }
 
@@ -99,17 +130,17 @@ namespace PlurCrawler.Format
 
         public void RenewConnection()
         {
-            RenewConnection($"server={Server};userid={UserId};password={Password};database={DataBaseName};Charset=utf8;");
+            RenewConnection($"server={Server};userid={UserId};password={Password};database={DataBaseName};Charset=euckr;");
         }
         public void RenewConnection(string connStr)
         {
             Connection = new MySqlConnection(connStr);
         }
 
-        public IEnumerable<(string, string, bool)> GetProperties()
+        private IEnumerable<(string, string, bool)> GetProperties()
         {
             string primaryProp;
-            IEnumerable<PropertyInfo> properties = typeof(TResult).GetProperties();
+            IEnumerable<PropertyInfo> properties = type.GetProperties();
             
             try
             {
@@ -125,8 +156,8 @@ namespace PlurCrawler.Format
 
             return properties.Select(i => (i.Name, GetTypeString(i), i.Name == primaryProp));
         }
-        
-        public string GetTypeString(PropertyInfo info)
+
+        private string GetTypeString(PropertyInfo info)
         {
             try
             {
@@ -139,23 +170,33 @@ namespace PlurCrawler.Format
                 return "VARCHAR(100)";
             }
         }
-
-            /*
-            string sql = "CREATE TABLE `TWEETS` ("
-+ "  `ID` varchar(45) NOT NULL,"
-+ "  `USER_NAME` varchar(45) DEFAULT NULL,"
-+ "  `CREATE_DATE` varchar(45) DEFAULT NULL,"
-+ "  `LANG` varchar(5) DEFAULT NULL,"
-+ "  `MESSAGE` text,"
-+ "  `KEYWORD` text,"
-+ "  PRIMARY KEY (`ID`)"
-+ ");";
-             */
-
+        
         public override void FormattingData(IEnumerable<TResult> resultData)
         {
+            if (resultData.Count() == 0)
+                return;
+
+            Type t = resultData.First().GetType();
+            if (t == typeof(GoogleCSESearchResult))
+            {
+                TableName = "GoogleResult";
+                type = typeof(GoogleCSESearchResult);
+            }
+            else if (t == typeof(TwitterSearchResult))
+            {
+                TableName = "Tweets";
+                type = typeof(TwitterSearchResult);
+            }
+            else if (t == typeof(YoutubeSearchResult))
+            {
+                TableName = "YoutubeVideos";
+                type = typeof(YoutubeSearchResult);
+            }
+            
             if (IsOpened != ConnectionState.Open)
                 Connection.Open();
+
+            CreateTable();
             
             string baseQuery = $"INSERT INTO {TableName} values({string.Join(", ", GetProperties().Select(i => $"@{i.Item1}"))})";
             
@@ -167,15 +208,16 @@ namespace PlurCrawler.Format
 
                     cm.CommandText = baseQuery;
 
-                    foreach (PropertyInfo prop in typeof(TResult).GetProperties())
+                    foreach (PropertyInfo prop in type.GetProperties())
                     {
-                        cm.Parameters.AddWithValue($"@{prop}", prop.GetValue(data));
+                        cm.Parameters.AddWithValue($"@{prop.Name}", prop.GetValue(data));
                     }
 
                     cm.ExecuteNonQuery();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    throw ex;
                 }
             }
         }

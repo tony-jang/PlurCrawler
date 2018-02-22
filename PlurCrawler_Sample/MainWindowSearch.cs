@@ -398,7 +398,7 @@ namespace PlurCrawler_Sample
 
             return string.Empty;
         }
-
+        
         public ExportResultPack Export(OutputFormat format, IEnumerable<ISearchResult> result, ServiceKind serviceKind)
         {
             ExportResultPack pack = null;
@@ -508,7 +508,76 @@ namespace PlurCrawler_Sample
                 }
                 if (format.HasFlag(OutputFormat.MySQL))
                 {
-                    // TODO: Implements
+                    pack.MySQLExportResult = MySQLExportResult.NotSet;
+
+                    // TODO : MySQL 재설계
+                    MySQLFormat<ISearchResult> mySQLFormat = null;
+                    try
+                    {
+                        if (SettingManager.ExportOptionSetting.MySQLManualInput)
+                        {
+                            if (SettingManager.ExportOptionSetting.MySQLConnString.IsNullOrEmpty())
+                            {
+                                AddLog("파일을 MySQL로 내보내기 실패했습니다. [데이터베이스 연결문이 입력되지 않았습니다.]", TaskLogType.Failed);
+                                pack.MySQLExportResult = MySQLExportResult.Fail_NotEnoughConnectData;
+                            }
+
+                            if (pack.MySQLExportResult == MySQLExportResult.NotSet)
+                                mySQLFormat = new MySQLFormat<ISearchResult>(SettingManager.ExportOptionSetting.MySQLConnString);
+                        }
+                        else
+                        {
+                            if (SettingManager.ExportOptionSetting.MySQLConnAddr.IsNullOrEmpty())
+                            {
+                                AddLog("파일을 MySQL로 내보내기 실패했습니다. [연결 주소가 입력되지 않았습니다.]", TaskLogType.Failed);
+                                pack.MySQLExportResult = MySQLExportResult.Fail_NotEnoughConnectData;
+                            }
+                            else if (SettingManager.ExportOptionSetting.MySQLDatabaseName.IsNullOrEmpty())
+                            {
+                                AddLog("파일을 MySQL로 내보내기 실패했습니다. [데이터베이스 이름이 입력되지 않았습니다.]", TaskLogType.Failed);
+                                pack.MySQLExportResult = MySQLExportResult.Fail_NotEnoughConnectData;
+                            }
+                            else if (SettingManager.ExportOptionSetting.MySQLUserID.IsNullOrEmpty())
+                            {
+                                AddLog("파일을 MySQL로 내보내기 실패했습니다. [데이터베이스 사용자 이름이 입력되지 않았습니다.]", TaskLogType.Failed);
+                                pack.MySQLExportResult = MySQLExportResult.Fail_NotEnoughConnectData;
+                            }
+                            else if (SettingManager.ExportOptionSetting.MySQLUserPassword.IsNullOrEmpty())
+                            {
+                                AddLog("파일을 MySQL로 내보내기 실패했습니다. [데이터베이스 사용자 비밀번호가 입력되지 않았습니다.]", TaskLogType.Failed);
+                                pack.MySQLExportResult = MySQLExportResult.Fail_NotEnoughConnectData;
+                            }
+
+                            if (pack.MySQLExportResult == MySQLExportResult.NotSet)
+                                mySQLFormat = new MySQLFormat<ISearchResult>(SettingManager.ExportOptionSetting.MySQLConnAddr,
+                                    SettingManager.ExportOptionSetting.MySQLUserID, 
+                                    SettingManager.ExportOptionSetting.MySQLUserPassword, 
+                                    SettingManager.ExportOptionSetting.MySQLDatabaseName);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                    }
+                    
+                    if (mySQLFormat == null)
+                    {
+                        AddLog("파일을 MySQL로 내보내기 실패했습니다. [데이터베이스 연결 정보중 하나가 잘못되었습니다.]", TaskLogType.Failed);
+                    }
+                    else
+                    {
+                        try
+                        {
+                            ExportManager.MySQLExport(result, mySQLFormat);
+                            AddLog("MySQL로 성공적으로 내보냈습니다.", TaskLogType.Complete);
+                            pack.MySQLExportResult = MySQLExportResult.Success;
+                        }
+                        catch (Exception ex)
+                        {
+                            AddLog("파일을 MySQL로 내보내기 실패했습니다. [알 수 없는 오류가 발생했습니다.]", TaskLogType.Failed);
+                            AddLog(ex.ToString(), TaskLogType.Failed);
+                            pack.MySQLExportResult = MySQLExportResult.Fail_UnkownError;
+                        }
+                    }
                 }
                 if (format.HasFlag(OutputFormat.AccessDB))
                 {
