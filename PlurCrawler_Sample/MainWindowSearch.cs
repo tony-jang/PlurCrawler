@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading;
 
 using PlurCrawler.Extension;
+using PlurCrawler.Format;
 using PlurCrawler.Format.Common;
 using PlurCrawler.Search;
 using PlurCrawler.Search.Base;
@@ -269,6 +270,8 @@ namespace PlurCrawler_Sample
 
                 youtubeSearcher.SearchProgressChanged += Searcher_SearchProgressChanged;
                 youtubeSearcher.SearchFinished += Searcher_SearchFinished;
+                youtubeSearcher.ChangeInfoMessage += Searcher_ChangeInfoMessage;
+                youtubeSearcher.SearchItemFound += Searcher_SearchItemFound;
 
                 Dispatcher.Invoke(() =>
                 {
@@ -354,7 +357,7 @@ namespace PlurCrawler_Sample
 
             thr.Start();
         }
-
+        
         #endregion
 
         #region [  Common Events  ]
@@ -381,7 +384,35 @@ namespace PlurCrawler_Sample
                 itm.SetValue(maximum: args.Maximum, value: args.Value);
             });
         }
+
+        private void Searcher_ChangeInfoMessage(object sender, MessageEventArgs e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                var itm = dict[sender as ISearcher];
+                itm.SetValue(message: e.Message);
+            });
+        }
         
+        private void Searcher_SearchItemFound(object sender, SearchResultEventArgs e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                switch (e.Kind)
+                {
+                    case ServiceKind.GoogleCSE:
+
+                        break;
+                    case ServiceKind.Youtube:
+                        
+                        break;
+                    case ServiceKind.Twitter:
+
+                        break;
+                }
+            });
+        }
+
         #endregion
 
         public string GetServiceString(ServiceKind serviceKind)

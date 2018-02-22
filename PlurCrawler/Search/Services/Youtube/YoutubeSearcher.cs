@@ -48,9 +48,6 @@ namespace PlurCrawler.Search.Services.Youtube
             try
             {
                 YoutubeRequest listRequest = BuildRequest(searchOption);
-                
-
-                
                 List<YoutubeSearchResult> list = new List<YoutubeSearchResult>();
 
                 int remain = searchOption.SearchCount;
@@ -73,24 +70,32 @@ namespace PlurCrawler.Search.Services.Youtube
 
                     foreach (SearchResult searchResult in searchResponse.Items)
                     {
+                        OnChangeInfoMessage(this, new MessageEventArgs("비디오 타입을 분석중입니다."));
                         if (searchResult.Id.Kind == "youtube#video")
                         {
                             videos.Add(searchResult);
                             remain--;
+                            OnSearchProgressChanged(this, new ProgressEventArgs(searchOption.SearchCount, count++));
                         }
                         if (remain <= 0)
                             break;
+                        
                     }
 
+                    count = 1;
+                    
                     foreach (SearchResult s in videos)
                     {
+                        OnChangeInfoMessage(this, new MessageEventArgs("설명을 가져오는 중입니다."));
+                        OnSearchProgressChanged(this, new ProgressEventArgs(searchOption.SearchCount, count++));
+
                         string title = s.Snippet.Title;
                         string description = s.Snippet.Description;
 
                         if (description.EndsWith("..."))
                             description = GetFullDescription(s.Id.VideoId);
 
-                        list.Add(new YoutubeSearchResult()
+                        var itm = new YoutubeSearchResult()
                         {
                             Title = title,
                             OriginalURL = $"{"http:"}//youtube.com/watch?v={s.Id.VideoId}",
@@ -98,8 +103,11 @@ namespace PlurCrawler.Search.Services.Youtube
                             ChannelTitle = s.Snippet.ChannelTitle,
                             Description = description,
                             ChannelId = s.Snippet.ChannelId
-                        });
-                        OnSearchProgressChanged(this, new ProgressEventArgs(searchOption.SearchCount, count++));
+                        };
+
+                        OnSearchItemFound(this, new SearchResultEventArgs(itm, ServiceKind.Youtube));
+
+                        list.Add(itm);
                     }
 
                     if (remain <= 0)

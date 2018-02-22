@@ -47,15 +47,27 @@ namespace PlurCrawler.Search.Base
 
         public event EventHandler<ProgressEventArgs> SearchProgressChanged;
         public event EventHandler SearchFinished;
+        public event EventHandler<MessageEventArgs> ChangeInfoMessage;
+        public event EventHandler<SearchResultEventArgs> SearchItemFound;
 
-        internal void OnSearchProgressChanged(object sender, ProgressEventArgs args)
+        internal void OnSearchProgressChanged(object sender, ProgressEventArgs e)
         {
-            SearchProgressChanged?.Invoke(sender, args);
+            SearchProgressChanged?.Invoke(sender, e);
         }
 
         internal void OnSearchFinished(object sender)
         {
             SearchFinished?.Invoke(sender, new EventArgs());
+        }
+
+        internal void OnChangeInfoMessage(object sender, MessageEventArgs e)
+        {
+            ChangeInfoMessage?.Invoke(sender, e);
+        }
+
+        internal void OnSearchItemFound(object sender, SearchResultEventArgs e)
+        {
+            SearchItemFound?.Invoke(sender, e);
         }
     }
 }
