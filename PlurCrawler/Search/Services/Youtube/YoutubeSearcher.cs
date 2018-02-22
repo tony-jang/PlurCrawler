@@ -102,7 +102,9 @@ namespace PlurCrawler.Search.Services.Youtube
                             PublishedDate = s.Snippet.PublishedAt,
                             ChannelTitle = s.Snippet.ChannelTitle,
                             Description = description,
-                            ChannelId = s.Snippet.ChannelId
+                            ChannelId = s.Snippet.ChannelId,
+                            VideoId = s.Id.VideoId,
+                            Keyword = searchOption.Query,
                         };
 
                         OnSearchItemFound(this, new SearchResultEventArgs(itm, ServiceKind.Youtube));

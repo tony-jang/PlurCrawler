@@ -26,7 +26,6 @@ namespace PlurCrawler.Search.Services.Twitter
         /// <summary>
         /// 올린 사람의 닉네임과 내용 10자로 이루어진 제목입니다.
         /// </summary>
-        [PrimaryKey]
         [MySQLType("VARCHAR(30)")]
         public string Title { get; set; }
 
@@ -55,9 +54,22 @@ namespace PlurCrawler.Search.Services.Twitter
         public bool IsRetweet { get; set; }
 
         /// <summary>
+        /// 해당 트윗의 ID를 가져옵니다.
+        /// </summary>
+        [PrimaryKey]    
+        [MySQLType("BIGINT")]
+        public long ID { get; set; }
+
+        /// <summary>
         /// 해당 트윗의 텍스트를 가져옵니다.
         /// </summary>
         [MySQLType("LONGTEXT")]
         public string Text { get; set; }
+
+        /// <summary>
+        /// 검색을 위해 입력했던 키워드를 나타냅니다.
+        /// </summary>
+        [MySQLType("TEXT")]
+        public string Keyword { get; set; }
     }
 }

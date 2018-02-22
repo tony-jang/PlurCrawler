@@ -61,6 +61,8 @@ namespace PlurCrawler.Search.Services.GoogleCSE
 
         // TODO: DateSearch시 Maximum값 현재 값 조정하는 변수 만들기
 
+        private string query { get; set; }
+
         /// <summary>
         /// Google Custom Search를 이용해 검색을 실시합니다.
         /// </summary>
@@ -68,6 +70,8 @@ namespace PlurCrawler.Search.Services.GoogleCSE
         /// <returns></returns>
         public override IEnumerable<GoogleCSESearchResult> Search(GoogleCSESearchOption searchOption)
         {
+            query = searchOption.Query;
+
             CseResource.ListRequest request = BuildRequest(searchOption);
 
             if (!searchOption.SplitWithDate)
@@ -156,7 +160,8 @@ namespace PlurCrawler.Search.Services.GoogleCSE
                 OriginalURL = i.Link,
                 PublishedDate = null,
                 Title = i.Title,
-                Snippet = i.Snippet.Replace("\\n", Environment.NewLine)
+                Snippet = i.Snippet.Replace("\\n", Environment.NewLine),
+                Keyword = query
             });
         }
 

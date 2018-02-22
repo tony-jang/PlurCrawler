@@ -38,5 +38,11 @@ namespace PlurCrawler.Search.Services.GoogleCSE
         /// </summary>
         [MySQLType("LONGTEXT")]
         public string Snippet { get; set; }
+
+        /// <summary>
+        /// 검색을 위해 입력했던 키워드를 나타냅니다.
+        /// </summary>
+        [MySQLType("TEXT")]
+        public string Keyword { get; set; }
     }
 }

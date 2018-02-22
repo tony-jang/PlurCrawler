@@ -22,7 +22,6 @@ namespace PlurCrawler.Search.Services.Youtube
         /// <summary>
         /// 해당 동영상의 제목을 가져옵니다.
         /// </summary>
-        [PrimaryKey]
         [MySQLType("VARCHAR(300)")]
         public string Title { get; set; }
 
@@ -44,5 +43,17 @@ namespace PlurCrawler.Search.Services.Youtube
         [MySQLType("VARCHAR(30)")]
         public string ChannelId { get; set; }
 
+        /// <summary>
+        /// 유튜브의 고유 비디오 ID를 가져옵니다.
+        /// </summary>
+        [MySQLType("TEXT")]
+        [PrimaryKey]
+        public string VideoId { get; set; }
+
+        /// <summary>
+        /// 검색을 위해 입력했던 키워드를 나타냅니다.
+        /// </summary>
+        [MySQLType("TEXT")]
+        public string Keyword { get; set; }
     }
 }

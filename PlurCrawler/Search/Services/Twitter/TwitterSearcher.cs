@@ -127,7 +127,7 @@ namespace PlurCrawler.Search.Services.Twitter
                     Current += rawTweets.Count();
 
                     IEnumerable<TwitterSearchResult> tweets = rawTweets
-                        .Select(i => ConvertResult(i));
+                        .Select(i => ConvertResult(i, searchOption.Query));
 
                     OnSearchProgressChanged(this, new ProgressEventArgs(Maximum, Current));
 
@@ -159,7 +159,7 @@ namespace PlurCrawler.Search.Services.Twitter
             return searchCount;
         }
 
-        private TwitterSearchResult ConvertResult(ITweetWithSearchMetadata tweet)
+        private TwitterSearchResult ConvertResult(ITweetWithSearchMetadata tweet, string query)
         {
             return new TwitterSearchResult()
             {
@@ -171,6 +171,8 @@ namespace PlurCrawler.Search.Services.Twitter
                 CreatorName = tweet.CreatedBy.Name,
                 CreatorId = tweet.CreatedBy.ScreenName,
                 OriginalURL = tweet.Url,
+                Keyword = query,
+                ID = tweet.Id
             };
         }
 

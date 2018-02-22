@@ -27,6 +27,26 @@ namespace PlurCrawler_Sample.Common
         {
             _exportOptionSetting = new ObjectSerializer<ExportOptionSetting>().Deserialize(AppSetting.ExportOption);
 
+            if (_exportOptionSetting == null)
+                _exportOptionSetting = new ExportOptionSetting()
+                {
+                    AccessFileName = string.Empty,
+                    AccessFolderLocation = string.Empty,
+                    CSVFileName = string.Empty,
+                    CSVFolderLocation = string.Empty,
+                    CSVOverlapOption = 0,
+                    JsonFileName = string.Empty,
+                    JsonFolderLocation = string.Empty,
+                    JsonOverlapOption = 0,
+                    JsonSort = true,
+                    MySQLConnAddr = "localhost",
+                    MySQLConnString = string.Empty,
+                    MySQLDatabaseName = "plurcrawler",
+                    MySQLManualInput = false,
+                    MySQLUserID = string.Empty,
+                    MySQLUserPassword = string.Empty,
+                };
+
             _googleCSESearchOption = new ObjectSerializer<GoogleCSESearchOption>().Deserialize(AppSetting.GoogleOption);
 
             if (_googleCSESearchOption == null)

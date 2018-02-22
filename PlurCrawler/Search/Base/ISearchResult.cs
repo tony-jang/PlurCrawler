@@ -21,5 +21,10 @@ namespace PlurCrawler.Search.Base
         /// 제목을 나타냅니다.
         /// </summary>
         string Title { get; }
+
+        /// <summary>
+        /// 검색을 위해 입력했던 키워드를 나타냅니다.
+        /// </summary>
+        string Keyword { get; set; }
     }
 }

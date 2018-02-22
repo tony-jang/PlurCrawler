@@ -303,7 +303,7 @@ namespace PlurCrawler_Sample.Windows
         /// <param name="key">Google API Key입니다.</param>
         public void SetGoogleEngineID(string id)
         {
-            SetGoogleEngineID(id);
+            SetGoogleEngineID(id, false);
         }
 
         public void SetGoogleEngineID(string id, bool systemInput)
