@@ -14,5 +14,6 @@ namespace PlurCrawler_Sample.Report.Result
 
         public MySQLExportResult MySQLExportResult { get; set; } = MySQLExportResult.NotSet;
 
+        public AccessExportResult AccessExportResult { get; set; } = AccessExportResult.NotSet;
     }
 }

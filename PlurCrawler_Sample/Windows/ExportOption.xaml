@@ -116,6 +116,21 @@
                 <TabItem.Header>
                     <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/Icon_access.png" Height="20" Text="Access DB"/>
                 </TabItem.Header>
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <Grid Margin="10,10,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ctrl:PropertyTextBox x:Name="accExportFolder" PropertyName="파일을 내보낼 위치" Margin="0" Description="Access DB 데이터를 내보낼 위치를 선택합니다."/>
+                            <Button x:Name="setAccLocationPath" Content="..." Grid.Column="1" Height="25" Width="25" VerticalAlignment="Center" Margin="5,0"/>
+                        </Grid>
+                        <ctrl:PropertyTextBox x:Name="accExportName" PropertyName="파일 이름" Margin="10,10,45,10" 
+                                              Description="※ Access DB 파일의 이름을 결정합니다. [확장자 제외]"/>
+                    </StackPanel>
+                </ScrollViewer>
             </TabItem>
         </TabControl>
     </Grid>

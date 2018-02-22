@@ -95,6 +95,7 @@
     <Compile Include="Export\ExportOptionSetting.cs" />
     <Compile Include="MainWindowSearch.cs" />
     <Compile Include="Report\BoolAttribute.cs" />
+    <Compile Include="Report\Result\AccessExportResult.cs" />
     <Compile Include="Report\Result\CSVExportResult.cs" />
     <Compile Include="Report\Result\ExportResultPack.cs" />
     <Compile Include="Report\Result\JsonExportResult.cs" />

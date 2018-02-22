@@ -23,14 +23,14 @@ namespace PlurCrawler.Search.Services.GoogleCSE
         /// <summary>
         /// 해당 검색 결과의 원본 URL을 나타냅니다.
         /// </summary>
-        [MySQLType("TEXT")]
+        [PrimaryKey]
+        [MySQLType("VARCHAR(500)")]
         public string OriginalURL { get; set; }
         
         /// <summary>
         /// 해당 검색 결과의 제목을 나타냅니다.
         /// </summary>
-        [PrimaryKey]
-        [MySQLType("VARCHAR(40)")]
+        [MySQLType("VARCHAR(200)")]
         public string Title { get; set; }
 
         /// <summary>

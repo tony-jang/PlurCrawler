@@ -443,8 +443,6 @@ namespace PlurCrawler_Sample
                     string folder = SettingManager.ExportOptionSetting.JsonFolderLocation;
                     string fileName = SettingManager.ExportOptionSetting.JsonFileName;
 
-                    string fullPath = Path.Combine(folder, $"{fileName}{GetServiceString(serviceKind)}.json");
-
                     if (fileName.IsNullOrEmpty())
                     {
                         AddLog("파일을 Json 형식으로 내보내기 실패했습니다. [파일명 입력란이 비어있습니다.]", TaskLogType.Failed);
@@ -456,6 +454,8 @@ namespace PlurCrawler_Sample
                         {
                             try
                             {
+                                string fullPath = Path.Combine(folder, $"{fileName}{GetServiceString(serviceKind)}.json");
+
                                 if (ExportManager.JsonExport(fullPath, result, SettingManager.ExportOptionSetting.JsonSort))
                                 {
                                     AddLog($"Json으로 성공적으로 내보냈습니다. 저장 위치 : {fullPath}", TaskLogType.Complete);
@@ -493,8 +493,6 @@ namespace PlurCrawler_Sample
                     string folder = SettingManager.ExportOptionSetting.CSVFolderLocation;
                     string fileName = SettingManager.ExportOptionSetting.CSVFileName;
                     
-                    string fullPath = Path.Combine(folder, $"{fileName}{GetServiceString(serviceKind)}.csv");
-
                     if (fileName.IsNullOrEmpty())
                     {
                         AddLog("파일을 CSV 형식으로 내보내기 실패했습니다. [파일명 입력란이 비어있습니다.]", TaskLogType.Failed);
@@ -506,6 +504,8 @@ namespace PlurCrawler_Sample
                         {
                             try
                             {
+                                string fullPath = Path.Combine(folder, $"{fileName}{GetServiceString(serviceKind)}.csv");
+
                                 if (ExportManager.CSVExport(fullPath, result))
                                 {
                                     AddLog($"CSV로 성공적으로 내보냈습니다. 저장 위치 : {fullPath}", TaskLogType.Complete);
@@ -513,13 +513,13 @@ namespace PlurCrawler_Sample
                                 }
                                 else
                                 {
-                                    AddLog($"CSV으로 내보낼 파일 위치에 접근 실패했습니다. 위치 : {fullPath}", TaskLogType.Failed);
+                                    AddLog($"CSV로 내보낼 파일 위치에 접근 실패했습니다. 위치 : {fullPath}", TaskLogType.Failed);
                                     pack.CSVExportResult = CSVExportResult.Fail_FileAccessDenied;
                                 }
                             }
                             catch (Exception ex)
                             {
-                                AddLog($"CSV으로 내보내던 중 알 수 없는 오류가 발생했습니다.{Environment.NewLine}{Environment.NewLine}{ex.ToString()}", TaskLogType.System);
+                                AddLog($"CSV로 내보내던 중 알 수 없는 오류가 발생했습니다.{Environment.NewLine}{Environment.NewLine}{ex.ToString()}", TaskLogType.System);
                                 pack.CSVExportResult = CSVExportResult.Unknown;
                             }
                         }
@@ -613,7 +613,54 @@ namespace PlurCrawler_Sample
                 }
                 if (format.HasFlag(OutputFormat.AccessDB))
                 {
-                    // TODO: Implements
+                    string folder = SettingManager.ExportOptionSetting.AccessFolderLocation;
+                    string fileName = SettingManager.ExportOptionSetting.AccessFileName;
+                    
+                    if (fileName.IsNullOrEmpty())
+                    {
+                        AddLog("파일을 Access DB 형식으로 내보내기 실패했습니다. [파일명 입력란이 비어있습니다.]", TaskLogType.Failed);
+                        pack.AccessExportResult = AccessExportResult.Fail_FileNameNull;
+                    }
+                    else
+                    {
+                        if (Directory.Exists(folder))
+                        {
+                            try
+                            {
+                                string fullPath = Path.Combine(folder, $"{fileName}{GetServiceString(serviceKind)}.accdb");
+                                if (ExportManager.AccessDBExport(fullPath, result))
+                                {
+                                    AddLog($"Access DB로 성공적으로 내보냈습니다. 저장 위치 : {fullPath}", TaskLogType.Complete);
+                                    pack.AccessExportResult = AccessExportResult.Success;
+                                }
+                                else
+                                {
+                                    AddLog($"Access DB로 내보낼 파일 위치에 접근 실패했습니다. 위치 : {fullPath}", TaskLogType.Failed);
+                                    pack.AccessExportResult = AccessExportResult.Fail_FileAccessDenied;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                AddLog($"파일을 Access DB로 내보내기 실패했습니다. [알 수 없는 오류가 발생했습니다.]", TaskLogType.Failed);
+                                AddLog(ex.ToString(), TaskLogType.Failed);
+
+                                pack.AccessExportResult = AccessExportResult.Unknown;
+                            }
+                        }
+                        else
+                        {
+                            if (folder.IsNullOrEmpty())
+                            {
+                                AddLog("파일을 Access DB 형식으로 내보내기 실패했습니다. [폴더 입력란이 비어있습니다.]", TaskLogType.Failed);
+                                pack.AccessExportResult = AccessExportResult.Fail_FileDirectoryNull;
+                            }
+                            else if (!Directory.Exists(folder))
+                            {
+                                AddLog("파일을 Access DB 형식으로 내보내기 실패했습니다. [해당하는 경로가 없습니다.]", TaskLogType.Failed);
+                                pack.AccessExportResult = AccessExportResult.Fail_FileDirectoryNotExists;
+                            }
+                        }
+                    }
                 }
             });
 

@@ -33,8 +33,6 @@ namespace PlurCrawler.Format
             Connection = new MySqlConnection(connStr);
         }
 
-        Type type;
-
         private void CreateTable()
         {
 
@@ -170,7 +168,9 @@ namespace PlurCrawler.Format
                 return "VARCHAR(100)";
             }
         }
-        
+
+        Type type;
+
         public override void FormattingData(IEnumerable<TResult> resultData)
         {
             if (resultData.Count() == 0)

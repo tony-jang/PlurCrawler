@@ -39,6 +39,7 @@ namespace PlurCrawler_Sample.Windows
 
             setJsonLocationPath.Click += SetJsonLocationPath_Click;
             setCsvLocationPath.Click += SetCsvLocationPath_Click;
+            setAccLocationPath.Click += SetAccLocationPath_Click;
 
             jsonExportFolder.TextChanged += SettingChanged;
             jsonExportName.TextChanged += SettingChanged;
@@ -54,6 +55,9 @@ namespace PlurCrawler_Sample.Windows
             mysqlUserID.TextChanged += SettingChanged;
             mysqlUserPw.PasswordChanged += SettingChanged;
             mysqlDatabaseName.TextChanged += SettingChanged;
+
+            accExportFolder.TextChanged += SettingChanged;
+            accExportName.TextChanged += SettingChanged;
 
             cbMySQLManualInput.Checked += SettingChanged;
             mysqlSelfConnQuery.TextChanged += SettingChanged;
@@ -82,6 +86,9 @@ namespace PlurCrawler_Sample.Windows
             mysqlUserPw.Password = option.MySQLUserPassword;
             mysqlDatabaseName.Text = option.MySQLDatabaseName;
 
+            accExportFolder.Text = option.AccessFolderLocation;
+            accExportName.Text = option.AccessFileName;
+
             cbMySQLManualInput.IsChecked = option.MySQLManualInput;
             mysqlSelfConnQuery.Text = option.MySQLConnString;
         }
@@ -102,7 +109,9 @@ namespace PlurCrawler_Sample.Windows
                 MySQLUserPassword = mysqlUserPw.Password,
                 MySQLDatabaseName = mysqlDatabaseName.Text,
                 MySQLManualInput = cbMySQLManualInput.IsChecked.GetValueOrDefault(),
-                MySQLConnString = mysqlSelfConnQuery.Text
+                MySQLConnString = mysqlSelfConnQuery.Text,
+                AccessFolderLocation = accExportFolder.Text,
+                AccessFileName = accExportName.Text
             };
 
             return option;
@@ -126,6 +135,15 @@ namespace PlurCrawler_Sample.Windows
         private void SetCsvLocationPath_Click(object sender, RoutedEventArgs e)
         {
             csvExportFolder.Text = GetFolderPath(csvExportFolder.Text);
+        }
+
+        #endregion
+
+        #region [  MySQL  ]
+
+        private void SetAccLocationPath_Click(object sender, RoutedEventArgs e)
+        {
+            accExportFolder.Text = GetFolderPath(accExportFolder.Text);
         }
 
         #endregion

@@ -152,12 +152,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\AccessTypeAttribute.cs" />
     <Compile Include="Attributes\MySQLTypeAttribute.cs" />
     <Compile Include="Attributes\PrimaryKeyAttribute.cs" />
     <Compile Include="Common\Pair.cs" />
     <Compile Include="Extension\DateTimeEx.cs" />
     <Compile Include="Extension\EnumEx.cs" />
     <Compile Include="Extension\StringEx.cs" />
+    <Compile Include="Format\AccessDBFormat.cs" />
     <Compile Include="Format\Base\BaseFormat.cs" />
     <Compile Include="Format\Base\BaseFormatReturn.cs" />
     <Compile Include="Format\Base\IFormat.cs" />

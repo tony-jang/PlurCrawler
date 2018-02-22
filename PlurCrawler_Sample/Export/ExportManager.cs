@@ -38,5 +38,22 @@ namespace PlurCrawler_Sample.Export
             mySQLFormat.FormattingData(searchResult);
             mySQLFormat.Dispose();
         }
+
+        public static bool AccessDBExport<TResult>(string fileLocation,IEnumerable<TResult> searchResult)
+            where TResult : ISearchResult
+        {
+            try
+            {
+                AccessDBFormat<TResult> dbFormat = new AccessDBFormat<TResult>(fileLocation);
+
+                dbFormat.FormattingData(searchResult);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return true;
+        }
     }
 }

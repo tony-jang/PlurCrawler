@@ -168,11 +168,12 @@ namespace PlurCrawler_Sample.Windows
                 TextBlock[] tbList = { tbJsonInfo, tbCSVInfo, tbMySQLInfo, tbAccessDBInfo };
                 Enum[] resultEnumList = { data.ExportResultPack.JsonExportResult,
                                       data.ExportResultPack.CSVExportResult,
-                                      data.ExportResultPack.MySQLExportResult};
+                                      data.ExportResultPack.MySQLExportResult,
+                                      data.ExportResultPack.AccessExportResult};
 
                 Enum[] serviceEnumList = { OutputFormat.Json, OutputFormat.CSV, OutputFormat.MySQL, OutputFormat.AccessDB };
 
-                for (int i = 0; i <= 2; i++)
+                for (int i = 0; i <= 3; i++)
                 {
                     tbList[i].Text = resultEnumList[i].GetAttributeFromEnum<NoteAttribute>().Message;
 

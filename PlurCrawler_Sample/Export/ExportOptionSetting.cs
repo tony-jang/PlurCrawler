@@ -185,6 +185,35 @@ namespace PlurCrawler_Sample.Export
         }
 
         #endregion
+
+        #region [  Access DB  ]
+
+
+        private string _accessFolderLocation;
+
+        public string AccessFolderLocation
+        {
+            get => _accessFolderLocation;
+            set
+            {
+                _accessFolderLocation = value;
+                OnPropertyChanged(this, new PropertyChangedEventArgs("AccessFolderLocation"));
+            }
+        }
+        
+        private string _accessFileName;
+
+        public string AccessFileName
+        {
+            get => _accessFileName;
+            set
+            {
+                _accessFileName = value;
+                OnPropertyChanged(this, new PropertyChangedEventArgs("AccessFileName"));
+            }
+        }
+        
+        #endregion
     }
 }
     
