@@ -35,6 +35,7 @@ namespace PlurCrawler_Sample
                 if (mainTabControl.SelectedIndex != 0)
                     mainTabControl.SelectedIndex = 0;
                 _logManager.AddLog(message, type);
+                ScrollToEnd();
             });
             
         }

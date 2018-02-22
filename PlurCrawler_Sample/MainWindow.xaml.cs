@@ -116,6 +116,18 @@ namespace PlurCrawler_Sample
             });
         }
 
+        public void ScrollToEnd()
+        {
+            try
+            {
+                lvLog.SelectedIndex = lvLog.Items.Count - 1;
+                lvLog.ScrollIntoView(lvLog.SelectedItem);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             #region [  Initalization UI  ]

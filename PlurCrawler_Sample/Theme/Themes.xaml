@@ -474,5 +474,26 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="SearchListBoxItemStyle" TargetType="{x:Type local:SearchListBoxItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:SearchListBoxItem}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <TextBlock Margin="3" Foreground="{TemplateBinding Foreground}" TextWrapping="Wrap">
+                        <Run Text="{TemplateBinding DateString}"/> | <Run Text="{TemplateBinding Title}"/> |
+                        <Run Text="{TemplateBinding Body}"/>
+                        </TextBlock>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#FF446FBB"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     
 </ResourceDictionary>

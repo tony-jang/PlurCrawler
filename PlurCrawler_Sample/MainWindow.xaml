@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlurCrawler_Sample"
         xmlns:ctrl="clr-namespace:PlurCrawler_Sample.Controls"
+        xmlns:twitter="clr-namespace:PlurCrawler.Search.Services.Twitter;assembly=PlurCrawler"
         mc:Ignorable="d"
         Title="PlurCrawler" Height="700" Width="1000" MinHeight="500" MinWidth="800">
     <Grid>
@@ -105,7 +106,7 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <TextBlock x:Name="tbSelectedName" Text="작업 로그" FontWeight="Bold" Margin="5" FontSize="14"/>
+                <TextBlock x:Name="tbSelectedName" Text="작업 로그 &amp; 미리보기" FontWeight="Bold" Margin="5" FontSize="14"/>
 
                 <TabControl x:Name="mainTabControl" SelectedIndex="0" Grid.Row="1" BorderBrush="{x:Null}">
                     <TabControl.Resources>
@@ -120,7 +121,62 @@
                         </Style>
                     </TabControl.Resources>
                     <TabItem x:Name="tiLog" Tag="작업 로그">
-                        <ListBox x:Name="lvLog" ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="5"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <ListBox x:Name="lvLog" ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
+                            <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            <TabControl Grid.Row="2">
+                                <TabItem Style="{DynamicResource TabItemStyle}">
+                                    <TabItem.Header>
+                                        <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/icon_google.png" Text="Google CSE" Height="16"/>
+                                    </TabItem.Header>
+                                    <Grid>
+                                        <DataGrid>
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="트윗 올린 날짜" Width="120" Binding="{Binding no}"/>
+                                                <DataGridTextColumn Header="원본 URL" Width="200" Binding="{Binding name}"/>
+                                                <DataGridTextColumn Header="제목" Width="100" Binding="{Binding data}"/>
+                                                <DataGridTextColumn Header="Excute Time" Width="100" Binding="{Binding time}"/>
+                                                <DataGridTextColumn Header="Loop Count" Width="100" Binding="{Binding loop}"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                        <Grid x:Name="blockGoogle" Background="#CCFFFFFF" Visibility="Hidden">
+                                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center">
+                                                검색이 진행중이 아닙니다.
+                                            </TextBlock>
+                                        </Grid>
+                                    </Grid>
+                                    
+                                    
+                                </TabItem>
+                                <TabItem Style="{DynamicResource TabItemStyle}">
+                                    <TabItem.Header>
+                                        <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/icon_twitter.png" Text="Twitter" Height="16"/>
+                                    </TabItem.Header>
+                                    <DataGrid>
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="트윗 올린 날짜" Width="120" Binding="{Binding PublishedDate}"/>
+                                            <DataGridTextColumn Header="올린 사람" Width="100" Binding="{Binding CreatorName}"/>
+                                            <DataGridTextColumn Header="리트윗" Width="60" Binding="{Binding IsRetweet}"/>
+                                            <DataGridTextColumn Header="텍스트" Width="350" Binding="{Binding Text}"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </TabItem>
+                                <TabItem Style="{DynamicResource TabItemStyle}">
+                                    <TabItem.Header>
+                                        <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/icon_youtube.png" Text="Youtube" Height="16"/>
+                                    </TabItem.Header>
+                                    <ListBox>
+                                        <!--<ctrl:SearchListBoxItem Date="2017-11-12"/>-->
+                                    </ListBox>
+                                </TabItem>
+                            </TabControl>
+                            
+                        </Grid>
                     </TabItem>
 
                     <TabItem x:Name="tiVertification" Tag="인증 관리자">
@@ -160,7 +216,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <Button x:Name="btnLog" Content="작업 로그" Padding="5" Margin="5"/>
+                    <Button x:Name="btnLog" Content="작업 로그 &amp; 미리보기" Padding="5" Margin="5"/>
                     <Button x:Name="btnVertManager" Content="인증 관리자" Padding="5" Margin="5" Grid.Row="0" Grid.Column="1"/>
                     <Button x:Name="btnTaskReport" Content="작업 보고서" Padding="5" Margin="5" Grid.Row="1" Grid.Column="0"/>
                     <Button x:Name="btnExportOption" Content="내보내기 옵션" Padding="5" Margin="5" Grid.Row="1" Grid.Column="1"/>
@@ -179,7 +235,7 @@
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
                             </Style>
                         </ListBox.ItemContainerStyle>
-                        <ctrl:TaskProgressBar Title="작업" Message="asdf"/>
+                        <ctrl:TaskProgressBar Title="작업" Message="작업중입니다."/>
                     </ListView>
                 </Grid>
 
