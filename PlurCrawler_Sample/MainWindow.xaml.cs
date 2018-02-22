@@ -16,6 +16,8 @@ using PlurCrawler_Sample.Windows;
 using PlurCrawler_Sample.Controls;
 using PlurCrawler_Sample.Common;
 using PlurCrawler_Sample.TaskLogs;
+using System.Net;
+using System.IO;
 
 namespace PlurCrawler_Sample
 {
@@ -35,7 +37,7 @@ namespace PlurCrawler_Sample
         public MainWindow()
         {
             InitializeComponent();
-
+            
             //var format = new MySQLFormat<YoutubeSearchResult>("localhost", "root", "asdf", "plurcrawler", "ttest");
 
             //string str = format.GetCreateTableQuery();
@@ -141,6 +143,13 @@ namespace PlurCrawler_Sample
             _taskReport = (TaskReport)frTaskReport.Content;
             
             _taskReport.ExportRequest += _taskReport_ExportRequest;
+
+            if (!AccessDBFormat<ISearchResult>.AccessConnectorInstalled())
+            {
+                AddLog("Access DB에 올바르게 접근 할 수 없습니다. 내보내기 옵션의 Access DB에서 문제를 해결하세요.", TaskLogType.System);
+
+                // TODO: 내보내기 옵션에 문제 해결 추가 (다운로드 + ...)
+            }
 
             #endregion
 

@@ -12,6 +12,7 @@ using PlurCrawler.Search.Services.GoogleCSE;
 using PlurCrawler.Search.Services.Twitter;
 using PlurCrawler.Search.Services.Youtube;
 using PlurCrawler.Attributes;
+using System.IO;
 
 namespace PlurCrawler.Format
 {
@@ -20,6 +21,45 @@ namespace PlurCrawler.Format
         public AccessDBFormat(string fileName)
         {
             this.FileName = fileName;
+            try
+            {
+                var cat = new ADOX.Catalog();
+                cat.Create($"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={fileName}");
+            }
+            catch (Exception ex)
+            {
+                bool knownException = false;
+                if (ex.Message.ToLower().Contains("database already exists"))
+                {
+                    knownException = true;
+                }
+
+                if (!knownException)
+                    throw ex;
+            }
+        }
+        
+        public static bool AccessConnectorInstalled()
+        {
+            string path = Path.Combine(Path.GetTempPath(), "testfile____.accdb");
+
+            try
+            {
+                var cat = new ADOX.Catalog();
+                cat.Create($"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={path}");
+                cat.ActiveConnection.Close();
+            }
+            catch (Exception ex)
+            {
+                if (ex.HResult == -2147221164)
+                {
+                    return false;
+                }
+            }
+
+            File.Delete(path);
+
+            return true;
         }
 
         #region [  Table 생성 관리  ]
@@ -152,23 +192,16 @@ namespace PlurCrawler.Format
                 
                 foreach(TResult data in resultData)
                 {
-                    try
+                    OleDbCommand cm = conn.CreateCommand();
+
+                    cm.CommandText = baseQuery;
+
+                    foreach (PropertyInfo prop in type.GetProperties())
                     {
-                        OleDbCommand cm = conn.CreateCommand();
-
-                        cm.CommandText = baseQuery;
-
-                        foreach (PropertyInfo prop in type.GetProperties())
-                        {
-                            cm.Parameters.AddWithValue($"@{prop.Name}", prop.GetValue(data));
-                        }
-
-                        cm.ExecuteNonQuery();
+                        cm.Parameters.AddWithValue($"@{prop.Name}", prop.GetValue(data));
                     }
-                    catch (Exception ex)
-                    {
-                        throw ex;
-                    }
+
+                    cm.ExecuteNonQuery();
                 }
             }
         }

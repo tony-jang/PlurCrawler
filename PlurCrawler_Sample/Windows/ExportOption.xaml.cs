@@ -31,6 +31,20 @@ namespace PlurCrawler_Sample.Windows
     /// </summary>
     public partial class ExportOption : Page
     {
+
+        /*
+            TODO: Access DB 연결 구현
+            
+            WebClient wc = new WebClient();
+
+            wc.DownloadFile("https://download.microsoft.com/download/f/d/8/fd8c20d8-e38a-48b6-8691-542403b91da1/AccessDatabaseEngine.exe", 
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "testfile.exe"));
+         */
+
+
+
+
+
         public ExportOption()
         {
             InitializeComponent();
