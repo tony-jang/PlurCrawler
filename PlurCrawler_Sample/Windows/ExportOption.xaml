@@ -129,6 +129,22 @@
                         </Grid>
                         <ctrl:PropertyTextBox x:Name="accExportName" PropertyName="파일 이름" Margin="10,10,45,10" 
                                               Description="※ Access DB 파일의 이름을 결정합니다. [확장자 제외]"/>
+                        
+                        <TextBlock Margin="10" TextWrapping="Wrap">
+                            Access DB 형식을 사용하기 위해서는 x32비트 OLE DB Provider가 필요합니다. 아래의 설치 버튼으로 설치한 뒤에 재시작해서 해결해보세요.
+                        </TextBlock>
+                        <Grid Margin="10">
+                            <Grid.ColumnDefinitions >
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="btnInstallFile" Content="설치중" Padding="20,5"/>
+                            <TextBlock VerticalAlignment="Center" Margin="10,0" Grid.Column="1">
+                                설치 파일을 다운로드 중입니다. <Run Text="(0%)"/>
+                            </TextBlock>
+                        </Grid>
+                        
+
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>

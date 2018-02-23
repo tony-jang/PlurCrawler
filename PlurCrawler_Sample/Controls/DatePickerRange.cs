@@ -49,13 +49,15 @@ namespace PlurCrawler_Sample.Controls
 
         DateTime saveSince, saveUntil;
 
+        bool templateApplied = false;
+
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
 
             dpSince = base.GetTemplateChild("dpSince") as DatePicker;
             dpUntil = base.GetTemplateChild("dpUntil") as DatePicker;
-            
+
             if (saveSince != default(DateTime))
                 dpSince.SelectedDate = saveSince;
 
@@ -78,8 +80,10 @@ namespace PlurCrawler_Sample.Controls
                 dpSince.DisplayDateEnd = _limitUntil;
                 dpUntil.DisplayDateEnd = _limitUntil;
             }
+
+            templateApplied = true;
         }
-        
+
         public static DependencyProperty PropertyNameProperty = DependencyHelper.Register();
 
         public string PropertyName
@@ -120,18 +124,15 @@ namespace PlurCrawler_Sample.Controls
             set
             {
                 _limitSince = value;
-                try
+                if (templateApplied)
                 {
                     dpSince.DisplayDateStart = _limitSince;
                     dpUntil.DisplayDateStart = _limitSince;
                 }
-                catch (Exception)
-                {
-                }
-                
+
             }
         }
-        
+
         private DateTime? _limitUntil;
 
         public DateTime? LimitUntil
@@ -140,16 +141,12 @@ namespace PlurCrawler_Sample.Controls
             set
             {
                 _limitUntil = value;
-                try
+                if (templateApplied)
                 {
                     dpSince.DisplayDateEnd = _limitUntil;
                     dpUntil.DisplayDateEnd = _limitUntil;
                 }
-                catch (Exception)
-                {
-                }
             }
         }
-        
     }
 }
