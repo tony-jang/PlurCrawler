@@ -167,7 +167,7 @@ namespace PlurCrawler.Search.Services.Twitter
                 IsRetweeted = tweet.Retweeted,
                 IsRetweet = tweet.IsRetweet,
                 PublishedDate = tweet.CreatedAt,
-                Text = tweet.FullText,
+                Content = tweet.FullText,
                 CreatorName = tweet.CreatedBy.Name,
                 CreatorId = tweet.CreatedBy.ScreenName,
                 OriginalURL = tweet.Url,

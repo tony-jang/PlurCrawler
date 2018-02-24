@@ -63,12 +63,12 @@ namespace PlurCrawler.Format
 
                 var props = GetProperties();
 
-                string prim = props.Where(i => i.Item3).First().Item1;
+                string prim = props.Where(i => i.IsPrimary).First().Name;
 
-                foreach ((string, string, bool) prop in props)
+                foreach (TableField prop in props)
                 {
-                    sql.Append($"{prop.Item1} {prop.Item2}");
-                    if (prop.Item3)
+                    sql.Append($"{prop.Name} {prop.Type}");
+                    if (prop.IsPrimary)
                     {
                         sql.Append(" NOT NULL");
                     }
@@ -135,10 +135,10 @@ namespace PlurCrawler.Format
             Connection = new MySqlConnection(connStr);
         }
 
-        private IEnumerable<(string, string, bool)> GetProperties()
+        private IEnumerable<TableField> GetProperties()
         {
             string primaryProp;
-            IEnumerable<PropertyInfo> properties = type.GetProperties();
+            IEnumerable<PropertyInfo> properties = type.GetProperties().Where(i => i.GetCustomAttributes<IgnorePropertyAttribute>().Count() == 0);
             
             try
             {
@@ -152,7 +152,15 @@ namespace PlurCrawler.Format
                 primaryProp = properties.First().Name;
             }
 
-            return properties.Select(i => (i.Name, GetTypeString(i), i.Name == primaryProp));
+            return properties.Select(i => new TableField(i.Name, GetTypeString(i), i.Name == primaryProp));
+        }
+
+        private IEnumerable<PropertyInfo> GetProperties(bool exceptIgnoreProperty)
+        {
+            if (exceptIgnoreProperty)
+                return type.GetProperties().Where(i => i.GetCustomAttributes<IgnorePropertyAttribute>().Count() == 0);
+            else
+                return type.GetProperties();
         }
 
         private string GetTypeString(PropertyInfo info)
@@ -198,7 +206,7 @@ namespace PlurCrawler.Format
 
             CreateTable();
             
-            string baseQuery = $"INSERT INTO {TableName} values({string.Join(", ", GetProperties().Select(i => $"@{i.Item1}"))})";
+            string baseQuery = $"INSERT INTO {TableName} values({string.Join(", ", GetProperties().Select(i => $"@{i.Name}"))})";
             
             foreach (TResult data in resultData)
             {
@@ -208,7 +216,7 @@ namespace PlurCrawler.Format
 
                     cm.CommandText = baseQuery;
 
-                    foreach (PropertyInfo prop in type.GetProperties())
+                    foreach (PropertyInfo prop in GetProperties(true))
                     {
                         cm.Parameters.AddWithValue($"@{prop.Name}", prop.GetValue(data));
                     }

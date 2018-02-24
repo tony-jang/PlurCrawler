@@ -18,6 +18,7 @@ namespace PlurCrawler.Search.Services.GoogleCSE
         /// 해당 검색 결과가 올라온 날짜를 나타냅니다. null일 수 있습니다.
         /// </summary>
         [MySQLType("DATETIME")]
+        [AccessType("DATETIME")]
         public DateTime? PublishedDate { get; set; }
 
         /// <summary>
@@ -25,24 +26,43 @@ namespace PlurCrawler.Search.Services.GoogleCSE
         /// </summary>
         [PrimaryKey]
         [MySQLType("VARCHAR(500)")]
+        [AccessType("LONGTEXT")]
         public string OriginalURL { get; set; }
         
         /// <summary>
         /// 해당 검색 결과의 제목을 나타냅니다.
         /// </summary>
         [MySQLType("VARCHAR(200)")]
+        [AccessType("LONGTEXT")]
         public string Title { get; set; }
 
         /// <summary>
         /// 해당 검색 결과를 미리보기 합니다.
         /// </summary>
         [MySQLType("LONGTEXT")]
+        [AccessType("LONGTEXT")]
         public string Snippet { get; set; }
+
+        [IgnoreProperty]
+        public string SimplifySnippet
+        {
+            get
+            {
+                string text = Snippet.Replace(Environment.NewLine, " ");
+                if (text.Length >= 50)
+                {
+                    return text.Substring(0, 50);
+                }
+
+                return text;
+            }
+        }
 
         /// <summary>
         /// 검색을 위해 입력했던 키워드를 나타냅니다.
         /// </summary>
         [MySQLType("TEXT")]
+        [AccessType("LONGTEXT")]
         public string Keyword { get; set; }
     }
 }

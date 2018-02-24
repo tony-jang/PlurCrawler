@@ -72,12 +72,12 @@ namespace PlurCrawler.Format
 
             var props = GetProperties();
 
-            string prim = props.Where(i => i.Item3).First().Item1;
+            string prim = props.Where(i => i.IsPrimary).First().Name;
 
-            foreach ((string, string, bool) prop in props)
+            foreach (TableField prop in props)
             {
-                sql.Append($"{prop.Item1} {prop.Item2}");
-                if (prop.Item3)
+                sql.Append($"{prop.Name} {prop.Type}");
+                if (prop.IsPrimary)
                 {
                     sql.Append(" NOT NULL");
                 }
@@ -112,10 +112,10 @@ namespace PlurCrawler.Format
 
         #region [  Property 관리  ]
 
-        private IEnumerable<(string, string, bool)> GetProperties()
+        private IEnumerable<TableField> GetProperties()
         {
             string primaryProp;
-            IEnumerable<PropertyInfo> properties = type.GetProperties();
+            IEnumerable<PropertyInfo> properties = type.GetProperties().Where(i => i.GetCustomAttributes<IgnorePropertyAttribute>().Count() == 0);
 
             try
             {
@@ -129,9 +129,17 @@ namespace PlurCrawler.Format
                 primaryProp = properties.First().Name;
             }
 
-            return properties.Select(i => (i.Name, GetTypeString(i), i.Name == primaryProp));
+            return properties.Select(i => new TableField(i.Name, GetTypeString(i), i.Name == primaryProp));
         }
         
+        private IEnumerable<PropertyInfo> GetProperties(bool exceptIgnoreProperty)
+        {
+            if (exceptIgnoreProperty)
+                return type.GetProperties().Where(i => i.GetCustomAttributes<IgnorePropertyAttribute>().Count() == 0);
+            else
+                return type.GetProperties();
+        }
+
         private string GetTypeString(PropertyInfo info)
         {
             try
@@ -142,7 +150,7 @@ namespace PlurCrawler.Format
             }
             catch (Exception)
             {
-                return "VARCHAR(500)";
+                return "VARCHAR";
             }
         }
 
@@ -184,24 +192,27 @@ namespace PlurCrawler.Format
 
                 CreateTable(conn);
 
-                string baseQuery = $"INSERT INTO {TableName} values({string.Join(", ", GetProperties().Select(i => $"@{i.Item1}"))})";
-
-                string sql = "";
-                OleDbCommand cmd = new OleDbCommand(sql, conn);
-                cmd.ExecuteNonQuery();
+                string baseQuery = $"INSERT INTO {TableName} values({string.Join(", ", GetProperties().Select(i => $"@{i.Name}"))})";
                 
                 foreach(TResult data in resultData)
                 {
-                    OleDbCommand cm = conn.CreateCommand();
+                    OleDbCommand cmd = new OleDbCommand(baseQuery, conn);
 
-                    cm.CommandText = baseQuery;
-
-                    foreach (PropertyInfo prop in type.GetProperties())
+                    foreach (PropertyInfo prop in GetProperties(true))
                     {
-                        cm.Parameters.AddWithValue($"@{prop.Name}", prop.GetValue(data));
+                        cmd.Parameters.AddWithValue($"@{prop.Name}", GetValue());
+
+                        object GetValue()
+                        {
+                            object value = prop.GetValue(data);
+                            if (value == null)
+                                return DBNull.Value;
+
+                            return value;
+                        }
                     }
 
-                    cm.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery();
                 }
             }
         }

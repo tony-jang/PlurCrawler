@@ -189,6 +189,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\AccessTypeAttribute.cs" />
+    <Compile Include="Attributes\IgnorePropertyAttribute.cs" />
     <Compile Include="Attributes\MySQLTypeAttribute.cs" />
     <Compile Include="Attributes\PrimaryKeyAttribute.cs" />
     <Compile Include="Common\Pair.cs" />
@@ -203,6 +204,7 @@
     <Compile Include="Format\CSVFormat.cs" />
     <Compile Include="Format\JsonFormat.cs" />
     <Compile Include="Format\MySQLFormat.cs" />
+    <Compile Include="Format\TableField.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ResourceManager.cs" />
     <Compile Include="Search\Base\IDateSearchOption.cs" />
