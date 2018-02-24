@@ -22,6 +22,12 @@ namespace PlurCrawler_Sample.Controls
         ProgressBar pb;
         PathButton btn;
 
+        public bool TaskFinished
+        {
+            get => btn.Visibility == Visibility.Visible;
+            set => btn.Visibility = (value ? Visibility.Visible : Visibility.Hidden);
+        }
+
         bool init = false;
 
         double savedValue, savedMaximum, savedMinimum;

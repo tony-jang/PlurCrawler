@@ -125,25 +125,26 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="5"/>
-                                <RowDefinition/>
+                                <RowDefinition Height="268"/>
                             </Grid.RowDefinitions>
                             <ListBox x:Name="lvLog" ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
                             <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                            <TabControl Grid.Row="2">
+                            <TabControl x:Name="tcPreview" Grid.Row="2">
                                 <TabItem Style="{DynamicResource TabItemStyle}">
                                     <TabItem.Header>
                                         <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/icon_google.png" Text="Google CSE" Height="16"/>
                                     </TabItem.Header>
                                     <Grid>
-                                        <DataGrid>
-                                            <DataGrid.Columns>
-                                                <DataGridTextColumn Header="트윗 올린 날짜" Width="120" Binding="{Binding no}"/>
-                                                <DataGridTextColumn Header="원본 URL" Width="200" Binding="{Binding name}"/>
-                                                <DataGridTextColumn Header="제목" Width="100" Binding="{Binding data}"/>
-                                                <DataGridTextColumn Header="Excute Time" Width="100" Binding="{Binding time}"/>
-                                                <DataGridTextColumn Header="Loop Count" Width="100" Binding="{Binding loop}"/>
-                                            </DataGrid.Columns>
-                                        </DataGrid>
+                                        <ListView x:Name="lvGoogle" Foreground="Black">
+                                            <ListView.View>
+                                                <GridView>
+                                                    <GridViewColumn Header="날짜" Width="120" DisplayMemberBinding="{Binding PublishedDate}"/>
+                                                    <GridViewColumn Header="제목" Width="200" DisplayMemberBinding="{Binding Title}"/>
+                                                    <GridViewColumn Header="미리보기" Width="150" DisplayMemberBinding="{Binding SimplifySnippet}"/>
+                                                    <GridViewColumn Header="URL" Width="200" DisplayMemberBinding="{Binding OriginalURL}"/>
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
                                         <Grid x:Name="blockGoogle" Background="#CCFFFFFF" Visibility="Hidden">
                                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center">
                                                 검색이 진행중이 아닙니다.
@@ -157,22 +158,31 @@
                                     <TabItem.Header>
                                         <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/icon_twitter.png" Text="Twitter" Height="16"/>
                                     </TabItem.Header>
-                                    <DataGrid>
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn Header="트윗 올린 날짜" Width="120" Binding="{Binding PublishedDate}"/>
-                                            <DataGridTextColumn Header="올린 사람" Width="100" Binding="{Binding CreatorName}"/>
-                                            <DataGridTextColumn Header="리트윗" Width="60" Binding="{Binding IsRetweet}"/>
-                                            <DataGridTextColumn Header="텍스트" Width="350" Binding="{Binding Text}"/>
-                                        </DataGrid.Columns>
-                                    </DataGrid>
+                                    <ListView x:Name="lvTwitter" Foreground="Black">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="날짜" Width="120" DisplayMemberBinding="{Binding PublishedDate}"/>
+                                                <GridViewColumn Header="제목" Width="200" DisplayMemberBinding="{Binding Title}"/>
+                                                <GridViewColumn Header="내용" Width="150" DisplayMemberBinding="{Binding SimplifyContent}"/>
+                                                <GridViewColumn Header="URL" Width="200" DisplayMemberBinding="{Binding OriginalURL}"/>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
                                 </TabItem>
                                 <TabItem Style="{DynamicResource TabItemStyle}">
                                     <TabItem.Header>
                                         <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/icon_youtube.png" Text="Youtube" Height="16"/>
                                     </TabItem.Header>
-                                    <ListBox>
-                                        <!--<ctrl:SearchListBoxItem Date="2017-11-12"/>-->
-                                    </ListBox>
+                                    <ListView x:Name="lvYoutube" Foreground="Black">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="날짜" Width="120" DisplayMemberBinding="{Binding PublishedDate}"/>
+                                                <GridViewColumn Header="제목" Width="200" DisplayMemberBinding="{Binding Title}"/>
+                                                <GridViewColumn Header="설명" Width="150" DisplayMemberBinding="{Binding SimplifyDescription}"/>
+                                                <GridViewColumn Header="URL" Width="200" DisplayMemberBinding="{Binding OriginalURL}"/>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
                                 </TabItem>
                             </TabControl>
                             

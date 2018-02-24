@@ -83,7 +83,7 @@ namespace PlurCrawler_Sample
                     {
                         tb.SetValue(message: "결과를 내보낼 위치가 없습니다.", maximum: 1);
                         AddLog("검색을 내보낼 위치가 없습니다.", TaskLogType.Failed);
-
+                        tb.TaskFinished = true;
                         info = SearchResult.Fail_InvaildSetting;
                         isCanceled = true;
                     }
@@ -93,6 +93,7 @@ namespace PlurCrawler_Sample
                     if (!googleCSESearcher.IsVerification) // 인증되지 않았을 경우
                     {
                         tb.SetValue(message: "API키가 인증되지 않았습니다.", maximum: 1);
+                        tb.TaskFinished = true;
                         AddLog("API키가 인증되지 않았습니다.", TaskLogType.Failed);
 
                         info = SearchResult.Fail_APIError;
@@ -116,6 +117,11 @@ namespace PlurCrawler_Sample
                     {
                         AddLog("'Google CSE' 검색 중 오류가 발생했습니다. [날짜를 사용하지 않은 상태에서는 '하루 기준' 옵션을 사용할 수 없습니다.]", TaskLogType.Failed);
                         info = SearchResult.Fail_InvaildSetting;
+                        Dispatcher.Invoke(() =>
+                        {
+                            dict[googleCSESearcher].SetValue(message: "설정 오류가 발생했습니다.", maximum: 1);
+                            dict[googleCSESearcher].TaskFinished = true;
+                        });
                     }
                 }
 
@@ -370,6 +376,8 @@ namespace PlurCrawler_Sample
                 TaskProgressBar itm = dict[sender as ISearcher];
                 itm.SetValue(value: itm.Maximum, message: "검색이 완료되었습니다.");
 
+                itm.TaskFinished = true;
+
                 _logManager.AddLog("검색이 완료되었습니다.", TaskLogType.Searching);
 
                 SettingManager.GoogleCredentials.Item2 = VerifyType.Verified;
@@ -402,13 +410,16 @@ namespace PlurCrawler_Sample
                 switch (e.Kind)
                 {
                     case ServiceKind.GoogleCSE:
-
+                        lvGoogle.Items.Add((GoogleCSESearchResult)e.Result);
+                        tcPreview.SelectedIndex = 0;
                         break;
                     case ServiceKind.Youtube:
-                        
+                        lvYoutube.Items.Add((YoutubeSearchResult)e.Result);
+                        tcPreview.SelectedIndex = 2;
                         break;
                     case ServiceKind.Twitter:
-
+                        lvTwitter.Items.Add((TwitterSearchResult)e.Result);
+                        tcPreview.SelectedIndex = 1;
                         break;
                 }
             });
@@ -627,7 +638,7 @@ namespace PlurCrawler_Sample
                         {
                             try
                             {
-                                string fullPath = Path.Combine(folder, $"{fileName}{GetServiceString(serviceKind)}.accdb");
+                                string fullPath = Path.Combine(folder, $"{fileName}.accdb");
                                 if (ExportManager.AccessDBExport(fullPath, result))
                                 {
                                     AddLog($"Access DB로 성공적으로 내보냈습니다. 저장 위치 : {fullPath}", TaskLogType.Complete);
