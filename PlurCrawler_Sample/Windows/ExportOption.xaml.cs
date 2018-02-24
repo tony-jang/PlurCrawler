@@ -1,26 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Forms;
 using System.IO;
 
-using PlurCrawler.Extension;
 
 using PlurCrawler_Sample.Export;
 using PlurCrawler_Sample.Common;
-
-using Microsoft.Win32;
 
 using IOPath = System.IO.Path;
 
@@ -31,20 +17,6 @@ namespace PlurCrawler_Sample.Windows
     /// </summary>
     public partial class ExportOption : Page
     {
-
-        /*
-            TODO: Access DB 연결 구현
-            
-            WebClient wc = new WebClient();
-
-            wc.DownloadFile("https://download.microsoft.com/download/f/d/8/fd8c20d8-e38a-48b6-8691-542403b91da1/AccessDatabaseEngine.exe", 
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "testfile.exe"));
-         */
-
-
-
-
-
         public ExportOption()
         {
             InitializeComponent();

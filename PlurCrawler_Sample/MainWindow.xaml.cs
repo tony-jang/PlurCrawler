@@ -38,12 +38,6 @@ namespace PlurCrawler_Sample
         {
             InitializeComponent();
             
-            //var format = new MySQLFormat<YoutubeSearchResult>("localhost", "root", "asdf", "plurcrawler", "ttest");
-
-            //string str = format.GetCreateTableQuery();
-
-            //return;
-
             #region [  Initalization  ]
 
             _logManager = new TaskLogManager();
@@ -147,28 +141,9 @@ namespace PlurCrawler_Sample
             if (!AccessDBFormat<ISearchResult>.AccessConnectorInstalled())
             {
                 AddLog("Access DB에 올바르게 접근 할 수 없습니다. 내보내기 옵션의 Access DB에서 문제를 해결하세요.", TaskLogType.System);
-
-                // TODO: 내보내기 옵션에 문제 해결 추가 (다운로드 + ...)
             }
 
             #endregion
-
-#if DEBUG
-
-            //var mysql = new MySQLFormat<GoogleCSESearchResult>("localhost", "root", "-", "plurcrawler", "google");
-
-            //mysql.FormattingData(null);
-
-            //var csvformat = new CSVFormat<GoogleCSESearchResult>();
-
-            //csvformat.FormattingData(new List<GoogleCSESearchResult>() { new GoogleCSESearchResult()
-            //{
-            //    OriginalURL = "www.naver.com",
-            //    PublishedDate = DateTime.Now,
-            //    Snippet = "jasdfkjklasdfkjl;adsfs",
-            //    Title = "asdf"
-            //}});
-#endif
         }
         
         #region [  UI EventHandler  ]
