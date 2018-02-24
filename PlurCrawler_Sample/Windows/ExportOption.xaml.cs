@@ -3,12 +3,18 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.IO;
+using System.Net;
+using System.Threading;
+using System.Diagnostics;
 
+using PlurCrawler.Format;
+using PlurCrawler.Search.Base;
 
 using PlurCrawler_Sample.Export;
 using PlurCrawler_Sample.Common;
 
 using IOPath = System.IO.Path;
+using WinApplication = System.Windows.Application;
 
 namespace PlurCrawler_Sample.Windows
 {
@@ -47,6 +53,16 @@ namespace PlurCrawler_Sample.Windows
 
             cbMySQLManualInput.Checked += SettingChanged;
             mysqlSelfConnQuery.TextChanged += SettingChanged;
+
+            btnInstallFile.Click += BtnInstallFile_Click;
+        }
+
+        private void BtnInstallFile_Click(object sender, RoutedEventArgs e)
+        {
+            tbInstallLoad.Visibility = Visibility.Visible;
+            btnInstallFile.IsEnabled = false;
+            btnInstallFile.Content = "설치중";
+            DownloadDBProvider();
         }
 
         public void SettingChanged(object sender, EventArgs e)
@@ -54,11 +70,26 @@ namespace PlurCrawler_Sample.Windows
             SettingManager.ExportOptionSetting = ExportSetting();
         }
 
+        private string GetFolderPath(string startPath)
+        {
+            var folderDialog = new FolderBrowserDialog();
+
+            if (Directory.Exists(startPath))
+                folderDialog.SelectedPath = startPath;
+
+            if (folderDialog.ShowDialog() == DialogResult.OK)
+            {
+                return folderDialog.SelectedPath;
+            }
+
+            return startPath;
+        }
+
         #region [  Setting Load / Save  ]
 
         public void LoadSetting(ExportOptionSetting option)
         {
-            jsonExportFolder.Text = option.JsonFolderLocation ;
+            jsonExportFolder.Text = option.JsonFolderLocation;
             jsonExportName.Text = option.JsonFileName;
             jsonOverlapOption.SelectedIndex = option.JsonOverlapOption;
             cbUseJsonSort.IsChecked = option.JsonSort;
@@ -108,7 +139,7 @@ namespace PlurCrawler_Sample.Windows
         #region [  Json  ]
 
         public bool UseJsonSort => cbUseJsonSort.IsChecked.GetValueOrDefault();
-        
+
         private void SetJsonLocationPath_Click(object sender, RoutedEventArgs e)
         {
             jsonExportFolder.Text = GetFolderPath(jsonExportFolder.Text);
@@ -134,19 +165,72 @@ namespace PlurCrawler_Sample.Windows
 
         #endregion
 
-        private string GetFolderPath(string startPath)
+        public string FullPath = IOPath.Combine(IOPath.GetTempPath(), "AccessDatabaseEngine.exe");
+
+        public void DownloadDBProvider()
         {
-            var folderDialog = new FolderBrowserDialog();
-
-            if (Directory.Exists(startPath))
-                folderDialog.SelectedPath = startPath;
-
-            if (folderDialog.ShowDialog() == DialogResult.OK)
+            Thread thr = new Thread(() =>
             {
-                return folderDialog.SelectedPath;
-            }
+                try
+                {
+                    WebClient wc = new WebClient();
 
-            return startPath;
+                    wc.DownloadProgressChanged += Wc_DownloadProgressChanged;
+                    wc.DownloadFileCompleted += Wc_DownloadFileCompleted;
+                    wc.DownloadFileAsync(new Uri("https://download.microsoft.com/download/f/d/8/fd8c20d8-e38a-48b6-8691-542403b91da1/AccessDatabaseEngine.exe"), FullPath);
+                }
+                catch (Exception ex)
+                {
+                }
+            });
+
+            thr.Start();
+        }
+
+        private void Wc_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                runDownloadPercent.Text = string.Empty;
+                runBaseText.Text = "설치중입니다.";
+                Thread thr = new Thread(() =>
+                {
+                    Process p = Process.Start(FullPath);
+
+                    while (!p.HasExited)
+                    {
+                    }
+
+                    if (!AccessDBFormat<ISearchResult>.AccessConnectorInstalled())
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            runBaseText.Text = "설치가 제대로 완료되지 않았습니다. 설치 버튼으로 재시도해보세요.";
+                        });
+                    }
+                    else
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            runBaseText.Text = "설치가 완료되었습니다. 이제 5초뒤에 자동으로 재시작합니다.";
+                        });
+                        Thread.Sleep(5000);
+
+                        Process.Start(WinApplication.ResourceAssembly.Location);
+                        Dispatcher.Invoke(() => WinApplication.Current.Shutdown());
+                    }
+                });
+
+                thr.Start();
+            });
+        }
+
+        private void Wc_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                runDownloadPercent.Text = $"({e.ProgressPercentage}%)";
+            });
         }
     }
 }
