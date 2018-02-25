@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Newtonsoft.Json;
 using PlurCrawler.Attributes;
 using PlurCrawler.Search.Base;
 
@@ -44,6 +44,7 @@ namespace PlurCrawler.Search.Services.GoogleCSE
         public string Snippet { get; set; }
 
         [IgnoreProperty]
+        [JsonIgnore]
         public string SimplifySnippet
         {
             get

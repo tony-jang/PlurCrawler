@@ -1,5 +1,5 @@
 ﻿using System;
-
+using Newtonsoft.Json;
 using PlurCrawler.Attributes;
 using PlurCrawler.Search.Base;
 
@@ -43,6 +43,7 @@ namespace PlurCrawler.Search.Services.Youtube
         public string Description { get; set; }
 
         [IgnoreProperty]
+        [JsonIgnore]
         public string SimplifyDescription {
             get
             {

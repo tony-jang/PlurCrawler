@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-
+using PlurCrawler.Attributes;
 using PlurCrawler.Extension;
 using PlurCrawler.Format.Base;
 using PlurCrawler.Search.Base;
@@ -24,7 +24,13 @@ namespace PlurCrawler.Format
             StringBuilder sb = new StringBuilder();
 
             // 프로퍼티 목록 추출
-            IEnumerable<string> properties = resultData.First().GetType().GetProperties().Select(i => i.Name);
+            IEnumerable<string> properties = resultData
+                .First()
+                .GetType()
+                .GetProperties()
+                .Where(i => i.GetCustomAttributes<IgnorePropertyAttribute>().Count() == 0)
+                .Select(i => i.Name);
+
             sb.AppendLine(string.Join(",", properties));
 
             foreach(TResult item in resultData)
