@@ -198,7 +198,7 @@ namespace PlurCrawler_Sample
                         isCanceled = true;
                     }
 
-                    if (!twitterSearcher.IsVerification)
+                    if (!TwitterSearcher.IsVerification)
                     {
                         tb.SetValue(message: "API키가 인증되지 않았습니다.", maximum: 1);
                         AddLog("API키가 인증되지 않았습니다.", TaskLogType.Failed);
@@ -224,6 +224,10 @@ namespace PlurCrawler_Sample
                     {
                         AddLog("'Twitter' 검색 중 오류가 발생했습니다. [날짜를 사용하지 않은 상태에서는 '하루 기준' 옵션을 사용할 수 없습니다.]", TaskLogType.Failed);
                         info = SearchResult.Fail_InvaildSetting;
+                    }
+                    catch (InternetUnstableException)
+                    {
+                        AddLog("'Twitter' 검색 중 오류가 발생했습니다. [인터넷 환경이 불안정한거 같습니다.]", TaskLogType.Failed);
                     }
                 }
 

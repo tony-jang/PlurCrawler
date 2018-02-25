@@ -127,8 +127,21 @@ namespace PlurCrawler_Sample.Common
             YoutubeCredentials.PropertyChanged += YoutubeCredentials_PropertyChanged;
             YoutubeSearchOption.PropertyChanged += YoutubeSearchOption_PropertyChanged;
         }
-
+        
         private static AppSetting AppSetting => AppSetting.Default;
+
+        #region [  Twitter Vertified Check  ]
+
+        public static event EventHandler TwitterCredentialChanged;
+
+        public static bool TwitterVertified => TwitterSearcher.IsVerification;
+
+        public static void RaiseTwitterCredentialChanged()
+        {
+            TwitterCredentialChanged?.Invoke(null, new EventArgs());
+        }
+
+        #endregion
 
         #region [  Event  ]
 

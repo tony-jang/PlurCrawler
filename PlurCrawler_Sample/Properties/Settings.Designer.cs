@@ -73,7 +73,7 @@ namespace PlurCrawler_Sample.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("NotChecked")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Invalid")]
         public global::PlurCrawler_Sample.Common.VerifyType GoogleIDVertified {
             get {
                 return ((global::PlurCrawler_Sample.Common.VerifyType)(this["GoogleIDVertified"]));
@@ -97,7 +97,7 @@ namespace PlurCrawler_Sample.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("NotChecked")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Invalid")]
         public global::PlurCrawler_Sample.Common.VerifyType GoogleKeyVertified {
             get {
                 return ((global::PlurCrawler_Sample.Common.VerifyType)(this["GoogleKeyVertified"]));
@@ -145,7 +145,7 @@ namespace PlurCrawler_Sample.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("NotChecked")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Invalid")]
         public global::PlurCrawler_Sample.Common.VerifyType YoutubeVertified {
             get {
                 return ((global::PlurCrawler_Sample.Common.VerifyType)(this["YoutubeVertified"]));

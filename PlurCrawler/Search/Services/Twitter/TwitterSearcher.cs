@@ -18,8 +18,8 @@ namespace PlurCrawler.Search.Services.Twitter
         /// <summary>
         /// 인증 상태를 확인합니다.
         /// </summary>
-        public new bool IsVerification => Tweetinvi.Auth.Credentials != null;
-
+        public static new bool IsVerification => Tweetinvi.Auth.Credentials != null;
+        
         private int Maximum { get; set; }
         private int Current { get; set; } = 0;
 
@@ -119,7 +119,20 @@ namespace PlurCrawler.Search.Services.Twitter
                     searchParam.Until = time.AddDays(1);
                 }
 
-                ITweetSearchResult results = Tweetinvi.Search.SearchTweetsWithMetadata(searchParam);
+                ITweetSearchResult results = null;
+
+                try
+                {
+                    results = Tweetinvi.Search.SearchTweetsWithMetadata(searchParam);
+                }
+                catch (ArgumentNullException)
+                {
+                    throw new InternetUnstableException("인터넷 상태가 불안정합니다. 좀 더 원할한 곳에서 검색을 진행해주세요.");
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
                 
                 if (results.Tweets != null)
                 {

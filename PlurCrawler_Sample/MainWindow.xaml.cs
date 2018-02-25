@@ -52,6 +52,14 @@ namespace PlurCrawler_Sample
             cbTwitterService.IsChecked = eUsage.Item2;
             cbYoutubeService.IsChecked = eUsage.Item3;
 
+            CheckVertified(ServiceKind.GoogleCSE);
+            CheckVertified(ServiceKind.Twitter);
+            CheckVertified(ServiceKind.Youtube);
+
+            SettingManager.GoogleCredentials.PropertyChanged += GoogleCredentials_PropertyChanged;
+            SettingManager.TwitterCredentialChanged += SettingManager_TwitterCredentialChanged;
+            SettingManager.YoutubeCredentials.PropertyChanged += YoutubeCredentials_PropertyChanged;
+            
             btnSearch.IsEnabled = eUsage.Item1 || eUsage.Item2 || eUsage.Item3;
 
             #endregion
@@ -84,6 +92,82 @@ namespace PlurCrawler_Sample
 
             #endregion
         }
+
+        #region [  인증 상태 관리  ]
+
+        public void CheckVertified(ServiceKind serviceKind)
+        {
+            switch (serviceKind)
+            {
+                case ServiceKind.GoogleCSE:
+                    if (SettingManager.GoogleCredentials.Item2 == VerifyType.Verified &&
+                        SettingManager.GoogleCredentials.Item4 == VerifyType.Verified)
+                    {
+                        cbGoogleVertified.IsChecked = true;
+                        goVertToolTip.Content = "구글 CSE 엔진은 인증되었습니다.";
+                    }
+                    else
+                    {
+                        cbGoogleVertified.IsChecked = false;
+                        goVertToolTip.Content = "구글 CSE 엔진은 인증되지 않았습니다.";
+                    }
+                    break;
+                case ServiceKind.Youtube:
+                    if (SettingManager.YoutubeCredentials.Item2 == VerifyType.Verified)
+                    {
+                        cbYoutubeVertified.IsChecked = true;
+                        ytVertToolTip.Content = "Youtube 엔진은 인증되었습니다.";
+                    }
+                    else
+                    {
+                        cbYoutubeVertified.IsChecked = false;
+                        ytVertToolTip.Content = "Youtube 엔진은 인증되지 않았습니다.";
+                    }
+                    break;
+                case ServiceKind.Twitter:
+                    if (SettingManager.TwitterVertified)
+                    {
+                        cbTwitterVertified.IsChecked = true;
+                        twVertToolTip.Content = "Twitter 엔진은 인증되었습니다.";
+                    }
+                    else
+                    {
+                        cbTwitterVertified.IsChecked = false;
+                        twVertToolTip.Content = "Twitter 엔진은 인증되지 않았습니다." ;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void YoutubeCredentials_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case "Item2":
+                    CheckVertified(ServiceKind.Youtube);
+                    break;
+            }
+        }
+
+        private void SettingManager_TwitterCredentialChanged(object sender, EventArgs e)
+        {
+            CheckVertified(ServiceKind.Twitter);
+        }
+
+        private void GoogleCredentials_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case "Item2":
+                case "Item4":
+                    CheckVertified(ServiceKind.GoogleCSE);
+                    break;
+            }
+        }
+
+        #endregion
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {

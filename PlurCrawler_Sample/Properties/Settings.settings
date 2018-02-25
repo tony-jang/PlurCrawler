@@ -15,13 +15,13 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="GoogleIDVertified" Type="PlurCrawler_Sample.Common.VerifyType" Scope="User">
-      <Value Profile="(Default)">NotChecked</Value>
+      <Value Profile="(Default)">Invalid</Value>
     </Setting>
     <Setting Name="EngineUsage" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="GoogleKeyVertified" Type="PlurCrawler_Sample.Common.VerifyType" Scope="User">
-      <Value Profile="(Default)">NotChecked</Value>
+      <Value Profile="(Default)">Invalid</Value>
     </Setting>
     <Setting Name="ExportOption" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
@@ -33,7 +33,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="YoutubeVertified" Type="PlurCrawler_Sample.Common.VerifyType" Scope="User">
-      <Value Profile="(Default)">NotChecked</Value>
+      <Value Profile="(Default)">Invalid</Value>
     </Setting>
   </Settings>
 </SettingsFile>

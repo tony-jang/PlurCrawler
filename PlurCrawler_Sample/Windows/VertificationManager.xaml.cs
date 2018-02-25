@@ -90,19 +90,24 @@ namespace PlurCrawler_Sample.Windows
         private void VertificationManager_Loaded(object sender, RoutedEventArgs e)
         {
             if (!SettingManager.GoogleCredentials.Item1.IsNullOrEmpty())
+            {
                 SetGoogleKey(SettingManager.GoogleCredentials.Item1, true);
+                ChangeGoogleState(SettingManager.GoogleCredentials.Item2, true);
+            }
             if (!SettingManager.GoogleCredentials.Item3.IsNullOrEmpty())
+            {
                 SetGoogleEngineID(SettingManager.GoogleCredentials.Item3, true);
-
-            ChangeGoogleState(SettingManager.GoogleCredentials.Item2, true);
-            ChangeGoogleState(SettingManager.GoogleCredentials.Item4, false);
+                ChangeGoogleState(SettingManager.GoogleCredentials.Item4, false);
+            }
 
             SetTwitterAuthPair(SettingManager.TwitterCredentials.Item1, SettingManager.TwitterCredentials.Item2);
 
             if (!SettingManager.YoutubeCredentials.Item1.IsNullOrEmpty())
+            {
                 SetYoutubeKey(SettingManager.YoutubeCredentials.Item1, true);
+                ChangeYoutubeState(SettingManager.YoutubeCredentials.Item2);
+            }
 
-            ChangeYoutubeState(SettingManager.YoutubeCredentials.Item2);
         }
 
         private void ChangeYoutubeState(VerifyType verifyType)
@@ -170,7 +175,7 @@ namespace PlurCrawler_Sample.Windows
             try
             {
                 tokenizer.CredentialsCertification(credentials);
-
+                SettingManager.RaiseTwitterCredentialChanged();
                 tbTwitterPINMsg.Visibility = Visibility.Hidden;
                 wbTwitter.Visibility = Visibility.Hidden;
                 tcTwitterAuth.SelectedIndex = 2;

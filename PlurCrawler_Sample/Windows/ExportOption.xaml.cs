@@ -181,6 +181,7 @@ namespace PlurCrawler_Sample.Windows
                 }
                 catch (Exception ex)
                 {
+                    // TODO: 인터넷 오류 발생시 알림 추가
                 }
             });
 

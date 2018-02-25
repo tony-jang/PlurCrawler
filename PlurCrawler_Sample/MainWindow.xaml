@@ -61,13 +61,13 @@
                                 </Style>
                             </WrapPanel.Resources>
                             <Grid Background="Transparent">
-                                <ctrl:ImageCheckBox x:Name="cbGoogleVertified" Margin="5"
+                                <ctrl:ImageCheckBox x:Name="cbGoogleVertified" Margin="6,5,4,5"
                                                     Source="Resources/icon_google.png" 
                                                     DisabledSource="Resources/icon_google_gray.png"
                                                     Style="{StaticResource ImageCheckBoxStyle2}">
                                 </ctrl:ImageCheckBox>
                                 <Grid.ToolTip>
-                                    <ToolTip Content="구글의 인증 상태가 표시될 예정입니다."/>
+                                    <ToolTip x:Name="goVertToolTip" Content="구글의 인증 상태가 표시될 예정입니다."/>
                                 </Grid.ToolTip>
                             </Grid>
                             <Grid Background="Transparent">
@@ -76,7 +76,7 @@
                                                     DisabledSource="Resources/icon_twitter_gray.png"
                                                     Style="{StaticResource ImageCheckBoxStyle2}"/>
                                 <Grid.ToolTip>
-                                    <ToolTip Content="트위터의 인증 상태가 표시될 예정입니다."/>
+                                    <ToolTip x:Name="twVertToolTip" Content="트위터의 인증 상태가 표시될 예정입니다."/>
                                 </Grid.ToolTip>
                             </Grid>
                             <Grid Background="Transparent">
@@ -85,7 +85,7 @@
                                                     DisabledSource="Resources/icon_youtube_gray.png"
                                                     Style="{StaticResource ImageCheckBoxStyle2}"/>
                                 <Grid.ToolTip>
-                                    <ToolTip Content="유튜브의 인증 상태가 표시될 예정입니다."/>
+                                    <ToolTip x:Name="ytVertToolTip" Content="유튜브의 인증 상태가 표시될 예정입니다."/>
                                 </Grid.ToolTip>
                             </Grid>
                             
