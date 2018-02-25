@@ -34,6 +34,8 @@ namespace PlurCrawler_Sample
 
         Dictionary<ISearcher, TaskProgressBar> dict;
 
+        bool AutoPreviewItemFocus { get; set; } = false;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -88,9 +90,17 @@ namespace PlurCrawler_Sample
 
             _logManager.LogAdded += _logManager_LogAdded;
 
+            previewTabAutoFocusing.Checked += PreviewTabAutoFocusing_Checked;
+            previewTabAutoFocusing.Unchecked += PreviewTabAutoFocusing_Checked;
+
             this.Closing += MainWindow_Closing;
 
             #endregion
+        }
+
+        private void PreviewTabAutoFocusing_Checked(object sender, RoutedEventArgs e)
+        {
+            AutoPreviewItemFocus = previewTabAutoFocusing.IsChecked.GetValueOrDefault();
         }
 
         #region [  인증 상태 관리  ]

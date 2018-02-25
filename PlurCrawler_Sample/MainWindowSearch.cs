@@ -78,7 +78,7 @@ namespace PlurCrawler_Sample
 
                     tb.SetValue(title: "Google CSE 검색", message: "검색이 진행중입니다.", maximum: 1);
 
-                    lvTask.Items.Add(tb);
+                    lvTask.Items.Insert(0, tb);
                     dict[googleCSESearcher] = tb;
 
                     if (option.OutputServices == OutputFormat.None)
@@ -189,7 +189,7 @@ namespace PlurCrawler_Sample
 
                     tb.SetValue(title: "Twitter 검색", message: "검색이 진행중입니다.", maximum: 1);
 
-                    lvTask.Items.Add(tb);
+                    lvTask.Items.Insert(0, tb);
                     dict[twitterSearcher] = tb;
 
                     if (option.OutputServices == OutputFormat.None)
@@ -300,7 +300,7 @@ namespace PlurCrawler_Sample
 
                     tb.SetValue(title: "Youtube 검색", message: "검색이 진행중입니다.", maximum: 1);
 
-                    lvTask.Items.Add(tb);
+                    lvTask.Items.Insert(0, tb);
                     dict[youtubeSearcher] = tb;
 
                     if (option.OutputServices == OutputFormat.None)
@@ -419,15 +419,18 @@ namespace PlurCrawler_Sample
                 {
                     case ServiceKind.GoogleCSE:
                         lvGoogle.Items.Add((GoogleCSESearchResult)e.Result);
-                        tcPreview.SelectedIndex = 0;
+                        if (AutoPreviewItemFocus)
+                            tcPreview.SelectedIndex = 0;
                         break;
                     case ServiceKind.Youtube:
                         lvYoutube.Items.Add((YoutubeSearchResult)e.Result);
-                        tcPreview.SelectedIndex = 2;
+                        if (AutoPreviewItemFocus)
+                            tcPreview.SelectedIndex = 2;
                         break;
                     case ServiceKind.Twitter:
                         lvTwitter.Items.Add((TwitterSearchResult)e.Result);
-                        tcPreview.SelectedIndex = 1;
+                        if (AutoPreviewItemFocus)
+                            tcPreview.SelectedIndex = 1;
                         break;
                 }
             });
@@ -560,8 +563,7 @@ namespace PlurCrawler_Sample
                 if (format.HasFlag(OutputFormat.MySQL))
                 {
                     pack.MySQLExportResult = MySQLExportResult.NotSet;
-
-                    // TODO : MySQL 재설계
+                    
                     MySQLFormat<ISearchResult> mySQLFormat = null;
                     try
                     {

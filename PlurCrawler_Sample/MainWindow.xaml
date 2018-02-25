@@ -185,7 +185,18 @@
                                     </ListView>
                                 </TabItem>
                             </TabControl>
-                            
+
+                            <CheckBox x:Name="previewTabAutoFocusing" Content="자동 포커싱" Grid.Row="2" Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                <CheckBox.ToolTip>
+                                    <ToolTip>
+                                        <TextBlock>
+                                            미리보기 탭 컨트롤의 아이템이 변경될때 마다<LineBreak/>
+                                            해당 추가된 데이터의 엔진 탭 아이템으로 바로 이동합니다.<LineBreak/>
+                                            [동시 검색에서는 권장하지 않습니다.]
+                                        </TextBlock>
+                                    </ToolTip>
+                                </CheckBox.ToolTip>
+                            </CheckBox>
                         </Grid>
                     </TabItem>
 
