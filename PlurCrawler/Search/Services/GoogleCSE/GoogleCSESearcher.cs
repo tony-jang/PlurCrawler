@@ -60,8 +60,9 @@ namespace PlurCrawler.Search.Services.GoogleCSE
 
             IsVerification = true;
         }
-
-        // TODO: DateSearch시 Maximum값 현재 값 조정하는 변수 만들기
+        
+        private int Maximum { get; set; } = 0;
+        private int Current { get; set; } = 0;
 
         private string query { get; set; }
 
@@ -78,6 +79,8 @@ namespace PlurCrawler.Search.Services.GoogleCSE
 
             if (!searchOption.SplitWithDate)
             {
+                Maximum = searchOption.SearchCount;
+
                 IEnumerable<Result> results = Search(request, searchOption.Offset, searchOption.SearchCount);
 
                 OnSearchFinished(this);
@@ -89,6 +92,8 @@ namespace PlurCrawler.Search.Services.GoogleCSE
             }
             else
             {
+                Maximum = searchOption.SearchCount * searchOption.DateRange.GetDateRange().Count();
+
                 if (!searchOption.UseDateSearch) // DateSearch가 아닌데 날짜별로 구분할 수 없으므로 예외 발생
                     throw new InvaildOptionException("날짜를 사용하지 않는데 날짜별로 구분해 검색할 수 없습니다.");
 
@@ -150,10 +155,12 @@ namespace PlurCrawler.Search.Services.GoogleCSE
                 }
 
                 count++;
+
                 tempCount -= request.Num.Value;
+                Current += (int)request.Num.Value;
 
                 int currCount = (int)(targetCount - tempCount);
-                OnSearchProgressChanged(this, new ProgressEventArgs((int)targetCount, currCount));
+                OnSearchProgressChanged(this, new ProgressEventArgs(Maximum, Current));
             }
 
             return results;
