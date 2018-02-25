@@ -13,6 +13,7 @@ using PlurCrawler.Search.Services.GoogleCSE;
 using PlurCrawler.Search.Services.Twitter;
 using PlurCrawler.Search.Services.Youtube;
 using PlurCrawler.Tokens.Credentials;
+
 using PlurCrawler_Sample.Common;
 using PlurCrawler_Sample.Controls;
 using PlurCrawler_Sample.Export;
@@ -54,6 +55,7 @@ namespace PlurCrawler_Sample
             googleSearching = true;
             _detailsOption.GoogleEnableChange(false);
             _vertManager.ChangeEditable(false, ServiceKind.GoogleCSE);
+            lvGoogle.Items.Clear();
 
             Thread thr = new Thread(() =>
             {
@@ -164,6 +166,7 @@ namespace PlurCrawler_Sample
             twitterSearching = true;
             _detailsOption.TwitterEnableChange(false);
             _vertManager.ChangeEditable(false, ServiceKind.Twitter);
+            lvTwitter.Items.Clear();
 
             Thread thr = new Thread(() =>
             {
@@ -271,6 +274,7 @@ namespace PlurCrawler_Sample
             youtubeSearching = true;
             _detailsOption.YoutubeEnableChange(false);
             _vertManager.ChangeEditable(false, ServiceKind.Youtube);
+            lvYoutube.Items.Clear();
 
             Thread thr = new Thread(() =>
             {

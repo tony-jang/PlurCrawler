@@ -12,6 +12,8 @@ using Google.Apis.Customsearch.v1;
 using Google.Apis.Customsearch.v1.Data;
 using Google.Apis.Services;
 
+using static PlurCrawler.Extension.IEnumerableEx;
+
 namespace PlurCrawler.Search.Services.GoogleCSE
 {
     public class GoogleCSESearcher : BaseSearcher<GoogleCSESearchOption, GoogleCSESearchResult>
@@ -95,7 +97,7 @@ namespace PlurCrawler.Search.Services.GoogleCSE
                 foreach(DateTime dt in searchOption.DateRange.GetDateRange())
                 {
                     request.Sort = $"date:r:{dt.To8LengthYear()}:{dt.To8LengthYear()}";
-                    results.AddRange(Search(request, searchOption.Offset, searchOption.SearchCount));
+                    results.AddRange(Search(request, searchOption.Offset, searchOption.SearchCount, dt));
                 }
                 
                 return ConvertType(results);
@@ -123,7 +125,7 @@ namespace PlurCrawler.Search.Services.GoogleCSE
             return request;
         }
         
-        private IEnumerable<Result> Search(CseResource.ListRequest request, int offset, int targetCount)
+        private IEnumerable<Result> Search(CseResource.ListRequest request, int offset, int targetCount, DateTime? dt = null)
         {
             var results = new List<Result>();
             IList<Result> paging = new List<Result>();
@@ -141,7 +143,11 @@ namespace PlurCrawler.Search.Services.GoogleCSE
                 paging = request.Execute().Items;
 
                 if (paging != null)
+                {
                     results.AddRange(paging);
+                    var itm = paging.Select(i => ConvertType(i, dt));
+                    itm.ForEach(i => OnSearchItemFound(this, new SearchResultEventArgs(i, ServiceKind.GoogleCSE)));
+                }
 
                 count++;
                 tempCount -= request.Num.Value;
@@ -163,6 +169,18 @@ namespace PlurCrawler.Search.Services.GoogleCSE
                 Snippet = i.Snippet.Replace("\\n", Environment.NewLine),
                 Keyword = query
             });
+        }
+
+        private GoogleCSESearchResult ConvertType(Result result, DateTime? date)
+        {
+            return new GoogleCSESearchResult()
+            {
+                OriginalURL = result.Link,
+                PublishedDate = date,
+                Title = result.Title,
+                Snippet = result.Snippet.Replace("\\n", Environment.NewLine),
+                Keyword = query
+            };
         }
 
         #endregion

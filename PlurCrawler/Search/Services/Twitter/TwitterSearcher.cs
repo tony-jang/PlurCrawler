@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PlurCrawler.Extension;
 using PlurCrawler.Search.Base;
 using PlurCrawler.Search.Common;
 
@@ -141,6 +142,8 @@ namespace PlurCrawler.Search.Services.Twitter
 
                     IEnumerable<TwitterSearchResult> tweets = rawTweets
                         .Select(i => ConvertResult(i, searchOption.Query));
+
+                    tweets.ForEach(i => OnSearchItemFound(this, new SearchResultEventArgs(i, ServiceKind.Twitter)));
 
                     OnSearchProgressChanged(this, new ProgressEventArgs(Maximum, Current));
 
