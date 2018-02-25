@@ -252,7 +252,7 @@ namespace PlurCrawler.Format
                     if (ex.HResult == -2147467259)
                     {
                         MySqlCommand cm = Connection.CreateCommand();
-                        // TODO: 제대로 동작하는지에 대한 체크
+                        // TODO: 제대로 동작하는지에 대한 체크 + 키워드도 가져와서 체크하기
                         cm.CommandText = GetUpdateQuery(data);
                     }
                     throw ex;
