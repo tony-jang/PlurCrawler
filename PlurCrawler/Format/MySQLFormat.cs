@@ -154,6 +154,29 @@ namespace PlurCrawler.Format
 
             return properties.Select(i => new TableField(i.Name, GetTypeString(i), i.Name == primaryProp));
         }
+        
+        public string GetUpdateQuery(TResult obj)
+        {
+            var primaryProp = GetPrimaryProperty();
+
+            if (primaryProp.Name.StartsWith("VARCHAR") ||
+                primaryProp.Name.StartsWith("LONGTEXT"))
+            {
+                return $"update {TableName} set keyword = CONCAT(keyword, ', ', '{obj.Keyword}') WHERE {primaryProp} = '{primaryProp.GetValue(obj)}';";
+            }
+            else if (primaryProp.Name.StartsWith("BIGINT") ||
+                primaryProp.Name.StartsWith("INT"))
+            {
+                return $"update {TableName} set keyword = CONCAT(keyword, ', ', '{obj.Keyword}') WHERE {primaryProp} = {primaryProp.GetValue(obj)};";
+            }
+
+            return null;
+        }
+
+        private PropertyInfo GetPrimaryProperty()
+        {
+            return type.GetProperties().Where(i => i.GetCustomAttributes<PrimaryKeyAttribute>().Count() == 1).First();
+        }
 
         private IEnumerable<PropertyInfo> GetProperties(bool exceptIgnoreProperty)
         {
@@ -225,6 +248,13 @@ namespace PlurCrawler.Format
                 }
                 catch (Exception ex)
                 {
+                    // 중복 오류가 발생했을시,
+                    if (ex.HResult == -2147467259)
+                    {
+                        MySqlCommand cm = Connection.CreateCommand();
+                        // TODO: 제대로 동작하는지에 대한 체크
+                        cm.CommandText = GetUpdateQuery(data);
+                    }
                     throw ex;
                 }
             }
