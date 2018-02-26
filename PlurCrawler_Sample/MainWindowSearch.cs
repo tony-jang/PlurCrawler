@@ -292,8 +292,7 @@ namespace PlurCrawler_Sample
                 Dispatcher.Invoke(() =>
                 {
                     AddLog("Youtube 검색 엔진을 초기화중입니다.", TaskLogType.SearchReady);
-
-
+                    
                     option = SettingManager.YoutubeSearchOption;
                     option.Query = tbQuery.Text;
 
@@ -378,7 +377,7 @@ namespace PlurCrawler_Sample
 
         #region [  Common Events  ]
 
-        private void Searcher_SearchFinished(object sender, EventArgs e)
+        private void Searcher_SearchFinished(object sender, SearchFinishedEventArgs e)
         {
             Dispatcher.Invoke(() =>
             {
@@ -388,9 +387,17 @@ namespace PlurCrawler_Sample
                 itm.TaskFinished = true;
 
                 TaskLogManager.AddLog("검색이 완료되었습니다.", TaskLogType.Searching);
-
-                SettingManager.GoogleCredentials.Item2 = VerifyType.Verified;
-                SettingManager.GoogleCredentials.Item4 = VerifyType.Verified;
+                
+                switch (e.ServiceKind)
+                {
+                    case ServiceKind.GoogleCSE:
+                        SettingManager.GoogleCredentials.Item2 = VerifyType.Verified;
+                        SettingManager.GoogleCredentials.Item4 = VerifyType.Verified;
+                        break;
+                    case ServiceKind.Youtube:
+                        SettingManager.YoutubeCredentials.Item2 = VerifyType.Verified;
+                        break;
+                }
             });
         }
 

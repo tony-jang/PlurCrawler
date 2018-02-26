@@ -115,7 +115,7 @@ namespace PlurCrawler.Search.Services.Youtube
                     if (remain <= 0)
                         break;
                 }
-                OnSearchFinished(this);
+                OnSearchFinished(this, new SearchFinishedEventArgs(ServiceKind.Youtube));
 
                 return list;
             }

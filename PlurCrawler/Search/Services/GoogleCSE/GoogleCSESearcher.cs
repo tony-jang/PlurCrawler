@@ -83,7 +83,7 @@ namespace PlurCrawler.Search.Services.GoogleCSE
 
                 IEnumerable<Result> results = Search(request, searchOption.Offset, searchOption.SearchCount);
 
-                OnSearchFinished(this);
+                OnSearchFinished(this, new SearchFinishedEventArgs(ServiceKind.GoogleCSE));
 
                 if (results.Count() == 0)
                     return Enumerable.Empty<GoogleCSESearchResult>();

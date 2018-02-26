@@ -46,7 +46,7 @@ namespace PlurCrawler.Search.Services.Twitter
                     result = result.Union(SearchOneDay(d));
                 }
 
-                OnSearchFinished(this);
+                OnSearchFinished(this, new SearchFinishedEventArgs(ServiceKind.Twitter));
 
                 return result;
             }
@@ -75,7 +75,7 @@ namespace PlurCrawler.Search.Services.Twitter
                     }
                 }
 
-                OnSearchFinished(this);
+                OnSearchFinished(this, new SearchFinishedEventArgs(ServiceKind.Twitter));
 
                 return result.ToList();
             }

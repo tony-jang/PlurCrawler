@@ -217,6 +217,7 @@
     <Compile Include="Search\Common\MessageEventArgs.cs" />
     <Compile Include="Search\Common\ProgressEventArgs.cs" />
     <Compile Include="Search\Common\RegionCode.cs" />
+    <Compile Include="Search\Common\SearchFinishedEventArgs.cs" />
     <Compile Include="Search\Common\SearchResultEventArgs.cs" />
     <Compile Include="Search\Common\ServiceKind.cs" />
     <Compile Include="Search\Services\GoogleCSE\GoogleCSESearcher.cs" />

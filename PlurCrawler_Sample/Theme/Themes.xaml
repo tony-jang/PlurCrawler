@@ -432,9 +432,13 @@
                         <ContentPresenter VerticalAlignment="Center" Grid.Column="1" Content="{TemplateBinding Content}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <!--TODO: MultiTrigger으로 Checked와 MouseOver를 동시에 판별하기-->
                         <Trigger Property="IsChecked" Value="False">
                             <Setter Property="FontWeight" Value="Normal"/>
                             <Setter TargetName="img" Property="Source" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DisabledSource}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="FontWeight" Value="Bold"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

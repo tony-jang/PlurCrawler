@@ -46,7 +46,7 @@ namespace PlurCrawler.Search.Base
         public delegate void SearchResultDelegate(object sender);
 
         public event EventHandler<ProgressEventArgs> SearchProgressChanged;
-        public event EventHandler SearchFinished;
+        public event EventHandler<SearchFinishedEventArgs> SearchFinished;
         public event EventHandler<MessageEventArgs> ChangeInfoMessage;
         public event EventHandler<SearchResultEventArgs> SearchItemFound;
 
@@ -55,9 +55,9 @@ namespace PlurCrawler.Search.Base
             SearchProgressChanged?.Invoke(sender, e);
         }
 
-        internal void OnSearchFinished(object sender)
+        internal void OnSearchFinished(object sender, SearchFinishedEventArgs e)
         {
-            SearchFinished?.Invoke(sender, new EventArgs());
+            SearchFinished?.Invoke(sender, e);
         }
 
         internal void OnChangeInfoMessage(object sender, MessageEventArgs e)
