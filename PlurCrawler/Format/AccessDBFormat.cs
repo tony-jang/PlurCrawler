@@ -13,6 +13,7 @@ using PlurCrawler.Search.Services.Twitter;
 using PlurCrawler.Search.Services.Youtube;
 using PlurCrawler.Attributes;
 using System.IO;
+using PlurCrawler.Extension;
 
 namespace PlurCrawler.Format
 {
@@ -161,13 +162,9 @@ namespace PlurCrawler.Format
         public string TableName { get; set; }
 
         Type type;
-
-        public override void FormattingData(IEnumerable<TResult> resultData)
+        
+        private void SetType(Type t)
         {
-            if (resultData.Count() == 0)
-                return;
-
-            Type t = resultData.First().GetType();
             if (t == typeof(GoogleCSESearchResult))
             {
                 TableName = "GoogleResult";
@@ -183,7 +180,104 @@ namespace PlurCrawler.Format
                 TableName = "YoutubeVideos";
                 type = typeof(YoutubeSearchResult);
             }
-            
+        }
+
+        private void ExecuteCommand(OleDbConnection conn, TResult data, string baseQuery)
+        {
+            OleDbCommand cmd = new OleDbCommand(baseQuery, conn);
+
+            foreach (PropertyInfo prop in GetProperties(true))
+            {
+                cmd.Parameters.AddWithValue($"@{prop.Name}", GetValue());
+
+                object GetValue()
+                {
+                    object value = prop.GetValue(data);
+                    if (value == null)
+                        return DBNull.Value;
+
+                    return value;
+                }
+            }
+
+            cmd.ExecuteNonQuery();
+        }
+        
+        public string GetUpdateQuery(TableField field, object value, string keyword)
+        {
+            if (field.Type.StartsWith("VARCHAR") ||
+                field.Type.StartsWith("LONGTEXT"))
+            {
+                return $"update {TableName} set keyword = keyword & ', ' & '{keyword}' WHERE {field.Name} = '{value}';";
+            }
+            else if (field.Type.StartsWith("BIGINT") ||
+                     field.Type.StartsWith("INT"))
+            {
+                return $"update {TableName} set keyword = keyword & ', ' & '{keyword}' WHERE {field.Name} = {value};";
+            }
+
+            throw new Exception(field.Type + "타입에 대한 GetUpdateQuery 함수를 완성해야 합니다.");
+        }
+
+        public bool KeywordExists(TableField primaryProp, object value, string keyword, OleDbConnection conn)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"select Keyword from {TableName} where {primaryProp.Name} = ");
+
+            if (primaryProp.Type.StartsWith("VARCHAR") ||
+                primaryProp.Type.StartsWith("LONGTEXT"))
+            {
+                sb.Append($"'{value}'");
+            }
+            else if (primaryProp.Type.StartsWith("BIGINT") ||
+                primaryProp.Type.StartsWith("INT"))
+            {
+                sb.Append($"{value}");
+            }
+
+            bool flag = false;
+
+            using (OleDbCommand cm = conn.CreateCommand())
+            {
+                cm.CommandText = sb.ToString();
+
+                using (OleDbDataReader reader = cm.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string findKeyword = reader["Keyword"].ToString();
+
+                        string[] keywords = findKeyword.Split(", ");
+
+                        if (keywords.Contains(keyword))
+                        {
+                            flag = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return flag;
+        }
+        
+        private TableField ToTableField(PropertyInfo info)
+        {
+            return new TableField()
+            {
+                IsPrimary = info.GetCustomAttributes<PrimaryKeyAttribute>().Count() == 1,
+                Name = info.Name,
+                Type = GetTypeString(info)
+            };
+        }
+
+        public override void FormattingData(IEnumerable<TResult> resultData)
+        {
+            if (resultData.Count() == 0)
+                return;
+
+            SetType(resultData.First().GetType());
+
             string connStr = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={FileName}";
 
             using (OleDbConnection conn = new OleDbConnection(connStr))
@@ -196,23 +290,29 @@ namespace PlurCrawler.Format
                 
                 foreach(TResult data in resultData)
                 {
-                    OleDbCommand cmd = new OleDbCommand(baseQuery, conn);
-
-                    foreach (PropertyInfo prop in GetProperties(true))
+                    try
                     {
-                        cmd.Parameters.AddWithValue($"@{prop.Name}", GetValue());
-
-                        object GetValue()
+                        ExecuteCommand(conn, data, baseQuery);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.HResult == -2147467259)
                         {
-                            object value = prop.GetValue(data);
-                            if (value == null)
-                                return DBNull.Value;
+                            var primaryProp = type.GetProperties().Where(i => i.GetCustomAttributes<PrimaryKeyAttribute>().Count() == 1).First();
 
-                            return value;
+                            // 키워드가 중복되지 않았을시 추가
+                            if (!KeywordExists(ToTableField(primaryProp), primaryProp.GetValue(data), data.Keyword, conn))
+                            {
+                                using (OleDbCommand cm = conn.CreateCommand())
+                                {
+                                    cm.CommandText = GetUpdateQuery(ToTableField(primaryProp), primaryProp.GetValue(data), data.Keyword);
+                                    cm.ExecuteNonQuery();
+                                }
+                            }
+                            continue;
                         }
                     }
-
-                    cmd.ExecuteNonQuery();
+                    
                 }
             }
         }

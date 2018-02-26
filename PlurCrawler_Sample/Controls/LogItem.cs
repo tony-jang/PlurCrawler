@@ -1,7 +1,4 @@
-﻿using PlurCrawler.Attributes;
-using PlurCrawler.Extension;
-using PlurCrawler_Sample.TaskLogs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -9,6 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+
+using PlurCrawler.Attributes;
+using PlurCrawler.Extension;
+
+using PlurCrawler_Sample.TaskLogs;
+
 using WPFExtension;
 
 namespace PlurCrawler_Sample.Controls

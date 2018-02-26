@@ -28,7 +28,6 @@ namespace PlurCrawler_Sample
     {
         DetailsOption _detailsOption;
         VertificationManager _vertManager;
-        TaskLogManager _logManager;
         ExportOption _exportOption;
         TaskReport _taskReport;
 
@@ -39,13 +38,12 @@ namespace PlurCrawler_Sample
         public MainWindow()
         {
             InitializeComponent();
-            
+
             #region [  Initalization  ]
 
-            _logManager = new TaskLogManager();
-            
             dict = new Dictionary<ISearcher, TaskProgressBar>();
 
+            TaskLogManager.Init();
             SettingManager.Init();
 
             Pair<bool,bool,bool> eUsage = SettingManager.EngineUsage;
@@ -88,7 +86,7 @@ namespace PlurCrawler_Sample
 
             mainTabControl.SelectionChanged += MainTabControl_SelectionChanged;
 
-            _logManager.LogAdded += _logManager_LogAdded;
+            TaskLogManager.LogAdded += LogManager_LogAdded;
 
             previewTabAutoFocusing.Checked += PreviewTabAutoFocusing_Checked;
             previewTabAutoFocusing.Unchecked += PreviewTabAutoFocusing_Checked;
@@ -195,7 +193,7 @@ namespace PlurCrawler_Sample
             Export(format, result, serviceKind);
         }
 
-        private void _logManager_LogAdded(object sender, TaskLog taskLog)
+        private void LogManager_LogAdded(TaskLog taskLog)
         {
             Dispatcher.Invoke(() =>
             {

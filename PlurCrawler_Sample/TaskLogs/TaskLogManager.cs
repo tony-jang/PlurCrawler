@@ -1,55 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
+using PlurCrawler.Attributes;
+using PlurCrawler.Extension;
+
 namespace PlurCrawler_Sample.TaskLogs
 {
-    public class TaskLogManager
+    public static class TaskLogManager
     {
         // TODO: Rich Log Add Implement
 
-        public delegate void LogDelegate(object sender, TaskLog taskLog);
+        public delegate void LogDelegate(TaskLog taskLog);
 
-        public event LogDelegate LogAdded;
+        public static event LogDelegate LogAdded;
 
-        internal void OnLogAdded(object sender, TaskLog taskLog)
+        static StreamWriter sw;
+
+        public static void Init()
         {
-            LogAdded?.Invoke(sender, taskLog);
+        }
+
+        internal static void OnLogAdded(TaskLog taskLog)
+        {
+            LogAdded?.Invoke(taskLog);
+        }
+
+        static TaskLogManager()
+        {
+            sw = new StreamWriter("Log.txt");
         }
         
-        public TaskLogManager()
+        public static void AddLog(string message, TaskLogType type)
         {
-            // TODO: Implement
-        }
-
-        public bool FileConnected { get; internal set; }
-
-        /// <summary>
-        /// 로그 출력용 파일을 연결 시킵니다.
-        /// </summary>
-        /// <param name="FileName"></param>
-        public void ConnectFile(string FileName)
-        {
-            // TODO: Implement
-        }
-
-        public void WriteLine()
-        {
-            // TODO: Implement
-        }
-        
-        public void AddLog(string message, TaskLogType type)
-        {
-            OnLogAdded(this, new TaskLog()
+            OnLogAdded(new TaskLog()
             {
                 DateTime = DateTime.Now,
                 LogType = type,
                 Message = message
             });
-            // TODO: Implement
+
+            sw.WriteLine($"[{DateTime.Now.ToString("MM/dd HH:mm:ss")}] [{type.GetAttributeFromEnum<NoteAttribute>().Message}] {message}");
+            sw.Flush();
         }
     }
 }

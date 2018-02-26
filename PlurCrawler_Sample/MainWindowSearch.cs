@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 
 using PlurCrawler.Extension;
@@ -35,7 +36,7 @@ namespace PlurCrawler_Sample
             {
                 if (mainTabControl.SelectedIndex != 0)
                     mainTabControl.SelectedIndex = 0;
-                _logManager.AddLog(message, type);
+                TaskLogManager.AddLog(message, type);
                 ScrollToEnd();
             });
             
@@ -386,7 +387,7 @@ namespace PlurCrawler_Sample
 
                 itm.TaskFinished = true;
 
-                _logManager.AddLog("검색이 완료되었습니다.", TaskLogType.Searching);
+                TaskLogManager.AddLog("검색이 완료되었습니다.", TaskLogType.Searching);
 
                 SettingManager.GoogleCredentials.Item2 = VerifyType.Verified;
                 SettingManager.GoogleCredentials.Item4 = VerifyType.Verified;
@@ -648,6 +649,11 @@ namespace PlurCrawler_Sample
                         {
                             try
                             {
+                                var i = result.ToList();
+                                i.First().Keyword = "asdf";
+
+                                result = i;
+
                                 string fullPath = Path.Combine(folder, $"{fileName}.accdb");
                                 if (ExportManager.AccessDBExport(fullPath, result))
                                 {
