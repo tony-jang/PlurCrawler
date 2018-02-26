@@ -28,12 +28,10 @@
                         <ctrl:PropertyTextBox x:Name="jsonExportName" PropertyName="파일 이름" Margin="10,10,45,10" 
                                                   Description="※ Json 파일의 이름을 결정합니다. [확장자 제외]"/>
 
-                        <TextBlock TextWrapping="Wrap" Margin="5" Foreground="Gray">
-                            - 파일 이름에 변수를 사용할 수 있습니다.<LineBreak/>
-                            - %v1 : 년월일 | %v2 : 시:분:초<LineBreak/>
-                            - 파일 이름 뒤에는 자동으로 엔진에 따른 텍스트가 따라붙습니다. (예. file_youtube.json)
+                        <TextBlock Margin="10">
+                            ※ 파일은 '<Run Text="{Binding ElementName=jsonExportFolder, Path=Text}"/>\<Run Text="{Binding ElementName=jsonExportName, Path=Text}"/>.json'위치에 출력됩니다.
                         </TextBlock>
-
+                        
                         <ctrl:PropertyGroupBox Header="파일 중복 설정">
                             <WrapPanel>
                                 <TextBlock Text="파일 이름이 중복될때" Margin="10,0"/>
@@ -49,8 +47,11 @@
                             <CheckBox x:Name="cbUseJsonSort" Content="사용"/>
                         </ctrl:PropertyGroupBox>
 
-
-
+                        <TextBlock TextWrapping="Wrap" Margin="5" Foreground="Gray">
+                            - 파일 이름에 변수를 사용할 수 있습니다.<LineBreak/>
+                            - %v1 : 년월일 | %v2 : 시:분:초<LineBreak/>
+                            - 파일 이름 뒤에는 자동으로 엔진에 따른 텍스트가 따라붙습니다. (예. file_youtube.json)
+                        </TextBlock>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
@@ -71,11 +72,8 @@
                         <ctrl:PropertyTextBox x:Name="csvExportName" PropertyName="파일 이름" Margin="10,10,45,10" 
                                               Description="※ CSV 파일의 이름을 결정합니다. [확장자 제외]"/>
 
-
-                        <TextBlock TextWrapping="Wrap" Margin="5" Foreground="Gray">
-                            - 파일 이름에 변수를 사용할 수 있습니다.<LineBreak/>
-                            - %v1 : 년월일 | %v2 : 시:분:초<LineBreak/>
-                            - 파일 이름 뒤에는 자동으로 엔진에 따른 텍스트가 따라붙습니다. (예. file_youtube.csv)
+                        <TextBlock Margin="10">
+                            ※ 파일은 '<Run Text="{Binding ElementName=csvExportFolder, Path=Text}"/>\<Run Text="{Binding ElementName=csvExportName, Path=Text}"/>.csv'위치에 출력됩니다.
                         </TextBlock>
 
                         <ctrl:PropertyGroupBox Header="파일 중복 설정">
@@ -88,6 +86,12 @@
                                 </ComboBox>
                             </WrapPanel>
                         </ctrl:PropertyGroupBox>
+
+                        <TextBlock TextWrapping="Wrap" Margin="5" Foreground="Gray">
+                            - 파일 이름에 변수를 사용할 수 있습니다.<LineBreak/>
+                            - %v1 : 년월일 | %v2 : 시:분:초<LineBreak/>
+                            - 파일 이름 뒤에는 자동으로 엔진에 따른 텍스트가 따라붙습니다. (예. file_youtube.csv)
+                        </TextBlock>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
@@ -129,10 +133,10 @@
                         </Grid>
                         <ctrl:PropertyTextBox x:Name="accExportName" PropertyName="파일 이름" Margin="10,10,45,10" 
                                               Description="※ Access DB 파일의 이름을 결정합니다. [확장자 제외]"/>
-                        <StackPanel Margin="0,10,0,0">
+                        <StackPanel x:Name="spInstallProvider" Margin="0,10,0,0">
                             <TextBlock Text="32비트(x86) OLE DB Provider가 설치되어 있지 않습니다!" FontSize="15"/>
                             <TextBlock Margin="10" TextWrapping="Wrap">
-                            Access DB 형식을 사용하기 위해서는 x32비트 OLE DB Provider가 필요합니다. 아래의 설치 버튼으로 설치한 뒤에 재시작해서 해결해보세요.
+                            Access DB 형식을 사용하기 위해서는 32비트(x86) OLE DB Provider가 필요합니다. 아래의 설치 버튼으로 설치한 뒤에 재시작해서 해결해보세요.
                             </TextBlock>
                             <Grid Margin="10">
                                 <Grid.ColumnDefinitions >

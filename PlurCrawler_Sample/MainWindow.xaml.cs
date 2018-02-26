@@ -234,6 +234,10 @@ namespace PlurCrawler_Sample
             {
                 AddLog("Access DB에 올바르게 접근 할 수 없습니다. 내보내기 옵션의 Access DB에서 문제를 해결하세요.", TaskLogType.System);
             }
+            else
+            {
+                _exportOption.HiddenInstall();
+            }
 
             #endregion
         }

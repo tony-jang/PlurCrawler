@@ -25,6 +25,8 @@ namespace PlurCrawler_Sample.Windows
     {
         public ExportOption()
         {
+            // TODO: 중복 설정 Enum 만들고 구현한뒤 설정에 변경 시키기
+
             InitializeComponent();
 
             LoadSetting(SettingManager.ExportOptionSetting);
@@ -57,6 +59,11 @@ namespace PlurCrawler_Sample.Windows
             btnInstallFile.Click += BtnInstallFile_Click;
         }
 
+        public void HiddenInstall()
+        {
+            spInstallProvider.Visibility = Visibility.Hidden;
+        }
+
         private void BtnInstallFile_Click(object sender, RoutedEventArgs e)
         {
             tbInstallLoad.Visibility = Visibility.Visible;
@@ -67,6 +74,12 @@ namespace PlurCrawler_Sample.Windows
 
         public void SettingChanged(object sender, EventArgs e)
         {
+            if (jsonExportFolder.Text.EndsWith("\\"))
+                jsonExportFolder.Text = jsonExportFolder.Text.Substring(0, jsonExportFolder.Text.Length - 1);
+
+            if (csvExportFolder.Text.EndsWith("\\"))
+                csvExportFolder.Text = csvExportFolder.Text.Substring(0, csvExportFolder.Text.Length - 1);
+
             SettingManager.ExportOptionSetting = ExportSetting();
         }
 
