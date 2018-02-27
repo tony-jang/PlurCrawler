@@ -25,8 +25,6 @@ namespace PlurCrawler_Sample.Windows
     {
         public ExportOption()
         {
-            // TODO: 중복 설정 Enum 만들고 구현한뒤 설정에 변경 시키기
-
             InitializeComponent();
 
             LoadSetting(SettingManager.ExportOptionSetting);

@@ -13,8 +13,6 @@ namespace PlurCrawler_Sample.TaskLogs
 {
     public static class TaskLogManager
     {
-        // TODO: Rich Log Add Implement
-
         public delegate void LogDelegate(TaskLog taskLog);
 
         public static event LogDelegate LogAdded;
