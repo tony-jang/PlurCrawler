@@ -289,13 +289,19 @@ namespace PlurCrawler_Sample
             }
 
             if (cbGoogleService.IsChecked.GetValueOrDefault())
+            {
                 SearchGoogle();
+            }
 
             if (cbTwitterService.IsChecked.GetValueOrDefault())
+            {
                 TwitterSearch();
+            }
 
             if (cbYoutubeService.IsChecked.GetValueOrDefault())
+            {
                 YoutubeSearch();
+            }
         }
     }
 }

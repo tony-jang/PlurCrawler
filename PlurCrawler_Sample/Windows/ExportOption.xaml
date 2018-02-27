@@ -29,7 +29,7 @@
                                                   Description="※ Json 파일의 이름을 결정합니다. [확장자 제외]"/>
 
                         <TextBlock Margin="10">
-                            ※ 파일은 '<Run Text="{Binding ElementName=jsonExportFolder, Path=Text}"/>\<Run Text="{Binding ElementName=jsonExportName, Path=Text}"/>.json'위치에 출력됩니다.
+                            ※ 파일은 '<Run Text="{Binding ElementName=jsonExportFolder, Path=Text}"/>\<Run Text="{Binding ElementName=jsonExportName, Path=Text}"/>_서비스이름.json'위치에 출력됩니다.
                         </TextBlock>
                         
                         <ctrl:PropertyGroupBox Header="파일 중복 설정">
@@ -74,7 +74,7 @@
                                               Description="※ CSV 파일의 이름을 결정합니다. [확장자 제외]"/>
 
                         <TextBlock Margin="10">
-                            ※ 파일은 '<Run Text="{Binding ElementName=csvExportFolder, Path=Text}"/>\<Run Text="{Binding ElementName=csvExportName, Path=Text}"/>.csv'위치에 출력됩니다.
+                            ※ 파일은 '<Run Text="{Binding ElementName=csvExportFolder, Path=Text}"/>\<Run Text="{Binding ElementName=csvExportName, Path=Text}"/>_서비스이름.csv'위치에 출력됩니다.
                         </TextBlock>
 
                         <ctrl:PropertyGroupBox Header="파일 중복 설정">

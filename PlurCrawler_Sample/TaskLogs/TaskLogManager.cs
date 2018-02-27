@@ -23,14 +23,14 @@ namespace PlurCrawler_Sample.TaskLogs
         {
         }
 
+        static TaskLogManager()
+        {
+            sw = new StreamWriter("Log.txt", true);
+        }
+
         private static void OnLogAdded(TaskLog taskLog)
         {
             LogAdded?.Invoke(taskLog);
-        }
-
-        static TaskLogManager()
-        {
-            sw = new StreamWriter("Log.txt");
         }
         
         public static void AddLog(string message, TaskLogType type)

@@ -53,6 +53,17 @@ namespace PlurCrawler_Sample
                 return;
             }
 
+            // 날짜 유효성 미리 검사
+
+            if (SettingManager.GoogleCSESearchOption.UseDateSearch)
+            {
+                if (!SettingManager.GoogleCSESearchOption.DateRange.Vaild)
+                {
+                    AddLog("구글 검색의 날짜 설정이 잘못되었습니다.", TaskLogType.Failed);
+                    return;
+                }
+            }
+
             googleSearching = true;
             _detailsOption.GoogleEnableChange(false);
             _vertManager.ChangeEditable(false, ServiceKind.GoogleCSE);
@@ -169,6 +180,12 @@ namespace PlurCrawler_Sample
             if (twitterSearching)
             {
                 AddLog("이미 Twitter 서비스에서 검색을 실행중입니다.", TaskLogType.Failed);
+                return;
+            }
+            
+            if (!SettingManager.TwitterSearchOption.DateRange.Vaild)
+            {
+                AddLog("트위터 검색의 날짜 설정이 잘못되었습니다.", TaskLogType.Failed);
                 return;
             }
             
@@ -294,6 +311,15 @@ namespace PlurCrawler_Sample
                 return;
             }
 
+            if (SettingManager.YoutubeSearchOption.UseDateSearch)
+            {
+                if (!SettingManager.YoutubeSearchOption.DateRange.Vaild)
+                {
+                    AddLog("트위터 검색의 날짜 설정이 잘못되었습니다.", TaskLogType.Failed);
+                    return;
+                }
+            }
+            
             youtubeSearching = true;
             _detailsOption.YoutubeEnableChange(false);
             _vertManager.ChangeEditable(false, ServiceKind.Youtube);
