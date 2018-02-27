@@ -84,7 +84,7 @@
                     <ScrollViewer x:Name="svTwitter" VerticalScrollBarVisibility="Auto">
                         <StackPanel Margin="0,10">
                             <ctrl:PropertyTextBox x:Name="tbTwitterSearchCount" PropertyName="검색 갯수" DigitOnly="True" 
-                                Description="* 기본은 15개입니다.&#x0a;* 검색 타입에 따라서 의미가 달라집니다."/>
+                                Description="* 기본은 100개입니다.&#x0a;* 검색 타입에 따라서 의미가 달라집니다."/>
 
                             <TextBlock TextWrapping="Wrap" Margin="5" Foreground="Gray">
                                 - 하루 기준이면 검색 범위 * 검색 갯수<LineBreak/>
@@ -159,7 +159,7 @@
                     <ScrollViewer x:Name="svYoutube" VerticalScrollBarVisibility="Auto">
                         <StackPanel Margin="0,10">
                             <ctrl:PropertyTextBox x:Name="tbYoutubeSearchCount" PropertyName="검색 갯수" DigitOnly="True" 
-                            Description="* 기본은 10개입니다.&#x0a;* 검색 타입에 따라서 의미가 달라집니다."/>
+                            Description="* 기본은 50개입니다.&#x0a;* 검색 타입에 따라서 의미가 달라집니다."/>
 
                             <Grid Margin="10">
                                 <Rectangle Fill="LightGray"/>

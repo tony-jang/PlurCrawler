@@ -62,6 +62,8 @@ namespace PlurCrawler_Sample.Common
             if (_youtubeSearchOption == null)
                 YoutubeSearchOption = YoutubeSearchOption.GetDefault();
 
+            _tutorialView = AppSetting.TutorialView;
+
             if (AppSetting.GoogleCredentials.IsNullOrEmpty())
             {
                 AppSetting.GoogleCredentials = "//";
@@ -211,6 +213,19 @@ namespace PlurCrawler_Sample.Common
         }
 
         #endregion
+
+        private static bool _tutorialView;
+
+        public static bool TutorialView
+        {
+            get => _tutorialView;
+            set
+            {
+                _tutorialView = value;
+                AppSetting.TutorialView = value;
+                AppSetting.Save();
+            }
+        }
 
         private static ExportOptionSetting _exportOptionSetting;
 

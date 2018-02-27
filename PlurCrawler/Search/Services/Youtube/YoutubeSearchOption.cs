@@ -22,7 +22,7 @@ namespace PlurCrawler.Search.Services.Youtube
             return new YoutubeSearchOption()
             {
                 DateRange = new DateRange(),
-                SearchCount = 10,
+                SearchCount = 50,
                 SplitWithDate = false,
                 UseDateSearch = false,
                 OutputServices = OutputFormat.Json,

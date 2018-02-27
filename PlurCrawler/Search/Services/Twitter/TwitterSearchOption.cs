@@ -19,7 +19,7 @@ namespace PlurCrawler.Search.Services.Twitter
             return new TwitterSearchOption()
             {
                 DateRange = new DateRange(),
-                SearchCount = 10,
+                SearchCount = 100,
                 SplitWithDate = false,
                 OutputServices = OutputFormat.Json | OutputFormat.CSV,
                 Offset = 0,

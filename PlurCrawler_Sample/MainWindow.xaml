@@ -124,9 +124,9 @@
                     <TabItem x:Name="tiLog" Tag="작업 로그">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition/>
+                                <RowDefinition Height="3*"/>
                                 <RowDefinition Height="5"/>
-                                <RowDefinition Height="268"/>
+                                <RowDefinition Height="2*"/>
                             </Grid.RowDefinitions>
                             <ListBox x:Name="lvLog" ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
                             <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
@@ -266,6 +266,74 @@
                 <Frame x:Name="frOption" Grid.Row="3" Source="/PlurCrawler_Sample;component/Windows/DetailsOption.xaml" NavigationUIVisibility="Hidden" />
             </Grid>
             
+        </Grid>
+
+        <Grid x:Name="gridHelp" Grid.RowSpan="2" Background="#7F000000">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="90"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.Resources>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="TextAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="FontSize" Value="20"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="IsHitTestVisible" Value="False"/>
+                </Style>
+                <Style TargetType="{x:Type Rectangle}">
+                    <Setter Property="Stroke" Value="White"/>
+                    <Setter Property="StrokeThickness" Value="3"/>
+                    <Setter Property="RadiusX" Value="10"/>
+                    <Setter Property="RadiusY" Value="10"/>
+                    <Setter Property="IsHitTestVisible" Value="False"/>
+                </Style>
+            </Grid.Resources>
+            <Grid Margin="5" Height="80" VerticalAlignment="Top" >
+                <Rectangle/>
+                <TextBlock Text="이곳에서 검색 엔진 선택, 검색어 입력, 인증 상태 확인을 할 수 있습니다."/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="305"/>
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Margin="5">
+                        <Rectangle/>
+                        <TextBlock Text="작업에 대해서 알려주는 로그 공간입니다."/>
+                    </Grid>
+                    <Grid Grid.Row="1" Margin="5">
+                        <Rectangle/>
+                        <TextBlock Text="현재 검색중인 엔진 결과를&#x0a;실시간으로 미리보기 합니다."/>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Margin="5">
+                        <Rectangle/>
+                        <TextBlock Text="주메뉴 선택 버튼입니다."/>
+                    </Grid>
+                    <Grid Grid.Row="1" Margin="5">
+                        <Rectangle/>
+                        <TextBlock Text="작업중인 상태를 나타냅니다."/>
+                    </Grid>
+                    <Grid Grid.Row="2" Margin="5">
+                        <Rectangle/>
+                        <TextBlock Text="각 검색엔진의&#x0a;상세 설정을 할 수 있습니다."/>
+                    </Grid>
+                    
+                </Grid>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

@@ -154,5 +154,17 @@ namespace PlurCrawler_Sample.Properties {
                 this["YoutubeVertified"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool TutorialView {
+            get {
+                return ((bool)(this["TutorialView"]));
+            }
+            set {
+                this["TutorialView"] = value;
+            }
+        }
     }
 }

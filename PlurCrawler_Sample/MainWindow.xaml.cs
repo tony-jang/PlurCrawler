@@ -62,6 +62,25 @@ namespace PlurCrawler_Sample
             
             btnSearch.IsEnabled = eUsage.Item1 || eUsage.Item2 || eUsage.Item3;
 
+            if (SettingManager.TutorialView)
+            {
+                gridHelp.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                bool down = false;
+
+                gridHelp.MouseDown += ((o, e) => { down = true; });
+                gridHelp.MouseUp += ((o, e) => 
+                {
+                    if (down)
+                    {
+                        gridHelp.Visibility = Visibility.Hidden;
+                        SettingManager.TutorialView = true;
+                    }
+                });
+            }
+
             #endregion
 
             #region [  Event Connection  ]

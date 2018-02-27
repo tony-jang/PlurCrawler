@@ -35,5 +35,8 @@
     <Setting Name="YoutubeVertified" Type="PlurCrawler_Sample.Common.VerifyType" Scope="User">
       <Value Profile="(Default)">Invalid</Value>
     </Setting>
+    <Setting Name="TutorialView" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
