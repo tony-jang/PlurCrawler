@@ -30,12 +30,19 @@ namespace PlurCrawler_Sample.Controls
         {
             if (isDpSince)
             {
-                if (LimitSince != null && (dpSince.SelectedDate < LimitSince || dpSince.SelectedDate > LimitUntil))
+                if (LimitSince != null && dpSince.SelectedDate < LimitSince)
                     dpSince.SelectedDate = LimitSince;
+
+                if (LimitUntil != null && dpSince.SelectedDate > LimitUntil)
+                    dpSince.SelectedDate = LimitUntil;
+
             }
             else
             {
-                if (LimitUntil != null && (dpUntil.SelectedDate > LimitUntil || dpUntil.SelectedDate < LimitSince))
+                if (LimitSince != null && dpUntil.SelectedDate < LimitSince)
+                    dpUntil.SelectedDate = LimitSince;
+
+                if (LimitUntil != null && dpUntil.SelectedDate > LimitUntil)
                     dpUntil.SelectedDate = LimitUntil;
             }
         }
@@ -70,14 +77,24 @@ namespace PlurCrawler_Sample.Controls
             if (_limitSince != null)
             {
                 CheckDate(true);
+                if (dpSince.SelectedDate < _limitSince)
+                    dpSince.SelectedDate = _limitSince;
                 dpSince.DisplayDateStart = _limitSince;
+
+                if (dpUntil.SelectedDate < _limitSince)
+                    dpUntil.SelectedDate = _limitSince;
                 dpUntil.DisplayDateStart = _limitSince;
             }
 
             if (_limitUntil != null)
             {
                 CheckDate(false);
+                if (dpSince.SelectedDate > _limitUntil)
+                    dpSince.SelectedDate = _limitUntil;
                 dpSince.DisplayDateEnd = _limitUntil;
+
+                if (dpUntil.SelectedDate > _limitUntil)
+                    dpUntil.SelectedDate = _limitUntil;
                 dpUntil.DisplayDateEnd = _limitUntil;
             }
 
@@ -126,7 +143,12 @@ namespace PlurCrawler_Sample.Controls
                 _limitSince = value;
                 if (templateApplied)
                 {
+                    if (dpSince.SelectedDate < value)
+                        dpSince.SelectedDate = value;
                     dpSince.DisplayDateStart = _limitSince;
+
+                    if (dpUntil.SelectedDate < value)
+                        dpUntil.SelectedDate = value;
                     dpUntil.DisplayDateStart = _limitSince;
                 }
 
@@ -143,7 +165,12 @@ namespace PlurCrawler_Sample.Controls
                 _limitUntil = value;
                 if (templateApplied)
                 {
+                    if (dpSince.SelectedDate > value)
+                        dpSince.SelectedDate = value;
                     dpSince.DisplayDateEnd = _limitUntil;
+
+                    if (dpUntil.SelectedDate > value)
+                        dpUntil.SelectedDate = value;
                     dpUntil.DisplayDateEnd = _limitUntil;
                 }
             }

@@ -21,6 +21,7 @@ using PlurCrawler.Search.Services.GoogleCSE;
 using PlurCrawler.Search.Services.Twitter;
 using PlurCrawler.Search.Services.Youtube;
 using PlurCrawler_Sample.Common;
+using PlurCrawler_Sample.Controls;
 
 namespace PlurCrawler_Sample.Windows
 {
@@ -69,8 +70,7 @@ namespace PlurCrawler_Sample.Windows
             cbTwitterRetweet.Checked += TwitterSettingChanged;
             cbTwitterRetweet.Unchecked += TwitterSettingChanged;
             drpTwitter.DateChanged += TwitterSettingChanged;
-            drpTwitter.Loaded += DrpTwitter_Loaded;
-
+            
             tbYoutubeSearchCount.TextChanged += YoutubeSettingChanged;
             rbYoutubeNoSplit.Checked += YoutubeSettingChanged;
             rbYoutubeSplitWithDate.Checked += YoutubeSettingChanged;
@@ -86,13 +86,19 @@ namespace PlurCrawler_Sample.Windows
             useYoutubeDate.Unchecked += YoutubeSettingChanged;
             drpYoutube.DateChanged += YoutubeSettingChanged;
 
+            drpGoogle.Loaded += Drp_Loaded;
+            drpTwitter.Loaded += Drp_Loaded;
+            drpYoutube.Loaded += Drp_Loaded;
+
             #endregion
         }
 
-        private void DrpTwitter_Loaded(object sender, RoutedEventArgs e)
+        private void Drp_Loaded(object sender, RoutedEventArgs e)
         {
-            drpTwitter.LimitSince = DateTime.Now.AddDays(-10);
-            drpTwitter.LimitUntil = DateTime.Now;
+            if (sender is DateRangePicker drp)
+            {
+                drp.LimitUntil = DateTime.Now;
+            }
         }
 
         private void GoogleSettingChanged(object sender, EventArgs e)

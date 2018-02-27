@@ -240,6 +240,8 @@ namespace PlurCrawler_Sample
             }
 
             #endregion
+
+            this.Activate();
         }
         
         #region [  UI EventHandler  ]

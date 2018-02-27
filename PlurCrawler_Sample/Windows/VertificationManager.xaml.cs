@@ -52,10 +52,24 @@ namespace PlurCrawler_Sample.Windows
             tbTwitterKey.TextChanged += TbTwitterKey_TextChanged;
             tbTwitterSecret.PasswordChanged += TbTwitterSecret_PasswordChanged;
 
+            wbTwitter.Navigating += WbTwitter_Navigating;
+
             SettingManager.GoogleCredentials.PropertyChanged += GoogleCredentials_PropertyChanged;
             SettingManager.YoutubeCredentials.PropertyChanged += YoutubeCredentials_PropertyChanged;
 
             this.Loaded += VertificationManager_Loaded;
+        }
+
+        private void WbTwitter_Navigating(object sender, NavigatingCancelEventArgs e)
+        {
+            string currURL = e.Uri.OriginalString;
+            if (!currURL.Contains("twitter.com"))
+            {
+                tbTwitterPINMsg.Text = "PIN 번호 입력이 취소되었습니다.";
+                tbTwitterPINMsg.Visibility = Visibility.Visible;
+                string url = GetTwitterURL();
+                wbTwitter.Navigate(url);
+            }
         }
 
         private void YoutubeCredentials_PropertyChanged(object sender, PropertyChangedEventArgs e)

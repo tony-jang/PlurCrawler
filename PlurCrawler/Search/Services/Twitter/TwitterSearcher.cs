@@ -58,7 +58,7 @@ namespace PlurCrawler.Search.Services.Twitter
 
                 foreach (DateTime d in dateRange)
                 {
-                    int searchCount = (int)Math.Round((double)(searchOption.SearchCount / dateRange.Count()));
+                    int searchCount = (int)Math.Ceiling((double)(searchOption.SearchCount / dateRange.Count()));
 
                     if (searchCount == 0)
                         searchCount = 1;
