@@ -5,6 +5,7 @@ using System.ComponentModel;
 using PlurCrawler.Search.Base;
 using PlurCrawler.Common;
 using PlurCrawler.Format.Common;
+using PlurCrawler.Search.Common;
 
 namespace PlurCrawler.Search.Services.GoogleCSE
 {
@@ -24,7 +25,7 @@ namespace PlurCrawler.Search.Services.GoogleCSE
                 UseDateSearch = false,
                 OutputServices = OutputFormat.Json,
                 Offset = 0,
-                Language = LanguageCode.All
+                CountryCode = CountryRestrictsCode.All
             };
         }
         
@@ -80,17 +81,17 @@ namespace PlurCrawler.Search.Services.GoogleCSE
             }
         }
 
-        private LanguageCode _language;
+        private CountryRestrictsCode _countryCode;
 
         /// <summary>
-        /// 검색할 언어 코드를 입력합니다.
+        /// 제한할 나라 코드를 입력합니다.
         /// </summary>
-        public LanguageCode Language
+        public CountryRestrictsCode CountryCode
         {
-            get => _language;
+            get => _countryCode;
             set
             {
-                _language = value;
+                _countryCode = value;
                 OnPropertyChanged(this, new PropertyChangedEventArgs("Language"));
             }
         }

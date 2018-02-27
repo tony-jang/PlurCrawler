@@ -8,6 +8,7 @@ using System.ComponentModel;
 using PlurCrawler.Format.Common;
 using PlurCrawler.Search.Base;
 using PlurCrawler.Common;
+using PlurCrawler.Search.Common;
 
 namespace PlurCrawler.Search.Services.Twitter
 {
@@ -22,7 +23,7 @@ namespace PlurCrawler.Search.Services.Twitter
                 SplitWithDate = false,
                 OutputServices = OutputFormat.Json | OutputFormat.CSV,
                 Offset = 0,
-                Language = LanguageCode.All
+                Language = TwitterLanguage.All
             };
         }
         
@@ -78,12 +79,12 @@ namespace PlurCrawler.Search.Services.Twitter
             }
         }
 
-        private LanguageCode _language;
+        private TwitterLanguage _language;
 
         /// <summary>
         /// 검색할 언어 코드를 입력합니다.
         /// </summary>
-        public LanguageCode Language
+        public TwitterLanguage Language
         {
             get => _language;
             set

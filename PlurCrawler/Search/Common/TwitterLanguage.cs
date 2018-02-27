@@ -1,0 +1,72 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PlurCrawler.Search.Common
+{
+    public enum TwitterLanguage
+    {
+        All = 100,
+        Amharic = 0,
+        Arabic = 1,
+        Armenian = 2,
+        Bengali = 3,
+        Bosnian = 4,
+        Bulgarian = 5,
+        Burmese = 6,
+        CentralKurdish = 7,
+        Chinese = 8,
+        Croatian = 9,
+        Danish = 10,
+        Dutch = 11,
+        English = 12,
+        Estonian = 13,
+        Finnish = 14,
+        French = 15,
+        Georgian = 16,
+        German = 17,
+        Greek = 18,
+        Gujarati = 19,
+        Hebrew = 20,
+        Hindi = 21,
+        Hungarian = 22,
+        Icelandic = 23,
+        Indonesian = 24,
+        Italian = 25,
+        Japanese = 26,
+        Kannada = 27,
+        Khmer = 28,
+        Korean = 29,
+        Lao = 30,
+        Latvian = 31,
+        Lithuanian = 32,
+        Malayalam = 33,
+        Marathi = 34,
+        Nepali = 35,
+        Norwegian = 36,
+        Oriya = 37,
+        Pashto = 38,
+        Persian = 39,
+        Polish = 40,
+        Portuguese = 41,
+        Punjabi = 42,
+        Romanian = 43,
+        Russian = 44,
+        Sindhi = 45,
+        Sinhala = 46,
+        Slovak = 47,
+        Slovenian = 48,
+        Spanish = 49,
+        Swedish = 50,
+        Tagalog = 51,
+        Tamil = 52,
+        Telugu = 53,
+        Thai = 54,
+        Turkish = 55,
+        Urdu = 56,
+        Uyghur = 57,
+        Vietnamese = 58
+    }
+}

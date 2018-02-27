@@ -13,10 +13,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using PlurCrawler.Attributes;
 using PlurCrawler.Common;
+using PlurCrawler.Extension;
 using PlurCrawler.Format.Common;
 using PlurCrawler.Search;
+using PlurCrawler.Search.Common;
 using PlurCrawler.Search.Services.GoogleCSE;
 using PlurCrawler.Search.Services.Twitter;
 using PlurCrawler.Search.Services.Youtube;
@@ -34,6 +36,44 @@ namespace PlurCrawler_Sample.Windows
         {
             InitializeComponent();
 
+            foreach(var itm in EnumEx.GetValues<CountryRestrictsCode>())
+            {
+                googleCountry.Items.Add(new ComboBoxItem()
+                {
+                    Content = itm.GetAttributeFromEnum<NoteAttribute>().Message,
+                    Tag = itm,
+                });
+            }
+            googleCountry.SelectedIndex = 0;
+            
+            foreach(var itm in EnumEx.GetValues<RegionCode>())
+            {
+                youtubeRegion.Items.Add(new ComboBoxItem()
+                {
+                    Content = itm.GetAttributeFromEnum<NoteAttribute>().Message,
+                    Tag = itm,
+                });
+            }
+            youtubeRegion.SelectedIndex = 0;
+            
+            twitterLang.Items.Add(new ComboBoxItem()
+            {
+                Content = "제한 없음",
+                Tag = TwitterLanguage.All,
+            });
+
+            foreach(var itm in EnumEx.GetValues<TwitterLanguage>())
+            {
+                if (itm == TwitterLanguage.All)
+                    continue;
+                twitterLang.Items.Add(new ComboBoxItem()
+                {
+                    Content = itm.ToString(),
+                    Tag = itm
+                });
+            }
+            twitterLang.SelectedIndex = 0;
+
             LoadGoogle(SettingManager.GoogleCSESearchOption);
             LoadTwitter(SettingManager.TwitterSearchOption);
             LoadYoutube(SettingManager.YoutubeSearchOption);
@@ -43,7 +83,7 @@ namespace PlurCrawler_Sample.Windows
             tbGoogleSearchCount.TextChanged += GoogleSettingChanged;
             rbGoogleNoSplit.Checked += GoogleSettingChanged;
             rbGoogleSplitWithDate.Checked += GoogleSettingChanged;
-            tbGooglePageOffset.TextChanged += GoogleSettingChanged;
+            tbGoogleOffset.TextChanged += GoogleSettingChanged;
             goCbOutput1.Checked += GoogleSettingChanged;
             goCbOutput2.Checked += GoogleSettingChanged;
             goCbOutput3.Checked += GoogleSettingChanged;
@@ -55,10 +95,11 @@ namespace PlurCrawler_Sample.Windows
             useGoogleDate.Checked += GoogleSettingChanged;
             useGoogleDate.Unchecked += GoogleSettingChanged;
             drpGoogle.DateChanged += GoogleSettingChanged;
-
+            
             tbTwitterSearchCount.TextChanged += TwitterSettingChanged;
             rbTwitterNoSplit.Checked += TwitterSettingChanged;
             rbTwitterSplitWithDate.Checked += TwitterSettingChanged;
+            tbTwitterOffset.TextChanged += TwitterSettingChanged;
             twCbOutput1.Checked += TwitterSettingChanged;
             twCbOutput2.Checked += TwitterSettingChanged;
             twCbOutput3.Checked += TwitterSettingChanged;
@@ -89,6 +130,10 @@ namespace PlurCrawler_Sample.Windows
             drpGoogle.Loaded += Drp_Loaded;
             drpTwitter.Loaded += Drp_Loaded;
             drpYoutube.Loaded += Drp_Loaded;
+
+            googleCountry.SelectionChanged += GoogleSettingChanged;
+            youtubeRegion.SelectionChanged += YoutubeSettingChanged;
+            twitterLang.SelectionChanged += TwitterSettingChanged;
 
             #endregion
         }
@@ -128,13 +173,15 @@ namespace PlurCrawler_Sample.Windows
             drpGoogle.Since = option.DateRange.Since.GetValueOrDefault();
             drpGoogle.Until = option.DateRange.Until.GetValueOrDefault();
 
-            tbGooglePageOffset.Text = option.Offset.ToString();
+            tbGoogleOffset.Text = option.Offset.ToString();
             tbGoogleSearchCount.Text = option.SearchCount.ToString();
 
             goCbOutput1.IsChecked = option.OutputServices.HasFlag(OutputFormat.CSV);
             goCbOutput2.IsChecked = option.OutputServices.HasFlag(OutputFormat.Json);
             goCbOutput3.IsChecked = option.OutputServices.HasFlag(OutputFormat.MySQL);
             goCbOutput4.IsChecked = option.OutputServices.HasFlag(OutputFormat.AccessDB);
+
+            googleCountry.SelectedIndex = (int)option.CountryCode;
 
             useGoogleDate.IsChecked = option.UseDateSearch;
 
@@ -150,10 +197,11 @@ namespace PlurCrawler_Sample.Windows
             {
                 DateRange = new DateRange(drpGoogle.Since, drpGoogle.Until),
                 UseDateSearch = useGoogleDate.IsChecked.GetValueOrDefault(),
-                Offset = tbGooglePageOffset.GetIntOrDefault(),
+                Offset = tbGoogleOffset.GetIntOrDefault(),
                 SplitWithDate = rbGoogleSplitWithDate.IsChecked.GetValueOrDefault(),
                 SearchCount = tbGoogleSearchCount.GetIntOrDefault(),
                 OutputServices = CalculateService(ServiceKind.GoogleCSE),
+                CountryCode = (CountryRestrictsCode)googleCountry.SelectedIndex
             };
         }
 
@@ -165,7 +213,7 @@ namespace PlurCrawler_Sample.Windows
             drpTwitter.Since = option.DateRange.Since.GetValueOrDefault();
             drpTwitter.Until = option.DateRange.Until.GetValueOrDefault();
 
-            tbTwitterPageOffset.Text = option.Offset.ToString();
+            tbTwitterOffset.Text = option.Offset.ToString();
             tbTwitterSearchCount.Text = option.SearchCount.ToString();
 
             twCbOutput1.IsChecked = option.OutputServices.HasFlag(OutputFormat.CSV);
@@ -174,6 +222,14 @@ namespace PlurCrawler_Sample.Windows
             twCbOutput4.IsChecked = option.OutputServices.HasFlag(OutputFormat.AccessDB);
             
             cbTwitterRetweet.IsChecked = option.IncludeRetweets;
+            if (option.Language == TwitterLanguage.All)
+            {
+                twitterLang.SelectedIndex = 0;
+            }
+            else
+            {
+                twitterLang.SelectedIndex = (int)option.Language + 1;
+            }
 
             if (option.SplitWithDate)
                 rbTwitterSplitWithDate.IsChecked = true;
@@ -186,11 +242,12 @@ namespace PlurCrawler_Sample.Windows
             return new TwitterSearchOption()
             {
                 DateRange = new DateRange(drpTwitter.Since, drpTwitter.Until),
-                Offset = tbTwitterPageOffset.GetIntOrDefault(),
+                Offset = tbTwitterOffset.GetIntOrDefault(),
                 SplitWithDate = rbTwitterSplitWithDate.IsChecked.GetValueOrDefault(),
                 SearchCount = tbTwitterSearchCount.GetIntOrDefault(),
                 OutputServices = CalculateService(ServiceKind.Twitter),
                 IncludeRetweets = cbTwitterRetweet.IsChecked.GetValueOrDefault(),
+                Language = (TwitterLanguage)((ComboBoxItem)twitterLang.SelectedItem).Tag
             };
         }
 
@@ -214,6 +271,8 @@ namespace PlurCrawler_Sample.Windows
             ytCbOutput3.IsChecked = option.OutputServices.HasFlag(OutputFormat.MySQL);
             ytCbOutput4.IsChecked = option.OutputServices.HasFlag(OutputFormat.AccessDB);
 
+            youtubeRegion.SelectedIndex = (int)option.RegionCode;
+
             useYoutubeDate.IsChecked = option.UseDateSearch;
 
             if (option.SplitWithDate)
@@ -231,6 +290,7 @@ namespace PlurCrawler_Sample.Windows
                 SplitWithDate = rbYoutubeSplitWithDate.IsChecked.GetValueOrDefault(),
                 SearchCount = tbYoutubeSearchCount.GetIntOrDefault(),
                 OutputServices = CalculateService(ServiceKind.Youtube),
+                RegionCode = (RegionCode)((ComboBoxItem)youtubeRegion.SelectedItem).Tag
             };
         }
 

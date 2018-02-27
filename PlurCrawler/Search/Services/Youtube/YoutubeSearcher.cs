@@ -49,7 +49,7 @@ namespace PlurCrawler.Search.Services.Youtube
             {
                 YoutubeRequest listRequest = BuildRequest(searchOption);
                 List<YoutubeSearchResult> list = new List<YoutubeSearchResult>();
-
+                
                 int remain = searchOption.SearchCount;
                 int count = 1;
 
@@ -154,6 +154,8 @@ namespace PlurCrawler.Search.Services.Youtube
             
             listRequest.MaxResults = count <= 50 ? count : 50;
             listRequest.SafeSearch = YoutubeRequest.SafeSearchEnum.Strict;
+
+            listRequest.RegionCode = searchOption.RegionCode.ToString();
 
             return listRequest;
         }

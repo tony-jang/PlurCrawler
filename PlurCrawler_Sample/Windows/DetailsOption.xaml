@@ -35,9 +35,13 @@
                                 </WrapPanel>
                             </ctrl:PropertyGroupBox>
 
-                            <ctrl:PropertyTextBox x:Name="tbGooglePageOffset" PropertyName="페이지 오프셋" DigitOnly="True"
+                            <ctrl:PropertyTextBox x:Name="tbGoogleOffset" PropertyName="오프셋" DigitOnly="True"
                                 Description="* 검색을 표시할 오프셋을 나타냅니다.&#x0a;(예를 들어 5라면 6번째 부터 출력합니다)"/>
 
+                            <ctrl:PropertyGroupBox x:Name="gbRegionCode" Header="국가 제한">
+                                <ComboBox x:Name="googleCountry"/>
+                            </ctrl:PropertyGroupBox>
+                            
                             <ctrl:PropertyGroupBox x:Name="gbOutputLoc" Header="출력할 위치">
                                 <StackPanel>
                                     <StackPanel.Resources>
@@ -91,8 +95,6 @@
                             <Grid Margin="10">
                                 <Rectangle Fill="LightGray"/>
                                 <TextBlock TextWrapping="Wrap" Margin="10">
-                                    트위터는 스탠다드 검색일 경우 15분당 450개의 쿼리를 전송 할 수 있습니다.<LineBreak/>
-                                    프리미엄 검색의 경우 15분당 900개의 쿼리를 전송 할 수 있으며, 초당 10개로 제한됩니다.<LineBreak/>
                                     유료 결제시 500개에서 100000개의 쿼리 요청이 가능합니다.<LineBreak/>
                                     결제는 <Hyperlink Tag="https://developer.twitter.com/en/pricing" Click="Hyperlink_Click">여기서</Hyperlink> 상단의 Apply 버튼으로 가능합니다.
                                 </TextBlock>
@@ -104,8 +106,12 @@
                                     <RadioButton x:Name="rbTwitterSplitWithDate" Margin="5" Content="하루 기준" GroupName="twitterFindType" IsChecked="True"/>
                                 </WrapPanel>
                             </ctrl:PropertyGroupBox>
-
-                            <ctrl:PropertyTextBox x:Name="tbTwitterPageOffset" PropertyName="페이지 오프셋" DigitOnly="True"
+                            
+                            <ctrl:PropertyGroupBox Header="언어 제한">
+                                <ComboBox x:Name="twitterLang"/>
+                            </ctrl:PropertyGroupBox>
+                            
+                            <ctrl:PropertyTextBox x:Name="tbTwitterOffset" PropertyName="오프셋" DigitOnly="True"
                                 Description="* 검색을 표시할 오프셋을 나타냅니다.&#x0a;(예를 들어 5라면 6번째 부터 출력합니다)"/>
 
                             <ctrl:PropertyGroupBox x:Name="twOutputLoc" Header="출력할 위치">
@@ -134,7 +140,6 @@
                                 - 일반적인 경우 검색 범위는 10일 이내여야 함<LineBreak/>
                                 - 프리미엄의 경우 서비스에 따라서 30일 이내 혹은 전체 검색이 존재
                             </TextBlock>
-
                         </StackPanel>
                     </ScrollViewer>
 
@@ -170,6 +175,11 @@
                                     <RadioButton x:Name="rbYoutubeNoSplit" Margin="5" Content="전체 기준" GroupName="youtubeFindType" IsChecked="True"/>
                                     <RadioButton x:Name="rbYoutubeSplitWithDate" Margin="5" Content="하루 기준" GroupName="youtubeFindType" IsChecked="True"/>
                                 </WrapPanel>
+                            </ctrl:PropertyGroupBox>
+
+
+                            <ctrl:PropertyGroupBox Header="지역 제한">
+                                <ComboBox x:Name="youtubeRegion"/>
                             </ctrl:PropertyGroupBox>
 
                             <ctrl:PropertyGroupBox x:Name="ytOutputLoc" Header="출력할 위치">

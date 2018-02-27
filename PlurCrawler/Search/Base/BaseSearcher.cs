@@ -25,24 +25,7 @@ namespace PlurCrawler.Search.Base
         /// <param name="searchOption">검색 옵션입니다.</param>
         /// <returns></returns>
         public abstract IEnumerable<TResult> Search(TOption searchOption);
-
-        /// <summary>
-        /// 각 서비스에서 사용하는 언어 코드를 가져옵니다. 없을 경우 빈 문자열을 반환합니다.
-        /// </summary>
-        /// <param name="serviceKind">언어 코드를 가져올 서비스 종류입니다.</param>
-        /// <param name="languageCode">언어 코드입니다.</param>
-        /// <returns></returns>
-        public string GetLanguageCode(ServiceKind serviceKind, LanguageCode languageCode)
-        {
-            LanguageNoteAttribute[] attr = languageCode.GetAttributesFromEnum<LanguageNoteAttribute>();
-
-            LanguageNoteAttribute itm = attr.Where(i => i.ServiceKind == serviceKind).FirstOrDefault();
-
-            if (itm == null)
-                return "";
-            else
-                return itm.LanguageString;
-        }
+        
         public delegate void SearchResultDelegate(object sender);
 
         public event EventHandler<ProgressEventArgs> SearchProgressChanged;

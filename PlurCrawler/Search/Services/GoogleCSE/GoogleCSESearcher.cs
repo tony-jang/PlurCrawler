@@ -122,7 +122,11 @@ namespace PlurCrawler.Search.Services.GoogleCSE
 
             request.Cx = SearchEngineId;
             request.Start = option.Offset;
-
+            if (option.CountryCode != CountryRestrictsCode.All)
+            {
+                request.Cr = option.CountryCode.ToString();
+            }
+            
             if (option.UseDateSearch)
                 request.Sort = $@"date:r:{option.DateRange.Since.GetValueOrDefault().To8LengthYear()
                                        }:{option.DateRange.Until.GetValueOrDefault().To8LengthYear()}";
@@ -136,7 +140,7 @@ namespace PlurCrawler.Search.Services.GoogleCSE
             IList<Result> paging = new List<Result>();
             int count = 0;
             long tempCount = targetCount;
-
+            
             while ((paging != null) && tempCount > 0)
             {
                 request.Start = count * 10 + 1 + offset;

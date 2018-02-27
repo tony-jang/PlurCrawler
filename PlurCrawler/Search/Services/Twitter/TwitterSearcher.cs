@@ -108,7 +108,7 @@ namespace PlurCrawler.Search.Services.Twitter
                 {
                     MaximumNumberOfResults = searchCount,
                     MaxId = maxid,
-                    TweetSearchType = searchOption.IncludeRetweets ? TweetSearchType.All : TweetSearchType.OriginalTweetsOnly
+                    TweetSearchType = searchOption.IncludeRetweets ? TweetSearchType.All : TweetSearchType.OriginalTweetsOnly,
                 };
                 
                 searchParam.Since = searchOption.DateRange.Since.GetValueOrDefault();

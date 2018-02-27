@@ -26,7 +26,7 @@ namespace PlurCrawler.Search.Services.Youtube
                 SplitWithDate = false,
                 UseDateSearch = false,
                 OutputServices = OutputFormat.Json,
-                Language = LanguageCode.All
+                RegionCode = RegionCode.All
             };
         }
 
@@ -67,12 +67,12 @@ namespace PlurCrawler.Search.Services.Youtube
             }
         }
 
-        private LanguageCode _language;
+        private RegionCode _language;
 
         /// <summary>
-        /// 검색할 언어 코드를 입력합니다.
+        /// 검색할 지역 코드를 입력합니다.
         /// </summary>
-        public LanguageCode Language
+        public RegionCode RegionCode
         {
             get => _language;
             set
