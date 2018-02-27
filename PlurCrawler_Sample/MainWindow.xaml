@@ -34,11 +34,12 @@
                         <WrapPanel HorizontalAlignment="Center">
                             <WrapPanel.Resources>
                                 <Style x:Key="ImageCheckBoxStyle2" TargetType="{x:Type ctrl:ImageCheckBox}" BasedOn="{StaticResource ImageCheckBoxStyle}">
+                                    <Setter Property="Background" Value="Transparent"/>
                                     <Setter Property="Height" Value="20"/>
                                 </Style>
                             </WrapPanel.Resources>
                             <TextBlock Text="검색 엔진 선택 - " VerticalAlignment="Center"/>
-                            <ctrl:ImageCheckBox x:Name="cbGoogleService" Margin="5" Content="Google CSE" 
+                            <ctrl:ImageCheckBox x:Name="cbGoogleService" Margin="5" Content="구글 CSE" 
                                                 Source="Resources/icon_google.png" 
                                                 DisabledSource="Resources/icon_google_gray.png"
                                                 Style="{StaticResource ImageCheckBoxStyle2}"/>
