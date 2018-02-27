@@ -26,6 +26,7 @@ namespace PlurCrawler_Sample.Windows
         public ExportOption()
         {
             InitializeComponent();
+            mysqlUserPw.ApplyTemplate();
 
             LoadSetting(SettingManager.ExportOptionSetting);
 

@@ -67,6 +67,8 @@ namespace PlurCrawler_Sample
 
                 googleCSESearcher.SearchProgressChanged += Searcher_SearchProgressChanged;
                 googleCSESearcher.SearchFinished += Searcher_SearchFinished;
+                googleCSESearcher.ChangeInfoMessage += Searcher_ChangeInfoMessage;
+                googleCSESearcher.SearchItemFound += Searcher_SearchItemFound;
 
                 Dispatcher.Invoke(() =>
                 {
@@ -112,6 +114,12 @@ namespace PlurCrawler_Sample
                     try
                     {
                         googleResult = googleCSESearcher.Search(option);
+                        if (googleResult.Count() == 0)
+                        {
+                            info = SearchResult.Fail_NoResult;
+                            AddLog("검색 결과가 없습니다.", TaskLogType.Failed);
+                            return;
+                        }
                         info = SearchResult.Success;
                         AddLog("검색 결과를 내보내는 중입니다.", TaskLogType.Searching);
                         pack = Export(option.OutputServices, googleResult, ServiceKind.GoogleCSE);
@@ -178,6 +186,8 @@ namespace PlurCrawler_Sample
 
                 twitterSearcher.SearchProgressChanged += Searcher_SearchProgressChanged;
                 twitterSearcher.SearchFinished += Searcher_SearchFinished;
+                twitterSearcher.ChangeInfoMessage += Searcher_ChangeInfoMessage;
+                twitterSearcher.SearchItemFound += Searcher_SearchItemFound;
 
                 Dispatcher.Invoke(() =>
                 {
@@ -198,6 +208,8 @@ namespace PlurCrawler_Sample
                         tb.SetValue(message: "결과를 내보낼 위치가 없습니다.", maximum: 1);
                         AddLog("검색을 내보낼 위치가 없습니다.", TaskLogType.Failed);
 
+                        tb.TaskFinished = true;
+
                         info = SearchResult.Fail_InvaildSetting;
                         isCanceled = true;
                     }
@@ -206,6 +218,8 @@ namespace PlurCrawler_Sample
                     {
                         tb.SetValue(message: "API키가 인증되지 않았습니다.", maximum: 1);
                         AddLog("API키가 인증되지 않았습니다.", TaskLogType.Failed);
+
+                        tb.TaskFinished = true;
 
                         info = SearchResult.Fail_APIError;
                         isCanceled = true;
@@ -220,6 +234,14 @@ namespace PlurCrawler_Sample
                     try
                     {
                         twitterResult = twitterSearcher.Search(option);
+
+                        if (twitterResult.Count() == 0)
+                        {
+                            info = SearchResult.Fail_NoResult;
+                            AddLog("검색 결과가 없습니다.", TaskLogType.Failed);
+                            return;
+                        }
+
                         info = SearchResult.Success;
                         AddLog("검색 결과를 내보내는 중입니다.", TaskLogType.Searching);
                         pack = Export(option.OutputServices, twitterResult, ServiceKind.Twitter);
@@ -332,6 +354,14 @@ namespace PlurCrawler_Sample
                     try
                     {
                         youtubeResult = youtubeSearcher.Search(option);
+
+                        if (youtubeResult.Count() == 0)
+                        {
+                            info = SearchResult.Fail_NoResult;
+                            AddLog("검색 결과가 없습니다.", TaskLogType.Failed);
+                            return;
+                        }
+
                         info = SearchResult.Success;
                         AddLog("검색 결과를 내보내는 중입니다.", TaskLogType.Searching);
                         pack = Export(option.OutputServices, youtubeResult, ServiceKind.Youtube);
@@ -656,11 +686,6 @@ namespace PlurCrawler_Sample
                         {
                             try
                             {
-                                var i = result.ToList();
-                                i.First().Keyword = "asdf";
-
-                                result = i;
-
                                 string fullPath = Path.Combine(folder, $"{fileName}.accdb");
                                 if (ExportManager.AccessDBExport(fullPath, result))
                                 {

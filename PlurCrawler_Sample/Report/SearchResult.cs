@@ -9,6 +9,7 @@ namespace PlurCrawler_Sample.Report
     public enum SearchResult
     {
         Success,
+        Fail_NoResult,
         Fail_InvaildSetting,
         Fail_APIError,
     }

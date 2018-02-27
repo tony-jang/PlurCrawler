@@ -159,6 +159,10 @@ namespace PlurCrawler_Sample.Windows
                     brush = Brushes.Red;
                     tbSearchResult.Text = "실패 - API 오류로 인한 실패";
                     break;
+                case SearchResult.Fail_NoResult:
+                    brush = Brushes.Red;
+                    tbSearchResult.Text = "실패 - 결과 없음";
+                    break;
             }
 
             ChangeButtonEnabled(data.SearchResult == SearchResult.Success);
