@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlurCrawler_Sample.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -44,9 +45,9 @@ namespace PlurCrawler_Sample.Export
             }
         }
 
-        private int _jsonOverlapOption;
+        private FileOverrideOption _jsonOverlapOption;
 
-        public int JsonOverlapOption
+        public FileOverrideOption JsonOverlapOption
         {
             get => _jsonOverlapOption;
             set
@@ -96,9 +97,9 @@ namespace PlurCrawler_Sample.Export
             }
         }
 
-        private int _csvOverlapOption;
+        private FileOverrideOption _csvOverlapOption;
 
-        public int CSVOverlapOption
+        public FileOverrideOption CSVOverlapOption
         {
             get => _csvOverlapOption;
             set

@@ -117,6 +117,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\TabItemCommand.cs" />
+    <Compile Include="Common\FileOverrideOption.cs" />
     <Compile Include="Common\ObjectSerializer.cs" />
     <Compile Include="Common\SettingManager.cs" />
     <Compile Include="Controls\CloseableTabItem.cs" />

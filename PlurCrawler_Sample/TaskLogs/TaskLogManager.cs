@@ -25,7 +25,7 @@ namespace PlurCrawler_Sample.TaskLogs
         {
         }
 
-        internal static void OnLogAdded(TaskLog taskLog)
+        private static void OnLogAdded(TaskLog taskLog)
         {
             LogAdded?.Invoke(taskLog);
         }

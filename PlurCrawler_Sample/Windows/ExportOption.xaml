@@ -36,8 +36,9 @@
                             <WrapPanel>
                                 <TextBlock Text="파일 이름이 중복될때" Margin="10,0"/>
                                 <ComboBox x:Name="jsonOverlapOption" SelectedIndex="0">
-                                    <ComboBoxItem Content="내용을 이어서 저장"/>
+                                    <ComboBoxItem Content="내보내지 않고 알림"/>
                                     <ComboBoxItem Content="덮어씌우기"/>
+                                    <ComboBoxItem Content="내용을 이어서 저장"/>
                                     <ComboBoxItem Content="앞에 (1) 붙여서 저장"/>
                                 </ComboBox>
                             </WrapPanel>
@@ -80,8 +81,9 @@
                             <WrapPanel>
                                 <TextBlock Text="파일 이름이 중복될때" Margin="10,0"/>
                                 <ComboBox x:Name="csvOverlapOption" SelectedIndex="0">
-                                    <ComboBoxItem Content="내용을 이어서 저장"/>
+                                    <ComboBoxItem Content="내보내지 않고 알림"/>
                                     <ComboBoxItem Content="덮어씌우기"/>
+                                    <ComboBoxItem Content="내용을 이어서 저장"/>
                                     <ComboBoxItem Content="앞에 (1) 붙여서 저장"/>
                                 </ComboBox>
                             </WrapPanel>

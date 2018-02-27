@@ -104,12 +104,12 @@ namespace PlurCrawler_Sample.Windows
         {
             jsonExportFolder.Text = option.JsonFolderLocation;
             jsonExportName.Text = option.JsonFileName;
-            jsonOverlapOption.SelectedIndex = option.JsonOverlapOption;
+            jsonOverlapOption.SelectedIndex = (int)option.JsonOverlapOption;
             cbUseJsonSort.IsChecked = option.JsonSort;
 
             csvExportFolder.Text = option.CSVFolderLocation;
             csvExportName.Text = option.CSVFileName;
-            csvOverlapOption.SelectedIndex = option.CSVOverlapOption;
+            csvOverlapOption.SelectedIndex = (int)option.CSVOverlapOption;
 
             mysqlConnAddr.Text = option.MySQLConnAddr;
             mysqlUserID.Text = option.MySQLUserID;
@@ -129,11 +129,11 @@ namespace PlurCrawler_Sample.Windows
             {
                 JsonFolderLocation = jsonExportFolder.Text,
                 JsonFileName = jsonExportName.Text,
-                JsonOverlapOption = jsonOverlapOption.SelectedIndex,
+                JsonOverlapOption = (FileOverrideOption)jsonOverlapOption.SelectedIndex,
                 JsonSort = cbUseJsonSort.IsChecked.GetValueOrDefault(),
                 CSVFolderLocation = csvExportFolder.Text,
                 CSVFileName = csvExportName.Text,
-                CSVOverlapOption = csvOverlapOption.SelectedIndex,
+                CSVOverlapOption = (FileOverrideOption)csvOverlapOption.SelectedIndex,
                 MySQLConnAddr = mysqlConnAddr.Text,
                 MySQLUserID = mysqlUserID.Text,
                 MySQLUserPassword = mysqlUserPw.Password,
