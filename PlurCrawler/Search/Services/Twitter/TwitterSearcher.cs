@@ -66,7 +66,7 @@ namespace PlurCrawler.Search.Services.Twitter
                     while (searchCount > 0)
                     {
                         int count = GetSearchCount(searchCount);
-                        result = result.Union(Search(count, maxid));
+                        result = result.Union(Search(count, maxid, d));
 
                         if (maxid == -1)
                             break;
@@ -111,13 +111,18 @@ namespace PlurCrawler.Search.Services.Twitter
                     TweetSearchType = searchOption.IncludeRetweets ? TweetSearchType.All : TweetSearchType.OriginalTweetsOnly,
                 };
                 
+                if (searchOption.Language != TwitterLanguage.All)
+                {
+                    searchParam.Lang = (LanguageFilter)(int)searchOption.Language;
+                }
+
                 searchParam.Since = searchOption.DateRange.Since.GetValueOrDefault();
                 searchParam.Until = searchOption.DateRange.Until.GetValueOrDefault();
 
                 if (time != default(DateTime))
                 {
-                    searchParam.Since = time;
-                    searchParam.Until = time.AddDays(1);
+                    searchParam.Since = time.AddDays(-1);
+                    searchParam.Until = time;
                 }
 
                 ITweetSearchResult results = null;
@@ -152,7 +157,6 @@ namespace PlurCrawler.Search.Services.Twitter
                     if (nextResults == null)
                     {
                         maxid = -1;
-                        return Enumerable.Empty<TwitterSearchResult>();
                     }
                     else
                     {
