@@ -169,25 +169,28 @@ namespace PlurCrawler_Sample.Windows
 
             try
             {
-                TextBlock[] tbList = { tbJsonInfo, tbCSVInfo, tbMySQLInfo, tbAccessDBInfo };
-                Enum[] resultEnumList = { data.ExportResultPack.JsonExportResult,
+                if (data.ExportResultPack != null)
+                {
+                    TextBlock[] tbList = { tbJsonInfo, tbCSVInfo, tbMySQLInfo, tbAccessDBInfo };
+                    Enum[] resultEnumList = { data.ExportResultPack.JsonExportResult,
                                       data.ExportResultPack.CSVExportResult,
                                       data.ExportResultPack.MySQLExportResult,
                                       data.ExportResultPack.AccessExportResult};
 
-                Enum[] serviceEnumList = { OutputFormat.Json, OutputFormat.CSV, OutputFormat.MySQL, OutputFormat.AccessDB };
+                    Enum[] serviceEnumList = { OutputFormat.Json, OutputFormat.CSV, OutputFormat.MySQL, OutputFormat.AccessDB };
 
-                for (int i = 0; i <= 3; i++)
-                {
-                    tbList[i].Text = resultEnumList[i].GetAttributeFromEnum<NoteAttribute>().Message;
+                    for (int i = 0; i <= 3; i++)
+                    {
+                        tbList[i].Text = resultEnumList[i].GetAttributeFromEnum<NoteAttribute>().Message;
 
-                    if (data.OutputFormat.HasFlag(serviceEnumList[i]))
-                    {
-                        tbList[i].Foreground = (resultEnumList[i].GetAttributeFromEnum<BoolAttribute>().Value ? Brushes.Green : Brushes.Red);
-                    }
-                    else
-                    {
-                        tbList[i].Foreground = Brushes.Black;
+                        if (data.OutputFormat.HasFlag(serviceEnumList[i]))
+                        {
+                            tbList[i].Foreground = (resultEnumList[i].GetAttributeFromEnum<BoolAttribute>().Value ? Brushes.Green : Brushes.Red);
+                        }
+                        else
+                        {
+                            tbList[i].Foreground = Brushes.Black;
+                        }
                     }
                 }
             }

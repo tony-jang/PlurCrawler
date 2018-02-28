@@ -129,11 +129,14 @@ namespace PlurCrawler_Sample
                         {
                             info = SearchResult.Fail_NoResult;
                             AddLog("검색 결과가 없습니다.", TaskLogType.Failed);
-                            return;
                         }
-                        info = SearchResult.Success;
-                        AddLog("검색 결과를 내보내는 중입니다.", TaskLogType.Searching);
-                        pack = Export(option.OutputServices, googleResult, ServiceKind.GoogleCSE);
+                        else
+                        {
+                            info = SearchResult.Success;
+                            AddLog("검색 결과를 내보내는 중입니다.", TaskLogType.Searching);
+                            pack = Export(option.OutputServices, googleResult, ServiceKind.GoogleCSE);
+                        }
+                        
                     }
                     catch (InvaildOptionException)
                     {
@@ -256,12 +259,13 @@ namespace PlurCrawler_Sample
                         {
                             info = SearchResult.Fail_NoResult;
                             AddLog("검색 결과가 없습니다.", TaskLogType.Failed);
-                            return;
                         }
-
-                        info = SearchResult.Success;
-                        AddLog("검색 결과를 내보내는 중입니다.", TaskLogType.Searching);
-                        pack = Export(option.OutputServices, twitterResult, ServiceKind.Twitter);
+                        else
+                        {
+                            info = SearchResult.Success;
+                            AddLog("검색 결과를 내보내는 중입니다.", TaskLogType.Searching);
+                            pack = Export(option.OutputServices, twitterResult, ServiceKind.Twitter);
+                        }
                     }
                     catch (InvaildOptionException)
                     {
@@ -385,12 +389,13 @@ namespace PlurCrawler_Sample
                         {
                             info = SearchResult.Fail_NoResult;
                             AddLog("검색 결과가 없습니다.", TaskLogType.Failed);
-                            return;
                         }
-
-                        info = SearchResult.Success;
-                        AddLog("검색 결과를 내보내는 중입니다.", TaskLogType.Searching);
-                        pack = Export(option.OutputServices, youtubeResult, ServiceKind.Youtube);
+                        else
+                        {
+                            info = SearchResult.Success;
+                            AddLog("검색 결과를 내보내는 중입니다.", TaskLogType.Searching);
+                            pack = Export(option.OutputServices, youtubeResult, ServiceKind.Youtube);
+                        }
                     }
                     catch (InvaildOptionException)
                     {
