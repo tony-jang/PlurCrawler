@@ -155,7 +155,10 @@ namespace PlurCrawler.Search.Services.Youtube
             listRequest.MaxResults = count <= 50 ? count : 50;
             listRequest.SafeSearch = YoutubeRequest.SafeSearchEnum.Strict;
 
-            listRequest.RegionCode = searchOption.RegionCode.ToString();
+            if (searchOption.RegionCode != RegionCode.All)
+            {
+                listRequest.RegionCode = searchOption.RegionCode.ToString();
+            }
 
             return listRequest;
         }
