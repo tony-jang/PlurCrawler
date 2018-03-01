@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -42,7 +43,7 @@ namespace PlurCrawler_Sample.TaskLogs
                 Message = message
             });
 
-            sw.WriteLine($"[{DateTime.Now.ToString("MM/dd HH:mm:ss")}] [{type.GetAttributeFromEnum<NoteAttribute>().Message}] {message}");
+            sw.WriteLine($"[{DateTime.Now.ToString("MM/dd HH:mm:ss")}] [{type.GetAttributeFromEnum<DescriptionAttribute>().Description}] {message}");
             sw.Flush();
         }
     }

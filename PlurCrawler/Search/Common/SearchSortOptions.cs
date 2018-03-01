@@ -1,4 +1,5 @@
 ﻿using PlurCrawler.Attributes;
+using System.ComponentModel;
 
 namespace PlurCrawler.Search
 {
@@ -10,13 +11,13 @@ namespace PlurCrawler.Search
         /// <summary>
         /// 유사성 우선적으로 정렬합니다.
         /// </summary>
-        [Note("sim")]
+        [Description("sim")]
         Similarity,
 
         /// <summary>
         /// 날짜의 최신 우선순으로 정렬합니다.
         /// </summary>
-        [Note("date")]
+        [Description("date")]
         Date
     }
 }

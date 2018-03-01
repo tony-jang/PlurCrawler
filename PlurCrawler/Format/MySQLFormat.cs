@@ -17,8 +17,19 @@ using MySql.Data.MySqlClient;
 
 namespace PlurCrawler.Format
 {
+    /// <summary>
+    /// MySQL 타입으로 내보내는 포맷을 나타냅니다.
+    /// </summary>
+    /// <typeparam name="TResult"></typeparam>
     public class MySQLFormat<TResult> : BaseFormat<TResult>, IDisposable where TResult : ISearchResult
     {
+        /// <summary>
+        /// 지정된 포맷으로 <see cref="MySQLFormat{TResult}"/>을 초기화합니다.
+        /// </summary>
+        /// <param name="server">서버 이름 또는 주소입니다.</param>
+        /// <param name="userId">사용자 ID입니다.</param>
+        /// <param name="password">사용자 비밀번호입니다.</param>
+        /// <param name="databaseName">데이터베이스 이름입니다.</param>
         public MySQLFormat(string server, string userId, string password, string databaseName)
             : this($"server={server};userid={userId};password={password};database={databaseName};Charset=euckr;")
         {
@@ -28,6 +39,10 @@ namespace PlurCrawler.Format
             this.DataBaseName = databaseName;
         }
 
+        /// <summary>
+        /// 연결 문자열로 <see cref="MySQLFormat{TResult}"/>을 초기화합니다.
+        /// </summary>
+        /// <param name="connStr">DB 연결 문자열입니다.</param>
         public MySQLFormat(string connStr)
         {
             Connection = new MySqlConnection(connStr);
@@ -35,18 +50,36 @@ namespace PlurCrawler.Format
 
         #region [  Property  ]
 
+        /// <summary>
+        /// 서버 주소 또는 이름입니다.
+        /// </summary>
         public string Server { get; set; }
 
+        /// <summary>
+        /// 사용자 ID입니다.
+        /// </summary>
         public string UserId { get; set; }
 
+        /// <summary>
+        /// 사용자 비밀번호입니다.
+        /// </summary>
         public string Password { get; set; }
 
+        /// <summary>
+        /// 데이터베이스 이름입니다.
+        /// </summary>
         public string DataBaseName { get; set; }
 
+        /// <summary>
+        /// 테이블 이름을 가져옵니다. 테이블 이름은 FormattingData 이전까지는 null을 유지합니다.
+        /// </summary>
         public string TableName { get; internal set; }
-
+        
         private MySqlConnection Connection { get; set; }
 
+        /// <summary>
+        /// MySQL이 현재 열린 상태인지를 나타냅니다.
+        /// </summary>
         public ConnectionState? IsOpened => Connection?.State;
 
         #endregion
@@ -150,8 +183,8 @@ namespace PlurCrawler.Format
 
             return properties.Select(i => new TableField(i.Name, GetTypeString(i), i.Name == primaryProp));
         }
-
-        public string GetUpdateQuery(TableField field, object value, string keyword)
+        
+        private string GetUpdateQuery(TableField field, object value, string keyword)
         {
             if (field.Type.StartsWith("VARCHAR") ||
                 field.Type.StartsWith("LONGTEXT"))
@@ -202,21 +235,32 @@ namespace PlurCrawler.Format
             }
             catch (Exception)
             {
-                return "VARCHAR(100)";
+                return "VARCHAR(200)";
             }
         }
 
         #endregion
 
+        /// <summary>
+        /// 연결을 해제합니다.
+        /// </summary>
         public void Dispose()
         {
             Connection?.Dispose();
         }
 
+        /// <summary>
+        /// 바뀐 속성을 기반으로 연결을 다시 진행합니다.
+        /// </summary>
         public void RenewConnection()
         {
             RenewConnection($"server={Server};userid={UserId};password={Password};database={DataBaseName};Charset=euckr;");
         }
+
+        /// <summary>
+        /// 지정된 연결 문자열로 연결을 다시 진행합니다..
+        /// </summary>
+        /// <param name="connStr"></param>
         public void RenewConnection(string connStr)
         {
             Connection = new MySqlConnection(connStr);
@@ -240,7 +284,7 @@ namespace PlurCrawler.Format
                 type = typeof(YoutubeSearchResult);
             }
         }
-
+        
         private void ExecuteCommand(TResult data, string baseQuery)
         {
             using (MySqlCommand cm = Connection.CreateCommand())
@@ -258,7 +302,7 @@ namespace PlurCrawler.Format
 
         #region [  Check Keyword Exists  ]
 
-        public bool KeywordExists(TableField primaryProp, object value, string keyword)
+        private bool KeywordExists(TableField primaryProp, object value, string keyword)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append($"select keyword from {TableName} where {primaryProp.Name} = ");

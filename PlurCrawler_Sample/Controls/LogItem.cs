@@ -95,7 +95,7 @@ namespace PlurCrawler_Sample.Controls
         {
             if (d is LogItem itm)
             {
-                itm.SetValue(TaskLogTypeStringPropertyKey, itm.TaskLogType.GetAttributeFromEnum<NoteAttribute>().Message);
+                itm.SetValue(TaskLogTypeStringPropertyKey, itm.TaskLogType.GetAttributeFromEnum<DescriptionAttributeAttribute>().Message);
             }
         }
 
@@ -110,7 +110,7 @@ namespace PlurCrawler_Sample.Controls
             get => (TaskLogType)GetValue(TaskLogTypeProperty);
             set
             {
-                SetValue(TaskLogTypeStringPropertyKey, value.GetAttributeFromEnum<NoteAttribute>().Message);
+                SetValue(TaskLogTypeStringPropertyKey, value.GetAttributeFromEnum<DescriptionAttributeAttribute>().Message);
                 SetValue(TaskLogTypeProperty, value);
             }
         }

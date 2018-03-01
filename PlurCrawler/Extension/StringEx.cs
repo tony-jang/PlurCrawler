@@ -38,6 +38,13 @@ namespace PlurCrawler.Extension
             }
         }
 
+        /// <summary>
+        /// 현재 String 데이터를 파일로 저장합니다.
+        /// </summary>
+        /// <param name="str">저장할 String 데이터입니다.</param>
+        /// <param name="fileLocation">저장할 파일 위치입니다.</param>
+        /// <param name="appendText">파일을 새로 만들지 아니면 텍스트를 추가할지에 대한 여부를 나타냅니다.</param>
+        /// <returns></returns>
         public static bool SaveAsFile(this string str, string fileLocation, bool appendText)
         {
             try
@@ -58,6 +65,13 @@ namespace PlurCrawler.Extension
             }
         }
 
+        /// <summary>
+        /// 현재 String 데이터를 파일로 저장합니다.
+        /// </summary>
+        /// <param name="str">저장할 String 데이터입니다.</param>
+        /// <param name="fileLocation">저장할 파일 위치입니다.</param>
+        /// <param name="appendText">파일을 새로 만들지 아니면 텍스트를 추가할지에 대한 여부를 나타냅니다.</param>
+        /// <param name="encoding">파일을 저장할 <see cref="Encoding"/> 방식을 나타냅니다.</param>
         public static bool SaveAsFile(this string str, string fileLocation, bool appendText, Encoding encoding)
         {
             try
@@ -78,6 +92,12 @@ namespace PlurCrawler.Extension
             }
         }
 
+        /// <summary>
+        /// 문자열을 seperator를 통해서 잘라낼 수 있습니다.
+        /// </summary>
+        /// <param name="str">자를 문자열입니다.</param>
+        /// <param name="seperator">자르는 기준이 될 문자열 입니다.</param>
+        /// <param name="stringSplitOptions">반환된 문자열에서 빈칸일 경우 빈칸을 포함할지에 대한 여부를 포함합니다.</param>
         public static string[] Split(this string str, string seperator, StringSplitOptions stringSplitOptions = StringSplitOptions.None)
         {
             return str.Split(new string[] { seperator }, stringSplitOptions);

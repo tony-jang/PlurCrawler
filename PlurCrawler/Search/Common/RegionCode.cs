@@ -1,6 +1,7 @@
 ﻿using PlurCrawler.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,505 +13,505 @@ namespace PlurCrawler.Search
     /// </summary>
     public enum RegionCode
     {
-        [Note("제한 없음")]
+        [Description("제한 없음")]
         All,
-        [Note("Afghanistan")]
+        [Description("Afghanistan")]
         AF,
-        [Note("Åland Islands")]
+        [Description("Åland Islands")]
         AX,
-        [Note("Albania")]
+        [Description("Albania")]
         AL,
-        [Note("Algeria")]
+        [Description("Algeria")]
         DZ,
-        [Note("American Samoa")]
+        [Description("American Samoa")]
         AS,
-        [Note("Andorra")]
+        [Description("Andorra")]
         AD,
-        [Note("Angola")]
+        [Description("Angola")]
         AO,
-        [Note("Anguilla")]
+        [Description("Anguilla")]
         AI,
-        [Note("Antarctica")]
+        [Description("Antarctica")]
         AQ,
-        [Note("Antigua and Barbuda")]
+        [Description("Antigua and Barbuda")]
         AG,
-        [Note("Argentina")]
+        [Description("Argentina")]
         AR,
-        [Note("Armenia")]
+        [Description("Armenia")]
         AM,
-        [Note("Aruba")]
+        [Description("Aruba")]
         AW,
-        [Note("Australia")]
+        [Description("Australia")]
         AU,
-        [Note("Austria")]
+        [Description("Austria")]
         AT,
-        [Note("Azerbaijan")]
+        [Description("Azerbaijan")]
         AZ,
-        [Note("Bahamas")]
+        [Description("Bahamas")]
         BS,
-        [Note("Bahrain")]
+        [Description("Bahrain")]
         BH,
-        [Note("Bangladesh")]
+        [Description("Bangladesh")]
         BD,
-        [Note("Barbados")]
+        [Description("Barbados")]
         BB,
-        [Note("Belarus")]
+        [Description("Belarus")]
         BY,
-        [Note("Belgium")]
+        [Description("Belgium")]
         BE,
-        [Note("Belize")]
+        [Description("Belize")]
         BZ,
-        [Note("Benin")]
+        [Description("Benin")]
         BJ,
-        [Note("Bermuda")]
+        [Description("Bermuda")]
         BM,
-        [Note("Bhutan")]
+        [Description("Bhutan")]
         BT,
-        [Note("Bolivia, Plurinational State of")]
+        [Description("Bolivia, Plurinational State of")]
         BO,
-        [Note("Bonaire, Sint Eustatius and Saba")]
+        [Description("Bonaire, Sint Eustatius and Saba")]
         BQ,
-        [Note("Bosnia and Herzegovina")]
+        [Description("Bosnia and Herzegovina")]
         BA,
-        [Note("Botswana")]
+        [Description("Botswana")]
         BW,
-        [Note("Bouvet Island")]
+        [Description("Bouvet Island")]
         BV,
-        [Note("Brazil")]
+        [Description("Brazil")]
         BR,
-        [Note("British Indian Ocean Territory")]
+        [Description("British Indian Ocean Territory")]
         IO,
-        [Note("Brunei Darussalam")]
+        [Description("Brunei Darussalam")]
         BN,
-        [Note("Bulgaria")]
+        [Description("Bulgaria")]
         BG,
-        [Note("Burkina Faso")]
+        [Description("Burkina Faso")]
         BF,
-        [Note("Burundi")]
+        [Description("Burundi")]
         BI,
-        [Note("Cambodia")]
+        [Description("Cambodia")]
         KH,
-        [Note("Cameroon")]
+        [Description("Cameroon")]
         CM,
-        [Note("Canada")]
+        [Description("Canada")]
         CA,
-        [Note("Cape Verde")]
+        [Description("Cape Verde")]
         CV,
-        [Note("Cayman Islands")]
+        [Description("Cayman Islands")]
         KY,
-        [Note("Central African Republic")]
+        [Description("Central African Republic")]
         CF,
-        [Note("Chad")]
+        [Description("Chad")]
         TD,
-        [Note("Chile")]
+        [Description("Chile")]
         CL,
-        [Note("China")]
+        [Description("China")]
         CN,
-        [Note("Christmas Island")]
+        [Description("Christmas Island")]
         CX,
-        [Note("Cocos(Keeling Islands")]
+        [Description("Cocos(Keeling Islands")]
         CC,
-        [Note("Colombia")]
+        [Description("Colombia")]
         CO,
-        [Note("Comoros")]
+        [Description("Comoros")]
         KM,
-        [Note("Congo")]
+        [Description("Congo")]
         CG,
-        [Note("Congo, the Democratic Republic of the")]
+        [Description("Congo, the Democratic Republic of the")]
         CD,
-        [Note("Cook Islands")]
+        [Description("Cook Islands")]
         CK,
-        [Note("Costa Rica")]
+        [Description("Costa Rica")]
         CR,
-        [Note("Côte d'Ivoire")]
+        [Description("Côte d'Ivoire")]
         CI,
-        [Note("Croatia")]
+        [Description("Croatia")]
         HR,
-        [Note("Cuba")]
+        [Description("Cuba")]
         CU,
-        [Note("Curaçao")]
+        [Description("Curaçao")]
         CW,
-        [Note("Cyprus")]
+        [Description("Cyprus")]
         CY,
-        [Note("Czech Republic")]
+        [Description("Czech Republic")]
         CZ,
-        [Note("Denmark")]
+        [Description("Denmark")]
         DK,
-        [Note("Djibouti")]
+        [Description("Djibouti")]
         DJ,
-        [Note("Dominica")]
+        [Description("Dominica")]
         DM,
-        [Note("Dominican Republic")]
+        [Description("Dominican Republic")]
         DO,
-        [Note("Ecuador")]
+        [Description("Ecuador")]
         EC,
-        [Note("Egypt")]
+        [Description("Egypt")]
         EG,
-        [Note("El Salvador")]
+        [Description("El Salvador")]
         SV,
-        [Note("Equatorial Guinea")]
+        [Description("Equatorial Guinea")]
         GQ,
-        [Note("Eritrea")]
+        [Description("Eritrea")]
         ER,
-        [Note("Estonia")]
+        [Description("Estonia")]
         EE,
-        [Note("Ethiopia")]
+        [Description("Ethiopia")]
         ET,
-        [Note("Falkland Islands(Malvinas")]
+        [Description("Falkland Islands(Malvinas")]
         FK,
-        [Note("Faroe Islands")]
+        [Description("Faroe Islands")]
         FO,
-        [Note("Fiji")]
+        [Description("Fiji")]
         FJ,
-        [Note("Finland")]
+        [Description("Finland")]
         FI,
-        [Note("France")]
+        [Description("France")]
         FR,
-        [Note("French Guiana")]
+        [Description("French Guiana")]
         GF,
-        [Note("French Polynesia")]
+        [Description("French Polynesia")]
         PF,
-        [Note("French Southern Territories")]
+        [Description("French Southern Territories")]
         TF,
-        [Note("Gabon")]
+        [Description("Gabon")]
         GA,
-        [Note("Gambia")]
+        [Description("Gambia")]
         GM,
-        [Note("Georgia")]
+        [Description("Georgia")]
         GE,
-        [Note("Germany")]
+        [Description("Germany")]
         DE,
-        [Note("Ghana")]
+        [Description("Ghana")]
         GH,
-        [Note("Gibraltar")]
+        [Description("Gibraltar")]
         GI,
-        [Note("Greece")]
+        [Description("Greece")]
         GR,
-        [Note("Greenland")]
+        [Description("Greenland")]
         GL,
-        [Note("Grenada")]
+        [Description("Grenada")]
         GD,
-        [Note("Guadeloupe")]
+        [Description("Guadeloupe")]
         GP,
-        [Note("Guam")]
+        [Description("Guam")]
         GU,
-        [Note("Guatemala")]
+        [Description("Guatemala")]
         GT,
-        [Note("Guernsey")]
+        [Description("Guernsey")]
         GG,
-        [Note("Guinea")]
+        [Description("Guinea")]
         GN,
-        [Note("Guinea - Bissau")]
+        [Description("Guinea - Bissau")]
         GW,
-        [Note("Guyana")]
+        [Description("Guyana")]
         GY,
-        [Note("Haiti")]
+        [Description("Haiti")]
         HT,
-        [Note("Heard Island and McDonald Islands")]
+        [Description("Heard Island and McDonald Islands")]
         HM,
-        [Note("Holy See(Vatican City State")]
+        [Description("Holy See(Vatican City State")]
         VA,
-        [Note("Honduras")]
+        [Description("Honduras")]
         HN,
-        [Note("Hong Kong")]
+        [Description("Hong Kong")]
         HK,
-        [Note("Hungary")]
+        [Description("Hungary")]
         HU,
-        [Note("Iceland")]
+        [Description("Iceland")]
         IS,
-        [Note("India")]
+        [Description("India")]
         IN,
-        [Note("Indonesia")]
+        [Description("Indonesia")]
         ID,
-        [Note("Iran, Islamic Republic of")]
+        [Description("Iran, Islamic Republic of")]
         IR,
-        [Note("Iraq")]
+        [Description("Iraq")]
         IQ,
-        [Note("Ireland")]
+        [Description("Ireland")]
         IE,
-        [Note("Isle of Man")]
+        [Description("Isle of Man")]
         IM,
-        [Note("Israel")]
+        [Description("Israel")]
         IL,
-        [Note("Italy")]
+        [Description("Italy")]
         IT,
-        [Note("Jamaica")]
+        [Description("Jamaica")]
         JM,
-        [Note("Japan")]
+        [Description("Japan")]
         JP,
-        [Note("Jersey")]
+        [Description("Jersey")]
         JE,
-        [Note("Jordan")]
+        [Description("Jordan")]
         JO,
-        [Note("Kazakhstan")]
+        [Description("Kazakhstan")]
         KZ,
-        [Note("Kenya")]
+        [Description("Kenya")]
         KE,
-        [Note("Kiribati")]
+        [Description("Kiribati")]
         KI,
-        [Note("Korea, Democratic People's Republic of")]
+        [Description("Korea, Democratic People's Republic of")]
         KP,
-        [Note("Korea, Republic of")]
+        [Description("Korea, Republic of")]
         KR,
-        [Note("Kuwait")]
+        [Description("Kuwait")]
         KW,
-        [Note("Kyrgyzstan")]
+        [Description("Kyrgyzstan")]
         KG,
-        [Note("Lao People's Democratic Republic")]
+        [Description("Lao People's Democratic Republic")]
         LA,
-        [Note("Latvia")]
+        [Description("Latvia")]
         LV,
-        [Note("Lebanon")]
+        [Description("Lebanon")]
         LB,
-        [Note("Lesotho")]
+        [Description("Lesotho")]
         LS,
-        [Note("Liberia")]
+        [Description("Liberia")]
         LR,
-        [Note("Libya")]
+        [Description("Libya")]
         LY,
-        [Note("Liechtenstein")]
+        [Description("Liechtenstein")]
         LI,
-        [Note("Lithuania")]
+        [Description("Lithuania")]
         LT,
-        [Note("Luxembourg")]
+        [Description("Luxembourg")]
         LU,
-        [Note("Macao")]
+        [Description("Macao")]
         MO,
-        [Note("Macedonia, the Former Yugoslav Republic of")]
+        [Description("Macedonia, the Former Yugoslav Republic of")]
         MK,
-        [Note("Madagascar")]
+        [Description("Madagascar")]
         MG,
-        [Note("Malawi")]
+        [Description("Malawi")]
         MW,
-        [Note("Malaysia")]
+        [Description("Malaysia")]
         MY,
-        [Note("Maldives")]
+        [Description("Maldives")]
         MV,
-        [Note("Mali")]
+        [Description("Mali")]
         ML,
-        [Note("Malta")]
+        [Description("Malta")]
         MT,
-        [Note("Marshall Islands")]
+        [Description("Marshall Islands")]
         MH,
-        [Note("Martinique")]
+        [Description("Martinique")]
         MQ,
-        [Note("Mauritania")]
+        [Description("Mauritania")]
         MR,
-        [Note("Mauritius")]
+        [Description("Mauritius")]
         MU,
-        [Note("Mayotte")]
+        [Description("Mayotte")]
         YT,
-        [Note("Mexico")]
+        [Description("Mexico")]
         MX,
-        [Note("Micronesia, Federated States of")]
+        [Description("Micronesia, Federated States of")]
         FM,
-        [Note("Moldova, Republic of")]
+        [Description("Moldova, Republic of")]
         MD,
-        [Note("Monaco")]
+        [Description("Monaco")]
         MC,
-        [Note("Mongolia")]
+        [Description("Mongolia")]
         MN,
-        [Note("Montenegro")]
+        [Description("Montenegro")]
         ME,
-        [Note("Montserrat")]
+        [Description("Montserrat")]
         MS,
-        [Note("Morocco")]
+        [Description("Morocco")]
         MA,
-        [Note("Mozambique")]
+        [Description("Mozambique")]
         MZ,
-        [Note("Myanmar")]
+        [Description("Myanmar")]
         MM,
-        [Note("Namibia")]
+        [Description("Namibia")]
         NA,
-        [Note("Nauru")]
+        [Description("Nauru")]
         NR,
-        [Note("Nepal")]
+        [Description("Nepal")]
         NP,
-        [Note("Netherlands")]
+        [Description("Netherlands")]
         NL,
-        [Note("New Caledonia")]
+        [Description("New Caledonia")]
         NC,
-        [Note("New Zealand")]
+        [Description("New Zealand")]
         NZ,
-        [Note("Nicaragua")]
+        [Description("Nicaragua")]
         NI,
-        [Note("Niger")]
+        [Description("Niger")]
         NE,
-        [Note("Nigeria")]
+        [Description("Nigeria")]
         NG,
-        [Note("Niue")]
+        [Description("Niue")]
         NU,
-        [Note("Norfolk Island")]
+        [Description("Norfolk Island")]
         NF,
-        [Note("Northern Mariana Islands")]
+        [Description("Northern Mariana Islands")]
         MP,
-        [Note("Norway")]
+        [Description("Norway")]
         NO,
-        [Note("Oman")]
+        [Description("Oman")]
         OM,
-        [Note("Pakistan")]
+        [Description("Pakistan")]
         PK,
-        [Note("Palau")]
+        [Description("Palau")]
         PW,
-        [Note("Palestine, State of")]
+        [Description("Palestine, State of")]
         PS,
-        [Note("Panama")]
+        [Description("Panama")]
         PA,
-        [Note("Papua New Guinea")]
+        [Description("Papua New Guinea")]
         PG,
-        [Note("Paraguay")]
+        [Description("Paraguay")]
         PY,
-        [Note("Peru")]
+        [Description("Peru")]
         PE,
-        [Note("Philippines")]
+        [Description("Philippines")]
         PH,
-        [Note("Pitcairn")]
+        [Description("Pitcairn")]
         PN,
-        [Note("Poland")]
+        [Description("Poland")]
         PL,
-        [Note("Portugal")]
+        [Description("Portugal")]
         PT,
-        [Note("Puerto Rico")]
+        [Description("Puerto Rico")]
         PR,
-        [Note("Qatar")]
+        [Description("Qatar")]
         QA,
-        [Note("R챕union")]
+        [Description("R챕union")]
         RE,
-        [Note("Romania")]
+        [Description("Romania")]
         RO,
-        [Note("Russian Federation")]
+        [Description("Russian Federation")]
         RU,
-        [Note("Rwanda")]
+        [Description("Rwanda")]
         RW,
-        [Note("Saint Barthelemy")]
+        [Description("Saint Barthelemy")]
         BL,
-        [Note("Saint Helena, Ascension and Tristan da Cunha")]
+        [Description("Saint Helena, Ascension and Tristan da Cunha")]
         SH,
-        [Note("Saint Kitts and Nevis")]
+        [Description("Saint Kitts and Nevis")]
         KN,
-        [Note("Saint Lucia")]
+        [Description("Saint Lucia")]
         LC,
-        [Note("Saint Martin(French part")]
+        [Description("Saint Martin(French part")]
         MF,
-        [Note("Saint Pierre and Miquelon")]
+        [Description("Saint Pierre and Miquelon")]
         PM,
-        [Note("Saint Vincent and the Grenadines")]
+        [Description("Saint Vincent and the Grenadines")]
         VC,
-        [Note("Samoa")]
+        [Description("Samoa")]
         WS,
-        [Note("San Marino")]
+        [Description("San Marino")]
         SM,
-        [Note("Sao Tome and Principe")]
+        [Description("Sao Tome and Principe")]
         ST,
-        [Note("Saudi Arabia")]
+        [Description("Saudi Arabia")]
         SA,
-        [Note("Senegal")]
+        [Description("Senegal")]
         SN,
-        [Note("Serbia")]
+        [Description("Serbia")]
         RS,
-        [Note("Seychelles")]
+        [Description("Seychelles")]
         SC,
-        [Note("Sierra Leone")]
+        [Description("Sierra Leone")]
         SL,
-        [Note("Singapore")]
+        [Description("Singapore")]
         SG,
-        [Note("Sint Maarten(Dutch part")]
+        [Description("Sint Maarten(Dutch part")]
         SX,
-        [Note("Slovakia")]
+        [Description("Slovakia")]
         SK,
-        [Note("Slovenia")]
+        [Description("Slovenia")]
         SI,
-        [Note("Solomon Islands")]
+        [Description("Solomon Islands")]
         SB,
-        [Note("Somalia")]
+        [Description("Somalia")]
         SO,
-        [Note("South Africa")]
+        [Description("South Africa")]
         ZA,
-        [Note("South Georgia and the South Sandwich Islands")]
+        [Description("South Georgia and the South Sandwich Islands")]
         GS,
-        [Note("South Sudan")]
+        [Description("South Sudan")]
         SS,
-        [Note("Spain")]
+        [Description("Spain")]
         ES,
-        [Note("Sri Lanka")]
+        [Description("Sri Lanka")]
         LK,
-        [Note("Sudan")]
+        [Description("Sudan")]
         SD,
-        [Note("Suriname")]
+        [Description("Suriname")]
         SR,
-        [Note("Svalbard and Jan Mayen")]
+        [Description("Svalbard and Jan Mayen")]
         SJ,
-        [Note("Swaziland")]
+        [Description("Swaziland")]
         SZ,
-        [Note("Sweden")]
+        [Description("Sweden")]
         SE,
-        [Note("Switzerland")]
+        [Description("Switzerland")]
         CH,
-        [Note("Syrian Arab Republic")]
+        [Description("Syrian Arab Republic")]
         SY,
-        [Note("Taiwan, Province of China")]
+        [Description("Taiwan, Province of China")]
         TW,
-        [Note("Tajikistan")]
+        [Description("Tajikistan")]
         TJ,
-        [Note("Tanzania, United Republic of")]
+        [Description("Tanzania, United Republic of")]
         TZ,
-        [Note("Thailand")]
+        [Description("Thailand")]
         TH,
-        [Note("Timor - Leste")]
+        [Description("Timor - Leste")]
         TL,
-        [Note("Togo")]
+        [Description("Togo")]
         TG,
-        [Note("Tokelau")]
+        [Description("Tokelau")]
         TK,
-        [Note("Tonga")]
+        [Description("Tonga")]
         TO,
-        [Note("Trinidad and Tobago")]
+        [Description("Trinidad and Tobago")]
         TT,
-        [Note("Tunisia")]
+        [Description("Tunisia")]
         TN,
-        [Note("Turkey")]
+        [Description("Turkey")]
         TR,
-        [Note("Turkmenistan")]
+        [Description("Turkmenistan")]
         TM,
-        [Note("Turks and Caicos Islands")]
+        [Description("Turks and Caicos Islands")]
         TC,
-        [Note("Tuvalu")]
+        [Description("Tuvalu")]
         TV,
-        [Note("Uganda")]
+        [Description("Uganda")]
         UG,
-        [Note("Ukraine")]
+        [Description("Ukraine")]
         UA,
-        [Note("United Arab Emirates")]
+        [Description("United Arab Emirates")]
         AE,
-        [Note("United Kingdom")]
+        [Description("United Kingdom")]
         GB,
-        [Note("United States")]
+        [Description("United States")]
         US,
-        [Note("United States Minor Outlying Islands")]
+        [Description("United States Minor Outlying Islands")]
         UM,
-        [Note("Uruguay")]
+        [Description("Uruguay")]
         UY,
-        [Note("Uzbekistan")]
+        [Description("Uzbekistan")]
         UZ,
-        [Note("Vanuatu")]
+        [Description("Vanuatu")]
         VU,
-        [Note("Venezuela, Bolivarian Republic of")]
+        [Description("Venezuela, Bolivarian Republic of")]
         VE,
-        [Note("Viet Nam")]
+        [Description("Viet Nam")]
         VN,
-        [Note("Virgin Islands, British")]
+        [Description("Virgin Islands, British")]
         VG,
-        [Note("Virgin Islands, U.S.")]
+        [Description("Virgin Islands, U.S.")]
         VI,
-        [Note("Wallis and Futuna")]
+        [Description("Wallis and Futuna")]
         WF,
-        [Note("Western Sahara")]
+        [Description("Western Sahara")]
         EH,
-        [Note("Yemen")]
+        [Description("Yemen")]
         YE,
-        [Note("Zambia")]
+        [Description("Zambia")]
         ZM,
-        [Note("Zimbabwe")]
+        [Description("Zimbabwe")]
         ZW,
     }
 }

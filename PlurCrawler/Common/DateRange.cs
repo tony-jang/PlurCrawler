@@ -59,6 +59,9 @@ namespace PlurCrawler.Common
             }
         }
 
+        /// <summary>
+        /// 올바른 범위 인지를 나타냅니다.
+        /// </summary>
         public bool Vaild => Since <= Until;
 
         /// <summary>

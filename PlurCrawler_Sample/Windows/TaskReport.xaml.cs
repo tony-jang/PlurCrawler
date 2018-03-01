@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -181,7 +182,7 @@ namespace PlurCrawler_Sample.Windows
 
                     for (int i = 0; i <= 3; i++)
                     {
-                        tbList[i].Text = resultEnumList[i].GetAttributeFromEnum<NoteAttribute>().Message;
+                        tbList[i].Text = resultEnumList[i].GetAttributeFromEnum<DescriptionAttribute>().Description;
 
                         if (data.OutputFormat.HasFlag(serviceEnumList[i]))
                         {

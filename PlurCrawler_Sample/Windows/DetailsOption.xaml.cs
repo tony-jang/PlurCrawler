@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -40,7 +41,7 @@ namespace PlurCrawler_Sample.Windows
             {
                 googleCountry.Items.Add(new ComboBoxItem()
                 {
-                    Content = itm.GetAttributeFromEnum<NoteAttribute>().Message,
+                    Content = itm.GetAttributeFromEnum<DescriptionAttribute>().Description,
                     Tag = itm,
                 });
             }
@@ -50,7 +51,7 @@ namespace PlurCrawler_Sample.Windows
             {
                 youtubeRegion.Items.Add(new ComboBoxItem()
                 {
-                    Content = itm.GetAttributeFromEnum<NoteAttribute>().Message,
+                    Content = itm.GetAttributeFromEnum<DescriptionAttribute>().Description,
                     Tag = itm,
                 });
             }

@@ -210,7 +210,6 @@
     <Compile Include="Resources\ResourceManager.cs" />
     <Compile Include="Search\Base\IDateSearchOption.cs" />
     <Compile Include="Search\Base\BaseSearcher.cs" />
-    <Compile Include="Attributes\LanguageAttribute.cs" />
     <Compile Include="Search\Base\ISearcher.cs" />
     <Compile Include="Search\Common\CountryRestrictsCode.cs" />
     <Compile Include="Search\Common\InternetUnstableException.cs" />
@@ -232,7 +231,6 @@
     <Compile Include="Search\Services\Youtube\YoutubeSearchResult.cs" />
     <Compile Include="Common\DateRange.cs" />
     <Compile Include="Search\Base\ISearchOption.cs" />
-    <Compile Include="Attributes\NoteAttribute.cs" />
     <Compile Include="Search\Common\SearchSortOptions.cs" />
     <Compile Include="Search\Common\InvaildOptionException.cs" />
     <Compile Include="Search\Base\ISearchResult.cs" />

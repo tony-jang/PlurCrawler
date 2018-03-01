@@ -11,8 +11,17 @@ using PlurCrawler.Search.Base;
 
 namespace PlurCrawler.Format
 {
+    /// <summary>
+    /// CSV 형태로 반환하는 포맷을 나타냅니다.
+    /// </summary>
+    /// <typeparam name="TResult"></typeparam>
     public class CSVFormat<TResult> : BaseFormat<TResult, string> where TResult : ISearchResult
     {
+        /// <summary>
+        /// <see cref="IEnumerable{T}"/>를 csv 포맷의 string 데이터로 반환합니다.
+        /// </summary>
+        /// <param name="resultData"></param>
+        /// <returns></returns>
         public override string FormattingData(IEnumerable<TResult> resultData)
         {
             if (resultData == null ||

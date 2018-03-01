@@ -17,8 +17,16 @@ using PlurCrawler.Extension;
 
 namespace PlurCrawler.Format
 {
+    /// <summary>
+    /// Access DB 타입으로 내보내는 포맷을 나타냅니다.
+    /// </summary>
+    /// <typeparam name="TResult"></typeparam>
     public class AccessDBFormat<TResult> : BaseFormat<TResult> where TResult : ISearchResult
     {
+        /// <summary>
+        /// 파일 위치로 <see cref="AccessDBFormat{TResult}"/>을 초기화합니다.
+        /// </summary>
+        /// <param name="fileName"></param>
         public AccessDBFormat(string fileName)
         {
             this.FileName = fileName;
@@ -40,6 +48,10 @@ namespace PlurCrawler.Format
             }
         }
         
+        /// <summary>
+        /// Access에 접근하는 Connector가 설치되었는지에 대한 여부를 가져옵니다.
+        /// </summary>
+        /// <returns></returns>
         public static bool AccessConnectorInstalled()
         {
             string path = Path.Combine(Path.GetTempPath(), "testfile____.accdb");
@@ -157,6 +169,9 @@ namespace PlurCrawler.Format
 
         #endregion
 
+        /// <summary>
+        /// 내보낸 위치의 파일명을 가져옵니다.
+        /// </summary>
         public string FileName { get; set; }
 
         public string TableName { get; set; }
