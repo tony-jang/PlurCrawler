@@ -268,7 +268,7 @@
             
         </Grid>
 
-        <Grid x:Name="gridHelp" Grid.RowSpan="2" Background="#7F000000">
+        <Grid x:Name="gridHelp" Grid.RowSpan="2" Visibility="Hidden" Background="#7F000000">
             <Grid.RowDefinitions>
                 <RowDefinition Height="90"/>
                 <RowDefinition/>

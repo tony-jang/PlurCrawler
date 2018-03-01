@@ -211,6 +211,9 @@ namespace PlurCrawler.Format
                     if (value == null)
                         return DBNull.Value;
 
+                    if (value is bool b)
+                        return b ? "True" : "False";
+
                     return value;
                 }
             }

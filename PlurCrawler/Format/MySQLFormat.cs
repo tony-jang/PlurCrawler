@@ -293,7 +293,15 @@ namespace PlurCrawler.Format
 
                 foreach (PropertyInfo prop in GetProperties(true))
                 {
-                    cm.Parameters.AddWithValue($"@{prop.Name}", prop.GetValue(data));
+                    // Default Type
+                    if (prop.PropertyType == typeof(bool))
+                    {
+                        cm.Parameters.AddWithValue($"@{prop.Name}", (bool)prop.GetValue(data) ? "True" : "False");
+                    }
+                    else
+                    {
+                        cm.Parameters.AddWithValue($"@{prop.Name}", prop.GetValue(data));
+                    }
                 }
 
                 cm.ExecuteNonQuery();

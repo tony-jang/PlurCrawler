@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlurCrawler.Search.Common
+namespace PlurCrawler.Search.Services.Twitter
 {
     public enum TwitterLanguage
     {
