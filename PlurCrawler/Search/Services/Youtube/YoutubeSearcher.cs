@@ -18,6 +18,7 @@ using Google.Apis.YouTube.v3.Data;
 
 using YoutubeRequest = Google.Apis.YouTube.v3.SearchResource.ListRequest;
 using PlurCrawler.Extension;
+using static Google.Apis.YouTube.v3.SearchResource.ListRequest;
 
 namespace PlurCrawler.Search.Services.Youtube
 {
@@ -148,14 +149,18 @@ namespace PlurCrawler.Search.Services.Youtube
                 listRequest.PublishedBefore = searchOption.DateRange.Until;
             }
             
-            listRequest.Order = YoutubeRequest.OrderEnum.Relevance;
+            listRequest.Order = OrderEnum.Relevance;
 
+            listRequest.VideoDuration = VideoDurationEnum.Short__;
+            
             int count = searchOption.SearchCount;
             
             listRequest.MaxResults = count <= 50 ? count : 50;
-            listRequest.SafeSearch = YoutubeRequest.SafeSearchEnum.Strict;
+            listRequest.SafeSearch = SafeSearchEnum.Strict;
 
-            
+            listRequest.VideoDuration = (VideoDurationEnum)searchOption.YoutubeVideoDuration;
+
+            listRequest.Order = (OrderEnum)searchOption.YoutubeSortOrder;
 
             if (searchOption.RegionCode != RegionCode.All)
             {

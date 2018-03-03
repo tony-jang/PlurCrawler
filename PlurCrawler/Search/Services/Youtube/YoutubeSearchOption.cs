@@ -26,7 +26,9 @@ namespace PlurCrawler.Search.Services.Youtube
                 SplitWithDate = false,
                 UseDateSearch = false,
                 OutputServices = OutputFormat.Json,
-                RegionCode = RegionCode.All
+                RegionCode = Search.RegionCode.All,
+                YoutubeSortOrder = Youtube.YoutubeSortOrder.Relevance,
+                YoutubeVideoDuration = Youtube.YoutubeVideoDuration.Any,
             };
         }
 
@@ -67,12 +69,12 @@ namespace PlurCrawler.Search.Services.Youtube
             }
         }
 
-        private RegionCode _language;
+        private RegionCode? _language;
 
         /// <summary>
         /// 검색할 지역 코드를 입력합니다.
         /// </summary>
-        public RegionCode RegionCode
+        public RegionCode? RegionCode
         {
             get => _language;
             set
@@ -142,6 +144,28 @@ namespace PlurCrawler.Search.Services.Youtube
             }
         }
 
+        private YoutubeSortOrder? _youtubeSortOrder;
+        public YoutubeSortOrder? YoutubeSortOrder
+        {
+            get => _youtubeSortOrder;
+            set
+            {
+                _youtubeSortOrder = value;
+                OnPropertyChanged(this, new PropertyChangedEventArgs("YoutubeSortOrder"));
+            }
+        }
+
+        private YoutubeVideoDuration? _youtubeVideoDuration;
+
+        public YoutubeVideoDuration? YoutubeVideoDuration
+        {
+            get => _youtubeVideoDuration;
+            set
+            {
+                _youtubeVideoDuration = value; 
+            }
+
+        }
 
     }
 }

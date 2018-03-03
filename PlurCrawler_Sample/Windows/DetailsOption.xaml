@@ -177,9 +177,28 @@
                                 </WrapPanel>
                             </ctrl:PropertyGroupBox>
 
-
                             <ctrl:PropertyGroupBox Header="지역 제한">
                                 <ComboBox x:Name="youtubeRegion"/>
+                            </ctrl:PropertyGroupBox>
+
+                            <ctrl:PropertyGroupBox Header="정렬 순서">
+                                <ComboBox x:Name="cbSortOrder" SelectedIndex="0">
+                                    <ComboBoxItem Content="연관성" Tag="2"/>
+                                    <ComboBoxItem Content="날짜 기준 (최근)" Tag="0"/>
+                                    <ComboBoxItem Content="평점 기준 (높은 평가)" Tag="1"/>
+                                    <ComboBoxItem Content="제목" Tag="3"/>
+                                    <ComboBoxItem Content="업로드한 동영상 기준" Tag="4"/>
+                                    <ComboBoxItem Content="조회수 기준" Tag="5"/>
+                                </ComboBox>
+                            </ctrl:PropertyGroupBox>
+
+                            <ctrl:PropertyGroupBox Header="동영상 길이">
+                                <ComboBox x:Name="cbVideoDuration" SelectedIndex="0">
+                                    <ComboBoxItem Content="제한 없음" Tag="0"/>
+                                    <ComboBoxItem Content="4분 미만" Tag="3"/>
+                                    <ComboBoxItem Content="4~20분" Tag="2"/>
+                                    <ComboBoxItem Content="20분+" Tag="1"/>
+                                </ComboBox>
                             </ctrl:PropertyGroupBox>
 
                             <ctrl:PropertyGroupBox x:Name="ytOutputLoc" Header="출력할 위치">

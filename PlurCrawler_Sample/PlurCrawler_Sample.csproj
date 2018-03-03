@@ -134,6 +134,7 @@
     <Compile Include="Export\ExportManager.cs" />
     <Compile Include="Controls\ImageCheckBox.cs" />
     <Compile Include="Export\ExportOptionSetting.cs" />
+    <Compile Include="Extension\ComboBoxEx.cs" />
     <Compile Include="MainWindowSearch.cs" />
     <Compile Include="Report\BoolAttribute.cs" />
     <Compile Include="Report\Result\AccessExportResult.cs" />

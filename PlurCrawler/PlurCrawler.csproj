@@ -234,6 +234,8 @@
     <Compile Include="Search\Common\SearchSortOptions.cs" />
     <Compile Include="Search\Common\InvaildOptionException.cs" />
     <Compile Include="Search\Base\ISearchResult.cs" />
+    <Compile Include="Search\Services\Youtube\YoutubeSortOrder.cs" />
+    <Compile Include="Search\Services\Youtube\YoutubeVideoDuration.cs" />
     <Compile Include="Tokens\Credentials\GoogleCredentials.cs" />
     <Compile Include="Tokens\OAuth\EventArg\AuthFailedEventArgs.cs" />
     <Compile Include="Tokens\OAuth\EventArg\AuthRequestEventArgs.cs" />

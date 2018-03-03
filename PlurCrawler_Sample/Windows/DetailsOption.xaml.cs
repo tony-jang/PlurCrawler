@@ -1,20 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using PlurCrawler.Attributes;
+
 using PlurCrawler.Common;
 using PlurCrawler.Extension;
 using PlurCrawler.Format.Common;
@@ -23,8 +14,10 @@ using PlurCrawler.Search.Common;
 using PlurCrawler.Search.Services.GoogleCSE;
 using PlurCrawler.Search.Services.Twitter;
 using PlurCrawler.Search.Services.Youtube;
+
 using PlurCrawler_Sample.Common;
 using PlurCrawler_Sample.Controls;
+using PlurCrawler_Sample.Extension;
 
 namespace PlurCrawler_Sample.Windows
 {
@@ -127,6 +120,8 @@ namespace PlurCrawler_Sample.Windows
             useYoutubeDate.Checked += YoutubeSettingChanged;
             useYoutubeDate.Unchecked += YoutubeSettingChanged;
             drpYoutube.DateChanged += YoutubeSettingChanged;
+            cbVideoDuration.SelectionChanged += YoutubeSettingChanged;
+            cbSortOrder.SelectionChanged += YoutubeSettingChanged;
 
             drpGoogle.Loaded += Drp_Loaded;
             drpTwitter.Loaded += Drp_Loaded;
@@ -274,6 +269,34 @@ namespace PlurCrawler_Sample.Windows
 
             youtubeRegion.SelectedIndex = (int)option.RegionCode;
 
+            try
+            {
+                cbSortOrder.SelectedItem = cbSortOrder
+                    .Items
+                    .Cast<ComboBoxItem>()
+                    .Where(i => int.Parse(i.Tag.ToString()) == (int)option.YoutubeSortOrder.GetValueOrDefault())
+                    .First();
+            }
+            catch (Exception)
+            {
+                option.YoutubeSortOrder = YoutubeSortOrder.Relevance;
+                cbSortOrder.SelectedItem = 0;
+            }
+            
+            try
+            {
+                cbVideoDuration.SelectedItem = cbVideoDuration
+                    .Items
+                    .Cast<ComboBoxItem>()
+                    .Where(i => int.Parse(i.Tag.ToString()) == (int)option.YoutubeVideoDuration.GetValueOrDefault())
+                    .First();
+            }
+            catch (Exception)
+            {
+                option.YoutubeVideoDuration = YoutubeVideoDuration.Any;
+                cbVideoDuration.SelectedItem = 0;
+            }
+            
             useYoutubeDate.IsChecked = option.UseDateSearch;
 
             if (option.SplitWithDate)
@@ -281,7 +304,7 @@ namespace PlurCrawler_Sample.Windows
             else
                 rbYoutubeNoSplit.IsChecked = true;
         }
-
+        
         public YoutubeSearchOption GetYoutubeSearchOption()
         {
             return new YoutubeSearchOption()
@@ -291,7 +314,9 @@ namespace PlurCrawler_Sample.Windows
                 SplitWithDate = rbYoutubeSplitWithDate.IsChecked.GetValueOrDefault(),
                 SearchCount = tbYoutubeSearchCount.GetIntOrDefault(),
                 OutputServices = CalculateService(ServiceKind.Youtube),
-                RegionCode = (RegionCode)((ComboBoxItem)youtubeRegion.SelectedItem).Tag
+                RegionCode = (RegionCode)((ComboBoxItem)youtubeRegion.SelectedItem).Tag,
+                YoutubeSortOrder = (YoutubeSortOrder)cbSortOrder.GetInt(),
+                YoutubeVideoDuration = (YoutubeVideoDuration)cbVideoDuration.GetInt()
             };
         }
 

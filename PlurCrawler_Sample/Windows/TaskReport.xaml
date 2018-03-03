@@ -59,7 +59,7 @@
 
                 <Grid Margin="0,40,0,0"/>
 
-                <ctrls:PropertyGroupBox Header="Json으로 내보내기">
+                <ctrls:PropertyGroupBox Header="Json">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -70,7 +70,7 @@
                     </Grid>
                 </ctrls:PropertyGroupBox>
 
-                <ctrls:PropertyGroupBox Header="CSV로 내보내기">
+                <ctrls:PropertyGroupBox Header="CSV">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -81,7 +81,7 @@
                     </Grid>
                 </ctrls:PropertyGroupBox>
 
-                <ctrls:PropertyGroupBox Header="MySQL로 내보내기">
+                <ctrls:PropertyGroupBox Header="MySQL">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -92,7 +92,7 @@
                     </Grid>
                 </ctrls:PropertyGroupBox>
 
-                <ctrls:PropertyGroupBox Header="Access DB로 내보내기">
+                <ctrls:PropertyGroupBox Header="Access DB">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
