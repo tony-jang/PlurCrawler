@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -39,7 +40,6 @@ namespace PlurCrawler_Sample
                 TaskLogManager.AddLog(message, type);
                 ScrollToEnd();
             });
-            
         }
 
         #region [  Google CSE  ]
@@ -71,6 +71,7 @@ namespace PlurCrawler_Sample
 
             Thread thr = new Thread(() =>
             {
+                var sw = new Stopwatch();
                 var googleCSESearcher = new GoogleCSESearcher();
                 bool isCanceled = false;
                 SearchResult info = SearchResult.Fail_APIError;
@@ -83,6 +84,7 @@ namespace PlurCrawler_Sample
 
                 Dispatcher.Invoke(() =>
                 {
+                    sw.Start();
                     AddLog("Google CSE 검색 엔진을 초기화중입니다.", TaskLogType.SearchReady);
 
                     option = SettingManager.GoogleCSESearchOption;
@@ -125,6 +127,7 @@ namespace PlurCrawler_Sample
                     try
                     {
                         googleResult = googleCSESearcher.Search(option);
+
                         if (googleResult.Count() == 0)
                         {
                             info = SearchResult.Fail_NoResult;
@@ -136,7 +139,7 @@ namespace PlurCrawler_Sample
                             AddLog("검색 결과를 내보내는 중입니다.", TaskLogType.Searching);
                             pack = Export(option.OutputServices, googleResult, ServiceKind.GoogleCSE);
                         }
-                        
+
                     }
                     catch (InvaildOptionException)
                     {
@@ -151,6 +154,8 @@ namespace PlurCrawler_Sample
                 }
 
                 Dispatcher.Invoke(() => {
+                    AddLog($"Google CSE 검색에 소요된 시간 : {sw.ElapsedMilliseconds}ms", TaskLogType.Complete);
+
                     _taskReport.AddReport(new TaskReportData()
                     {
                         Query = option.Query,
@@ -170,7 +175,7 @@ namespace PlurCrawler_Sample
                     _vertManager.ChangeEditable(true, ServiceKind.GoogleCSE);
                 });
             });
-            
+
             thr.Start();
         }
 
@@ -185,13 +190,13 @@ namespace PlurCrawler_Sample
                 AddLog("이미 Twitter 서비스에서 검색을 실행중입니다.", TaskLogType.Failed);
                 return;
             }
-            
+
             if (!SettingManager.TwitterSearchOption.DateRange.Vaild)
             {
                 AddLog("트위터 검색의 날짜 설정이 잘못되었습니다.", TaskLogType.Failed);
                 return;
             }
-            
+
             twitterSearching = true;
             _detailsOption.TwitterEnableChange(false);
             _vertManager.ChangeEditable(false, ServiceKind.Twitter);
@@ -199,6 +204,7 @@ namespace PlurCrawler_Sample
 
             Thread thr = new Thread(() =>
             {
+                var sw = new Stopwatch();
                 var twitterSearcher = new TwitterSearcher();
                 bool isCanceled = false;
                 SearchResult info = SearchResult.Fail_APIError;
@@ -211,6 +217,8 @@ namespace PlurCrawler_Sample
 
                 Dispatcher.Invoke(() =>
                 {
+                    sw.Start();
+
                     AddLog("Twitter 검색 엔진을 초기화중입니다.", TaskLogType.SearchReady);
 
                     option = SettingManager.TwitterSearchOption;
@@ -280,6 +288,8 @@ namespace PlurCrawler_Sample
 
                 Dispatcher.Invoke(() =>
                 {
+                    AddLog($"Twitter 검색에 소요된 시간 : {sw.ElapsedMilliseconds}ms", TaskLogType.Complete);
+
                     _taskReport.AddReport(new TaskReportData()
                     {
                         Query = option.Query,
@@ -323,7 +333,7 @@ namespace PlurCrawler_Sample
                     return;
                 }
             }
-            
+
             youtubeSearching = true;
             _detailsOption.YoutubeEnableChange(false);
             _vertManager.ChangeEditable(false, ServiceKind.Youtube);
@@ -331,6 +341,7 @@ namespace PlurCrawler_Sample
 
             Thread thr = new Thread(() =>
             {
+                var sw = new Stopwatch();
                 var youtubeSearcher = new YoutubeSearcher();
                 bool isCanceled = false;
                 SearchResult info = SearchResult.Fail_APIError;
@@ -343,8 +354,10 @@ namespace PlurCrawler_Sample
 
                 Dispatcher.Invoke(() =>
                 {
+                    sw.Start();
+
                     AddLog("Youtube 검색 엔진을 초기화중입니다.", TaskLogType.SearchReady);
-                    
+
                     option = SettingManager.YoutubeSearchOption;
                     option.Query = tbQuery.Text;
 
@@ -408,8 +421,10 @@ namespace PlurCrawler_Sample
                         info = SearchResult.Fail_APIError;
                     }
                 }
-                
+
                 Dispatcher.Invoke(() => {
+
+                    AddLog($"Youtube 검색에 소요된 시간 : {sw.ElapsedMilliseconds}ms", TaskLogType.Complete);
 
                     _taskReport.AddReport(new TaskReportData()
                     {
@@ -433,7 +448,7 @@ namespace PlurCrawler_Sample
 
             thr.Start();
         }
-        
+
         #endregion
 
         #region [  Common Events  ]
@@ -448,7 +463,7 @@ namespace PlurCrawler_Sample
                 itm.TaskFinished = true;
 
                 TaskLogManager.AddLog("검색이 완료되었습니다.", TaskLogType.Searching);
-                
+
                 switch (e.ServiceKind)
                 {
                     case ServiceKind.GoogleCSE:
@@ -479,7 +494,7 @@ namespace PlurCrawler_Sample
                 itm.SetValue(message: e.Message);
             });
         }
-        
+
         private void Searcher_SearchItemFound(object sender, SearchResultEventArgs e)
         {
             Dispatcher.Invoke(() =>
@@ -521,238 +536,235 @@ namespace PlurCrawler_Sample
 
             return string.Empty;
         }
-        
+
         public ExportResultPack Export(OutputFormat format, IEnumerable<ISearchResult> result, ServiceKind serviceKind)
         {
-            ExportResultPack pack = null;
-            Dispatcher.Invoke(() =>
+            ExportResultPack pack = new ExportResultPack();
+            
+
+            if (format.HasFlag(OutputFormat.Json))
             {
-                pack = new ExportResultPack();
+                string folder = SettingManager.ExportOptionSetting.JsonFolderLocation;
+                string fileName = SettingManager.ExportOptionSetting.JsonFileName;
 
-                if (format.HasFlag(OutputFormat.Json))
+                if (fileName.IsNullOrEmpty())
                 {
-                    string folder = SettingManager.ExportOptionSetting.JsonFolderLocation;
-                    string fileName = SettingManager.ExportOptionSetting.JsonFileName;
-
-                    if (fileName.IsNullOrEmpty())
-                    {
-                        AddLog("파일을 Json 형식으로 내보내기 실패했습니다. [파일명 입력란이 비어있습니다.]", TaskLogType.Failed);
-                        pack.JsonExportResult = JsonExportResult.Fail_FileNameNull;
-                    }
-                    else
-                    {
-                        if (Directory.Exists(folder))
-                        {
-                            try
-                            {
-                                string fullPath = Path.Combine(folder, $"{fileName}{GetServiceString(serviceKind)}.json");
-
-                                if (ExportManager.JsonExport(fullPath, result, SettingManager.ExportOptionSetting.JsonSort))
-                                {
-                                    AddLog($"Json으로 성공적으로 내보냈습니다. 저장 위치 : {fullPath}", TaskLogType.Complete);
-                                    pack.JsonExportResult = JsonExportResult.Success;
-                                }
-                                else
-                                {
-                                    AddLog($"Json으로 내보낼 파일 위치에 접근 실패했습니다. 위치 : {fullPath}", TaskLogType.Failed);
-                                    pack.JsonExportResult = JsonExportResult.Fail_FileAccessDenied;
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                AddLog($"Json으로 내보내던 중 알 수 없는 오류가 발생했습니다.{Environment.NewLine}{Environment.NewLine}{ex.ToString()}", TaskLogType.System);
-                                pack.JsonExportResult = JsonExportResult.Unknown;
-                            }
-                        }
-                        else
-                        {
-                            if (folder.IsNullOrEmpty())
-                            {
-                                AddLog("파일을 Json 형식으로 내보내기 실패했습니다. [폴더 입력란이 비어있습니다.]", TaskLogType.Failed);
-                                pack.JsonExportResult = JsonExportResult.Fail_FileDirectoryNull;
-                            }
-                            else if (!Directory.Exists(folder))
-                            {
-                                AddLog("파일을 Json 형식으로 내보내기 실패했습니다. [해당하는 경로가 없습니다.]", TaskLogType.Failed);
-                                pack.JsonExportResult = JsonExportResult.Fail_FileDirectoryNotExists;
-                            }
-                        }
-                    }
+                    AddLog("파일을 Json 형식으로 내보내기 실패했습니다. [파일명 입력란이 비어있습니다.]", TaskLogType.Failed);
+                    Dispatcher.Invoke(() => pack.JsonExportResult = JsonExportResult.Fail_FileNameNull);
                 }
-                if (format.HasFlag(OutputFormat.CSV))
+                else
                 {
-                    string folder = SettingManager.ExportOptionSetting.CSVFolderLocation;
-                    string fileName = SettingManager.ExportOptionSetting.CSVFileName;
-                    
-                    if (fileName.IsNullOrEmpty())
-                    {
-                        AddLog("파일을 CSV 형식으로 내보내기 실패했습니다. [파일명 입력란이 비어있습니다.]", TaskLogType.Failed);
-                        pack.CSVExportResult = CSVExportResult.Fail_FileNameNull;
-                    }
-                    else
-                    {
-                        if (Directory.Exists(folder))
-                        {
-                            try
-                            {
-                                string fullPath = Path.Combine(folder, $"{fileName}{GetServiceString(serviceKind)}.csv");
-
-                                if (ExportManager.CSVExport(fullPath, result))
-                                {
-                                    AddLog($"CSV로 성공적으로 내보냈습니다. 저장 위치 : {fullPath}", TaskLogType.Complete);
-                                    pack.CSVExportResult = CSVExportResult.Success;
-                                }
-                                else
-                                {
-                                    AddLog($"CSV로 내보낼 파일 위치에 접근 실패했습니다. 위치 : {fullPath}", TaskLogType.Failed);
-                                    pack.CSVExportResult = CSVExportResult.Fail_FileAccessDenied;
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                AddLog($"CSV로 내보내던 중 알 수 없는 오류가 발생했습니다.{Environment.NewLine}{Environment.NewLine}{ex.ToString()}", TaskLogType.System);
-                                pack.CSVExportResult = CSVExportResult.Unknown;
-                            }
-                        }
-                        else
-                        {
-                            if (folder.IsNullOrEmpty())
-                            {
-                                AddLog("파일을 CSV 형식으로 내보내기 실패했습니다. [폴더 입력란이 비어있습니다.]", TaskLogType.Failed);
-                                pack.CSVExportResult = CSVExportResult.Fail_FileDirectoryNull;
-                            }
-                            else if (!Directory.Exists(folder))
-                            {
-                                AddLog("파일을 CSV 형식으로 내보내기 실패했습니다. [해당하는 경로가 없습니다.]", TaskLogType.Failed);
-                                pack.CSVExportResult = CSVExportResult.Fail_FileDirectoryNotExists;
-                            }
-                        }
-                    }
-                }
-                if (format.HasFlag(OutputFormat.MySQL))
-                {
-                    pack.MySQLExportResult = MySQLExportResult.NotSet;
-                    
-                    MySQLFormat<ISearchResult> mySQLFormat = null;
-                    try
-                    {
-                        if (SettingManager.ExportOptionSetting.MySQLManualInput)
-                        {
-                            if (SettingManager.ExportOptionSetting.MySQLConnString.IsNullOrEmpty())
-                            {
-                                AddLog("파일을 MySQL로 내보내기 실패했습니다. [데이터베이스 연결문이 입력되지 않았습니다.]", TaskLogType.Failed);
-                                pack.MySQLExportResult = MySQLExportResult.Fail_NotEnoughConnectData;
-                            }
-
-                            if (pack.MySQLExportResult == MySQLExportResult.NotSet)
-                                mySQLFormat = new MySQLFormat<ISearchResult>(SettingManager.ExportOptionSetting.MySQLConnString);
-                        }
-                        else
-                        {
-                            if (SettingManager.ExportOptionSetting.MySQLConnAddr.IsNullOrEmpty())
-                            {
-                                AddLog("파일을 MySQL로 내보내기 실패했습니다. [연결 주소가 입력되지 않았습니다.]", TaskLogType.Failed);
-                                pack.MySQLExportResult = MySQLExportResult.Fail_NotEnoughConnectData;
-                            }
-                            else if (SettingManager.ExportOptionSetting.MySQLDatabaseName.IsNullOrEmpty())
-                            {
-                                AddLog("파일을 MySQL로 내보내기 실패했습니다. [데이터베이스 이름이 입력되지 않았습니다.]", TaskLogType.Failed);
-                                pack.MySQLExportResult = MySQLExportResult.Fail_NotEnoughConnectData;
-                            }
-                            else if (SettingManager.ExportOptionSetting.MySQLUserID.IsNullOrEmpty())
-                            {
-                                AddLog("파일을 MySQL로 내보내기 실패했습니다. [데이터베이스 사용자 이름이 입력되지 않았습니다.]", TaskLogType.Failed);
-                                pack.MySQLExportResult = MySQLExportResult.Fail_NotEnoughConnectData;
-                            }
-                            else if (SettingManager.ExportOptionSetting.MySQLUserPassword.IsNullOrEmpty())
-                            {
-                                AddLog("파일을 MySQL로 내보내기 실패했습니다. [데이터베이스 사용자 비밀번호가 입력되지 않았습니다.]", TaskLogType.Failed);
-                                pack.MySQLExportResult = MySQLExportResult.Fail_NotEnoughConnectData;
-                            }
-
-                            if (pack.MySQLExportResult == MySQLExportResult.NotSet)
-                                mySQLFormat = new MySQLFormat<ISearchResult>(SettingManager.ExportOptionSetting.MySQLConnAddr,
-                                    SettingManager.ExportOptionSetting.MySQLUserID, 
-                                    SettingManager.ExportOptionSetting.MySQLUserPassword, 
-                                    SettingManager.ExportOptionSetting.MySQLDatabaseName);
-                        }
-                    }
-                    catch (Exception)
-                    {
-                    }
-                    
-                    if (mySQLFormat == null)
-                    {
-                        AddLog("파일을 MySQL로 내보내기 실패했습니다. [데이터베이스 연결 정보중 하나가 잘못되었습니다.]", TaskLogType.Failed);
-                    }
-                    else
+                    if (Directory.Exists(folder))
                     {
                         try
                         {
-                            ExportManager.MySQLExport(result, mySQLFormat);
-                            AddLog("MySQL로 성공적으로 내보냈습니다.", TaskLogType.Complete);
-                            pack.MySQLExportResult = MySQLExportResult.Success;
+                            string fullPath = Path.Combine(folder, $"{fileName}{GetServiceString(serviceKind)}.json");
+
+                            if (ExportManager.JsonExport(fullPath, result, SettingManager.ExportOptionSetting.JsonSort))
+                            {
+                                AddLog($"Json으로 성공적으로 내보냈습니다. 저장 위치 : {fullPath}", TaskLogType.Complete);
+                                pack.JsonExportResult = JsonExportResult.Success;
+                            }
+                            else
+                            {
+                                AddLog($"Json으로 내보낼 파일 위치에 접근 실패했습니다. 위치 : {fullPath}", TaskLogType.Failed);
+                                pack.JsonExportResult = JsonExportResult.Fail_FileAccessDenied;
+                            }
                         }
                         catch (Exception ex)
                         {
-                            AddLog("파일을 MySQL로 내보내기 실패했습니다. [알 수 없는 오류가 발생했습니다.]", TaskLogType.Failed);
-                            AddLog(ex.ToString(), TaskLogType.Failed);
-                            pack.MySQLExportResult = MySQLExportResult.Fail_UnkownError;
+                            AddLog($"Json으로 내보내던 중 알 수 없는 오류가 발생했습니다.{Environment.NewLine}{Environment.NewLine}{ex.ToString()}", TaskLogType.System);
+                            pack.JsonExportResult = JsonExportResult.Unknown;
                         }
-                    }
-                }
-                if (format.HasFlag(OutputFormat.AccessDB))
-                {
-                    string folder = SettingManager.ExportOptionSetting.AccessFolderLocation;
-                    string fileName = SettingManager.ExportOptionSetting.AccessFileName;
-                    
-                    if (fileName.IsNullOrEmpty())
-                    {
-                        AddLog("파일을 Access DB 형식으로 내보내기 실패했습니다. [파일명 입력란이 비어있습니다.]", TaskLogType.Failed);
-                        pack.AccessExportResult = AccessExportResult.Fail_FileNameNull;
                     }
                     else
                     {
-                        if (Directory.Exists(folder))
+                        if (folder.IsNullOrEmpty())
                         {
-                            try
-                            {
-                                string fullPath = Path.Combine(folder, $"{fileName}.accdb");
-                                if (ExportManager.AccessDBExport(fullPath, result))
-                                {
-                                    AddLog($"Access DB로 성공적으로 내보냈습니다. 저장 위치 : {fullPath}", TaskLogType.Complete);
-                                    pack.AccessExportResult = AccessExportResult.Success;
-                                }
-                                else
-                                {
-                                    AddLog($"Access DB로 내보낼 파일 위치에 접근 실패했습니다. 위치 : {fullPath}", TaskLogType.Failed);
-                                    pack.AccessExportResult = AccessExportResult.Fail_FileAccessDenied;
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                AddLog($"파일을 Access DB로 내보내기 실패했습니다. [알 수 없는 오류가 발생했습니다.]", TaskLogType.Failed);
-                                AddLog(ex.ToString(), TaskLogType.Failed);
-
-                                pack.AccessExportResult = AccessExportResult.Unknown;
-                            }
+                            AddLog("파일을 Json 형식으로 내보내기 실패했습니다. [폴더 입력란이 비어있습니다.]", TaskLogType.Failed);
+                            pack.JsonExportResult = JsonExportResult.Fail_FileDirectoryNull;
                         }
-                        else
+                        else if (!Directory.Exists(folder))
                         {
-                            if (folder.IsNullOrEmpty())
-                            {
-                                AddLog("파일을 Access DB 형식으로 내보내기 실패했습니다. [폴더 입력란이 비어있습니다.]", TaskLogType.Failed);
-                                pack.AccessExportResult = AccessExportResult.Fail_FileDirectoryNull;
-                            }
-                            else if (!Directory.Exists(folder))
-                            {
-                                AddLog("파일을 Access DB 형식으로 내보내기 실패했습니다. [해당하는 경로가 없습니다.]", TaskLogType.Failed);
-                                pack.AccessExportResult = AccessExportResult.Fail_FileDirectoryNotExists;
-                            }
+                            AddLog("파일을 Json 형식으로 내보내기 실패했습니다. [해당하는 경로가 없습니다.]", TaskLogType.Failed);
+                            pack.JsonExportResult = JsonExportResult.Fail_FileDirectoryNotExists;
                         }
                     }
                 }
-            });
+            }
+            if (format.HasFlag(OutputFormat.CSV))
+            {
+                string folder = SettingManager.ExportOptionSetting.CSVFolderLocation;
+                string fileName = SettingManager.ExportOptionSetting.CSVFileName;
+
+                if (fileName.IsNullOrEmpty())
+                {
+                    AddLog("파일을 CSV 형식으로 내보내기 실패했습니다. [파일명 입력란이 비어있습니다.]", TaskLogType.Failed);
+                    pack.CSVExportResult = CSVExportResult.Fail_FileNameNull;
+                }
+                else
+                {
+                    if (Directory.Exists(folder))
+                    {
+                        try
+                        {
+                            string fullPath = Path.Combine(folder, $"{fileName}{GetServiceString(serviceKind)}.csv");
+
+                            if (ExportManager.CSVExport(fullPath, result))
+                            {
+                                AddLog($"CSV로 성공적으로 내보냈습니다. 저장 위치 : {fullPath}", TaskLogType.Complete);
+                                pack.CSVExportResult = CSVExportResult.Success;
+                            }
+                            else
+                            {
+                                AddLog($"CSV로 내보낼 파일 위치에 접근 실패했습니다. 위치 : {fullPath}", TaskLogType.Failed);
+                                pack.CSVExportResult = CSVExportResult.Fail_FileAccessDenied;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            AddLog($"CSV로 내보내던 중 알 수 없는 오류가 발생했습니다.{Environment.NewLine}{Environment.NewLine}{ex.ToString()}", TaskLogType.System);
+                            pack.CSVExportResult = CSVExportResult.Unknown;
+                        }
+                    }
+                    else
+                    {
+                        if (folder.IsNullOrEmpty())
+                        {
+                            AddLog("파일을 CSV 형식으로 내보내기 실패했습니다. [폴더 입력란이 비어있습니다.]", TaskLogType.Failed);
+                            pack.CSVExportResult = CSVExportResult.Fail_FileDirectoryNull;
+                        }
+                        else if (!Directory.Exists(folder))
+                        {
+                            AddLog("파일을 CSV 형식으로 내보내기 실패했습니다. [해당하는 경로가 없습니다.]", TaskLogType.Failed);
+                            pack.CSVExportResult = CSVExportResult.Fail_FileDirectoryNotExists;
+                        }
+                    }
+                }
+            }
+            if (format.HasFlag(OutputFormat.MySQL))
+            {
+                pack.MySQLExportResult = MySQLExportResult.NotSet;
+
+                MySQLFormat<ISearchResult> mySQLFormat = null;
+                try
+                {
+                    if (SettingManager.ExportOptionSetting.MySQLManualInput)
+                    {
+                        if (SettingManager.ExportOptionSetting.MySQLConnString.IsNullOrEmpty())
+                        {
+                            AddLog("파일을 MySQL로 내보내기 실패했습니다. [데이터베이스 연결문이 입력되지 않았습니다.]", TaskLogType.Failed);
+                            pack.MySQLExportResult = MySQLExportResult.Fail_NotEnoughConnectData;
+                        }
+
+                        if (pack.MySQLExportResult == MySQLExportResult.NotSet)
+                            mySQLFormat = new MySQLFormat<ISearchResult>(SettingManager.ExportOptionSetting.MySQLConnString);
+                    }
+                    else
+                    {
+                        if (SettingManager.ExportOptionSetting.MySQLConnAddr.IsNullOrEmpty())
+                        {
+                            AddLog("파일을 MySQL로 내보내기 실패했습니다. [연결 주소가 입력되지 않았습니다.]", TaskLogType.Failed);
+                            pack.MySQLExportResult = MySQLExportResult.Fail_NotEnoughConnectData;
+                        }
+                        else if (SettingManager.ExportOptionSetting.MySQLDatabaseName.IsNullOrEmpty())
+                        {
+                            AddLog("파일을 MySQL로 내보내기 실패했습니다. [데이터베이스 이름이 입력되지 않았습니다.]", TaskLogType.Failed);
+                            pack.MySQLExportResult = MySQLExportResult.Fail_NotEnoughConnectData;
+                        }
+                        else if (SettingManager.ExportOptionSetting.MySQLUserID.IsNullOrEmpty())
+                        {
+                            AddLog("파일을 MySQL로 내보내기 실패했습니다. [데이터베이스 사용자 이름이 입력되지 않았습니다.]", TaskLogType.Failed);
+                            pack.MySQLExportResult = MySQLExportResult.Fail_NotEnoughConnectData;
+                        }
+                        else if (SettingManager.ExportOptionSetting.MySQLUserPassword.IsNullOrEmpty())
+                        {
+                            AddLog("파일을 MySQL로 내보내기 실패했습니다. [데이터베이스 사용자 비밀번호가 입력되지 않았습니다.]", TaskLogType.Failed);
+                            pack.MySQLExportResult = MySQLExportResult.Fail_NotEnoughConnectData;
+                        }
+
+                        if (pack.MySQLExportResult == MySQLExportResult.NotSet)
+                            mySQLFormat = new MySQLFormat<ISearchResult>(SettingManager.ExportOptionSetting.MySQLConnAddr,
+                                SettingManager.ExportOptionSetting.MySQLUserID,
+                                SettingManager.ExportOptionSetting.MySQLUserPassword,
+                                SettingManager.ExportOptionSetting.MySQLDatabaseName);
+                    }
+                }
+                catch (Exception)
+                {
+                }
+
+                if (mySQLFormat == null)
+                {
+                    AddLog("파일을 MySQL로 내보내기 실패했습니다. [데이터베이스 연결 정보중 하나가 잘못되었습니다.]", TaskLogType.Failed);
+                }
+                else
+                {
+                    try
+                    {
+                        ExportManager.MySQLExport(result, mySQLFormat);
+                        AddLog("MySQL로 성공적으로 내보냈습니다.", TaskLogType.Complete);
+                        pack.MySQLExportResult = MySQLExportResult.Success;
+                    }
+                    catch (Exception ex)
+                    {
+                        AddLog("파일을 MySQL로 내보내기 실패했습니다. [알 수 없는 오류가 발생했습니다.]", TaskLogType.Failed);
+                        AddLog(ex.ToString(), TaskLogType.Failed);
+                        pack.MySQLExportResult = MySQLExportResult.Fail_UnkownError;
+                    }
+                }
+            }
+            if (format.HasFlag(OutputFormat.AccessDB))
+            {
+                string folder = SettingManager.ExportOptionSetting.AccessFolderLocation;
+                string fileName = SettingManager.ExportOptionSetting.AccessFileName;
+
+                if (fileName.IsNullOrEmpty())
+                {
+                    AddLog("파일을 Access DB 형식으로 내보내기 실패했습니다. [파일명 입력란이 비어있습니다.]", TaskLogType.Failed);
+                    pack.AccessExportResult = AccessExportResult.Fail_FileNameNull;
+                }
+                else
+                {
+                    if (Directory.Exists(folder))
+                    {
+                        try
+                        {
+                            string fullPath = Path.Combine(folder, $"{fileName}.accdb");
+                            if (ExportManager.AccessDBExport(fullPath, result))
+                            {
+                                AddLog($"Access DB로 성공적으로 내보냈습니다. 저장 위치 : {fullPath}", TaskLogType.Complete);
+                                pack.AccessExportResult = AccessExportResult.Success;
+                            }
+                            else
+                            {
+                                AddLog($"Access DB로 내보낼 파일 위치에 접근 실패했습니다. 위치 : {fullPath}", TaskLogType.Failed);
+                                pack.AccessExportResult = AccessExportResult.Fail_FileAccessDenied;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            AddLog($"파일을 Access DB로 내보내기 실패했습니다. [알 수 없는 오류가 발생했습니다.]", TaskLogType.Failed);
+                            AddLog(ex.ToString(), TaskLogType.Failed);
+
+                            pack.AccessExportResult = AccessExportResult.Unknown;
+                        }
+                    }
+                    else
+                    {
+                        if (folder.IsNullOrEmpty())
+                        {
+                            AddLog("파일을 Access DB 형식으로 내보내기 실패했습니다. [폴더 입력란이 비어있습니다.]", TaskLogType.Failed);
+                            pack.AccessExportResult = AccessExportResult.Fail_FileDirectoryNull;
+                        }
+                        else if (!Directory.Exists(folder))
+                        {
+                            AddLog("파일을 Access DB 형식으로 내보내기 실패했습니다. [해당하는 경로가 없습니다.]", TaskLogType.Failed);
+                            pack.AccessExportResult = AccessExportResult.Fail_FileDirectoryNotExists;
+                        }
+                    }
+                }
+            }
 
             return pack;
         }

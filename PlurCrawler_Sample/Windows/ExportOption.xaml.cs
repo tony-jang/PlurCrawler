@@ -191,7 +191,7 @@ namespace PlurCrawler_Sample.Windows
                     wc.DownloadFileCompleted += Wc_DownloadFileCompleted;
                     wc.DownloadFileAsync(new Uri("https://download.microsoft.com/download/f/d/8/fd8c20d8-e38a-48b6-8691-542403b91da1/AccessDatabaseEngine.exe"), FullPath);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     // TODO: 인터넷 오류 발생시 알림 추가
                 }
