@@ -65,5 +65,13 @@ namespace PlurCrawler.Search.Services.GoogleCSE
         [MySQLType("TEXT")]
         [AccessType("LONGTEXT")]
         public string Keyword { get; set; }
+
+
+        /// <summary>
+        /// 해당 사이트의 내용입니다.
+        /// </summary>
+        [MySQLType("LONGTEXT")]
+        [AccessType("LONGTEXT")]
+        public string Content { get; set; }
     }
 }

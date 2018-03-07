@@ -13,6 +13,7 @@ using Google.Apis.Customsearch.v1.Data;
 using Google.Apis.Services;
 
 using static PlurCrawler.Extension.IEnumerableEx;
+using PlurCrawler.Crawling;
 
 namespace PlurCrawler.Search.Services.GoogleCSE
 {
@@ -154,7 +155,7 @@ namespace PlurCrawler.Search.Services.GoogleCSE
                 if (paging != null)
                 {
                     results.AddRange(paging);
-                    var itm = paging.Select(i => ConvertType(i, dt));
+                    var itm = paging.AsParallel().Select(i => ConvertType(i, dt));
                     itm.ForEach(i => OnSearchItemFound(this, new SearchResultEventArgs(i, ServiceKind.GoogleCSE)));
                 }
 
@@ -172,13 +173,14 @@ namespace PlurCrawler.Search.Services.GoogleCSE
 
         private IEnumerable<GoogleCSESearchResult> ConvertType(IEnumerable<Result> resultList)
         {
-            return resultList.Select(i => new GoogleCSESearchResult()
+            return resultList.AsParallel().Select(i => new GoogleCSESearchResult()
             {
                 OriginalURL = i.Link,
                 PublishedDate = null,
                 Title = i.Title,
                 Snippet = i.Snippet.Replace("\\n", Environment.NewLine),
-                Keyword = query
+                Keyword = query,
+                Content = new ContentCrawler(i.Link).Content
             });
         }
 
@@ -190,7 +192,8 @@ namespace PlurCrawler.Search.Services.GoogleCSE
                 PublishedDate = date,
                 Title = result.Title,
                 Snippet = result.Snippet.Replace("\\n", Environment.NewLine),
-                Keyword = query
+                Keyword = query,
+                Content = new ContentCrawler(result.Link).Content
             };
         }
 

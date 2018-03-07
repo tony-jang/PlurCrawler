@@ -195,6 +195,7 @@
     <Compile Include="Attributes\MySQLTypeAttribute.cs" />
     <Compile Include="Attributes\PrimaryKeyAttribute.cs" />
     <Compile Include="Common\Pair.cs" />
+    <Compile Include="Crawling\ContentCrawler.cs" />
     <Compile Include="Extension\DateTimeEx.cs" />
     <Compile Include="Extension\EnumEx.cs" />
     <Compile Include="Extension\IEnumerableEx.cs" />

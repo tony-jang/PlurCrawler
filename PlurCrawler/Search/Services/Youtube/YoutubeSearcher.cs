@@ -84,8 +84,8 @@ namespace PlurCrawler.Search.Services.Youtube
                     }
 
                     count = 1;
-                    
-                    foreach (SearchResult s in videos)
+
+                    videos.AsParallel().ForAll(s =>
                     {
                         OnChangeInfoMessage(this, new MessageEventArgs("설명을 가져오는 중입니다."));
                         OnSearchProgressChanged(this, new ProgressEventArgs(searchOption.SearchCount, count++));
@@ -111,7 +111,7 @@ namespace PlurCrawler.Search.Services.Youtube
                         OnSearchItemFound(this, new SearchResultEventArgs(itm, ServiceKind.Youtube));
 
                         list.Add(itm);
-                    }
+                    });
 
                     if (remain <= 0)
                         break;
