@@ -2,6 +2,10 @@
 
 빅데이터 수집을 위한 크롤러입니다.
 
+## 소개 영상
+
+[![Video](https://user-images.githubusercontent.com/23194065/37530966-2f2378d0-297e-11e8-9d19-5f3d9567e535.png)](https://youtu.be/5CrViIHzFCU)
+
 ## 핵심 기능
 ### 1. 모든 설정들이 저장됩니다.
 
