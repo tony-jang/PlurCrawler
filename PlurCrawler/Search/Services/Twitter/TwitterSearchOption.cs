@@ -26,7 +26,12 @@ namespace PlurCrawler.Search.Services.Twitter
                 Language = TwitterLanguage.All
             };
         }
-        
+
+        public TwitterSearchOption()
+        {
+            this.Language = TwitterLanguage.All;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)

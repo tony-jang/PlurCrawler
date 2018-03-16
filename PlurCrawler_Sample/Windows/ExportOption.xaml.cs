@@ -15,6 +15,7 @@ using PlurCrawler_Sample.Common;
 
 using IOPath = System.IO.Path;
 using WinApplication = System.Windows.Application;
+using PlurCrawler_Sample.TaskLogs;
 
 namespace PlurCrawler_Sample.Windows
 {
@@ -193,7 +194,7 @@ namespace PlurCrawler_Sample.Windows
                 }
                 catch (Exception)
                 {
-                    // TODO: 인터넷 오류 발생시 알림 추가
+                    TaskLogManager.AddLog("인터넷 연결에 문제가 생긴 것 같습니다.", TaskLogType.Failed);
                 }
             });
 

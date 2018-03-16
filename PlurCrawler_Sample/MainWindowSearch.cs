@@ -145,9 +145,31 @@ namespace PlurCrawler_Sample
                     {
                         AddLog("'Google CSE' 검색 중 오류가 발생했습니다. [날짜를 사용하지 않은 상태에서는 '하루 기준' 옵션을 사용할 수 없습니다.]", TaskLogType.Failed);
                         info = SearchResult.Fail_InvaildSetting;
+                    }
+                    catch (Exception)
+                    {
+                        AddLog("'Google CSE' 검색 중 오류가 발생했습니다. [잘못된 인증 정보를 입력했습니다.]", TaskLogType.Failed);
+                        info = SearchResult.Fail_APIError;
+                        Dispatcher.Invoke(() =>
+                        {
+                            SettingManager.GoogleCredentials.Item2 = VerifyType.Invalid;
+                            SettingManager.GoogleCredentials.Item4 = VerifyType.Invalid;
+                        });
+                        
+                    }
+                    if (info != SearchResult.Success)
+                    {
                         Dispatcher.Invoke(() =>
                         {
                             dict[googleCSESearcher].SetValue(message: "설정 오류가 발생했습니다.", maximum: 1);
+                            dict[googleCSESearcher].TaskFinished = true;
+                        });
+                    }
+                    else if (info != SearchResult.Fail_NoResult)
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            dict[googleCSESearcher].SetValue(message: "검색 결과가 없습니다.", maximum: 1);
                             dict[googleCSESearcher].TaskFinished = true;
                         });
                     }
@@ -329,7 +351,7 @@ namespace PlurCrawler_Sample
             {
                 if (!SettingManager.YoutubeSearchOption.DateRange.Vaild)
                 {
-                    AddLog("트위터 검색의 날짜 설정이 잘못되었습니다.", TaskLogType.Failed);
+                    AddLog("유튜브 검색의 날짜 설정이 잘못되었습니다.", TaskLogType.Failed);
                     return;
                 }
             }
@@ -418,6 +440,9 @@ namespace PlurCrawler_Sample
                     catch (CredentialsTypeException)
                     {
                         AddLog("'Youtube' 검색 중 오류가 발생했습니다. [Youtube의 API키가 올바르게 입력되지 않은거 같습니다.]", TaskLogType.Failed);
+
+                        Dispatcher.Invoke(() => SettingManager.YoutubeCredentials.Item2 = VerifyType.Invalid);
+
                         info = SearchResult.Fail_APIError;
                     }
                 }

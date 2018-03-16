@@ -68,6 +68,7 @@ namespace PlurCrawler_Sample
             }
             else
             {
+                gridHelp.Visibility = Visibility.Visible;
                 bool down = false;
 
                 gridHelp.MouseDown += ((o, e) => { down = true; });
@@ -112,6 +113,9 @@ namespace PlurCrawler_Sample
 
             this.Closing += MainWindow_Closing;
 
+            this.Width = 1280;
+            this.Height = 720;
+            
             #endregion
         }
 

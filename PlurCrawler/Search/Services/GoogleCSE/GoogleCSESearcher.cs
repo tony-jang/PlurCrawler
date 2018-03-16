@@ -149,9 +149,18 @@ namespace PlurCrawler.Search.Services.GoogleCSE
                     request.Num = 10;
                 else
                     request.Num = (tempCount % 10);
-
-                paging = request.Execute().Items;
-
+                try
+                {
+                    paging = request.Execute().Items;
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message.Contains("Reason[keyInvalid]"))
+                    {
+                        throw new InvaildKeyException("입력된 구글 키가 올바르지 않습니다.");
+                    }
+                }
+                
                 if (paging != null)
                 {
                     results.AddRange(paging);
