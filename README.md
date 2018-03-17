@@ -1,33 +1,56 @@
 # PlurCrawler
 
-빅데이터 수집을 위한 크롤러입니다.
+Crawler for BigData Collection
 
-## 소개 영상
+## Introduce Videos
 
 [![Video](https://user-images.githubusercontent.com/23194065/37530966-2f2378d0-297e-11e8-9d19-5f3d9567e535.png)](https://youtu.be/5CrViIHzFCU)
 
-## 핵심 기능
-### 1. 모든 설정들이 저장됩니다.
+## [Nuget](https://www.nuget.org/packages/PlurCrawler/)
+ ```
+PM> Install-Package PlurCrawler
+```
 
-굳이 프로그램을 다시 킬때마다 같은 정보를 입력할 필요가 없이, 사용자가 설정한 모든 정보들은 수정시마다 실시간으로 저장됩니다.
+## Support Searcher Methods
 
-### 2. 여러가지 서비스를 지원합니다.
+| Methods                           | Services    |
+| ----------------------------------|-------------|
+| Search(YoutubeSearchOption)       | Youtube     |
+| Search(GoogleCSESearchOption)     | Google CSE  |
+| Search(TwitterSearchOption)       | Twitter     |
 
-PlurCrawler를 사용하게 되면 Google CSE, Twitter, Youtube의 서비스들을 한번에 사용할 수 있습니다. 추후에 계속 서비스 가능한 엔진들을 추가할 계획입니다.
+## Main Features
+### 1. All Settings are Auto-Saved
 
-### 3. 작업 내역을 기억합니다.
+Your infos are auto-saved when you edit. So you desn't need to type same info.<br/><br/>
 
-만약 내보내기에 실패했을때에, 실패한 이유를 확인하고 수정한뒤에 다시 검색하지 않아도 해당 검색 내역을 프로그램이 켜져 있는 동안은 기억해서, 바로 다시 내보낼 수 있도록 도와줍니다.
+### 2. Provides Many Services
 
-### 4. 라이브러리와 프로그램으로 나뉘어져 있습니다.
+You can use Google CSE, Twitter, Youtube Services when you use PlurCrawler. I'll add another engine that can be serviced.<br/><br/>
 
-PlurCrawler라는 프로그램은 라이브러리와 프로그램 부분이 분리되어 있어서 만약 개발의 과정에서 PlurCrawler를 활용하고 싶을때에 라이브러리를 사용해서 사용 가능하고,
-일반 사용자가 사용하고 싶을때에는 실행 프로그램으로 사용할 수 있게 되어 있습니다.
 
-### 5. 다양한 내보내기 포맷들을 지원합니다.
 
-Json, CSV, MySQL과 Access DB와 같은 다양한 포맷들을 내보내기 포맷으로 지원하고 있습니다. 원하는 경우에 따라서 하나 이상을 선택해서 내보낼 수 있습니다.
+### 3. Remember Tasks
 
-### 6. Nuget에서 쉽게 다운로드 받을 수 있습니다.
+If you failed to export, check why you failed and helps export again and you don't need to search again.<br/><br/>
 
-Nuget에 'PlurCrawler'를 검색해서 다운로드 받으면 PlurCrawler 라이브러리를 바로 사용할 수 있게 환경이 구축됩니다.
+
+
+### 4. Divided Library and Execute File
+
+PlurCrawler is Divided Library and Execute File.
+so if you use PlurCrawler as Developer, you can use Library.
+Otherwise, if you are normal User that want to collect datas, you can use tool.<br/><br/>
+
+
+
+### 5. Provides variety Export Environment.
+
+It Provides variety Export Environment Like Json, CSV, MySQL, Access DB etc.. You can select one or more export engines.<br/><br/>
+
+
+
+### 6. Can download easy at Nuget
+
+Download 'PlurCrawler' at Nuget, You're all ready to use 'PlurCrawler' Library<br/><br/>
+
