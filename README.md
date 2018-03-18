@@ -99,11 +99,14 @@ foreach (var itm in list){
 ```C#
 TwitterCredentials credentials = new TwitterCredentials("YOUR-CONSUMER-KEY", "YOUR_CONSUMER-SECRET");
 TwitterTokenizer tokenizer = new TwitterTokenizer();
+
 Process.Start(tokenizer.GetURL(credentials));
+
 Console.Write("Input PIN CODE : ");
 string pinCode = Console.ReadLine();
 credentials.InputPIN(pinCode);
 tokenizer.CredentialsCertification(credentials);
+
 var list = searcher.Search(new TwitterSearchOption(){
     Query = "YOUR-QUERY",
     SplitWithDate = false,
