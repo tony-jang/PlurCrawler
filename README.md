@@ -73,7 +73,10 @@ PM> Install-Package PlurCrawler 
 ## Basic Usage
 ### Namespace Declare
 ```c#
-using PlurCrawler; // Base Namespaceusing PlurCrawler.Search.Services.GoogleCSE; // Google CSE Namespaceusing PlurCrawler.Search.Services.Youtube; // Youtube Namespaceusing PlurCrawler.Search.Services.Twitter; // Twitter Namespace
+using PlurCrawler; // Base Namespace
+using PlurCrawler.Search.Services.GoogleCSE; // Google CSE Namespace
+using PlurCrawler.Search.Services.Youtube; // Youtube Namespace
+using PlurCrawler.Search.Services.Twitter; // Twitter Namespace
 ```
 
 ### Youtube Search Example
