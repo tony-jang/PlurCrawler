@@ -2,7 +2,10 @@
 Crawler for BigData Collection
 ## Introduce Videos
 [![Video](https://user-images.githubusercontent.com/23194065/37530966-2f2378d0-297e-11e8-9d19-5f3d9567e535.png)](https://youtu.be/5CrViIHzFCU)
-## [Nuget](https://www.nuget.org/packages/PlurCrawler/) ```PM> Install-Package PlurCrawler ```
+## [Nuget](https://www.nuget.org/packages/PlurCrawler/)
+```
+PM> Install-Package PlurCrawler 
+```
 ------
 ## 1. Google Custom Search Engine
 ### Google CSE Searcher Members
