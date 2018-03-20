@@ -15,6 +15,11 @@ namespace PlurCrawler_Sample.Controls
 
         public static DependencyProperty TextProperty = DependencyProperty.Register(nameof(Text), typeof(string), typeof(ImageTextBlock));
 
+        public ImageTextBlock()
+        {
+            this.Style = FindResource("ImageTextBlockStyle") as Style;
+        }
+
         public ImageSource Source
         {
             get => (ImageSource)GetValue(SourceProperty);

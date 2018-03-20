@@ -10,9 +10,34 @@
       Title="DetailsOption">
     <Grid>
         <TabControl TabStripPlacement="Top">
+            <!--<TabControl.Template>
+                <ControlTemplate TargetType="TabControl">
+                    <StackPanel>
+                        <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Disabled">
+                            <TabPanel x:Name="HeaderPanel"
+                              Panel.ZIndex ="1" 
+                              KeyboardNavigation.TabIndex="1"
+                              Grid.Column="0"
+                              Grid.Row="0"
+                              Margin="2,2,2,0"
+                              IsItemsHost="true"/>
+                        </ScrollViewer>
+                        <Grid Background="{TemplateBinding Background}">
+                            <ScrollViewer VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                                <ContentPresenter x:Name="PART_SelectedContentHost"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          Margin="{TemplateBinding Padding}"
+                                          ContentSource="SelectedContent"/>
+                            </ScrollViewer>
+                            
+                        </Grid>
+                        
+                    </StackPanel>
+                </ControlTemplate>
+            </TabControl.Template>-->
             <TabItem Style="{DynamicResource TabItemStyle}">
                 <TabItem.Header>
-                    <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/icon_google.png" Text="Google CSE" Height="16"/>
+                    <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/icon_google.png" Text="구글 CSE" Height="16"/>
                 </TabItem.Header>
                 <Grid>
                     <ScrollViewer x:Name="svGoogle" VerticalScrollBarVisibility="Auto">
@@ -78,7 +103,7 @@
             </TabItem>
             <TabItem Style="{DynamicResource TabItemStyle}">
                 <TabItem.Header>
-                    <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/icon_twitter.png" Text="Twitter" Height="16"/>
+                    <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/icon_twitter.png" Text="트위터[검색어]" Height="16"/>
                 </TabItem.Header>
                 <Grid>
                     <ScrollViewer x:Name="svTwitter" VerticalScrollBarVisibility="Auto">
@@ -153,7 +178,7 @@
             </TabItem>
             <TabItem Style="{DynamicResource TabItemStyle}">
                 <TabItem.Header>
-                    <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/icon_youtube.png" Text="Youtube" Height="16"/>
+                    <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/icon_youtube.png" Text="유튜브[검색어]" Height="16"/>
                 </TabItem.Header>
                 <Grid>
                     <ScrollViewer x:Name="svYoutube" VerticalScrollBarVisibility="Auto">

@@ -39,6 +39,21 @@ namespace PlurCrawler_Sample
         {
             InitializeComponent();
 
+            //PlurCrawler.Format.AccessDBFormat<GoogleCSESearchResult> f = new PlurCrawler.Format.AccessDBFormat<GoogleCSESearchResult>("test.accdb");
+            //f.Test();
+            //var list = new List<GoogleCSESearchResult>() { new GoogleCSESearchResult(){
+            //    Content = "asdf",
+            //    Keyword = "asdfasdf",
+            //    OriginalURL = "https://naver.com",
+            //    PublishedDate = DateTime.Now,
+            //    Snippet = "asdfasfasdfasdf",
+            //    Title = "i4oqtuioewtuwieopt"
+            //} };
+
+            //f.FormattingData(list);
+
+            //return;
+
             #region [  Initalization  ]
 
             dict = new Dictionary<ISearcher, TaskProgressBar>();

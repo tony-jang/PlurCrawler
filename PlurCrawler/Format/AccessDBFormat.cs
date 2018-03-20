@@ -214,11 +214,20 @@ namespace PlurCrawler.Format
                     if (value is bool b)
                         return b ? "True" : "False";
 
-                    return value;
+                    return value.ToString();
                 }
             }
 
-            cmd.ExecuteNonQuery();
+            var i = cmd.ExecuteNonQuery();
+
+            if (i == 1)
+            {
+                Console.WriteLine("Success");
+            }
+            else
+            {
+                Console.WriteLine($"Failed! code : {i}");
+            }
         }
         
         public string GetUpdateQuery(TableField field, object value, string keyword)
