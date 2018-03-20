@@ -224,6 +224,8 @@
     <Compile Include="Search\Services\Twitter\TwitterSearcher.cs" />
     <Compile Include="Search\Services\Twitter\TwitterSearchOption.cs" />
     <Compile Include="Search\Services\Twitter\TwitterSearchResult.cs" />
+    <Compile Include="Search\Services\Youtube\YoutubeChannelSearcher.cs" />
+    <Compile Include="Search\Services\Youtube\YoutubeChannelSearchOption.cs" />
     <Compile Include="Search\Services\Youtube\YoutubeSearcher.cs" />
     <Compile Include="Search\Services\Youtube\YoutubeSearchOption.cs" />
     <Compile Include="Search\Services\Youtube\YoutubeSearchResult.cs" />

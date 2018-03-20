@@ -12,164 +12,227 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid>
-            <StackPanel>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="1"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
+        <Grid Height="100">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.Resources>
+                    <Style x:Key="ArrowButtonStyle" TargetType="Button">
+                        <Setter Property="Background" Value="Black"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Grid Background="Transparent">
+                                        <ContentPresenter Content="{TemplateBinding Content}"
+                                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="Gray"/>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter Property="Background" Value="LightGray"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Grid.Resources>
 
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
+                    <Button x:Name="btnUp" Style="{StaticResource ArrowButtonStyle}">
+                        <Path Fill="{Binding ElementName=btnUp, Path=Background}" Data="M 0 8 L 12 8 L 6 0 Z"/>
+                    </Button>
 
-                    <TextBlock Text="키워드 검색" VerticalAlignment="Center" TextAlignment="Center" FontWeight="Bold" Margin="5"/>
-                    <Rectangle Grid.Column="1" Fill="Black" Margin="0,5"/>
-                    <Grid Grid.Column="2" Margin="5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
+                    <Button x:Name="btnDown" Grid.Row="2" Style="{StaticResource ArrowButtonStyle}">
+                        <Path Fill="{Binding ElementName=btnDown, Path=Background}" Data="M 0 0 L 12 0 L 6 8 Z"/>
+                    </Button>
+                </Grid>
 
-                        <TextBlock Margin="5,0" Text="검색어" Grid.Column="0" VerticalAlignment="Center"/>
-                        <TextBox x:Name="tbQuery" Margin="10,0" Text="" Grid.Column="1" VerticalAlignment="Center"/>
-                        <Button x:Name="btnSearch" Grid.Column="2" 
-                        Margin="5,0" Content="작업 시작"
-                        VerticalAlignment="Center" Padding="30,5" IsEnabled="False"/>
-                        <Grid Grid.Row="1" Grid.ColumnSpan="2">
-                            <WrapPanel HorizontalAlignment="Center">
-                                <WrapPanel.Resources>
-                                    <Style x:Key="ImageCheckBoxStyle2" TargetType="{x:Type ctrl:ImageCheckBox}" BasedOn="{StaticResource ImageCheckBoxStyle}">
-                                        <Setter Property="Background" Value="Transparent"/>
-                                        <Setter Property="Height" Value="20"/>
-                                    </Style>
-                                </WrapPanel.Resources>
-                                <TextBlock Text="검색 엔진 선택 - " VerticalAlignment="Center"/>
-                                <ctrl:ImageCheckBox x:Name="cbGoogleService" Margin="5" Content="구글 CSE" 
+                <TextBlock x:Name="tbSearchPanelName"  Text="키워드 검색" VerticalAlignment="Center" TextAlignment="Center" FontWeight="Bold" Margin="5"/>
+                <TabControl x:Name="tcSearchPanel" Grid.Column="1" BorderBrush="{x:Null}">
+                    <TabControl.Resources>
+                        <Style TargetType="{x:Type TabItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type TabItem}">
+                                        <ContentPresenter Content="{TemplateBinding ContentTemplate}"/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </TabControl.Resources>
+                    <TabItem Tag="키워드 검색">
+                        <Border Grid.Column="1" Margin="5" 
+                                BorderBrush="LightGray"
+                                BorderThickness="2"
+                                CornerRadius="10">
+                            <Grid Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Margin="5,0" Text="검색어" Grid.Column="0" VerticalAlignment="Center"/>
+                                <TextBox x:Name="tbQuery" Margin="10,0" Text="" Grid.Column="1" VerticalAlignment="Center"/>
+                                <Button x:Name="btnSearch" Grid.Column="2" 
+                                        Margin="5,0" Content="작업 시작"
+                                        VerticalAlignment="Center" Padding="30,5" IsEnabled="False"/>
+                                <Grid Grid.Row="1" Grid.ColumnSpan="2">
+                                    <WrapPanel HorizontalAlignment="Center">
+                                        <WrapPanel.Resources>
+                                            <Style x:Key="ImageCheckBoxStyle2" TargetType="{x:Type ctrl:ImageCheckBox}" BasedOn="{StaticResource ImageCheckBoxStyle}">
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Setter Property="Height" Value="20"/>
+                                            </Style>
+                                        </WrapPanel.Resources>
+                                        <TextBlock Text="검색 엔진 선택 - " VerticalAlignment="Center"/>
+                                        <ctrl:ImageCheckBox x:Name="cbGoogleService" Margin="5" Content="구글 CSE" 
                                             Source="Resources/icon_google.png" 
                                             DisabledSource="Resources/icon_google_gray.png"
                                             Style="{StaticResource ImageCheckBoxStyle2}"/>
-                                <ctrl:ImageCheckBox x:Name="cbTwitterService" Margin="5" Content="트위터" 
+                                        <ctrl:ImageCheckBox x:Name="cbTwitterService" Margin="5" Content="트위터" 
                                             Source="Resources/icon_twitter.png" 
                                             DisabledSource="Resources/icon_twitter_gray.png"
                                             Style="{StaticResource ImageCheckBoxStyle2}"/>
-                                <ctrl:ImageCheckBox x:Name="cbYoutubeService" Margin="5" Content="유튜브"
+                                        <ctrl:ImageCheckBox x:Name="cbYoutubeService" Margin="5" Content="유튜브"
                                             Source="Resources/icon_youtube.png" DisabledSource="Resources/icon_youtube_gray.png"
                                             Style="{StaticResource ImageCheckBoxStyle2}"/>
-                            </WrapPanel>
-                        </Grid>
-                        <Grid Grid.Column="2" Grid.Row="1">
-                            <WrapPanel HorizontalAlignment="Center">
-                                <WrapPanel.Resources>
-                                    <Style x:Key="ImageCheckBoxStyle2" TargetType="{x:Type ctrl:ImageCheckBox}" BasedOn="{StaticResource ImageCheckBoxStyle}">
-                                        <Setter Property="Height" Value="20"/>
-                                        <Setter Property="IsTabStop" Value="False"/>
-                                        <Setter Property="IsHitTestVisible" Value="False"/>
-                                    </Style>
-                                </WrapPanel.Resources>
-                                <Grid Background="Transparent">
-                                    <ctrl:ImageCheckBox x:Name="cbGoogleVertified" Margin="6,5,4,5"
+                                    </WrapPanel>
+                                </Grid>
+                                <Grid Grid.Column="2" Grid.Row="1">
+                                    <WrapPanel HorizontalAlignment="Center">
+                                        <WrapPanel.Resources>
+                                            <Style x:Key="ImageCheckBoxStyle2" TargetType="{x:Type ctrl:ImageCheckBox}" BasedOn="{StaticResource ImageCheckBoxStyle}">
+                                                <Setter Property="Height" Value="20"/>
+                                                <Setter Property="IsTabStop" Value="False"/>
+                                                <Setter Property="IsHitTestVisible" Value="False"/>
+                                            </Style>
+                                        </WrapPanel.Resources>
+                                        <Grid Background="Transparent">
+                                            <ctrl:ImageCheckBox x:Name="cbGoogleVertified" Margin="6,5,4,5"
                                                 Source="Resources/icon_google.png" 
                                                 DisabledSource="Resources/icon_google_gray.png"
                                                 Style="{StaticResource ImageCheckBoxStyle2}">
-                                    </ctrl:ImageCheckBox>
-                                    <Grid.ToolTip>
-                                        <ToolTip x:Name="goVertToolTip" Content="구글의 인증 상태가 표시될 예정입니다."/>
-                                    </Grid.ToolTip>
-                                </Grid>
-                                <Grid Background="Transparent">
-                                    <ctrl:ImageCheckBox x:Name="cbTwitterVertified" Margin="5"
+                                            </ctrl:ImageCheckBox>
+                                            <Grid.ToolTip>
+                                                <ToolTip x:Name="goVertToolTip" Content="구글의 인증 상태가 표시될 예정입니다."/>
+                                            </Grid.ToolTip>
+                                        </Grid>
+                                        <Grid Background="Transparent">
+                                            <ctrl:ImageCheckBox x:Name="cbTwitterVertified" Margin="5"
                                                 Source="Resources/icon_twitter.png" 
                                                 DisabledSource="Resources/icon_twitter_gray.png"
                                                 Style="{StaticResource ImageCheckBoxStyle2}"/>
-                                    <Grid.ToolTip>
-                                        <ToolTip x:Name="twVertToolTip" Content="트위터의 인증 상태가 표시될 예정입니다."/>
-                                    </Grid.ToolTip>
-                                </Grid>
-                                <Grid Background="Transparent">
-                                    <ctrl:ImageCheckBox x:Name="cbYoutubeVertified" Margin="5"
+                                            <Grid.ToolTip>
+                                                <ToolTip x:Name="twVertToolTip" Content="트위터의 인증 상태가 표시될 예정입니다."/>
+                                            </Grid.ToolTip>
+                                        </Grid>
+                                        <Grid Background="Transparent">
+                                            <ctrl:ImageCheckBox x:Name="cbYoutubeVertified" Margin="5"
                                                 Source="Resources/icon_youtube.png" 
                                                 DisabledSource="Resources/icon_youtube_gray.png"
                                                 Style="{StaticResource ImageCheckBoxStyle2}"/>
-                                    <Grid.ToolTip>
-                                        <ToolTip x:Name="ytVertToolTip" Content="유튜브의 인증 상태가 표시될 예정입니다."/>
-                                    </Grid.ToolTip>
+                                            <Grid.ToolTip>
+                                                <ToolTip x:Name="ytVertToolTip" Content="유튜브의 인증 상태가 표시될 예정입니다."/>
+                                            </Grid.ToolTip>
+                                        </Grid>
+
+                                    </WrapPanel>
                                 </Grid>
+                            </Grid>
+                        </Border>
+                    </TabItem>
+                    <TabItem Tag="채널/페이지 검색">
+                        <Border Grid.Row="1" Grid.Column="1" Margin="5" 
+                            BorderBrush="LightGray"
+                            BorderThickness="2"
+                            CornerRadius="10">
+                            <Grid Margin="5">
+                                <Grid.Resources>
+                                    <Style x:Key="ImgTextBlockStyle" TargetType="{x:Type ctrl:ImageTextBlock}" BasedOn="{StaticResource ImageTextBlockStyle}">
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="Height" Value="20"/>
+                                        <Setter Property="Grid.ColumnSpan" Value="2"/>
+                                    </Style>
+                                </Grid.Resources>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
 
-                            </WrapPanel>
-                        </Grid>
-                    </Grid>
-
-                    <TextBlock Grid.Row="1" Text="페이지 검색" VerticalAlignment="Center" TextAlignment="Center" FontWeight="Bold" Margin="5"/>
-                    <Rectangle Grid.Row="1" Grid.Column="1" Fill="Black" Margin="0,5"/>
-                    <Grid Grid.Row="1" Grid.Column="2" Margin="5">
-                        <Grid.Resources>
-                            <Style x:Key="ImgTextBlockStyle" TargetType="{x:Type ctrl:ImageTextBlock}" BasedOn="{StaticResource ImageTextBlockStyle}">
-                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                                <Setter Property="Height" Value="20"/>
-                                <Setter Property="Grid.ColumnSpan" Value="2"/>
-                            </Style>
-                        </Grid.Resources>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ctrl:ImageTextBlock Text="유튜브 채널 검색" Source="Resources/icon_youtube.png" Style="{StaticResource ImgTextBlockStyle}"/>
+                                    <TextBox Grid.Row="1" VerticalAlignment="Center"/>
+                                    <Button Grid.Row="1" Grid.Column="1" Content="검색" Width="50" Margin="5" Padding="3"/>
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ctrl:ImageTextBlock Text="페이스북 페이지 검색" Source="Resources/icon_facebook.png" Style="{StaticResource ImgTextBlockStyle}"/>
+                                    <TextBox Grid.Row="1" VerticalAlignment="Center"/>
+                                    <Button Grid.Row="1" Grid.Column="1" Content="검색" Width="50" Margin="5" Padding="3"/>
+                                </Grid>
+                                <Grid Grid.Column="2">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ctrl:ImageTextBlock Text="트위터 페이지 검색" Source="Resources/icon_twitter.png" Style="{StaticResource ImgTextBlockStyle}"/>
+                                    <TextBox Grid.Row="1" VerticalAlignment="Center"/>
+                                    <Button Grid.Row="1" Grid.Column="1" Content="검색" Width="50" Margin="5" Padding="3"/>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </TabItem>
+                    <TabItem Tag="키워드 웹 검색">
+                        <Grid VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <ctrl:ImageTextBlock Text="유튜브 채널 검색" Source="Resources/icon_youtube.png" Style="{StaticResource ImgTextBlockStyle}"/>
-                            <TextBox Grid.Row="1" VerticalAlignment="Center"/>
-                            <Button Grid.Row="1" Grid.Column="1" Content="검색" Width="50" Margin="5" Padding="3"/>
+                            <TextBox Margin="10"/>
+                            <Button Content="검색 시작" Grid.Column="1" Margin="5" Padding="20,5"/>
                         </Grid>
-                        <Grid Grid.Column="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <ctrl:ImageTextBlock Text="페이스북 페이지 검색" Source="Resources/icon_facebook.png" Style="{StaticResource ImgTextBlockStyle}"/>
-                            <TextBox Grid.Row="1" VerticalAlignment="Center"/>
-                            <Button Grid.Row="1" Grid.Column="1" Content="검색" Width="50" Margin="5" Padding="3"/>
-                        </Grid>
-                        <Grid Grid.Column="2">
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <ctrl:ImageTextBlock Text="트위터 페이지 검색" Source="Resources/icon_twitter.png" Style="{StaticResource ImgTextBlockStyle}"/>
-                            <TextBox Grid.Row="1" VerticalAlignment="Center"/>
-                            <Button Grid.Row="1" Grid.Column="1" Content="검색" Width="50" Margin="5" Padding="3"/>
-                        </Grid>
-                    </Grid>
-                </Grid>
-
-                
-                
-            </StackPanel>
+                        
+                    </TabItem>
+                </TabControl>
+            </Grid>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>

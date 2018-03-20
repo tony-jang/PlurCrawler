@@ -39,21 +39,6 @@ namespace PlurCrawler_Sample
         {
             InitializeComponent();
 
-            //PlurCrawler.Format.AccessDBFormat<GoogleCSESearchResult> f = new PlurCrawler.Format.AccessDBFormat<GoogleCSESearchResult>("test.accdb");
-            //f.Test();
-            //var list = new List<GoogleCSESearchResult>() { new GoogleCSESearchResult(){
-            //    Content = "asdf",
-            //    Keyword = "asdfasdf",
-            //    OriginalURL = "https://naver.com",
-            //    PublishedDate = DateTime.Now,
-            //    Snippet = "asdfasfasdfasdf",
-            //    Title = "i4oqtuioewtuwieopt"
-            //} };
-
-            //f.FormattingData(list);
-
-            //return;
-
             #region [  Initalization  ]
 
             dict = new Dictionary<ISearcher, TaskProgressBar>();
@@ -119,6 +104,8 @@ namespace PlurCrawler_Sample
             btnTaskReport.Click += BtnTaskReport_Click;
             btnExportOption.Click += BtnExportOption_Click;
 
+            btnUp.Click += BtnUp_Click;
+            btnDown.Click += BtnDown_Click;
             mainTabControl.SelectionChanged += MainTabControl_SelectionChanged;
 
             TaskLogManager.LogAdded += LogManager_LogAdded;
@@ -128,10 +115,25 @@ namespace PlurCrawler_Sample
 
             this.Closing += MainWindow_Closing;
 
-            this.Width = 1280;
-            this.Height = 720;
-            
             #endregion
+        }
+
+        private void BtnUp_Click(object sender, RoutedEventArgs e)
+        {
+            if (tcSearchPanel.SelectedIndex != 0)
+            {
+                tcSearchPanel.SelectedIndex--;
+                tbSearchPanelName.Text = ((TabItem)tcSearchPanel.SelectedItem).Tag.ToString();
+            }
+        }
+
+        private void BtnDown_Click(object sender, RoutedEventArgs e)
+        {
+            if ((tcSearchPanel.SelectedIndex + 1) != tcSearchPanel.Items.Count)
+            {
+                tcSearchPanel.SelectedIndex++;
+                tbSearchPanelName.Text = ((TabItem)tcSearchPanel.SelectedItem).Tag.ToString();
+            }
         }
 
         private void PreviewTabAutoFocusing_Checked(object sender, RoutedEventArgs e)

@@ -8,11 +8,6 @@ namespace PlurCrawler.Search.Base
     public interface ISearchOption
     {
         /// <summary>
-        /// 검색할 검색어입니다.
-        /// </summary>
-        string Query { get; set; }
-
-        /// <summary>
         /// 검색할 갯수입니다.
         /// </summary>
         int SearchCount { get; set; }

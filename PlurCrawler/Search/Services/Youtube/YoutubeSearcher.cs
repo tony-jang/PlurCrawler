@@ -10,6 +10,7 @@ using PlurCrawler.Search.Base;
 using PlurCrawler.Search;
 using PlurCrawler.Tokens.Credentials;
 using PlurCrawler.Search.Common;
+using PlurCrawler.Extension;
 
 using Google;
 using Google.Apis.Services;
@@ -17,7 +18,6 @@ using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
 
 using YoutubeRequest = Google.Apis.YouTube.v3.SearchResource.ListRequest;
-using PlurCrawler.Extension;
 using static Google.Apis.YouTube.v3.SearchResource.ListRequest;
 
 namespace PlurCrawler.Search.Services.Youtube
@@ -49,8 +49,11 @@ namespace PlurCrawler.Search.Services.Youtube
             try
             {
                 YoutubeRequest listRequest = BuildRequest(searchOption);
-                List<YoutubeSearchResult> list = new List<YoutubeSearchResult>();
+                var list = new List<YoutubeSearchResult>();
                 
+                // TODO: 100개 이상일시에 count가 오류 생길 것으로 추측, 수정 필요
+                // TODO: NextPageToken 확인 부분이 의심스러움. 확인 필요
+
                 int remain = searchOption.SearchCount;
                 int count = 1;
 
@@ -122,8 +125,10 @@ namespace PlurCrawler.Search.Services.Youtube
             }
             catch (GoogleApiException ex)
             {
-                if (ex.Message.Contains("keyInvalid"))
+                if (ex.Message.ToLower().Contains("keyinvalid"))
                     throw new CredentialsTypeException("키가 올바르게 입력되지 않았습니다.");
+                else if (ex.Message.ToLower().Contains("keyexpired"))
+                    throw new CredentialsTypeException("이 키는 사용이 만료되었습니다.");
                 else
                     throw ex;
             }

@@ -437,8 +437,9 @@ namespace PlurCrawler_Sample
                         AddLog("'Youtube' 검색 중 오류가 발생했습니다. [날짜를 사용하지 않은 상태에서는 '하루 기준' 옵션을 사용할 수 없습니다.]", TaskLogType.Failed);
                         info = SearchResult.Fail_InvaildSetting;
                     }
-                    catch (CredentialsTypeException)
+                    catch (CredentialsTypeException ex)
                     {
+                        // TODO: Exception에 오류 코드 추가
                         AddLog("'Youtube' 검색 중 오류가 발생했습니다. [Youtube의 API키가 올바르게 입력되지 않은거 같습니다.]", TaskLogType.Failed);
 
                         Dispatcher.Invoke(() => SettingManager.YoutubeCredentials.Item2 = VerifyType.Invalid);
