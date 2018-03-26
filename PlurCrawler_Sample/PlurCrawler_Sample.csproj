@@ -157,6 +157,9 @@
     <Compile Include="Windows\ExportOption.xaml.cs">
       <DependentUpon>ExportOption.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Settings\VisitSiteLimit.xaml.cs">
+      <DependentUpon>VisitSiteLimit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\TaskReport.xaml.cs">
       <DependentUpon>TaskReport.xaml</DependentUpon>
     </Compile>
@@ -193,6 +196,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\ExportOption.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Settings\VisitSiteLimit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -269,6 +276,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\icon_access.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icon_kwSearch.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,0 +1,65 @@
+﻿<Window x:Class="PlurCrawler_Sample.Windows.Settings.VisitSiteLimit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="VisitSiteLimit" Height="500" Width="700">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Margin="10">
+                <Button Content="데이터 셋 추가" Padding="0,5" Margin="0,5"/>
+                <Button Content="데이터 셋 삭제" Padding="0,5" Margin="0,5"/>
+            </StackPanel>
+
+            <ListView Grid.Row="1" Margin="10">
+                <ListViewItem Content="[아싸라비아아아아] {54개}"/>
+            </ListView>
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Margin="10,10,10,0">
+                <Run Text="방문한 사이트를 제한 또는 허용할 사이트들의 모음을 선택합니다." FontWeight="Bold" FontSize="13"/>
+                <LineBreak/>
+                - 해당 사이트 모음은 허용 또는 제한 중 한가지 타입에서 사용될 목록입니다.
+                <LineBreak/>
+                - 정확하게 해당 사이트만 선택하려고 할시 사이트의 앞뒤를 '$'로 묶어주세요.
+                <LineBreak/>
+                - 한 사이트마다 [Enter]로 구분합니다.
+            </TextBlock>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid Margin="10,10,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="데이터 셋 이름 : "/>
+                    <TextBox Grid.Column="1"/>
+                </Grid>
+                
+                <TextBox Margin="10" Grid.Row="1">
+
+                </TextBox>
+            </Grid>
+            
+        </Grid>
+    </Grid>
+</Window>

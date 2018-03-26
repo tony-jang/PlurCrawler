@@ -9,7 +9,8 @@
       d:DesignHeight="600" d:DesignWidth="300" MinWidth="300"
       Title="DetailsOption">
     <Grid>
-        <TabControl TabStripPlacement="Top">
+        <TabControl TabStripPlacement="Top" Style="{DynamicResource TabControlStyle1}">
+            
             <!--<TabControl.Template>
                 <ControlTemplate TargetType="TabControl">
                     <StackPanel>
@@ -103,7 +104,7 @@
             </TabItem>
             <TabItem Style="{DynamicResource TabItemStyle}">
                 <TabItem.Header>
-                    <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/icon_twitter.png" Text="트위터[검색어]" Height="16"/>
+                    <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/icon_twitter.png" Text="트위터" Height="16"/>
                 </TabItem.Header>
                 <Grid>
                     <ScrollViewer x:Name="svTwitter" VerticalScrollBarVisibility="Auto">
@@ -178,7 +179,7 @@
             </TabItem>
             <TabItem Style="{DynamicResource TabItemStyle}">
                 <TabItem.Header>
-                    <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/icon_youtube.png" Text="유튜브[검색어]" Height="16"/>
+                    <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/icon_youtube.png" Text="유튜브" Height="16"/>
                 </TabItem.Header>
                 <Grid>
                     <ScrollViewer x:Name="svYoutube" VerticalScrollBarVisibility="Auto">
@@ -194,7 +195,7 @@
                                     더 많은 요청이 필요한 경우 <Hyperlink Tag="https://services.google.com/fb/forms/ytapiquotarequest/" Click="Hyperlink_Click">여기서</Hyperlink> 신청할 수 있습니다.
                                 </TextBlock>
                             </Grid>
-                            
+
                             <ctrl:PropertyGroupBox Header="갯수 기준">
                                 <WrapPanel>
                                     <RadioButton x:Name="rbYoutubeNoSplit" Margin="5" Content="전체 기준" GroupName="youtubeFindType" IsChecked="True"/>
@@ -258,6 +259,22 @@
                             해당 서비스에서 검색을 수행중 일때에는<LineBreak/>설정 변경이 불가합니다.
                         </TextBlock>
                     </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem Style="{DynamicResource TabItemStyle}">
+                <TabItem.Header>
+                    <ctrl:ImageTextBlock Source="/PlurCrawler_Sample;component/Resources/icon_kwSearch.png" Text="페이지/키워드 검색" Height="16"/>
+                </TabItem.Header>
+                <Grid>
+                    <ScrollViewer x:Name="svKeywordSearch" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="0,10">
+                            <ctrl:PropertyGroupBox Header="사이트 제한">
+                                <StackPanel>
+                                    <Button Content="방문 사이트 제한 관리" Padding="5"/>
+                                </StackPanel>
+                            </ctrl:PropertyGroupBox>
+                        </StackPanel>
+                    </ScrollViewer>
                 </Grid>
             </TabItem>
         </TabControl>
