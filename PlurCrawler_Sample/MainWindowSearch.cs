@@ -477,6 +477,15 @@ namespace PlurCrawler_Sample
 
         #endregion
 
+        #region [  Keyword Search  ]
+
+        public void KeywordSearch(string keyword, bool moveExternalSite)
+        {
+
+        }
+
+        #endregion
+
         #region [  Common Events  ]
 
         private void Searcher_SearchFinished(object sender, SearchFinishedEventArgs e)

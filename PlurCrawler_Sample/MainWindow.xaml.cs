@@ -18,6 +18,7 @@ using PlurCrawler_Sample.Common;
 using PlurCrawler_Sample.TaskLogs;
 using System.Net;
 using System.IO;
+using PlurCrawler.Crawling;
 
 namespace PlurCrawler_Sample
 {
@@ -99,6 +100,8 @@ namespace PlurCrawler_Sample
             cbYoutubeService.Checked += CheckChanged;
             cbYoutubeService.Unchecked += CheckChanged;
 
+            btnKeywordSearch.Click += BtnKeywordSearch_Click;
+
             btnLog.Click += BtnLog_Click;
             btnVertManager.Click += BtnVertManager_Click;
             btnTaskReport.Click += BtnTaskReport_Click;
@@ -116,6 +119,11 @@ namespace PlurCrawler_Sample
             this.Closing += MainWindow_Closing;
 
             #endregion
+        }
+
+        private void BtnKeywordSearch_Click(object sender, RoutedEventArgs e)
+        {
+            KeywordSearch(tbKeyword.Text, !cbNoExternalSite.IsChecked.Value);
         }
 
         private void BtnUp_Click(object sender, RoutedEventArgs e)
