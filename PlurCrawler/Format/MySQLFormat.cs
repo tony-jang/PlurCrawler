@@ -380,16 +380,21 @@ namespace PlurCrawler.Format
                     if (ex.HResult == -2147467259)
                     {
                         var primaryProp = GetPrimaryProperty();
-
-                        // 키워드가 중복되지 않았을시 추가
-                        if (!KeywordExists(ToTableField(primaryProp), primaryProp.GetValue(data), data.Keyword))
+                        
+                        // 키워드가 없다면 넘어가기
+                        if (!data.Keyword.IsNullOrEmpty())
                         {
-                            using (MySqlCommand cm = Connection.CreateCommand())
+                            // 키워드가 중복되지 않았을시 추가
+                            if (!KeywordExists(ToTableField(primaryProp), primaryProp.GetValue(data), data.Keyword))
                             {
-                                cm.CommandText = GetUpdateQuery(ToTableField(primaryProp), primaryProp.GetValue(data), data.Keyword);
-                                cm.ExecuteNonQuery();
+                                using (MySqlCommand cm = Connection.CreateCommand())
+                                {
+                                    cm.CommandText = GetUpdateQuery(ToTableField(primaryProp), primaryProp.GetValue(data), data.Keyword);
+                                    cm.ExecuteNonQuery();
+                                }
                             }
                         }
+
                         continue;
                     }
 

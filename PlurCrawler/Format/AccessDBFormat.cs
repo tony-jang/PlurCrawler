@@ -327,15 +327,19 @@ namespace PlurCrawler.Format
                         {
                             var primaryProp = type.GetProperties().Where(i => i.GetCustomAttributes<PrimaryKeyAttribute>().Count() == 1).First();
 
-                            // 키워드가 중복되지 않았을시 추가
-                            if (!KeywordExists(ToTableField(primaryProp), primaryProp.GetValue(data), data.Keyword, conn))
+                            if (!data.Keyword.IsNullOrEmpty())
                             {
-                                using (OleDbCommand cm = conn.CreateCommand())
+                                // 키워드가 중복되지 않았을시 추가
+                                if (!KeywordExists(ToTableField(primaryProp), primaryProp.GetValue(data), data.Keyword, conn))
                                 {
-                                    cm.CommandText = GetUpdateQuery(ToTableField(primaryProp), primaryProp.GetValue(data), data.Keyword);
-                                    cm.ExecuteNonQuery();
+                                    using (OleDbCommand cm = conn.CreateCommand())
+                                    {
+                                        cm.CommandText = GetUpdateQuery(ToTableField(primaryProp), primaryProp.GetValue(data), data.Keyword);
+                                        cm.ExecuteNonQuery();
+                                    }
                                 }
                             }
+                            
                             continue;
                         }
                     }
