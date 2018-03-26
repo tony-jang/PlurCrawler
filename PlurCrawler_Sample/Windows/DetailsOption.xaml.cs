@@ -18,6 +18,7 @@ using PlurCrawler.Search.Services.Youtube;
 using PlurCrawler_Sample.Common;
 using PlurCrawler_Sample.Controls;
 using PlurCrawler_Sample.Extension;
+using PlurCrawler_Sample.Windows.Settings;
 
 namespace PlurCrawler_Sample.Windows
 {
@@ -71,6 +72,8 @@ namespace PlurCrawler_Sample.Windows
             LoadGoogle(SettingManager.GoogleCSESearchOption);
             LoadTwitter(SettingManager.TwitterSearchOption);
             LoadYoutube(SettingManager.YoutubeSearchOption);
+
+            btnVisitSiteLimit.Click += BtnVisitSiteLimit_Click;
 
             #region [  Sync With Setting  ]
 
@@ -132,6 +135,13 @@ namespace PlurCrawler_Sample.Windows
             twitterLang.SelectionChanged += TwitterSettingChanged;
 
             #endregion
+        }
+
+        private void BtnVisitSiteLimit_Click(object sender, RoutedEventArgs e)
+        {
+            var wdw = new VisitSiteLimit();
+
+            wdw.ShowDialog();
         }
 
         private void Drp_Loaded(object sender, RoutedEventArgs e)

@@ -236,7 +236,14 @@
                                 </Grid.RowDefinitions>
                                 <TextBox x:Name="tbKeyword" Margin="10"/>
                                 <Button x:Name="btnKeywordSearch" Content="검색 시작" Grid.Column="1" Margin="5" Padding="20,5"/>
-                                <CheckBox x:Name="cbNoExternalSite" Margin="10,0" Content="외부 사이트로 이동하지 않기" Grid.Row="1"/>
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox x:Name="cbNoExternalSite" Margin="10,0" Content="외부 사이트로 이동하지 않기" Grid.Row="1"/>
+                                    <Image Source="Resources/icon_setting.png" Grid.Column="1" Width="15"/>
+                                </Grid>
                             </Grid>
                             
                         </Border>
