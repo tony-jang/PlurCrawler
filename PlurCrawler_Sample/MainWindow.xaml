@@ -221,15 +221,25 @@
                         </Border>
                     </TabItem>
                     <TabItem Tag="키워드 웹 검색">
-                        <Grid VerticalAlignment="Center">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBox Margin="10"/>
-                            <Button Content="검색 시작" Grid.Column="1" Margin="5" Padding="20,5"/>
-                        </Grid>
-                        
+                        <Border Grid.Column="1" Margin="5" 
+                                BorderBrush="LightGray"
+                                BorderThickness="2"
+                                CornerRadius="10">
+                            <Grid VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <TextBox x:Name="tbKeyword" Margin="10"/>
+                                <Button x:Name="btnKeywordSearch" Content="검색 시작" Grid.Column="1" Margin="5" Padding="20,5"/>
+                                <CheckBox x:Name="cbNoExternalSite" Margin="10,0" Content="외부 사이트로 이동하지 않기" Grid.Row="1"/>
+                            </Grid>
+                            
+                        </Border>
                     </TabItem>
                 </TabControl>
             </Grid>

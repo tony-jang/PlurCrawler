@@ -14,8 +14,6 @@ namespace PlurCrawler.Search.Services.Youtube
 
         public int SearchCount { get; set; }
 
-        // Offset Check
-
         public OutputFormat OutputServices { get; set; }
     }
 }
