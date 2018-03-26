@@ -217,6 +217,9 @@
     <Compile Include="Search\Common\SearchFinishedEventArgs.cs" />
     <Compile Include="Search\Common\SearchResultEventArgs.cs" />
     <Compile Include="Search\Common\ServiceKind.cs" />
+    <Compile Include="Search\Services\Facebook\FacebookPageSearcher.cs" />
+    <Compile Include="Search\Services\Facebook\FacebookPageSearchOption.cs" />
+    <Compile Include="Search\Services\Facebook\FacebookSearchResult.cs" />
     <Compile Include="Search\Services\Twitter\TwitterLanguage.cs" />
     <Compile Include="Search\Services\GoogleCSE\GoogleCSESearcher.cs" />
     <Compile Include="Search\Services\GoogleCSE\GoogleCSESearchOption.cs" />
