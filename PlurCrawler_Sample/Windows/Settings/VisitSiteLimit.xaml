@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="VisitSiteLimit" Height="500" Width="800" WindowStartupLocation="CenterScreen">
+        Title="방문 사이트 제한" Height="500" Width="800" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>
@@ -18,12 +18,11 @@
             </Grid.RowDefinitions>
 
             <StackPanel Margin="10">
-                <Button Content="데이터 셋 추가" Padding="0,5" Margin="0,5"/>
-                <Button Content="데이터 셋 삭제" Padding="0,5" Margin="0,5"/>
+                <Button x:Name="btnAddDataset" Content="데이터 셋 추가" Padding="0,5" Margin="0,5"/>
+                <Button x:Name="btnRemoveDataset" Content="데이터 셋 삭제" Padding="0,5" Margin="0,5"/>
             </StackPanel>
 
-            <ListView Grid.Row="1" Margin="10">
-                <ListViewItem Content="[아싸라비아아아아] {54개}"/>
+            <ListView x:Name="lvDatasets" Grid.Row="1" Margin="10">
             </ListView>
         </Grid>
 
@@ -39,6 +38,8 @@
                 <LineBreak/>
                 - 정확하게 해당 사이트만 선택하려고 할시 사이트의 앞뒤를 '$'로 묶어주세요.
                 <LineBreak/>
+                - http와 https 또는 생략한 URL을 구분하지 않습니다.
+                <LineBreak/>
                 - 한 사이트마다 [Enter]로 구분합니다.
             </TextBlock>
             <Grid Grid.Row="1">
@@ -52,12 +53,11 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="데이터 셋 이름 : "/>
-                    <TextBox Grid.Column="1"/>
+                    <TextBox x:Name="tbDatasetName" Grid.Column="1"/>
                 </Grid>
-                
-                <TextBox Margin="10" Grid.Row="1">
 
-                </TextBox>
+                <TextBox x:Name="tbDatasets" Margin="10" Grid.Row="1" AcceptsReturn="True"/>
+                <TextBlock x:Name="tbNoDataset" Grid.Row="1" Text="생성된 데이터 셋이 없습니다." VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Grid>
             
         </Grid>
