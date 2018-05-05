@@ -53,8 +53,8 @@ namespace PlurCrawler_Sample.Windows.Settings
             value.Item2 = tbDatasets.Text;
 
             // tbDatasets.Text.Split("\r\n").Count()
-            itm.Content = $@"[{(tbDatasetName.Text.IsNullOrEmpty() ? "입력되지 않은 이름" : tbDatasetName.Text)}]{{{
-                (tbDatasets.Text.Trim().IsNullOrEmpty() ? 0 : tbDatasets.Text.Split("\r\n").Count())}개}}";
+            itm.Content = $@"[{(tbDatasetName.Text.IsNullOrEmpty() ? "입력되지 않은 이름" : tbDatasetName.Text)}] {{{
+                (tbDatasets.Text.Trim().IsNullOrEmpty() ? 0 : tbDatasets.Text.Split("\r\n").Where(i => !string.IsNullOrEmpty(i)).Count())}개}}";
 
         }
 

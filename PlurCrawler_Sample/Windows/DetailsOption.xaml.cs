@@ -277,7 +277,7 @@ namespace PlurCrawler_Sample.Windows
             ytCbOutput3.IsChecked = option.OutputServices.HasFlag(OutputFormat.MySQL);
             ytCbOutput4.IsChecked = option.OutputServices.HasFlag(OutputFormat.AccessDB);
 
-            youtubeRegion.SelectedIndex = (int)option.RegionCode;
+            youtubeRegion.SelectedIndex = (int)option.RegionCode.GetValueOrDefault();
 
             try
             {

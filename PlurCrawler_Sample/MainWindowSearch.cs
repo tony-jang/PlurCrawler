@@ -367,7 +367,7 @@ namespace PlurCrawler_Sample
                 var youtubeSearcher = new YoutubeSearcher();
                 bool isCanceled = false;
                 SearchResult info = SearchResult.Fail_APIError;
-                YoutubeSearchOption option = null;
+                YoutubeSearchOption option = YoutubeSearchOption.GetDefault();
 
                 youtubeSearcher.SearchProgressChanged += Searcher_SearchProgressChanged;
                 youtubeSearcher.SearchFinished += Searcher_SearchFinished;

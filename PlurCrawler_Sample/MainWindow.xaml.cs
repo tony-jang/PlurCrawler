@@ -19,6 +19,7 @@ using PlurCrawler_Sample.TaskLogs;
 using System.Net;
 using System.IO;
 using PlurCrawler.Crawling;
+using PlurCrawler_Sample.Windows.Settings;
 
 namespace PlurCrawler_Sample
 {
@@ -116,9 +117,18 @@ namespace PlurCrawler_Sample
             previewTabAutoFocusing.Checked += PreviewTabAutoFocusing_Checked;
             previewTabAutoFocusing.Unchecked += PreviewTabAutoFocusing_Checked;
 
+            btnVisitRule.MouseDown += BtnVisitRule_MouseDown;
+
             this.Closing += MainWindow_Closing;
 
             #endregion
+        }
+
+        private void BtnVisitRule_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            VisitSiteLimit limit = new VisitSiteLimit();
+
+            limit.ShowDialog();
         }
 
         private void BtnKeywordSearch_Click(object sender, RoutedEventArgs e)
